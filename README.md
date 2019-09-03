@@ -2,8 +2,10 @@
 
 ### ***Today I learned...***
 
-* [Shell Command, Vim, and Git](git-github/notes/20190902-start-git.md)
-* [DevTools Setting & Create Blog using Hexo](git-github/notes/20190903-github-blog.md)
+* 2019-09-03 [Shell Command, Vim, and Git](git-github/notes/20190902-start-git.md)
+* 2019-09-04 [DevTools Setting & Create Blog using Hexo](git-github/notes/20190903-github-blog.md)
+
+
 
 
 
