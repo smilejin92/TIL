@@ -1,4 +1,4 @@
-# 개발환경 세팅
+# 개발환경 셋팅
 
 ### Visual Studion - Add Extensions
 
@@ -22,6 +22,14 @@
 ### Markdown Editor
 
 - typora
+
+---
+
+### Markdown Syntax
+
+* [Basic Writing and Formatting Syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax#lists)
+* [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 
 ---
 
@@ -59,8 +67,10 @@
 * `hexo new page about` (create a new page, page as type, about as page_name)
 * on _config.yml in source folder (under themes/landscape), type `About: /about` inside menu
 * refresh your local server and check a new menu
-
+* [How to use Hexo and deploy to Github pages](https://gist.github.com/btfak/18938572f5df000ebe06fbd1872e4e39)
 * [Watch this tutorial](https://www.youtube.com/watch?v=Onglr1_Kgls)
+* [Hexo Github page](https://gist.github.com/btfak/18938572f5df000ebe06fbd1872e4e39)
+* [Hexo Documentation](https://hexo.io/docs/)
 
 ---
 
