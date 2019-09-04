@@ -376,6 +376,12 @@
 * 기계적인 검색 엔진은 어떠한 태그가 어떠한 기능을 하는지 분별할 수 없음
 * 이를 해결하고자 특정한 태그에 의미를 부여해서 웹 페이지를 만다는 시도가 시작 = Semantic Web
 
----
-
+```html
+<header></header> header
+<nav></nav> navigation
+<aside></aside> side area
+<section></section> area for main content
+<article></article> area for main content (words)
+<footer></footer> footer
+```
 

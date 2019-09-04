@@ -1,119 +1,194 @@
-# 웹 접근성과 웹 표준
+# HTML5 Markup
 
-https://github.com/seulbinim
+([Lecture slides at here](https://github.com/seulbinim/pdf))
 
-* 인터넷
-  - Telnet
-  - e-mail
-  - usenet
-  - FTP
-  - IRC
-  - Archie
-  - Gopher
-  - WWW
+### 새로운 표준 HTML5
 
-* DOM
-* Framework
+* **Content Models** : 명확한 정보 구조 설계 및 구성을 위해 카테고리를 정의하여, 비슷한 성격을 가진 요소별로 그룹화한 것
 
----
+* **Category Examples**
 
-### 웹 접근성
+  * Sectioning Root
+  * Metadata Content
+  * Flow Content
+  * Sectioning Content
+  * Heading Content
+  * Sectioning Content
 
-_"The power of thw Web is in its universality, access by everyone regardless of disability is an essential aspect." Tim Berners-Lee_
+  ![](https://www.w3.org/TR/2011/WD-html5-20110525/content-venn.png)
 
 ---
 
-### 개발환경 설정
+### Outline Algorithm
 
-* Chrome extension - Web Developer, headingsMap, Tota11y
-* VS Code - auto close tag, auto rename tag, monokai-contrast theme
+* 정보 구조를 명확히 할 수 있도록 H TML5에 새롭게 도입된 개념
+* 웹 페이지의 정보 구조를 판별할 수 있음 (ex. 목차)
+* HTML5에 추가된 많은 요소들은 대부분 Outline Algorithm과 관련이 있음 (ex. Heading, Sectioning)
+
+---
+
+### HTML5의 API
+
+* HTML5에서는 JS 기술을 편리하게 이용할 수 있도록 다양한 API를 지원
+  * 오프라인 웹 구현을 위한 API (ex. Web Storage, Web SQL Database)
+  * 실시간 커뮤니케이션 API (ex. Web Socket)
+  * 파일/하드웨어 접근 API (ex. Desktop Drag-In, Geolocation)
+  * API for GUI (ex. Drag & Drop)
 
 ---
 
 ### XML
 
-- Extensive Markup Language (ex. `<item>`a110`</item>`)
-- XML을 HTML에 적용 -> XHTML (strict grammar: `<br />`)
+- **Extensive Markup Language** : markup language that **DEFINES** a set of rules for encoding documents in a format that is **both human & machine readable**
+  * (ex. `<item>`a110`</item>`)
+- XML을 HTML에 적용 -> XHTML with **strict grammar**
+  * (ex. `<br />`)
 
 ------
 
-# HTML5 Semantic
+### HTML5 서식
+
+* HTML 4.01, XHTML 1.0 등 기존에 사용하던 마크업 문법을 모두 허용 (하위 호환성)
 
 ---
 
-https://emmet.io/
+### DTD (Document Type Definition)
 
-https://docs.emmet.io/ (사용법, 단축키)
+* 모든 웹 문서의 시작은 문서형 정의 (DTD)의 선언으로 시작
+* HTML5, XHTML, HTML 세 가지 문서 유형 존재
+* **HTML5**에서 DTD 선언 = `<!DOCTYPE html>`
+* HTML 4.01에서의 DTD ([see example](http://www.w3.org/TR/html4/loose.dtd))
+  * Strict DTD
+  * Transitional DTD
+  * Frameset DTD
 
-https://docs.emmet.io/cheat-sheet/ (ctrl + f 'html4', copy text)
+---
 
-browse http://www.w3.org/TR/html4/loose.dtd
+### 개발환경 설정
 
-(document type definition)
+- Add Chrome Extension 
+  - Web Developer
+  - headingsMap
+  - Tota11y
+- Install Extension in VS Code
+  - auto close tag
+  - auto rename tag
+  - monokai-contrast theme
 
-dtd type = s (Strict), t (transitional)
+---
 
-ctrl + shift + k (delete current line)
+### [Emmet](https://emmet.io/)
 
+* a plugin for text editors which greatly improves HTML & CSS workflow (embedded in VS Code)
 
+* [Documentation](https://docs.emmet.io/)
 
-## HTML 페이지 디자인
+* [Shorcut Cheat Sheet](https://docs.emmet.io/cheat-sheet/) (example codes below)
+
+  * Type `header` and hit enter -> `<header></header>`
+
+  * Type `header.header` -> `<header class="header"></header>`
+
+  * `header.class_name{요소}` -> `<header class="class_name">요소 값</header>`
+
+  * header+div+main+article+footer
+
+    ```html
+    <header></header>
+    <div></div>
+    <main></main>
+    <article></article>
+    <footer></footer>
+    ```
+
+  * header>div (child tag)
+
+    ```html
+    <header>
+        <div></div>
+    </header>
+    ```
+
+  * div*3.group (make 3 div tags with class named "group")
+
+    ```html
+    <div class="group"></div>
+    <div class="group"></div>
+    <div class="group"></div>
+    ```
+
+  * div.group.group$*3 (dollar sign = incrementing number)
+
+    ```html
+    <div class="group group1"></div>
+    <div class="group group2"></div>
+    <div class="group group3"></div>
+    ```
+
+  * div.group.group${그룹$}*3 (also work in element value)
+
+    ```html
+    <div class="group group1">그룹1</div>
+    <div class="group group2">그룹2</div>
+    <div class="group group3">그룹3</div>
+    ```
+
+---
+
+### HTML 페이지 디자인
 
 1. 페이지 영역 분석
 
-* HTML page divided into 3 section (header, contents (body), footer)
-* header (머릿말)
-* contents
-  * banner
-  * main
-  * slogan
+   * HTML page divided into 3 section (header, contents (body), footer)
 
-* footer
+     * header
+     * contents
+       * banner
+       * main
+       * slogan
+
+     * footer
 
 2. HTML로 Markup
 
-* `<body>`
-  * `<header>`
-  * `<section>`
-    * `<header>`
+```html
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <!-- type of encoding -->
+    <meta charset="UTF-8">
+    <!-- expose keywords that match to your purpose -->
+    <title>keyword1, keyword2, keyword3</title>
+</head>
+<body>
+    <header></header>
+    <section>
+        <header></header>
+    </section>
+</body>
+</html>
+```
 
-3. Naming
+3. Name Elements
+   * Use Naming Convention
+     * Camel Case (`var = 'camelCase'`)
+     * Snake Case (`var = 'snake_case'`)
+     * ?? (`var = 'temp-case'`)
+   * id (unique) vs. class (group)
 
-* id (unique) vs. class (group)
-* Naming Convention : cc (camel), sc (snake -> main_content), c.c (main-content) 케밥?
-
-4. code
-
-* header
-* header.header
-* header.classname{요소}
-* header+div+main+article+footer
-* header>div (자식 요소 생성)
-* div*3.group (make 3 div with class name "group")
-* div.group.group$*3 (see how it works)
-* div.group.group${그룹$}*3
-* emmet 설치 안했는데 어떻게 가능?
+4. Code
 
 ---
 
-# HTML DOM Tree
+### DOM (Document Object Model)
 
----
+* A cross-platform and language interface that treats an XML or HTML document as a ***tree structure*** wherein each node is an object representing a part of the document.
+* A document with a ***logical tree***
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/DOM-model.svg/1024px-DOM-model.svg.png)
 
 # CSS3
 
-* slide at github
-* float, position, display:inline, display:flex, display:grid
 * **box model**
 * **box sizing**
 
-./ = 현재 폴더 하위의...
-
-- dtd 소개 및 사용방법
-- 인코딩 선언
-- 좋은 제목을 만드는 방법
-- html 구조 설계 (헤더, 비주얼, 메인 컨텐츠, 슬로건, 푸터)
-- CSS 레이아웃
-- 박스 모델 (width, height, margin, border, padding)
-- box-sizing
-- emmet

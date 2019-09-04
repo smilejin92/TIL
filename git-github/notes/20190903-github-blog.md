@@ -52,6 +52,8 @@
 
 - `ctrl + /` = comment out
 
+- `ctrl + shift + k` = delete current line
+
    ([see more](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf))
 
 ---
