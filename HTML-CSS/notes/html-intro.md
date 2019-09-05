@@ -309,64 +309,127 @@
 
 ### 테이블 태그
 
-* 
+* 표를 만들 때 사용하는 태그
+
+```html
+<table>
+    <tr>
+    	<th>Header 1</th>  Column name
+        <th>Header 2</th>
+    </tr>
+    <tr>                  row 1
+    	<td>Data 1</td>   table[1][1] value
+        <td>Data 2</td>   table[1][2] value
+    </tr>
+    <tr>                  row 2
+    	<td>Data 1</td>   table[2][1] value
+        <td>Data 2</td>   table[2][1] value
+    </tr>
+</table>
+```
+
+
 
 ---
 
 ### 이미지 태그
 
-* placehold.it
+```html
+<img src="이미지의 경로" alt="이미지가 없을때 나오는 글자" width="너비" height="높이">
+```
+
+* [placehold.it](https://placeholder.com/) : 원하는 크기의 이미지를 제공해주는 사이트
+
+  ```html
+  <img src="http://placehold.it/300x200" />
+  ```
+
+* Must incldue `src` and `alt` attribute
 
 ---
 
 ### 오디오 태그
 
-* 
+```html
+<audio src="sample.mp3" controls="controls"></audio>
+```
+
+* 플러그인의 도움 없이 음악을 재생할 수 있게 만들어 줌
+* IE 8 이하에서는 사용 불가
 
 ---
 
 ### 비디오 태그
 
-* video.js
+```html
+<video controls="controls">
+    <source src="sample.mp4" type="video/mp4" />
+</video>
+```
+
+* 플러그인 없이 웹에서 동영상을 볼 수 있게 만들어 줌
+* video.js : 웹 브라우저마다 표시되는 video 태그의 형태가 일관되지 않으므로 웹 페이지를 디자인할 때 생기는 문제를 해결해주는 플러그인 (하위버전도 호환)
+
+```html
+<head>
+    <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+</head>
+<body>
+    <video controls="controls" width="640" height="360"
+           class="video-js" data-setup="{}">
+    	<source src="sample.mp4" type="video/mp4" />
+    </video>
+</body>
+```
+
+
 
 ---
 
 ## FORM Tag
 
-* action
-* method (get vs. post)
+* `action` : 입력 데이터의 전달 위치를 지정
+* `method `: 입력 데이터의 전달 방식을 선택
+  * get : 주소에 데이터를 입력하여 전달
+  * post : 데이터를 더욱 안전하게 전달, 용량 제한 x
 
-### Input Tag (HTML5)
+## Input Tag (HTML5)
 
-* Ajax
+* 정보를 입력받는 기능을 수행
 
----
+```html
+<form method="post">
+    <input type="text" name="search" />
+    <input type="submit" />
+</form>
+```
 
-### Textarea Tag
-
-* 
+* Can be replaced with Ajax
 
 ---
 
 ### Select Tag
 
-* optgroup tag
+* 여러 개의 목록에서 몇 가지를 선택할 수 있는 입력 양식 요소
+
+```html
+<select multiple="multiple">
+    <optgroup label="HTML5">
+    	<option>Multimedia Tag</option>
+        <option>Connectivity</option>
+        <option>Device Access</option>
+    </optgroup>
+</select>
+```
 
 ---
 
-### Fieldset & legend Tag
-
-* 
-
----
-
-## DIV & Span Tag
+### DIV & Span Tag
 
 * 공간 분할 태그
-* `<div>` block 형식으로 공간을 분할
-* `<span>` inline 형식으로 공간 분할
-* pg. 93
-* **HTML5 콘텐츠 모델**
+* `<div>` **block 형식으로 공간을 분할**
+* `<span>` **inline 형식으로 공간 분할**
 
 ---
 
@@ -378,6 +441,7 @@
 
 ```html
 <header></header> header
+<main></main> main
 <nav></nav> navigation
 <aside></aside> side area
 <section></section> area for main content

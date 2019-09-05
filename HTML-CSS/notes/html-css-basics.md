@@ -142,9 +142,9 @@
    * HTML page divided into 3 section (header, contents (body), footer)
 
      * header
-     * contents
+     * main
        * banner
-       * main
+       * main-content / section / article
        * slogan
 
      * footer
@@ -162,9 +162,11 @@
 </head>
 <body>
     <header></header>
-    <section>
-        <header></header>
-    </section>
+    <main>
+        <section>
+        	<p></p>
+    	</section>
+    </main>
 </body>
 </html>
 ```
@@ -174,7 +176,7 @@
      * Camel Case (`var = 'camelCase'`)
      * Snake Case (`var = 'snake_case'`)
      * ?? (`var = 'temp-case'`)
-   * id (unique) vs. class (group)
+   * id name (unique) vs. class name (group)
 
 4. Code
 
@@ -186,12 +188,6 @@
 * A document with a ***logical tree***
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/DOM-model.svg/1024px-DOM-model.svg.png)
-
-# CSS3
-
-* **box model**
-* **box sizing**
-* **display: flex**
 
 ([Back to List](../../README.md))
 
