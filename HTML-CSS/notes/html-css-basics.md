@@ -191,6 +191,7 @@
 
 * **box model**
 * **box sizing**
+* **display: flex**
 
 ([Back to List](../../README.md))
 
