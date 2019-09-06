@@ -93,6 +93,8 @@
   	background-image: url('image.png')
   }
   ```
+  
+* linear-gradient(red, green)
 
 ---
 
@@ -118,7 +120,7 @@ display: flex
 
 ---
 
-### Visibility 속성
+### Visibility 속성 (NAH)
 
 * 대상을 보이거나 보이지 않게 지정하는 스타일 속성
 
@@ -131,6 +133,23 @@ visibility: collapse (table 태그를 보이지 않게 설정, only available in
 * So what's the difference btwn `display: none` & `visibility: hidden`?
 * `display: none` -> 태그가 화면에서 **제거**
 * `visibility: hidden` -> 화면에서 보이지 않을 뿐, hold space
+
+(see also `position`)
+
+```css
+.a11y-hidden {
+    background-color: red;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    margin: -1px;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+}
+```
+
+
 
 ---
 
