@@ -2,7 +2,6 @@
 
 ### 웹의 역사
 
-- **HTML (HyperText Markup Language)** : the standard markup language for documents designed to be displayed in a web browser
 - **인터넷** : 전세계를 연결하고 있는 국제 정보통신망
 - **www (World Wide Web)** : 인터넷에 연결된 컴퓨터를 통해 사람들이 정보를 공유할 수 있는 정보공간
 
@@ -87,13 +86,19 @@
 
 ---
 
-# HTML5 Tag Basics
+# HTML5
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1200px-HTML5_logo_and_wordmark.svg.png" style="zoom:25%;" />
 
-(***Tip. 외우지 말고 ~한 태그가 있었구나 이해하기***)
+
+
+**HTML (HyperText Markup Language)** : the standard **markup language** for documents designed to be displayed **in a web browser**
+
+---
 
 ### 태그(Tag)와 요소(Element)
+
+(***Tip. 외우지 말고 ~한 태그가 있었구나 이해하기***)
 
 * 태그는 HTML 페이지에서 객체 (요소)를 만들때 사용됨
 
@@ -437,7 +442,7 @@
 
 * **Semantic** : 의미론적인
 * 기계적인 검색 엔진은 어떠한 태그가 어떠한 기능을 하는지 분별할 수 없음
-* 이를 해결하고자 특정한 태그에 의미를 부여해서 웹 페이지를 만다는 시도가 시작 = Semantic Web
+* 이를 해결하고자 특정한 태그에 의미를 부여해서 웹 페이지를 만다는 시도가 시작 = **Semantic Web**
 
 ```html
 <header></header> header

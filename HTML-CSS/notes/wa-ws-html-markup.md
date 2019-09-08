@@ -21,7 +21,7 @@
 
 ### Outline Algorithm
 
-* 정보 구조를 명확히 할 수 있도록 H TML5에 새롭게 도입된 개념
+* 정보 구조를 명확히 할 수 있도록 HTML5에 새롭게 도입된 개념
 * 웹 페이지의 정보 구조를 판별할 수 있음 (ex. 목차)
 * HTML5에 추가된 많은 요소들은 대부분 Outline Algorithm과 관련이 있음 (ex. Heading, Sectioning)
 
@@ -175,9 +175,8 @@
    * Use Naming Convention
      * Camel Case (`var = 'camelCase'`)
      * Snake Case (`var = 'snake_case'`)
-     * ?? (`var = 'temp-case'`)
    * id name (unique) vs. class name (group)
-
+   
 4. Code
 
 ---
