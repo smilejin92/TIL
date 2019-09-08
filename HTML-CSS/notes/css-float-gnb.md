@@ -1,41 +1,30 @@
-### 위치 속성 (position)
+# CSS Property - continued
 
-### Float 속성
+### position
 
-### 그림자 속성
+* `position:absolute/relative`
 
-### 웹 페이지 레이아웃 (ch. 5)
+---
 
-------
+### display: float
 
-### 고정형 레이아웃 설계
+* 
 
-- Using `float`
-- `display:inline`
-- `display:block`
-- `display:flex`
-  - flexible
-  - IE 10 or higher
-  - `flex` 설정된 노드의 자식도 (flex item) 모두 flex 값 적용됨
-    - `justify-content` (parent)
-    - `flex-basis` (child) = 각 축에 해당하는 (width / height) 의 값을 설정
-    - `order` ???
-    - flex-grow
-  - 기본 direction은 **row**로 변경됨 (default = column)
-    - direction = row 일때 메인 축은 x 축 (가로)
-    - direction = col 일때 메인 축은 y 축 (세로)
-  - `flex`가 적용된 노드를 flex container라고 부름
-  - 가질 수 있는 속성은 flex parent와 flex child마다 다름
-  - https://flexboxfroggy.com/#ko
+---
 
-------
+### -shadow
 
-### Main Menu (Header) - GNB (Global Navigation Bar)
+* text-shadow
+* box-shadow
+
+---
+
+### Markup GNB (Global Navigation Bar)
 
 ![main-menu](C:/Users/Jinhyun Kim/Documents/dev/TIL/HTML-CSS/notes/images/main-menu.PNG)
 
 - Logo
-  - text, link, 모음?
+  - text, link
   - image vs. IR (image replacement)
 - Markup GNB
 
@@ -48,7 +37,6 @@
         <li><a href="join">Join</a></li>
     </ul>
 </header>
-<!-- try h1.logo>a[href="#"]>img -->
 ```
 
 ------
@@ -61,31 +49,50 @@
 
 ------
 
-### Using Emmet
+### Emmet Syntax for creating Menu
 
-example)
+```html
+1. 각 메뉴 이름 작성
 
 홈
-
 로그인
-
 회원가입
-
 사이트맵
-
 English
 
-(select 5 rows and ctrl + shift + p, then type "emmet wrap individual line with abbrev")
+2. 위의 메뉴를 마우스로 모두 선택하여 ctrl + shift + p
 
-write emmet syntax
+3. "emmet wrap individual line with abbrev" 입력
 
-ul.member>li*>a[href="#"]
+4. 입력란에 emmet 문법 작성
+(ex. ul.member>li*>a[href="#"])
+
+<ul class="member">
+        <li>
+            <a href="#">홈</a>
+        </li>
+        <li>
+            <a href="#">로그인</a>
+        </li>
+        <li>
+            <a href="#">회원가입</a>
+        </li>
+        <li>
+            <a href="#">사이트맵</a>
+        </li>
+        <li>
+            <a href="#">English</a>
+        </li>
+    </ul>
+```
 
 ------
 
 ### CSS INHERIT vs. Override
 
-inherits parent nodes' property
+* 
+
+
 
 ------
 
@@ -105,25 +112,25 @@ under computed tab in developer tools (chrome)
 
 http://necolas.github.io/normalize.css/latest/normalize.css
 
-### FONT
+---
+
+### External FONT
 
 https://fonts.google.com/
 
 (Noto Sans)
 
-`position:absolute/relative`
+---
 
-------
-
-`display:inline-block`
+### Fork Repo in Github
 
 `fork` target repo into your repo
 
 clone it into your local machine
 
+---
 
-
-숨김처리
+### Display 숨김처리
 
 (see also `position`)
 
@@ -140,42 +147,32 @@ clone it into your local machine
 }
 ```
 
-
-
-
-
-
-
-* [Icon Font 사용 가능](https://fontawesome.com/)
-
-  ```html
-  <i class="fas fa-camera"></i> <!-- this icon's 1) style prefix == fas and 2) icon name == camera -->
-  <i class="fas fa-camera"></i> <!-- using an <i> element to reference the icon -->
-  <span class="fas fa-camera"></span> <!-- using a <span> element to reference the icon -->
-  ```
-
-* http://fontello.com/
-
 ---
 
-* :hover
-* :focus
+### Icon Font
+
+* https://fontawesome.com/
+
+* http://fontello.com/
 
 ---
 
 ### 여백 지정 대상
 
 - margin vs. padding
+
 - inline 요소는 좌우로는 늘어나지만 (padding, margin), 위로는 line-height의 영향을 받음
 
-(tab 키로 선택되는 요소들은 `<a>` 혹은 `<form>`)
+  (tab 키로 선택되는 요소들은 `<a>` 혹은 `<form>` -> focus )
+
+---
 
 ### Main-menu Markup
 
 ```html
 <h1> (not visible)
 	<nav>
-		<h2>메인 메뉴</h2> -> a11y.hidden (accessibility)
+		<h2>메인 메뉴</h2> -> a11y.hidden (include for web accessibility)
         <ul class="menu">
             <li>
                 (<a> vs. <span>)
@@ -191,32 +188,25 @@ clone it into your local machine
 </h1> (not visible)
 ```
 
+---
+
 ### ROLE 부여
 
-* Sementic 하지 않은 `<div>` 혹은 원래 목적의 `<a>` 같은 태그에 `role` 속성을 부여하여 sementic 문제 해결
+* Sementic 하지 않은 `<div>` 혹은 원래 목적의 `<a>` 같은 태그에 `role` 속성을 추가해 의미를 부여
+
+---
 
 ### 요소 배치 속성
 
-* flex
-
-* inline-block
-
-* position
-
-* ### float: 특 떠있음
-
-  * 뜨는 순간 다음 요소가 당겨서 들어와짐?
-  * float의 부모 노드에게 overflow: hidden 설정
-  * clear
-
 * grid (respoinsive)
-
 * "margin" 병합
+
+---
 
 ### aria-label
 
 ### border-radius
 
-
+### 웹 페이지 레이아웃 (ch. 5)
 
 ([Back to List](../../README.md))
