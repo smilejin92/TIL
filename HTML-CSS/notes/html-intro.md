@@ -130,21 +130,6 @@
 
 ---
 
-### 클래스 & 아이디
-
-* 태그를 지칭하는 클래스 및 아이디를 부여할 수 있음
-
-  ``` html
-  <h1 class="main-title">h1 with class</h1>
-  <div id="main-content">
-      Block with id
-  </div>
-  ```
-
-* 이후 CSS 선택자로 특정 클래스 / 아이디만 선택하여 CSS 속성을 부여할 수 있음
-
----
-
 ### 주석 (Comment)
 
 * 프로그램의 실행에 영향을 주지않고 **설명**을 위해 사용하는 코드
@@ -470,3 +455,4 @@
 ```
 
 ([Back to List](../../README.md))
+
