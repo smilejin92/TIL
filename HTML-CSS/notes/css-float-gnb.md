@@ -117,9 +117,10 @@ position: sticky; (IE or Edge 15 이전 버전 지원 x)
 ### position: absolute
 
 * positioned **relative to the nearest positioned ancestor** (anything except **static**)
-* if there's no positioned ancestors, it uses **the document body**
+* if there's no positioned ancestors, it uses **the document body** (ex. `<body>`)
 * allow you to **place your element precisely where you want it**
-* 부모 노드가 position: relative면 영역 안에서 움직임 **(what if parent is set to absolute?)**
+* 부모 노드가 `position: relative`면 부모 노드 영역 안에서 움직임
+* 부모 노드가 `position: absolute`면 부모 노드 영역 0,0을 기준으로 시작
 
 ```css
 HTML
@@ -173,11 +174,76 @@ img {
 
 ---
 
-### display: float
+
+
+## [float](https://www.w3schools.com/css/css_float.asp)
+
+* `float` property specifies **how an element should float**
+* element with `position: absolute` **ignores** `float` property
+* To avoid elements flowing around `float` element, use `clear` property
+
+```css
+float: none; (default, element does not float)
+float: left; (the element floats to the left of its container)
+float: right; (the element floats to the right of its container)
+float: initial (back to default value)
+```
+
+* `float` takes elements **away from normal document flow**, so they **no longer occupies any height in normal document flow**
+
+([see more examples with `float`](https://www.w3schools.com/css/css_float.asp))
+
+
+
+## [clear](https://www.w3schools.com/css/css_float.asp)
+
+* `clear` property specifies **what elements can float beside the cleared element and on which side**
+
+``` css
+clear: none; (allow floating elements on both sides)
+clear: left; (No floating elements allowed on the left side)
+clear: right; (No floating elements allowed on the right side)
+clear: both; (No floating elements allowed on either the left or the right side)
+
+/* example */
+.blue {
+   float: left; /* it sitll wants to float, */
+   clear: left; /* but not something (float element) on the left */
+}
+```
+
+* non-floating element 안에 floating element를 올려놓을 수 있음
+
+---
+
+### clearfix Hack
+
+* If an element is **taller** than the element containing it, and it is floated, it will **overflow** outside of its container
+* To fix such problems, use below codes
+
+``` css
+.clearfix {
+  overflow: auto;
+}
+```
+
+```css
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+```
+
+---
+
+### [overflow](https://www.w3schools.com/css/css_overflow.asp)
 
 * 
 
 ---
+
+
 
 ### -shadow
 
