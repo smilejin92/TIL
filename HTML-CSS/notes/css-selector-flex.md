@@ -314,12 +314,18 @@ span {
 }
 ```
 
+* inline 요소는 좌우로는 늘어나지만 (padding, margin), **위로는 line-height**의 영향을 받음
+
 ---
 
 ### CSS 단위
 
 * `%` - 백분율 단위
-* `em` - 배수 단위
+
+* `em` - 배수 단위, 가장 가까운 부모 노드의 font-size에 대한 배수
+
+* `rem` - <html> 태그(root)의 font-size에 대한 배수 (하위 버전 브라우저에선 인식 x)
+
 * `px` - 픽셀
 
 * 색상단위

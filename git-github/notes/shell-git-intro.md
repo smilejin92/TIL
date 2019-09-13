@@ -159,17 +159,17 @@ press `esc` to escape
 
 ---
 ### Copy & Paste with Vim
-`$ vim hello.py`
+`$ vim hello.py` (hello.py를 vim으로 실행)
 
-`v`
+`v` (visual 모드 실행)
 `-- visual --`
-블록지정 후 `y`
-`p`
+블록지정 후 `y` (해당 블록 복사)
+`p` (붙여넣기)
 
 press `esc` to escape
-`:wq`
+`:wq` (write & quit, 변경사항 저장 후 vim 종료)
 
-`$ python hello.py`
+`$ python hello.py` (hello.py를 실행)
 
 ---
 ### Use Macro with Vim
@@ -250,7 +250,6 @@ https://github.com/
 **important!!**
 
 - 가입할 `email`과 `username`은 멋지게
-- private repo를 원한다면 $7/month
 
 ---
 
@@ -265,22 +264,41 @@ $ git config --global core.editor "vim"
 $ git config --list
 ```
 
+##### Set VS Code as Default Core Editor
+
+```shell
+git config --global core.editor "code --wait"
+```
+
 ---
 ## Connect to your Repo - Method 1
 
-After create a new repo through github,
+* Create a new repo in your github page (leave all default settings)
+* Create a new directory in your local device
+* Open shell (bash) and `cd` into your new directory
 
-`$ git init`
+``` bash
+$ git init
 
-`$ git remote add origin https://github.com/{username}/{reponame}.git`
-**(origin can be replaced with other name)**
+$ git remote add origin https://github.com/{username}/{reponame}.git
+('origin' can be replaced with other name)**
 
-`$ git add .`
+$ touch README.md
+(create README.md file to be pushed as the first commit)
 
-`$ git commit -m "some commit"`
+$ vim README.md
+(then write commmit message and save README.md file)
 
-`$ git push -u origin master`
-**(-u as upstream, only required for FIRST push)**
+$ git add .
+
+$ git commit -m "some commit"
+
+$ git commit --amend
+(commit 메시지 취소하기)
+
+$ git push -u origin master
+(-u as upstream, only required for FIRST push)
+```
 
 ---
 ## Connect to your Repo - Method 2
@@ -291,22 +309,20 @@ After create a new repo through github,
 - add .gitignore: node
 - add a license: MIT License
 - move to new repo and hit "clone" on top right (copy repo address)
+- open shell (bash) and `cd` into your working directory
 
 ```shell
 $ git clone {repo address}
-$ git add .
-$ git commit
-$ git push
 ```
 
 ---
 
-(see more at https://github.com/seulbinim/Intro/blob/master/README/preferences.md)
+## Fork 3rd person's repo into your repo
 
-다른 사람의 repo를 clone한 뒤, 내 repo로 push 하고 싶으면 .git을 지우고 git init 해야함
+* `fork` target repo into your repo
 
--> git remote (after creating new repo in github)
+* clone it into your local machine
 
-만약 새로 만든 repo에 README.md를 생성하면 local에서 push할때 conflict 발생 (pull 먼저)
+
 
 ([Back to List](../../README.md))

@@ -24,7 +24,7 @@ position: sticky; (IE or Edge 15 이전 버전 지원 x)
 
 * **NOT AFFECTED** by top, bottom, left, and right properties
 
-* html 문서에 나온 순서 그대로 표시
+* html 문서에 나온 순서 그대로 표시 (normal flow)
 
   ```html
   <!DOCTYPE html>
@@ -189,7 +189,7 @@ float: right; (the element floats to the right of its container)
 float: initial (back to default value)
 ```
 
-* `float` takes elements **away from normal document flow**, so they **no longer occupies any height in normal document flow**
+* `float` takes elements **away from normal document flow**, so they **no longer occupies any HEIGHT in normal document flow**
 
 ([see more examples with `float`](https://www.w3schools.com/css/css_float.asp))
 
@@ -212,11 +212,11 @@ clear: both; (No floating elements allowed on either the left or the right side)
 }
 ```
 
-* non-floating element 안에 floating element를 올려놓을 수 있음
+* non-floating element 안에 floating element를 올려놓을 수 있음 (using clearfix)
 
 ---
 
-### clearfix Hack
+### [clearfix Hack](https://www.w3schools.com/howto/howto_css_clearfix.asp)
 
 * If an element is **taller** than the element containing it, and it is floated, it will **overflow** outside of its container
 * To fix such problems, use below codes
@@ -239,16 +239,194 @@ clear: both; (No floating elements allowed on either the left or the right side)
 
 ### [overflow](https://www.w3schools.com/css/css_overflow.asp)
 
-* 
+* `overflow` property controls **what happens to content that is too big to fit into an area**
+* specify whether **to clip** the content or **to add scrollbars** when the content of an element is too big to fit in the specified area
+* **ONLY WORKS for block elements with a specified height**
+* OS X Lion에서는 `overflow: scroll`을 부여해도, 컨텐트가 모두 표시될 경우 스크롤바가 보이지않음
+
+``` css
+overflow: visible (default value, the overflow is not clipped, renders outside the box)
+overflow: fidden (overflow is clipped, the rest of the content will be INVISIBLE)
+overflow: scroll (overflow is clipped, and a scrollbar is added to see the rest)
+overflow: auto (add scrolbars ONLY WHEN NECESSARY)
+```
+
+
+
+### overflow: visible
+
+* 넘치는 내용물을 자르지 않고 그대로 출력, 요소의 박스 밖으로 렌더링 됨
+
+![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\overflow-visible.PNG)
+
+
+
+### overflow: hidden
+
+* 넘치는 내용물이 잘려나감
+
+![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\overflow-hidden.PNG)
+
+
+
+
+
+### overflow: scroll
+
+* 넘치는 내용물이 잘린 뒤, 스크롤바가 박스 안에 생성됨 (가로, 세로 방향으로 모두 생성)
+
+![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\overflow-scroll.PNG)
+
+
+
+### overflow: auto
+
+* 내용물이 넘칠때만 스크롤바 생성
+
+![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\overflow-auto.PNG)
+
+### overflow-x & overflow-y
+
+* `overflow-x`: 내용물의 좌우 끝 부분을 어떻게 처리할건지 지정
+* `overflow-y`: 내용물의 상하 끝 부분을 어떻게 처리할건지 지정
+
+```css
+div {
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  overflow-y: scroll; /* Add vertical scrollbar */
+}
+```
+
+
 
 ---
 
+### white-space
+
+* 요소 안의 공백을 어떻게 처리할 것인지 결정하는 속성
+
+``` css
+white-space: normal (기본값, 연속되는 공백을 하나의 공백으로 처리. 필요한 경우 문자는 자동으로 wrap)
+white-space: nowrap (연속되는 공백을 하나의 공백으로 처리. 문자는 <br>을 만나기 전까지 절대 다음 줄로 넘어가지 않음)
+white-space: pre (브라우저에 의해 모든 공백이 보존됨. <br>에 의해 다음 줄로 넘어감)
+white-space: pre-line (연속되는 공백을 하나의 공백으로 처리. 문자는 <br> 혹은 필요할 때에 다음 줄로 넘어감)
+white-sapce: pre-wrap (브라우저에 의해 모든 공백이 보존됨. 문자는 <br> 혹은 필요할 때에 다음 줄로 넘어감)
+```
 
 
-### -shadow
 
-* text-shadow
-* box-shadow
+---
+
+### text-overflow
+
+* specify how overflowed content (text) should be signaled to the user
+* MUST INCLUDE `white-space` and `overflow` properties when using `text-overflow`
+
+``` css
+.example {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip; /* default value, the text is clipped and not accessible */
+    text-overflow: ellipsis; /* represent the clipped text as "..." */
+}
+```
+
+---
+
+### -shadow effects
+
+* `text-shadow`: 문자에 그림자 속성을 부여
+
+``` css 
+h1 {
+    text-shadow: 2px 2px 5px red;/* horizontal shadow, vertical shadow, blur, color */
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF /* multiple shadows */
+}
+```
+
+
+
+* `box-shadow`: 요소에 그림자 속성을 부여
+
+``` css
+div {
+    box-shadow: 10px 10px 5px grey; /* horizontal shadow, vertical shadow, blur, color */
+}
+
+/* 가상 요소에 box-shadow 속성 부여 가능 */
+div::after {
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+}
+```
+
+
+
+---
+
+### Organizing CSS - Programming paradigm
+
+- OOCSS (Object Oriented CSS)
+
+- BEM (Block Element Modifier)
+
+- SMACSS (Scalable and Modular Architecture for CSS)
+
+  ([see more](https://mattstauffer.com/blog/organizing-css-oocss-smacss-and-bem/))
+
+
+
+---
+
+### NORMALIZE.CSS
+
+* a CSS file that provides better **cross-browser** consistency in the default styling of HTML elements
+
+* an alternative to CSS resets
+
+* **preserve useful browser defaults** rather than erasing them
+
+* **Normalize styles** for a wide range of HTML elements
+
+* **Correct bugs** and common browser inconsistencies.
+
+  [(see more)](http://necolas.github.io/normalize.css/latest/normalize.css)
+
+  
+
+---
+
+### CSS INHERIT vs. Override
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            margin: 10px;
+            padding: 10px;
+            background-color: green;
+        }
+        .box1 {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- INHERITS the properties from div selector  -->
+    <div>this is div 1</div>
+    
+    <!-- INHERITS the properties from div selector and OVERRRIDE background-color -->
+    <div class="box1">this is div2</div>
+</body>
+</html>
+```
+
+
 
 ---
 
@@ -258,31 +436,33 @@ clear: both; (No floating elements allowed on either the left or the right side)
 
 - Logo
   - text, link
-  - image vs. IR (image replacement)
+  - image vs. IR (image replacement - **see a11y.hidden below**)
 - Markup GNB
 
 ```html
-<header>
-	<h1 class="logo"><a href="#"><img src="image.png" /></a></h1>
-    <ul>
-        <li><a href="home">Home</a></li>
-        <li><a href="login">Log in</a></li>
-        <li><a href="join">Join</a></li>
-    </ul>
-</header>
+<h1> (not visible)
+	<nav>
+		<h2>메인 메뉴</h2> -> a11y.hidden (include for web accessibility)
+        <ul class="menu">
+            <li>
+                (<a> vs. <span>)
+                <a class="btn-menu" href="#" role="button">HTML에 대해</a>
+                <ul class="sub-menu">
+                    <li><a href="page1">예제 1</a></li>
+                    <li><a href="page2">예제 2</a></li>
+                    <li><a href="page3">예제 3</a></li>
+                </ul>
+            </li>
+        </ul>
+	</nav>
+</h1> (not visible)
 ```
 
-------
 
-### Organizing CSS - Programming paradigm
-
-- BEM
-- OOCSS
-- SMACSS
 
 ------
 
-### Emmet Syntax for creating Menu
+### Emmet - Wrap individual line with abbrev
 
 ```html
 1. 각 메뉴 이름 작성
@@ -319,53 +499,23 @@ English
     </ul>
 ```
 
-------
 
-### CSS INHERIT vs. Override
-
-* 
-
-
-
-------
-
-### 폰트 단위
-
-under computed tab in developer tools (chrome)
-
-`em` vs. `%`
-
-`rem` (하위 버전에서 인식 못함) -> px 단위도 넣어줘야함
-
-1.15 vs. 1.15em vs. 1.15%
-
-------
-
-### NORMALIZE CSS
-
-http://necolas.github.io/normalize.css/latest/normalize.css
 
 ---
 
-### External FONT
+### WEB FONT
 
-https://fonts.google.com/
+* 웹 브라우저는 사용자의 컴퓨터에 설치된 폰트만 사용할 수 있음
+* 웹 폰트는 사용자가 웹 페이지에 접속하는 순간 폰트를 자동으로 내려받고 해당 웹 페이지에서 사용할 수 있게 만들어주는 기능
+* [구글 무료 폰트 서비스](https://fonts.google.com/) : 원하는 폰트를 선택한 후 폰트 링크를 `<head>` 부분에 삽입
 
-(Noto Sans)
 
----
-
-### Fork Repo in Github
-
-`fork` target repo into your repo
-
-clone it into your local machine
 
 ---
 
-### Display 숨김처리
+### Image Replacement
 
-(see also `position`)
+* CSS image replacement: technique of replacing a text element (ex. h1) with **image (logo)**
 
 ```css
 .a11y-hidden {
@@ -380,66 +530,18 @@ clone it into your local machine
 }
 ```
 
+
+
 ---
 
 ### Icon Font
 
-* https://fontawesome.com/
+* Instead of containing letters or numbers, they contain symbols and glyphs.
+* can be styled with CSS in the same way you style regular text
 
+* https://fontawesome.com/
 * http://fontello.com/
 
 ---
-
-### 여백 지정 대상
-
-- margin vs. padding
-
-- inline 요소는 좌우로는 늘어나지만 (padding, margin), 위로는 line-height의 영향을 받음
-
-  (tab 키로 선택되는 요소들은 `<a>` 혹은 `<form>` -> focus )
-
----
-
-### Main-menu Markup
-
-```html
-<h1> (not visible)
-	<nav>
-		<h2>메인 메뉴</h2> -> a11y.hidden (include for web accessibility)
-        <ul class="menu">
-            <li>
-                (<a> vs. <span>)
-                <a class="btn-menu" href="#" role="button">HTML에 대해</a>
-                <ul class="sub-menu">
-                    <li><a href="page1">예제 1</a></li>
-                    <li><a href="page2">예제 2</a></li>
-                    <li><a href="page3">예제 3</a></li>
-                </ul>
-            </li>
-        </ul>
-	</nav>
-</h1> (not visible)
-```
-
----
-
-### ROLE 부여
-
-* Sementic 하지 않은 `<div>` 혹은 원래 목적의 `<a>` 같은 태그에 `role` 속성을 추가해 의미를 부여
-
----
-
-### 요소 배치 속성
-
-* grid (respoinsive)
-* "margin" 병합
-
----
-
-### aria-label
-
-### border-radius
-
-### 웹 페이지 레이아웃 (ch. 5)
 
 ([Back to List](../../README.md))

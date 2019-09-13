@@ -1,5 +1,19 @@
 # 20190909
 
+### ROLE 부여
+
+- Sementic 하지 않은 `<div>` 혹은 원래 목적의 `<a>` 같은 태그에 `role` 속성을 추가해 의미를 부여
+
+
+
+------
+
+### aria-label
+
+### border-radius
+
+### 웹 페이지 레이아웃 (ch. 5)
+
 * google "embed mdn" [(link)](https://www.w3.org/TR/2010/WD-html5-20100624/the-iframe-element.html#the-embed-element)
 * [html5 mulder21c](https://mulder21c.github.io/2016/10/14/prepare-to-translate-w3c-html5-specification/)
 
