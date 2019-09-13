@@ -219,21 +219,74 @@ clear: both; (No floating elements allowed on either the left or the right side)
 ### [clearfix Hack](https://www.w3schools.com/howto/howto_css_clearfix.asp)
 
 * If an element is **taller** than the element containing it, and it is floated, it will **overflow** outside of its container
-* To fix such problems, use below codes
+* 아래와 같은 코드에서 menu-item 클래스를 float 시키면 부모 요소인 menu의 높이가 사라짐
 
-``` css
-.clearfix {
-  overflow: auto;
-}
+``` html
+<style>
+    .menu {
+        background: skyblue;
+    }
+    .menu-item {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        background: orange;
+        float: left;
+    }
+</style>
+
+<div class="menu">
+    <div class="menu-item">HTML</div>
+    <div class="menu-item">CSS</div>
+    <div class="menu-item">웹표준</div>
+</div>
 ```
 
-```css
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
+![](./images/clearfix1.png)
+
+(before float: left)
+
+![](./images/clearfix2.png)
+
+(after float: left)
+
+* 위와 같은 문제를 해결하기 위해 부모 요소인 menu 클래스에 clearfix를 추가
+
+``` html
+<style>
+	.menu {
+        background: skyblue;
+    }
+    .clearfix::after {
+		content: "";
+        clear: both;
+        display: table;
+    }
+    /*
+    or
+    .clearfix {
+    	overflow: auto;
+    }
+    */
+    .menu-item {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        background: orange;
+        float: left;
+    }
+</style>
+
+<div class="menu clearfix">
+    <div class="menu-item">HTML</div>
+    <div class="menu-item">CSS</div>
+    <div class="menu-item">웹표준</div>
+</div>
 ```
+
+![](./images/clearfix3.png)
+
+(after clearfix)
 
 ---
 
@@ -381,7 +434,7 @@ div::after {
 
 * a CSS file that provides better **cross-browser** consistency in the default styling of HTML elements
 
-* an alternative to CSS resets
+* an alternative to [CSS resets](https://meyerweb.com/eric/tools/css/reset/)
 
 * **preserve useful browser defaults** rather than erasing them
 

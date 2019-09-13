@@ -4,8 +4,6 @@
 
 - Sementic 하지 않은 `<div>` 혹은 원래 목적의 `<a>` 같은 태그에 `role` 속성을 추가해 의미를 부여
 
-
-
 ------
 
 ### aria-label
@@ -19,27 +17,6 @@
 
 ---
 
-### float
-
-``` html
-<div class="menu">
-	<div class="menu item">HTML</div>
-    <div class="menu item">CSS</div>
-    <div class="menu item">웹표준</div>
-</div>
-
-menu-item을 float 설정하면... 부모 노드의 높이를 잃어버림
-따라서 div(::after)->clear: both 태그를 아래에 하나 더 추가하여 높이 보존 (margin)
-```
-
-(see photo)
-
-* 모든 float = block-level element
-* float 값을 주면 부모 노드의 영역이 사라지면서 layout이 망가짐
-* 위의 문제를 해결하기 위해 overflow: hidden 속성을 부여
-* BFC
-* `overflow`, `clear`(block-level element)
-* clearfix
 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/embed
 * https://www.w3.org/TR/2010/WD-html5-20100624/the-iframe-element.html#the-embed-element
 * https://mulder21c.github.io/2016/10/14/prepare-to-translate-w3c-html5-specification/
@@ -48,6 +25,12 @@ menu-item을 float 설정하면... 부모 노드의 높이를 잃어버림
 * https://www.slideshare.net/wsconf
 
 ---
+
+
+
+
+
+
 
 ![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\menu-space.PNG)
 
@@ -153,12 +136,6 @@ menu-item을 float 설정하면... 부모 노드의 높이를 잃어버림
     * animation-direction
     * infinite
     * transition-timing-function
-
-``` css
-
-```
-
-
 
 ---
 
