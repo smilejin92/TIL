@@ -1,65 +1,46 @@
-# 20190909
+# CSS property - continued
 
-### ROLE 부여
+### CSS 구체성 단위
 
-- Sementic 하지 않은 `<div>` 혹은 원래 목적의 `<a>` 같은 태그에 `role` 속성을 추가해 의미를 부여
+* CSS 셀렉터에 id, class, tag 이름이 갖는 점수를 계산하여 점수가 높은 selector가 우선 순위를 갖는다.
 
-------
+| Selector | Score |
+| :------: | :---: |
+|    id    |  100  |
+|  class   |  10   |
+|   tag    |   1   |
 
-### aria-label
+``` html
+<style>
+    /* score = 1 */
+    h1 {
+        color: blue;
+    }
+    /* score = 10 */
+    .heading {
+        color: red;
+    }
+    /* score = 100 */
+    #main-title {
+        color: green;
+    }
+</style>
 
-### border-radius
-
-### 웹 페이지 레이아웃 (ch. 5)
-
-* google "embed mdn" [(link)](https://www.w3.org/TR/2010/WD-html5-20100624/the-iframe-element.html#the-embed-element)
-* [html5 mulder21c](https://mulder21c.github.io/2016/10/14/prepare-to-translate-w3c-html5-specification/)
-
----
-
-* https://developer.mozilla.org/en-US/docs/Web/HTML/Element/embed
-* https://www.w3.org/TR/2010/WD-html5-20100624/the-iframe-element.html#the-embed-element
-* https://mulder21c.github.io/2016/10/14/prepare-to-translate-w3c-html5-specification/
-* https://www.w3schools.com/html/html_entities.asp
-* https://developer.mozilla.org/en-US/docs/Web/CSS/transform
-* https://www.slideshare.net/wsconf
-
----
-
-
-
-
-
-
-
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\menu-space.PNG)
-
-메뉴 간격 생성
-
-`<li>`에 padding vs. `<a>`에 padding
+<h1 id="main-title" class="heading">Title</h1>
+```
 
 ---
 
-### menu-act (dynamic)
+### Marking up Sub-menu (dynamic)
 
-* using javascript (jQuery)
-* CSS 선택자 구체성
-  * tag -> 1
-  * class -> 10
-  * id -> 100
-  * style
-  * !important keyword (for debugging, 선택자 순위 보존)
-
-* using ::after
-
----
-
-```html
+``` html
 <ul class="menu">
     <li class="menu-item menu-act">
-    	<a class="btn-menu" role="button">HTML</a>
-        <ul class="sub-menu">
+    	<a class="btn-menu" role="button">HTML</a> <!-- assign role="button" in <a> -->
+        <!-- a::after 검은색 선 삽입 예정 -->
+        <ul class="sub-menu"> <!-- sub-list in list -->
             <li class="sub-menu item">
+                <!-- a::before 아이콘 추가 예정 -->
             	<a>HTML5 소개</a>
             </li>
         </ul>
@@ -67,13 +48,11 @@
 </ul>
 ```
 
-* 형제 선택자
-
-* white-space: nowrap
+* (add note)
 
 ---
 
-### Marking-up Visual
+### Marking up Visual - Animation
 
 * 특수문자 (&, $...) escape sequence
 * [HTML Entities](https://www.w3schools.com/html/html_entities.asp)
@@ -128,7 +107,6 @@
 ---
 
 * slideshare/wsconf
-* z-index
 * 시나리오 (continued)
   * bgAni
     * 깜빡임 (교차) - delay
@@ -140,4 +118,40 @@
 ---
 
 https://cubic-bezier.com/#.46,-0.52,.83,.67
+
+
+
+CSS 선택자 구체성
+
+- tag -> 1
+- class -> 10
+- id -> 100
+- style
+- !important keyword (for debugging, 선택자 순위 보존)
+
+
+
+### ROLE 부여
+
+- Sementic 하지 않은 `<div>` 혹은 원래 목적의 `<a>` 같은 태그에 `role` 속성을 추가해 의미를 부여
+
+------
+
+### aria-label
+
+### border-radius
+
+### 웹 페이지 레이아웃 (ch. 5)
+
+- google "embed mdn" [(link)](https://www.w3.org/TR/2010/WD-html5-20100624/the-iframe-element.html#the-embed-element)
+- [html5 mulder21c](https://mulder21c.github.io/2016/10/14/prepare-to-translate-w3c-html5-specification/)
+
+------
+
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/embed
+- https://www.w3.org/TR/2010/WD-html5-20100624/the-iframe-element.html#the-embed-element
+- https://mulder21c.github.io/2016/10/14/prepare-to-translate-w3c-html5-specification/
+- https://www.w3schools.com/html/html_entities.asp
+- https://developer.mozilla.org/en-US/docs/Web/CSS/transform
+- https://www.slideshare.net/wsconf
 
