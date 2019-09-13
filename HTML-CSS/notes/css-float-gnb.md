@@ -242,11 +242,11 @@ clear: both; (No floating elements allowed on either the left or the right side)
 </div>
 ```
 
-![](./images/clearfix1.png)
+![](./images/clearfix1.PNG)
 
 (before float: left)
 
-![](./images/clearfix2.png)
+![](./images/clearfix2.PNG)
 
 (after float: left)
 
@@ -284,7 +284,7 @@ clear: both; (No floating elements allowed on either the left or the right side)
 </div>
 ```
 
-![](./images/clearfix3.png)
+![](./images/clearfix3.PNG)
 
 (after clearfix)
 
