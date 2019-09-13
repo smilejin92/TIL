@@ -239,7 +239,7 @@ tag1 > tag2 {
   </html>
   ```
 
-  ![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\pseudo-element-selector.PNG)
+  ![](./images/pseudo-element-selector.PNG)
 
   #### 전후 문자 선택자
 
@@ -265,7 +265,7 @@ tag1 > tag2 {
   }
   ```
 
-  ![](C:\Users\Jinhyun Kim\AppData\Roaming\Typora\typora-user-images\1567947825439.png)
+  ![](./images/pseudo-element-menu.png)
 
   * 가상 요소를 선택하여 content를 부여할 수 있음
 
@@ -296,11 +296,11 @@ tag1 > tag2 {
 
 * `inline` element **does not start on a new line** and **only takes up as much width as necessary**
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\inline-element.PNG)
+![](./images/inline-element.PNG)
 
 * `block-level` element **always starts on a new line** and **takes up the full width available**
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\block-level-element.PNG)
+![](./images/block-level-element.PNG)
 
 * 모든 요소들은 inline 혹은 block의 기본 값을 가지고 있지만, CSS로 display 설정 값을 변경할 수 있음
 
@@ -333,8 +333,8 @@ span {
   * `#000000` - (HEX 코드 단위, #(red)(green)(blue))
   * `rgb(red, green, blue)`  (RGB 색상 단위)
   * `rgba(red, green, blue, alpha)` RGBA 단위
-  * hsl(hue, saturation, lightness) HSL 색상 단위
-  * hsla(hue, saturation, lightness, alpha) HSLA 색상 단위
+  * `hsl(hue, saturation, lightness)` HSL 색상 단위
+  * `hsla(hue, saturation, lightness, alpha)` HSLA 색상 단위
 
 * `url` - url 단위
 
@@ -352,7 +352,7 @@ span {
 
 * 페이지 레이아웃을 구성할 때 가장 중요한 스타일 속성
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\box-model-1.png" style="zoom:50%;" />
+<img src="./images/box-model-1.png" style="zoom:50%;" />
 
 * width & height - 글자를 감싸는 영역의 크기를 지정하는 스타일 속성
 
@@ -368,7 +368,7 @@ span {
   * **content-box** : 기본 값, width와 height 속성이 **글자가 들어가는 영역**의 크기를 지정
   * **border-box** : width와 height 속성이 **테두리를 포함한 영역**의 크기를 지정
 
-  ![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\box-sizing.png)
+  ![](./images/box-sizing.png)
 
 ---
 
@@ -434,7 +434,7 @@ display: flex
 </style>
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\flex-box.PNG)
+![](./images/flex-box.PNG)
 
 
 
@@ -468,7 +468,7 @@ display: flex
 </style>
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\flex-direction.PNG)
+![](./images/flex-direction.PNG)
 
 
 
@@ -483,7 +483,7 @@ display: flex
 }
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\flex-flow.PNG)
+![](./images/flex-flow.PNG)
 
 
 
@@ -499,9 +499,11 @@ display: flex
 }
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\justify-content.PNG)
+![](./images/justify-content.PNG)
 
 
+
+[(flexbox froggy](https://flexboxfroggy.com/#ko) - flexbox 연습 게임)
 
 ---
 
@@ -524,7 +526,7 @@ display: flex
 </div>
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\flex-child-order.PNG)
+![](./images/flex-child-order.PNG)
 
 
 
@@ -540,7 +542,7 @@ display: flex
 </div>
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\flex-grow.PNG)
+![](./images/flex-grow.PNG)
 
 
 
@@ -563,7 +565,7 @@ display: flex
 </div>
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\flex-shrink.PNG)
+![](./images/flex-shrink.PNG)
 
 
 
@@ -610,7 +612,7 @@ display: flex
 
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\flex-basis.PNG)
+![](./images/flex-basis.PNG)
 
 
 

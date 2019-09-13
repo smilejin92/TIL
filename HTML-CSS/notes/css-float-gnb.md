@@ -46,7 +46,7 @@ position: sticky; (IE or Edge 15 이전 버전 지원 x)
   </html>
   ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\position-static.PNG)
+![](./images/position-static.PNG)
 
 
 
@@ -77,7 +77,7 @@ position: sticky; (IE or Edge 15 이전 버전 지원 x)
 
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\position-relative.PNG)
+![](./images/position-relative.PNG)
 
 
 
@@ -110,7 +110,7 @@ position: sticky; (IE or Edge 15 이전 버전 지원 x)
 
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\position-fixed.PNG)
+![](./images/position-fixed.PNG)
 
 
 
@@ -151,7 +151,7 @@ CSS
 }
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\position-absolute.PNG)
+![](./images/position-absolute.PNG)
 
 
 
@@ -170,7 +170,7 @@ img {
 }
 ```
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\z-index.PNG)
+![](./images/z-index.PNG)
 
 ---
 
@@ -257,7 +257,7 @@ overflow: auto (add scrolbars ONLY WHEN NECESSARY)
 
 * 넘치는 내용물을 자르지 않고 그대로 출력, 요소의 박스 밖으로 렌더링 됨
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\overflow-visible.PNG)
+![](./images/overflow-visible.PNG)
 
 
 
@@ -265,7 +265,7 @@ overflow: auto (add scrolbars ONLY WHEN NECESSARY)
 
 * 넘치는 내용물이 잘려나감
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\overflow-hidden.PNG)
+![](./images/overflow-hidden.PNG)
 
 
 
@@ -275,7 +275,7 @@ overflow: auto (add scrolbars ONLY WHEN NECESSARY)
 
 * 넘치는 내용물이 잘린 뒤, 스크롤바가 박스 안에 생성됨 (가로, 세로 방향으로 모두 생성)
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\overflow-scroll.PNG)
+![](./images/overflow-scroll.PNG)
 
 
 
@@ -283,7 +283,7 @@ overflow: auto (add scrolbars ONLY WHEN NECESSARY)
 
 * 내용물이 넘칠때만 스크롤바 생성
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\overflow-auto.PNG)
+![](./images/overflow-auto.PNG)
 
 ### overflow-x & overflow-y
 
@@ -432,7 +432,7 @@ div::after {
 
 ### Markup GNB (Global Navigation Bar)
 
-![main-menu](C:/Users/Jinhyun Kim/Documents/dev/TIL/HTML-CSS/notes/images/main-menu.PNG)
+![main-menu](./images/main-menu.PNG)
 
 - Logo
   - text, link
