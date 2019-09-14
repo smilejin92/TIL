@@ -412,6 +412,28 @@ div::after {
 }
 ```
 
+**(box-shadow는 마진에 영향을 주지 않음)**
+
+---
+
+### border-radius
+
+* 요소의 모서리를 둥글게 만드는 CSS 속성
+
+``` css
+#example1 {
+  border: 2px solid red;
+  /* 모든 모서리를 둥글게 설정 */
+  border-radius: 25px;
+  
+  /* (왼쪽 위, 오른쪽 위)를 50px, (왼쪽 밑, 오른쪽 밑)를 20px 둥글게 설정 */
+  border-radius: 50px 20px;
+  
+  /* 왼쪽 위, 오른쪽 위, 오른쪽 밑, 왼쪽 밑을 해당 값만큼 둥글게 설정 */
+  border-radius: 15px 50px 30px 15px;
+}
+```
+
 
 
 ---
