@@ -21,6 +21,8 @@
   </style>
   ```
 
+* `!important` : 선택자 순위 보존, 디버깅 용도로 많이 활용 됨. `;` 전에 추가하여 사용.
+
 ![](https://miro.medium.com/max/1527/1*0ACE4i1MCqXCnlBpdQHm3Q.jpeg)
 
 ---
@@ -653,6 +655,10 @@ visibility: collapse (table 태그를 보이지 않게 설정, only available in
 * Example: `opacity: 0.2`
 
 ---
+
+([prev - Web Accessiblity & Standards, Semantic HTML](./wa-ws-html-markup.md))
+
+([next - CSS float, Marking Up GNB](./css-float-gnb.md))
 
 ([Back to List](../../README.md))
 
