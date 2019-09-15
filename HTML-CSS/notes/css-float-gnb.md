@@ -190,6 +190,7 @@ float: initial (back to default value)
 ```
 
 * `float` takes elements **away from normal document flow**, so they **no longer occupies any HEIGHT in normal document flow**
+* `float` 되는 요소는 기존의 박스 크기를 잃고, 컨텐츠의 높이/넓이만큼의 크기를 가짐. 따라서, 필요에 따라 **높이/넓이를 재설정 해줘야함**
 
 ([see more examples with `float`](https://www.w3schools.com/css/css_float.asp))
 
