@@ -52,6 +52,27 @@
 
 ---
 
+### `<embed>`
+
+* embed external content at the specified point in the document
+
+  ``` html
+  <!-- example -->
+  <embed type="video/webm"
+         src="/media/examples/flower.mp4"
+         width="250"
+         height="200">
+  ```
+
+* most modern browsers have deprecated and removed support for browser plug-ins, so relying upon `<embed>` is generally not wise if you want your site to be operable on the average user's browser
+
+#### Resources
+
+* [w3c `<embed>` specification](https://www.w3.org/TR/2010/WD-html5-20100624/the-iframe-element.html#the-embed-element)
+* [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/embed)
+
+---
+
 ### Markup Log-In
 
 1. 로그인 header
@@ -129,7 +150,7 @@
 
 ---
 
-### Rendering JavaScript in `<head>`
+### [Rendering JavaScript in `<head>`](https://blog.asamaru.net/2017/05/04/script-async-defer/)
 
 ``` html
 <script src="js/jquery.min.js" defer></script>
@@ -203,7 +224,15 @@
     	<button aria-pressed="true"></button>
     ```
 
-([see more - "WAI-ARIA 개요 및 인증 심사 방안"](https://github.com/seulbinim/PDF))
+
+
+### Resources
+
+* [WAI-ARIA 개요 및 인증 심사 방안.pdf](https://github.com/seulbinim/PDF)
+* [웹접근성과 웹표준](https://seulbinim.github.io/WSA/accessibility.html)
+* [항공사 ARIA 적용 사례](https://aoa.gitbook.io/skymimo/)
+* [웹 접근성 연구소](https://www.wah.or.kr:444/index.asp)
+* [WSconf](https://www.slideshare.net/wsconf)
 
 
 

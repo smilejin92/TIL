@@ -403,7 +403,9 @@ display: float
 
 ### Display: flex (parent)
 
-([see W3C tutorial for more info](https://www.w3schools.com/css/css3_flexbox.asp))
+[CSS Tricks - A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+
+[W3C tutorial - flex](https://www.w3schools.com/css/css3_flexbox.asp)
 
 ```css
 display: flex

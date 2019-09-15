@@ -385,6 +385,8 @@ white-sapce: pre-wrap (브라우저에 의해 모든 공백이 보존됨. 문자
 }
 ```
 
+* [Multi-line Ellipsis CSS](http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/)
+
 ---
 
 ### -shadow effects
