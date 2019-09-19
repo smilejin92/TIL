@@ -1,5 +1,7 @@
 # Shell Command, Vim, and Git
 
+
+
 ### Goal
 
 - Linux의 역사를 이해한다
@@ -12,7 +14,11 @@
 - git의 branch model을 활용해 능숙하게 코드관리할 수 있다
 - git으로 타인과 협업하며, 다른 프로젝트에 기여할 수 있다
 
+
+
 ---
+
+
 
 ### Before Linux
 
@@ -21,7 +27,11 @@
 - 1973년 데니스 리치와 켄 톰슨이 C를 개발한 뒤, C 기반 UNIX 재작성
 - 1984년 리차드 스톨먼이 오픈 소프트웨어 자유성 확보를 위한 GNU (`G`NU is `N`ot `U`nix) 프로젝트 돌입. 하지만 GNU 프로젝트에는 커널이 없었음
 
+
+
 ---
+
+
 
 ### Kernel
 
@@ -29,14 +39,22 @@
 - 하드웨어와 응용프로그램을 이어주는 운영체제의 핵심 시스템소프트웨어
 - **OS >= kernel (system software)**
 
+
+
 ---
+
+
 
 ### Linus Torvalds
 
 - 헬싱키 대학생이던 리누스 토발즈는 앤디 타넨바움의 MINIX를 개조한 Linux를 발표
 - 0.1 - bash (GNU Bourne Again SHell), gcc(UNIX 기반 C 컴파일러)
 
+
+
 ---
+
+
 
 ### Linux
 
@@ -46,7 +64,11 @@
 - PC와 모바일, 서버, 임베디드 시스템 등 다양한 분야에서 활용
 - Redhat, Debian, Ubuntu, Android 등 다양한 배포판이 존재
 
+
+
 ---
+
+
 
 ### Shell
 
@@ -59,7 +81,11 @@
 	- sh 확장형 쉘
 	- 현재까지 가장 완벽한 쉘
 
+
+
 ---
+
+
 
 ### Shell Command Basic
 
@@ -90,6 +116,8 @@ $ cat file_name = concatnate text in file and print
 
 ---
 
+
+
 ### chmod (Change Mode)
 
 **파일의 권한을 설정할 때 사용**
@@ -102,7 +130,11 @@ $ cat file_name = concatnate text in file and print
 `drwxr - xr -   x`: permission of (user-group-other)
 `$ chmod [옵션] (8진수) (파일명)`
 
+
+
 ---
+
+
 
 ### Vim
 
@@ -112,8 +144,13 @@ Copyright (c) 2007 Laurent Gregoire
 - Vi improved Text Editor
 - **CLI 환경에서 사용하는 editor**
 
+
+
 ---
-## Vim Basic
+
+
+
+### Vim Basic
 
 **Command**
 
@@ -143,8 +180,13 @@ $ - move end of line
 :{number} - move to {number}th line
 ```
 
+
+
 ---
+
+
 ### Write `hello.py` with Vim
+
 `$ touch hello.py`
 `$ vim hello.py`
 
@@ -157,8 +199,13 @@ press `esc` to escape
 
 `$ python hello.py`
 
+
+
 ---
+
+
 ### Copy & Paste with Vim
+
 `$ vim hello.py` (hello.py를 vim으로 실행)
 
 `v` (visual 모드 실행)
@@ -171,8 +218,13 @@ press `esc` to escape
 
 `$ python hello.py` (hello.py를 실행)
 
+
+
 ---
+
+
 ### Use Macro with Vim
+
 `$ vim test.py`
 
 `qa` = 'a' 라는 매크로를 생성
@@ -185,7 +237,11 @@ press `esc` to escape
 
 `10@a` - a 매크로 10회 실행
 
+
+
 ---
+
+
 
 ### Git
 
@@ -193,27 +249,38 @@ press `esc` to escape
 * SCM (Source Code Management)
 * SCM (Software Configuration Management)
 
+
+
 ---
+
+
 
 ### chronicle of git
 
 - Linux Kernal을 만들기 위해 Subversion을 쓰다 화가 난 리누스 토발즈는 2주만에 git이라는 버전관리 시스템을 만듦
 - [git official repo](https://github.com/git/git)
 
+
+
 ---
+
+
 
 ### Characteristics of git
 
 - 빠른속도, 단순한 구조
 - 분산형 저장소 지원
 - 비선형적 개발(수천개의 브랜치) 가능
-
 - 소스코드 주고받기 없이 동시작업이 가능해져 생산성이 증가
 - 수정내용은 **commit** 단위로 관리, 배포 뿐 아니라 원하는 시점으로 **Checkout** 가능
 - 새로운 기능 추가는 **Branch**로 개발하여 편안한 실험이 가능하며, 성공적으로 개발이 완료되면 **Merge**하여 반영
 - 인터넷이 연결되지 않아도 개발할 수 있음
 
+
+
 ---
+
+
 
 ### Open-source project
 
@@ -223,7 +290,11 @@ https://github.com/tensorflow/tensorflow
 https://github.com/JuliaLang/julia
 https://github.com/golang/go
 
+
+
 ---
+
+
 
 ### git inside
 
@@ -231,27 +302,40 @@ https://github.com/golang/go
 - Tree: Blob(tree)들을 모은 것
 - Commit: 파일에 대한 정보들을 모은 것
 
+
+
 ---
+
+
 
 ### git Process and Command
 
 ![](https://i.stack.imgur.com/MgaV9.png)
 
----
+
 
 ### git is not equal to github
 
 ![](http://1.bp.blogspot.com/-WY2YpNr3W6g/UY6tZAc-H3I/AAAAAAAABLY/xJ9x3wIY8V8/s1600/Github2.png)
 
+
+
 ---
+
+
 ### Sign up github
+
 https://github.com/
 
 **important!!**
 
 - 가입할 `email`과 `username`은 멋지게
 
+
+
 ---
+
+
 
 ### Set configuration
 
@@ -270,8 +354,12 @@ $ git config --list
 git config --global core.editor "code --wait"
 ```
 
+
+
 ---
-## Connect to your Repo - Method 1
+
+
+### Connect to your Repo - Method 1
 
 * Create a new repo in your github page (leave all default settings)
 * Create a new directory in your local device
@@ -300,8 +388,12 @@ $ git push -u origin master
 (-u as upstream, only required for FIRST push)
 ```
 
+
+
 ---
-## Connect to your Repo - Method 2
+
+
+### Connect to your Repo - Method 2
 
 - create a new repo at github page
 - add description
@@ -315,13 +407,52 @@ $ git push -u origin master
 $ git clone {repo address}
 ```
 
+
+
 ---
 
-## Fork 3rd person's repo into your repo
+
+
+### Fork 3rd person's repo into your repo
 
 * `fork` target repo into your repo
-
 * clone it into your local machine
+
+
+
+---
+
+
+
+### Teamwork on github
+
+1. 팀원 중 1명이 프로젝트 repo를 개설한다.
+
+2. 프로젝트 repo 페이지에서 Setting -> Collaboraters 탭에서 팀원을 모두 초대한다.
+
+3. 팀원 모두 프로젝트 repo를 로컬에 clone한다.
+
+4. **항상** `master branch` 첫 연결 시, `git pull origin master`를 입력하여 모든 컨텐츠를 업데이트한다.
+
+5. `git branch branch_name`을 입력하여 팀원 각각의 브랜치를 생성한다.
+
+6. `git checkout branch_name`을 입력하여 5에서 생성한 브랜치로 이동한다.
+
+7. 파일 생성, 코드 작성 등 각자의 역할을 수행한다.
+
+8. **현재 브랜치 내에서**
+
+   ``` bash
+   git add .
+   git commit -m "커밋 내용"
+   git push origin branch_name
+   ```
+
+   위의 커맨드를 입력하여 현재 위치한 브랜치를 업데이트한다.
+
+9. 프로젝트 repo 페이지로 접속한다.
+10. 8에서 `commit`한 브랜치를 `master` 브랜치에 `merge` 하기 위한 pull request를 생성한다.
+11. PM은 10에서 생선된 request를 검토하여 `master` 브랜치에 `merge` 할 것인지 결정한다.
 
 
 
