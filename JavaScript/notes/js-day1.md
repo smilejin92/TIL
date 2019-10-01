@@ -43,7 +43,7 @@
 
 * **compiler** vs. **interpreter**
 
-  <img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\images\compiler-interpreter.PNG" style="zoom:60%;" />
+  <img src="../images/compiler-interpreter.PNG" style="zoom:60%;" />
 
   컴파일러는 소스 코드 전체를 기계어로 번역하므로, 번역하는 데 시간이 비교적 오래 걸리는 편이다. 하지만, 번역 후 프로그램을 실행하는 속도는 빠르다. 또한, 소스 코드 전체를 번역한 후에 에러 메시지를 생성하므로, 디버깅하기 비교적 까다롭다 (complie & execute).
 
@@ -150,7 +150,7 @@
 
 * HTML, CSS 파일은 렌더링 엔진의 HTML 파서와 CSS 파서에 의해 파싱 (parsing)되어 DOM, CSSOM 트리로 변환되고 렌더 트리로 결합됨
 
-  ![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\images\render-tree-construction.png)
+  ![](../images/render-tree-construction.png)
 
 * 자바스크립트는 렌더링 엔진이 아닌 자바스크립트 엔진이 처리함. 위의 DOM 트리 생성 과정에서, HTML 파서는 script 태그를 만나면 자바스크립트 코드를 실행하기 위해 DOM 생성 프로세스를 중지하고 자바스크립트 엔진으로 제어 권한을 넘김
 * 이후 자바스크립트 엔진은 소스 코드를 해석하여 문법적 의미와 구조를 갖는 AST (Abstract Syntax Tree)를 생성.
