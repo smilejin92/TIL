@@ -101,7 +101,7 @@
 
 즉, **표현식은 하나의 값으로 평가될 수 있는 문(statement)이다.**
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\images\expression.png)
+![](../images/expression.png)
 
 
 
@@ -263,7 +263,7 @@ console.log(typeof foo);  // function
 
 **문(statement)은 하나 이상의 표현식과 키워드의 조합으로 구성된 자바스크립트 엔진에게 내리는 명령**
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\images\statement.png)
+![](../images/statement.png)
 
 **표현식의 역할은 값을 생성하는 것이다. 문의 역할은 표현식으로 생성한 값을 사용해 자바스크립트 엔진에게 명령을 내리는 것이다.**
 
@@ -296,4 +296,3 @@ console.log(typeof foo);  // function
   ```
 
   
-
