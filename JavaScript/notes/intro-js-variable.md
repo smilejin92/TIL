@@ -349,4 +349,6 @@ ctrl + alt + n
 
 
 
+([next - Data Type and Operator](./js-dataType-operator.md))
+
 ([Back to List](../../README.md))

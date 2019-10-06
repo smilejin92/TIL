@@ -297,6 +297,10 @@ console.log(typeof foo);  // function
   console.log(result, x); // 5 5
   ```
 
-  
+
+
+
+([prev - Introduction to JavaScript, Variable](./intro-js-variable.md))
 
 ([Back to List](../../README.md))
+

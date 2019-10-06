@@ -389,4 +389,6 @@ sudo apach-get install elinks (CLI 환경에서 IP 접속)
 
 
 
+([prev - Shell Command, Vim, and Git](./shell-git-intro.md))
+
 ([Back to List](../../README.md))
