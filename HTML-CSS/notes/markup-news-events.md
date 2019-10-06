@@ -102,7 +102,7 @@
 
 ### 결과 1
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\HTML-CSS\notes\images\float-lineBox.PNG)
+![](./images/float-lineBox.PNG)
 
 * 현재 라임색 배경 안의 모든 요소들은 float: left/right 돼있는 상태
 * 하지만 예상과는 달리 `figure` 요소 위에 의문의 공백이 생김
@@ -217,6 +217,22 @@ float된 요소들은 배치된 방향에 따라 좌/우 여백 (linebox)를 생
 
 ### Markup 신규 이벤트
 
-`<a>` vs. `<button>`
+#### Place Background Image using background-position
 
-### 
+* ????
+
+
+
+---
+
+### Markup 관련 사이트
+
+transition, hover, focus
+
+
+
+---
+
+### Markup 인기 사이트
+
+::before, content: counter(number), background-position
