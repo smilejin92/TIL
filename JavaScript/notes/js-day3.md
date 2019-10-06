@@ -18,6 +18,8 @@
 
 * **더이상 평가할 수 없는 하나의 표현식**
 
+* 값 - 메모리에 들어가는 대상
+
 * 표현식 - 값을 생선하는 statement, 평가되어 값을 생성
 
   ``` javascript
@@ -101,7 +103,7 @@
 
 즉, **표현식은 하나의 값으로 평가될 수 있는 문(statement)이다.**
 
-![](../images/expression.png)
+<img src="./images/expression.png" style="zoom:50%;" />
 
 
 
@@ -263,7 +265,7 @@ console.log(typeof foo);  // function
 
 **문(statement)은 하나 이상의 표현식과 키워드의 조합으로 구성된 자바스크립트 엔진에게 내리는 명령**
 
-![](../images/statement.png)
+<img src="./images/statement.png" style="zoom:50%;" />
 
 **표현식의 역할은 값을 생성하는 것이다. 문의 역할은 표현식으로 생성한 값을 사용해 자바스크립트 엔진에게 명령을 내리는 것이다.**
 
@@ -296,3 +298,4 @@ console.log(typeof foo);  // function
   ```
 
   
+

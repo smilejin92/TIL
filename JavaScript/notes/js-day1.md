@@ -43,7 +43,7 @@
 
 * **compiler** vs. **interpreter**
 
-  <img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\images\compiler-interpreter.PNG" style="zoom:60%;" />
+  <img src="./images/compiler-interpreter.PNG" style="zoom:60%;" />
 
   컴파일러는 소스 코드 전체를 기계어로 번역하므로, 번역하는 데 시간이 비교적 오래 걸리는 편이다. 하지만, 번역 후 프로그램을 실행하는 속도는 빠르다. 또한, 소스 코드 전체를 번역한 후에 에러 메시지를 생성하므로, 디버깅하기 비교적 까다롭다 (complie & execute).
 
@@ -175,7 +175,7 @@
 
 * HTML, CSS 파일은 **렌더링 엔진**의 HTML 파서와 CSS 파서에 의해 파싱 (parsing)되어 DOM, CSSOM 트리로 변환되고 렌더 트리로 결합됨
 
-  ![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\images\render-tree-construction.png)
+  ![](./images/render-tree-construction.png)
 
 * 자바스크립트는 렌더링 엔진이 아닌 **자바스크립트 엔진**이 처리함. 위의 DOM 트리 생성 과정에서, HTML 파서는 script 태그를 만나면 자바스크립트 코드를 실행하기 위해 DOM 생성 프로세스를 중지하고 자바스크립트 엔진으로 제어 권한을 넘김
 
@@ -228,10 +228,11 @@
 
 #### 변수란 무엇인가?
 
-* 하나의 값을 저장할 수 있는 메모리 공간에 붙인 이름 또는 메모리 공간 자체
+* 하나의 값을 저장할 수 있는 메모리 공간에 붙인 이름, 또는 메모리 공간 자체
 * **할당** - 변수에 값을 저장하는 것
 * **참조** - 변수에 저장된 값을 읽어 들이는 것
 * 좋은 이름(식별자)의 변수는 가독성을 높여준다
+* **식별자는 어떤 값을 구별하여 식별해낼 수 있는 고유한 이름**을 말한다 (주소를 가진다). 사람을 이름으로 구별하여 식별하듯이 값도 식별자에 의해 구별하여 식별할 수 있다.
 
 
 
@@ -240,11 +241,12 @@
 * 변수를 생성하는 것
 * 변수값을 저장하기 위한 메모리 영역의 확보를 명령
 * `var`, `let`, `const`
+  * why let, const? 
 
 ``` javascript
 // initialization - 값을 저장하기 위한 메모리 공간을 확보, 암묵적으로 undefined를 할당
 // assignment - 값을 할당
-var score; // var score = undefined
+var score; // initialization, undefined
 score = 30; // assignment
 
 // initialization + assignment
@@ -266,7 +268,7 @@ var score; // 변수 선언
 
 위의 코드에서 선언되지 않은 변수를 console.log 하려했으니 당연히 에러가 발생할 줄 알았으나, undefined가 제대로 출력됨.
 
-위의 코드가 실행될 수 있는 이유는, 변수 (**및 함수??**) 선언이 소스 코드가 실행되는 런타임이 아니라 **그 이전 단계인 Syntax analysis 단계**에서 먼저 실행됨. 이미 소스 코드 전체를 평가하여 변수, 함수 식별자를 등록하고 초기화 해놓고 (**variable hoisting**) 소스 코드를 한 줄씩 실행함. 변수 선언문이 코드의 선두로 끌어 올려진 것처럼 동작함.
+위의 코드가 실행될 수 있는 이유는, 모든 (변수, 함수 등) 선언이 소스 코드가 실행되는 런타임이 아니라 **그 이전 단계인 Syntax analysis 단계 (평가)**에서 먼저 실행됨. 이미 소스 코드 전체를 평가하여 모든 식별자를 등록하고 (**암묵적으로 undefined 값을 할당해놓음**) 초기화 해놓고 (**variable hoisting**) 소스 코드를 한 줄씩 실행함. 모든 선언문이 코드의 선두로 끌어 올려진 것처럼 동작함.
 
 
 
@@ -287,6 +289,8 @@ function function_name() {
 즉, 변수의 선언과 값의 할당을 하나의 문장으로 단축 표현해도 자바스크립트 엔진은 변수의 선언과 값의 할당을 분리해서 각각 실행한다는 의미이다. 따라서 변수에 `undefined`가 할당되어 초기화되는 것은 변함이 없다.
 
 **재할당** 시 이전 메모리 공간을 overwrite하는게 아니고 새로운 메모리에 값을 할당 (그럼 저 쓰레기 값은? 가비지 컬렉터에 의해 메모리에서 자동 해제되지만, 언제 해제될 지는 예측할 수 없음)
+
+primitive type - immutable (할당된 메모리 셀의 데이터를 지우지/수정하지 않고 다른 공간에 재할당. 지우고 다시 쓸 수 없음)
 
 
 
@@ -337,3 +341,8 @@ function function_name() {
 
 ### [Installing ESLint](https://poiemaweb.com/eslint)
 
+**LF** vs. **CRLF**
+
+### Installing Code Runner
+
+ctrl + alt + n
