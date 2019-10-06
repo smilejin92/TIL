@@ -21,10 +21,10 @@
 
 ### HTML+CSS
 
-* [**HTML5 Intro**](./HTML-CSS/notes/html-intro.md)
-* [**Web Accessibility & Web Standards and HTML5 Markup**](./HTML-CSS/notes/wa-ws-html-markup.md)
-* [**CSS Selector & Display Property**](./HTML-CSS/notes/css-selector-flex.md)
-* [**CSS Float, Position, Font, and Markup GNB**](./HTML-CSS/notes/css-float-gnb.md)
+* [**Introduction to HTML5, Tags, Attributes**](./HTML-CSS/notes/html-intro.md)
+* [**Web Accessibility & Web Standards, HTML5 Markup**](./HTML-CSS/notes/wa-ws-html-markup.md)
+* [**CSS Selector, Box Model, Display Flex**](./HTML-CSS/notes/css-selector-flex.md)
+* [**CSS Position, Float, Font, and Markup GNB**](./HTML-CSS/notes/css-float-gnb.md)
 * [**CSS Animation**](./HTML-CSS/notes/css-float-animation.md)
 * [**Form Tag & WAI-ARIA**](./HTML-CSS/notes/form-waiAria.md)
 
@@ -36,4 +36,6 @@
 
 * [**Introduction to JavaScript, Variable**](./JavaScript/notes/intro-js-variable.md)
 * [**Data Type & Operator**](./JavaScript/notes/js-dataType-operator.md)
+
+
 
