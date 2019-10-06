@@ -1,4 +1,4 @@
-# Markup HTML - continued
+# Markup HTML - Login
 
 ### `<form>`, `<fieldset>`, `<label>`, `<input>`
 
@@ -66,10 +66,10 @@
 
 * most modern browsers have deprecated and removed support for browser plug-ins, so relying upon `<embed>` is generally not wise if you want your site to be operable on the average user's browser
 
-#### Resources
-
 * [w3c `<embed>` specification](https://www.w3.org/TR/2010/WD-html5-20100624/the-iframe-element.html#the-embed-element)
 * [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/embed)
+
+
 
 ---
 
@@ -107,6 +107,8 @@
     </ul>
 </section>
 ```
+
+* https://formspree.io - action 속성에 추가 시, 버튼을 눌렀을때 이메일로 입력 데이터를 받을 수 있음
 
 
 
@@ -161,6 +163,8 @@
 * `async` - script will be run **asynchronously** as soon as it is available
 
 ![](./images/async-defer.jpg)
+
+
 
 ---
 

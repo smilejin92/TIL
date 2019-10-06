@@ -230,9 +230,11 @@ div {
 }
 
 .visual-text {
-    background-color: yellow;
+    position: absolute;
     animation-name: textAni;
-    animation-duration: 1s;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 ```
 
@@ -252,12 +254,34 @@ div {
     }
 }
 
+/* 비주얼 영역 */
+.visual {
+    height: 120px;
+    position: relative;
+}
+
+/* 비주얼 영역의 가상요소 */
 .visual::before, .visual::after {
     content: "";
     width: 100%;
     height: 100%;
     position: absolute;
-    animation: bgAni 2000ms 1000ms infinite alternate ease-in-out;
+    /* bgAni를, 2초간, ease-in-out 속도로, 페이지 로드 후 1초 뒤에, 무한번, alternate 방향으로 실행*/
+    animation: bgAni 2000ms ease-in-out 1000ms infinite alternate;
+}
+
+/* 비주얼::before에는 */
+.visual::before{
+    /* 각각의 이미지를 해당 좌표에 위치 */
+	background: url('./images/ani_flower_01.png') no-repeat 0 -10px, 
+                url('./images/ani_flower_02.png') no-repeat 670px 0;
+}
+
+/* 비주얼::after에는 */
+.visual::after{
+  animation-delay: 1000ms;
+  background: url('./images/ani_flower_03.png') no-repeat 300px 0, 
+              url('./images/ani_flower_04.png') no-repeat 800px 15px;
 }
 ```
 

@@ -27,6 +27,8 @@
 * [**CSS Position, Float, Font, and Markup GNB**](./HTML-CSS/notes/css-float-gnb.md)
 * [**CSS Animation**](./HTML-CSS/notes/css-float-animation.md)
 * [**Form Tag & WAI-ARIA**](./HTML-CSS/notes/form-waiAria.md)
+* [**Markup Board using jQuery**](./HTML-CSS/notes/markup-board-jQuery.md)
+* [**Markup News & Events**](./HTML-CSS/notes/markup-news-events.md)
 
 
 

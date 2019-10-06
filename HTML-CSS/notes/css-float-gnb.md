@@ -196,6 +196,12 @@ float: initial (back to default value)
 
 
 
+### float - Line Box
+
+고정된 너비 안에 여러개의 요소가 float 되면, float 요소의 너비 합이 컨테이너의 너비를 초과하여 아래로 떨어짐. 이 과정에서 아래로 떨어진 요소는 바로 이전의 요소의 라인 박스 높이 만큼 공간이 추가되어 떨어짐.
+
+
+
 ## [clear](https://www.w3schools.com/css/css_float.asp)
 
 * `clear` property specifies **what elements can float beside the cleared element and on which side**
