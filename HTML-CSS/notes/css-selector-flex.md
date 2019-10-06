@@ -23,6 +23,42 @@
 
 * `!important` : 선택자 순위 보존, 디버깅 용도로 많이 활용 됨. `;` 전에 추가하여 사용.
 
+
+
+### CSS 구체성 단위
+
+- CSS 셀렉터에 id, class, tag 이름이 갖는 점수를 계산하여 점수가 높은 selector가 우선 순위를 갖는다.
+
+| Selector | Score |
+| :------: | :---: |
+|    id    |  100  |
+|  class   |  10   |
+|   tag    |   1   |
+
+```html
+<style>
+    /* score = 1 */
+    h1 {
+        color: blue;
+    }
+    /* score = 10 */
+    .heading {
+        color: red;
+    }
+    /* score = 100 */
+    #main-title {
+        color: green;
+    }
+</style>
+
+<h1 id="main-title" class="heading">Title</h1>
+
+<!-- html 태그 내부에 직접 스타일을 부여하면 우선 CSS 선택자로 선택하는 것 보다 우선 순위가 높다 -->
+<h1 id="main-title" class="heading" style="color: skyblue">Title 2 </h1>
+```
+
+
+
 ![](https://miro.medium.com/max/1527/1*0ACE4i1MCqXCnlBpdQHm3Q.jpeg)
 
 
@@ -789,4 +825,3 @@ visibility: collapse (table 태그를 보이지 않게 설정, only available in
 ([next - CSS float, Marking Up GNB](./css-float-gnb.md))
 
 ([Back to List](../../README.md))
-

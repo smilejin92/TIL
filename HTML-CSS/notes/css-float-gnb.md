@@ -469,18 +469,18 @@ div::after {
 ### NORMALIZE.CSS
 
 * a CSS file that provides better **cross-browser consistency** in the default styling of HTML elements
-
 * an alternative to [CSS resets](https://meyerweb.com/eric/tools/css/reset/)
-
 * **preserve useful browser defaults** rather than erasing them
-
 * **Normalize styles** for a wide range of HTML elements
-
 * **Correct bugs** and common browser inconsistencies.
 
-  [(see more)](http://necolas.github.io/normalize.css/latest/normalize.css)
+``` css
+@import url('https://necolas.github.io/normalize.css/latest/normalize.css');
+```
 
-  
+​	[(see more)](http://necolas.github.io/normalize.css/latest/normalize.css)
+
+
 
 ---
 
@@ -628,7 +628,35 @@ English
 
 * 웹 브라우저는 사용자의 컴퓨터에 설치된 폰트만 사용할 수 있음
 * 웹 폰트는 사용자가 웹 페이지에 접속하는 순간 폰트를 자동으로 내려받고 해당 웹 페이지에서 사용할 수 있게 만들어주는 기능
-* [구글 무료 폰트 서비스](https://fonts.google.com/) : 원하는 폰트를 선택한 후 폰트 링크를 `<head>` 부분에 삽입
+* [구글 무료 폰트 서비스](https://fonts.google.com/) : 원하는 폰트를 선택한 후 폰트 링크를 css 파일에 `import` 
+
+``` css
+@import url('https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css');
+
+body{
+  font-family: 'Spoqa Han Sans';
+}
+```
+
+
+
+---
+
+### Icon Font
+
+- Instead of containing letters or numbers, they contain symbols and glyphs.
+- can be styled with CSS in the same way you style regular text
+- https://fontawesome.com/
+- http://fontello.com/
+
+```css
+@import url('./fontello.css');
+
+.member li:nth-child(n+2)::before{
+  font-family: "fontello";
+  content: '\f142';
+}
+```
 
 
 
@@ -711,24 +739,8 @@ English
 
 
 
----
-
-### Icon Font
-
-* Instead of containing letters or numbers, they contain symbols and glyphs.
-* can be styled with CSS in the same way you style regular text
-* https://fontawesome.com/
-* http://fontello.com/
-
-
-
----
-
-
-
 ([prev - CSS Selector& Flex Box](./css-selector-flex.md))
 
 ([next - CSS Animation](./css-float-animation.md))
 
 ([Back to List](../../README.md))
-

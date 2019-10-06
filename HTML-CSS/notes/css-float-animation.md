@@ -1,64 +1,37 @@
-# CSS property - continued
+# CSS3 - Animation
 
-### CSS 구체성 단위
-
-* CSS 셀렉터에 id, class, tag 이름이 갖는 점수를 계산하여 점수가 높은 selector가 우선 순위를 갖는다.
-
-| Selector | Score |
-| :------: | :---: |
-|    id    |  100  |
-|  class   |  10   |
-|   tag    |   1   |
+### Markup Sub-menu
 
 ``` html
-<style>
-    /* score = 1 */
-    h1 {
-        color: blue;
-    }
-    /* score = 10 */
-    .heading {
-        color: red;
-    }
-    /* score = 100 */
-    #main-title {
-        color: green;
-    }
-</style>
-
-<h1 id="main-title" class="heading">Title</h1>
-
-<!-- html 태그 내부에 직접 스타일을 부여하면 우선 CSS 선택자로 선택하는 것 보다 우선 순위가 높다 -->
-<h1 id="main-title" class="heading" style="color: skyblue">Title 2 </h1>
+<nav class="navigation">
+    <ul class="menu">
+        <li class="menu-item menu-act">
+            <!-- assign role="button" in <a> -->
+            <a class="btn-menu" role="button">HTML에 대해</a>
+            <!-- sub-list in list -->
+            <ul class="sub-menu">
+                <li class="sub-menu item">
+                    <a>HTML5 소개</a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item"></li>
+        			.
+        			.
+        			.
+	</ul>
+</nav>
 ```
 
----
+* menu-item 중, menu-act가 추가되어 있는 li 요소만 sub-menu를 보여주게 설정 (**jQuery** 필요)
 
-### Markup Sub-menu (dynamic)
 
-``` html
-<ul class="menu">
-    <li class="menu-item menu-act">
-    	<a class="btn-menu" role="button">HTML</a> <!-- assign role="button" in <a> -->
-        <!-- a::after 검은색 선 삽입 예정 -->
-        <ul class="sub-menu"> <!-- sub-list in list -->
-            <li class="sub-menu item">
-                <!-- a::before 아이콘 추가 예정 -->
-            	<a>HTML5 소개</a>
-            </li>
-        </ul>
-    </li>
-</ul>
-```
-
-* (add note)
-* (add note)
 
 ---
 
 ### HTML Entities & Special Characters
 
-* **HTML Entities** - are used to implement **reserved chrarcters** or to express characters that cannot easily be entered with the keyboard
+* **HTML Entities** - are used to implement **reserved characters** or to express characters that cannot easily be entered with the keyboard
 
 | Character | Entity Name |      Description      |
 | :-------: | :---------: | :-------------------: |
@@ -70,6 +43,8 @@
 
 ([see more](https://www.w3schools.com/html/html_entities.asp))
 
+
+
 ---
 
 ### [CSS Animation](https://www.w3schools.com/css/css3_animations.asp)
@@ -78,6 +53,8 @@
 * CSS 애니메이션을 사용하려면, **keyframes**을 우선적으로 명시해야함
 * `keyframes` : 특정 시간대에 요소가 가져야 할 CSS 속성을 품고 있음
 * 일부 오래된 브라우저에서 애니메이션을 사용하려면, prefix를 명시해줘야함 (ex. `-webkit-`)
+
+
 
 ### @Keyframes
 
@@ -227,11 +204,13 @@ div {
 
 ([see more](https://www.w3schools.com/css/css3_2dtransforms.asp))
 
+
+
 ---
 
 ### Markup Visual - Animation
 
-* 시나리오 작성 (text)
+* 시나리오 작성 (텍스트)
   * 이동 효과
   * 글자 투명도 (opacity)
   * 텍스트 크기 (font-size)
@@ -281,6 +260,8 @@ div {
     animation: bgAni 2000ms 1000ms infinite alternate ease-in-out;
 }
 ```
+
+
 
 ---
 
