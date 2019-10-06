@@ -387,3 +387,6 @@ sudo apach-get install elinks (CLI 환경에서 IP 접속)
 - document root - 웹 페이지를 찾는 최상위 디렉토리*
 - log 파일을 통해 접속 기록을 확인 가능 (`tail` - 마지막 로그만 출력)
 
+
+
+([Back to List](../../README.md))
