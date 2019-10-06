@@ -1,4 +1,4 @@
-# CSS3
+# CSS3 - Selector, Box Model, and FlexBox
 
 ### Selector - 선택자
 
@@ -25,6 +25,8 @@
 
 ![](https://miro.medium.com/max/1527/1*0ACE4i1MCqXCnlBpdQHm3Q.jpeg)
 
+
+
 ---
 
 ### 전체 선택자
@@ -37,6 +39,8 @@
 
 * `<html>`, `<head>`, `<title>`, `<style>`, `<body>` 태그 모두 선택
 
+
+
 ---
 
 ### 아이디 선택자
@@ -48,6 +52,8 @@
 ```
 
 * **"id 속성은 웹 페이지 내부에서 중복되면 안된다"** -> CSS에선 문제 없지만 JS에서 선택시 문제
+
+
 
 ---
 
@@ -74,6 +80,8 @@
 * 클래스 이름 중복 시, 태그 이름까지 더하여 정교하게 선택
 
   `li.select {color: red;}`
+  
+  
 
 ---
 
@@ -109,6 +117,8 @@ tag1 > tag2 {
     /* tag1의 자손에 위치하는 tag2를 선택 */
 }
 ```
+
+
 
 ---
 
@@ -156,6 +166,8 @@ tag1 > tag2 {
       color: red;
   }
   ```
+  
+  
 
 ---
 
@@ -204,6 +216,8 @@ tag1 > tag2 {
   </body>
   </html>
   ```
+  
+  
 
 ---
 
@@ -276,6 +290,8 @@ tag1 > tag2 {
   * 단점: Screen Reader에 가상요소까지 같이 읽힘
 
     ([see more](https://www.youtube.com/watch?v=hvEfSbHJAfU&list=PLtaz5vK7MbK3EAPhmB2gFnCU9qU72YMq3&index=4))
+    
+    
 
 ---
 
@@ -287,6 +303,8 @@ tag1 > tag2 {
 :link     href 속성을 가지고 있는 <a> 태그를 선택
 :visited  방문했던 링크를 가지고 있는 <a> 태그를 선택
 ```
+
+
 
 ---
 
@@ -318,6 +336,8 @@ span {
 
 * inline 요소는 좌우로는 늘어나지만 (padding, margin), **위로는 line-height**의 영향을 받음
 
+
+
 ---
 
 ### CSS 단위
@@ -348,6 +368,8 @@ span {
 
 * linear-gradient(red, green)
 
+
+
 ---
 
 ### Box Model
@@ -364,6 +386,8 @@ span {
 
 * margin (바깥쪽 여백) - 상하좌우 마진 각각 별도로 설정 가능
 
+* **블록 요소에 너비 값을 지정해도, 컨텐츠가 표시되는 영역만 지정되며, 줄바뀜이 생기진 않음**
+
   #### Box-Sizing 속성
 
   * width와 height 속성이 차지하는 **범위를 지정**
@@ -371,6 +395,8 @@ span {
   * **border-box** : width와 height 속성이 **테두리를 포함한 영역**의 크기를 지정
 
   ![](./images/box-sizing.png)
+  
+  
 
 ---
 
@@ -384,10 +410,13 @@ display: inline (태그를 inline 형식으로 지정, 너비와 높이를 갖�
 display: block (태그를 block 형식으로 지정, 새로운 줄에 표시되며 화면 전체 너비를 차지)
 display: inline-block (태그를 inline-block 형식으로 지정, inline 설정에 너비/높이 설정 가능)
 display: flex (block-level flex 컨테이너로 지정)
-display: float 
+display: float
+display: grid
 ```
 
 ([see more](https://www.w3schools.com/cssref/playit.asp?filename=playcss_display&preval=inline))
+
+
 
 ---
 
@@ -399,6 +428,8 @@ display: float
 
   (both not recommended)
 
+
+
 ---
 
 ### Display: flex (parent)
@@ -408,7 +439,7 @@ display: float
 [W3C tutorial - flex](https://www.w3schools.com/css/css3_flexbox.asp)
 
 ```css
-display: flex
+display: flex;
 ```
 
 * CSS Flexbox Layout Module
@@ -444,8 +475,9 @@ display: flex
 
 ### flex-direction
 
-* define in which **direction** the container wants to **stack** the flex items
+* define in which **direction** the container wants to **stack** the flex items (flex 아이템 배치 방향)
 * `column-reverse`, `row`, `row-reverse`
+* 지정한 방향에 따라 메인 축, 서브 축이 결정됨 (row : 가로 축 메인 / 세로 축 서브)
 
 ``` css
 <div class="flex-container">
@@ -456,11 +488,12 @@ display: flex
 
 <style>
 .flex-container {
-    display: flex;        /* set parent node as flex */
+    display: flex;          /* set parent node as flex */
     flex-direction: column; /* set stacking direction of flex items (childs) */
     background-color: DodgerBlue;
 }
 
+/* 자식 노드는 플렉스로 지정된 부모의 영향을 받아 flex-item으로 설정됨 */
 .flex-container > div {
     background-color: #f1f1f1;
     width: 100px;
@@ -475,6 +508,26 @@ display: flex
 ![](./images/flex-direction.PNG)
 
 
+
+### flex-wrap
+
+* flex 아이템을 한 줄에 배치할 것인지, 감싸서 여러 줄로 배치할 것인지 결정하는 속성
+
+``` css
+.flex-item {
+    /* 기본 설정 값. flex 아이템을 한 줄에 모두 배치시킴. 단, flex 아이템이 flex 컨테이너 (부모노드)
+    밖으로 overflow 될 수 있음. */
+    flex-wrap: nowrap;
+    
+    /* flex 아이템을 줄바꿈 처리. */
+    flex-wrap: wrap;
+    
+    /* wrap과 똑같이 동작하지만, 줄의 순서가 반대로 바뀜 */
+    flex-wrap: wrap-reverse;
+}
+```
+
+<img src="./images/flex-wrap.PNG" style="zoom: 67%;" />
 
 ### flex-flow
 
@@ -493,13 +546,20 @@ display: flex
 
 ### justify-content
 
-* flex item 정렬을 위한 속성
+* flex item 정렬을 위한 속성 (**메인 축 기준**)
 * `center`, `flex-start`, `flex-end`, `space-around`, `space-between`
 
 ``` css
 .flex-container {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: center; /* 가로 축 (row) 에 대하여 justify-content */
+}
+    
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 세로 축 (column) 에 대하여 justify-content
 }
 ```
 
@@ -507,7 +567,48 @@ display: flex
 
 
 
+### align-content
+
+* flex item 정렬을 위한 속성 (**서브 축 기준**)
+* `flex-wrap: nowrap` 처리된 flex container 안에서는 작동하지 않음 (한 줄에 다 배치 되어 있으니)
+
+``` css
+align-content: space-between; /* Distribute items evenly
+                                 The first item is flush with the start,
+                                 the last is flush with the end */
+align-content: space-around;  /* Distribute items evenly
+                                 Items have a half-size space
+                                 on either end */
+align-content: space-evenly;  /* Distribute items evenly
+                                 Items have equal space around them */
+align-content: stretch;       /* Distribute items evenly
+                                 Stretch 'auto'-sized items to fit
+                                 the container */
+```
+
+([see more](https://developer.mozilla.org/en-US/docs/Web/CSS/align-content))
+
+
+
+### align-items
+
+* flex container 속의 모든  flex item 속성에 `align-self` 부여 (**서브 축 기준**)
+
+``` css
+align-items: center; /* Pack items around the center */ 
+align-items: start; /* Pack items from the start */ 
+align-items: end; /* Pack items from the end */ 
+align-items: flex-start; /* Pack flex items from the start */ 
+align-items: flex-end; /* Pack flex items from the end */  
+```
+
+([see more](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items))
+
+
+
 [(flexbox froggy](https://flexboxfroggy.com/#ko) - flexbox 연습 게임)
+
+
 
 ---
 
@@ -552,7 +653,7 @@ display: flex
 
 ### flex-shrink
 
-* specify how much a flex item will chrink **relative to the rest of the flex items**
+* specify how much a flex item will shrink **relative to the rest of the flex items**
 
 ``` css
 <div class="flex-container">
@@ -628,11 +729,30 @@ display: flex
 <div class="flex-container">
   <div>1</div>
   <div>2</div>
-  <!--not growable (0), not shrinkable (0), and with an initial length of 200 pixels -->
+  <!--not growable (0), not shrinkable (0), and with an initial width of 200 pixels -->
   <div style="flex: 0 0 200px">3</div>
   <div>4</div>
 </div>
 ```
+
+
+
+### align-self
+
+* flex container (부모노드)에서 설정된 flex-item의 align-item 설정을 override (서브 축)
+* block 단위 요소 (테이블 셀 포함)에 적용되지 않으며, 서브축의 `margin`이 `auto`로 설정되어 있으면 적용되지 않는다.
+
+``` css
+align-self: center; /* Put the item around the center */ 
+align-self: start; /* Put the item at the start */ 
+align-self: end; /* Put the item at the end */ 
+align-self: self-start; /* Align the item flush at the start */ 
+align-self: self-end; /* Align the item flush at the end */ 
+align-self: flex-start; /* Put the flex item at the start */ 
+align-self: flex-end; /* Put the flex item at the end */ 
+```
+
+([see more](https://developer.mozilla.org/en-US/docs/Web/CSS/align-self))
 
 
 
@@ -648,13 +768,19 @@ visibility: hidden
 visibility: collapse (table 태그를 보이지 않게 설정, only available in IE & Firefox)
 ```
 
+
+
 ---
 
 ### Opacity 속성
 
 * 태그의 투명도를 조절하는 스타일 속성
+
 * 0.0 ~ 1.0 사이의 숫자를 입력할 수 있으며 0.0은 투명, 1.0은 불투명
+
 * Example: `opacity: 0.2`
+
+  
 
 ---
 

@@ -16,6 +16,8 @@
   * Sectioning Content
 
   ![](https://www.w3.org/TR/2011/WD-html5-20110525/content-venn.png)
+  
+  
 
 ---
 
@@ -24,6 +26,8 @@
 * 정보 구조를 명확히 할 수 있도록 HTML5에 새롭게 도입된 개념
 * 웹 페이지의 정보 구조를 판별할 수 있음 (ex. 목차)
 * HTML5에 추가된 많은 요소들은 대부분 Outline Algorithm과 관련이 있음 (ex. Heading, Sectioning)
+
+
 
 ---
 
@@ -34,21 +38,29 @@
   * 실시간 커뮤니케이션 API (ex. Web Socket)
   * 파일/하드웨어 접근 API (ex. Desktop Drag-In, Geolocation)
   * API for GUI (ex. Drag & Drop)
+  
+  
 
 ---
 
 ### XML
 
 - **Extensive Markup Language** : markup language that **DEFINES** a set of rules for encoding documents in a format that is **both human & machine readable**
+  
   * (ex. `<item>`a110`</item>`)
 - XML을 HTML에 적용 -> XHTML with **strict grammar**
+  
   * (ex. `<br />`)
+  
+  
 
 ------
 
 ### HTML5 서식
 
 * HTML 4.01, XHTML 1.0 등 기존에 사용하던 마크업 문법을 모두 허용 (하위 호환성)
+
+
 
 ---
 
@@ -61,6 +73,8 @@
   * Strict DTD
   * Transitional DTD
   * Frameset DTD
+  
+  
 
 ---
 
@@ -74,6 +88,8 @@
   - auto close tag
   - auto rename tag
   - monokai-contrast theme
+  
+  
 
 ---
 
@@ -132,6 +148,8 @@
     <div class="group group2">그룹2</div>
     <div class="group group3">그룹3</div>
     ```
+    
+    
 
 ---
 
@@ -176,8 +194,9 @@
      * Camel Case (`var = 'camelCase'`)
      * Snake Case (`var = 'snake_case'`)
    * id name (unique) vs. class name (group)
-   
 4. Code
+
+
 
 ---
 

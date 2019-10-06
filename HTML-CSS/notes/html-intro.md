@@ -5,6 +5,8 @@
 - **인터넷** : 전세계를 연결하고 있는 국제 정보통신망
 - **www (World Wide Web)** : 인터넷에 연결된 컴퓨터를 통해 사람들이 정보를 공유할 수 있는 정보공간
 
+
+
 ---
 
 ### 인터넷의 시작
@@ -13,6 +15,8 @@
 * **ARPA (Advanced Research Projects Agency)** 창설
 * 1969년 현재 웹의 모태가 되는 ARPNET 개발
 * 현재 우리가 웹 브라우저로 보고있는 웹을 **팀 버너스리**가 개발 (hyperlink)
+
+
 
 ---
 
@@ -25,6 +29,8 @@
 
 * 하지만 Microsoft의 **인터넷 익스플로러**의 점유율을 따라잡지 못한 채 붕괴
 
+
+
 ---
 
 ### 플러그인
@@ -32,6 +38,8 @@
 * 웹 표준을 지정하는 **W3C**는 빠른 속도로 발전하는 웹에 대응하지 못함
 * 이에 불만을 느끼던 기업들은 **플러그인**을 개발
 * **플러그인** : 웹 브라우저와 연동되는 특정 프로그램을 사용자 PC에 추가로 설치해 웹 브라우저 기능을 확장하는 방법 (ex. **ActiveX**, **Adobe Flash**)
+
+
 
 ---
 
@@ -44,6 +52,8 @@
 
 * Flash를 기반으로 애니메이션 제작 (ex. 졸라맨)
 
+
+
 ---
 
 ### WHATWG
@@ -52,6 +62,8 @@
 * 하지만 모든 웹 사이트에 플러그인 (ex. ActiveX)이 들어가면서 웹 사이트들이 무거워짐
 * 이에 IE를 제외한 웹 브라우저 제공 기업 (ex. Apple, Mozilla, Opera)은 새로운 웹 표준 기관 **WHATWG**를 설립, 새로운 웹 표준으로 **Web Application 1.0** 작성
 * 이후 W3C는 Web Application 1.0을 HTML5 표준으로 변경, WHATWG와 **HTML W/G** 결성
+
+
 
 ---
 
@@ -62,6 +74,8 @@
 * Mozilla, Chrome, Opera 등 모든 웹 브라우저가 빠른 속도로 업데이트 (2019 기준 Chrome 승)
 * 2016년 1월, Microsoft는 IE 10 이하의 버전 지원을 중단
 
+
+
 ---
 
 ### HTML5를 공부해야하는 이유
@@ -71,6 +85,8 @@
 * HTML5를 활용하면 Web을 넘어 Desktop 앱까지 개발 가능함 (ex. Electron, React Native)
 
 ![](https://camo.githubusercontent.com/627c774e3070482b180c3abd858ef2145d46303b/68747470733a2f2f656c656374726f6e6a732e6f72672f696d616765732f656c656374726f6e2d6c6f676f2e737667)
+
+
 
 ---
 
@@ -84,17 +100,19 @@
 * React Native를 사용하면 HTML5로 개발했을때 내부적을 안드로이드와 아이폰에 맞는 **Native Code**로 변함됨 (**AWESOME!**)
 * Facebook, Instagram, Skype, Uber 모두 React Native로 개발됨
 
+
+
 ---
 
 # HTML5
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1200px-HTML5_logo_and_wordmark.svg.png" style="zoom:25%;" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1200px-HTML5_logo_and_wordmark.svg.png" style="zoom: 25%;" />
 
 
 
 **HTML (HyperText Markup Language)** : the standard **markup language** for documents designed to be displayed **in a web browser**
 
----
+
 
 ### 태그(Tag)와 요소(Element)
 
@@ -115,7 +133,7 @@
 
 * "요소 (element)를 생성" = "태그를 생성"
 
----
+
 
 ### 속성 (Attribute)
 
@@ -128,7 +146,7 @@
 
 * 모든 태그와 속성은 W3C에서 표준으로 정의돼있음
 
----
+
 
 ### 주석 (Comment)
 
@@ -136,7 +154,7 @@
 
   <!-- Write some comments in here -->
 
----
+
 
 ### HTML5 페이지 구조
 
@@ -157,6 +175,8 @@
 * 웹 브라우저가 현재 웹 페이지가 HTML5 문서임을 인식하게 만들어 줌
 * 모든 HTML5 문서는 **반드시** 문서의 가장 첫 번째 줄에 작성
 
+
+
 ### `<html>`
 
 * 모든 HTML 페이지의 **루트** 요소
@@ -171,6 +191,8 @@
 -->
 </html>
 ```
+
+
 
 ### `<head>`
 
@@ -188,13 +210,17 @@
 </head>
 ```
 
+
+
 ### `<body>`
 
 * 사용자에게 보이는 실제 부분
 
+
+
 ---
 
-### 글자 태그
+## 글자 태그
 
 - 제목 글자 (heading)
 - 본문 (paragraph)
@@ -202,7 +228,7 @@
 - 글자 형태
 - 루비문자
 
----
+
 
 ### Heading
 
@@ -217,7 +243,7 @@
 
 * 각 브라우저마다 폰트는 다름
 
----
+
 
 ### Paragraph
 
@@ -229,7 +255,7 @@
 
 * Lorem ipsum
 
----
+
 
 ### Anchor
 
@@ -251,7 +277,7 @@
 -->
 ```
 
----
+
 
 ### 글자 형태
 
@@ -265,7 +291,7 @@
 <del>가운데 줄이 그어진 글자</del>
 ```
 
----
+
 
 ### 루비 문자
 
@@ -273,7 +299,7 @@
 
 ![](https://www.w3docs.com/uploads/media/default/0001/01/b62d0c228cccda7416c2f5699af4d582f271b720.png)
 
----
+
 
 ### 목록 태그 - 기본 목록
 
@@ -295,7 +321,7 @@
 </body>
 ```
 
----
+
 
 ### 목록 태그 - 정의 목록
 
@@ -310,7 +336,7 @@
 </body>
 ```
 
----
+
 
 ### 테이블 태그
 
@@ -335,8 +361,6 @@
 
 
 
----
-
 ### 이미지 태그
 
 ```html
@@ -351,7 +375,7 @@
 
 * Must incldue `src` and `alt` attribute
 
----
+
 
 ### 오디오 태그
 
@@ -362,7 +386,7 @@
 * 플러그인의 도움 없이 음악을 재생할 수 있게 만들어 줌
 * IE 8 이하에서는 사용 불가
 
----
+
 
 ### 비디오 태그
 
@@ -390,16 +414,17 @@
 
 
 
----
-
-## FORM Tag
+### FORM Tag
 
 * `action` : 입력 데이터의 전달 위치를 지정
 * `method `: 입력 데이터의 전달 방식을 선택
+  
   * get : 주소에 데이터를 입력하여 전달
   * post : 데이터를 더욱 안전하게 전달, 용량 제한 x
+  
+  
 
-## Input Tag (HTML5)
+### Input Tag (HTML5)
 
 * 정보를 입력받는 기능을 수행
 
@@ -412,7 +437,7 @@
 
 * Can be replaced with Ajax
 
----
+
 
 ### Select Tag
 
@@ -428,13 +453,15 @@
 </select>
 ```
 
----
+
 
 ### DIV & Span Tag
 
 * 공간 분할 태그
 * `<div>` **block 형식으로 공간을 분할**
 * `<span>` **inline 형식으로 공간 분할**
+
+
 
 ---
 

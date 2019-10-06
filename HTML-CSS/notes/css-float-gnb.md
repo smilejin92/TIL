@@ -1,4 +1,4 @@
-# CSS Property - continued
+# CSS3 - Position, Float, Font
 
 ### [position](https://www.w3schools.com/css/css_positioning.asp)
 
@@ -119,8 +119,7 @@ position: sticky; (IE or Edge 15 이전 버전 지원 x)
 * positioned **relative to the nearest positioned ancestor** (anything except **static**)
 * if there's no positioned ancestors, it uses **the document body** (ex. `<body>`)
 * allow you to **place your element precisely where you want it**
-* 부모 노드가 `position: relative`면 부모 노드 영역 안에서 움직임
-* 부모 노드가 `position: absolute`면 부모 노드 영역 0,0을 기준으로 시작
+* 부모 노드에 `position` 속성이 부여되어 있으면, 부모 영역을 기준으로 좌표를 설정하여 배치 가능
 
 ```css
 HTML
@@ -191,6 +190,7 @@ float: initial (back to default value)
 
 * `float` takes elements **away from normal document flow**, so they **no longer occupies any HEIGHT in normal document flow**
 * `float` 되는 요소는 기존의 박스 크기를 잃고, 컨텐츠의 높이/넓이만큼의 크기를 가짐. 따라서, 필요에 따라 **높이/넓이를 재설정 해줘야함**
+* **position** 속성과 함께 같이 사용할 수 있음
 
 ([see more examples with `float`](https://www.w3schools.com/css/css_float.asp))
 
@@ -219,7 +219,7 @@ clear: both; (No floating elements allowed on either the left or the right side)
 
 ### [clearfix Hack](https://www.w3schools.com/howto/howto_css_clearfix.asp)
 
-* If an element is **taller** than the element containing it, and it is floated, it will **overflow** outside of its container
+* float 설정된 요소가 자신을 감싸고 있는 부모 영역보다 크면 (**HEIGHT**), 부모 영역 밖으로 **overflow** 됨. 
 * 아래와 같은 코드에서 menu-item 클래스를 float 시키면 부모 요소인 menu의 높이가 사라짐
 
 ``` html
@@ -243,15 +243,19 @@ clear: both; (No floating elements allowed on either the left or the right side)
 </div>
 ```
 
-![](./images/clearfix1.PNG)
-
 (before float: left)
 
-![](./images/clearfix2.PNG)
+![](./images/clearfix1.PNG)
+
+
 
 (after float: left)
 
-* 위와 같은 문제를 해결하기 위해 부모 요소인 menu 클래스에 clearfix를 추가
+![](./images/clearfix2.PNG)
+
+
+
+위와 같은 문제를 해결하기 위해 **부모 요소**인 menu 클래스에 clearfix를 설정
 
 ``` html
 <style>
@@ -285,9 +289,11 @@ clear: both; (No floating elements allowed on either the left or the right side)
 </div>
 ```
 
+(after clearfix)
+
 ![](./images/clearfix3.PNG)
 
-(after clearfix)
+
 
 ---
 
@@ -358,6 +364,7 @@ div {
 ### white-space
 
 * 요소 안의 공백을 어떻게 처리할 것인지 결정하는 속성
+* 대부분의 경우 **줄바꿈을 허용하지 않을 때** 사용
 
 ``` css
 white-space: normal (기본값, 연속되는 공백을 하나의 공백으로 처리. 필요한 경우 문자는 자동으로 wrap)
@@ -386,6 +393,8 @@ white-sapce: pre-wrap (브라우저에 의해 모든 공백이 보존됨. 문자
 ```
 
 * [Multi-line Ellipsis CSS](http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/)
+
+
 
 ---
 
@@ -416,6 +425,8 @@ div::after {
 ```
 
 **(box-shadow는 마진에 영향을 주지 않음)**
+
+
 
 ---
 
@@ -457,7 +468,7 @@ div::after {
 
 ### NORMALIZE.CSS
 
-* a CSS file that provides better **cross-browser** consistency in the default styling of HTML elements
+* a CSS file that provides better **cross-browser consistency** in the default styling of HTML elements
 
 * an alternative to [CSS resets](https://meyerweb.com/eric/tools/css/reset/)
 
@@ -473,7 +484,7 @@ div::after {
 
 ---
 
-### CSS INHERIT vs. Override
+### CSS INHERIT vs. Override Example
 
 ```html
 <!DOCTYPE html>
@@ -518,7 +529,7 @@ div::after {
 - Markup GNB
 
 ```html
-<h1> (not visible)
+<h1> (.a11y-hidden)
 	<nav>
 		<h2>메인 메뉴</h2> -> a11y.hidden (include for web accessibility)
         <ul class="menu">
@@ -533,7 +544,39 @@ div::after {
             </li>
         </ul>
 	</nav>
-</h1> (not visible)
+</h1>
+```
+
+
+
+#### a11y-hidden
+
+* 스크린 리더에는 읽히지만, 눈에서는 보이지 않게 설정
+* Semantic한 마크업을 위해 html에 요소를 추가하는 대신, 보이지 않게 처리함으로써 의미론적, 시각적 효과를 모두 부여할 수 있음
+
+``` CSS
+.a11y-hidden {
+      /* clip으로 자르기 위해 pos: abs 설정 */
+      position: absolute;
+      width: 1px;
+      height: 1px;
+
+      /* Setting a negative top margin indicates that you want negative spacing above
+    your block. Negative spacing may in itself be a confusing concept, but just the way
+    positive top margin pushes content down, a negative top margin pulls content up. */
+      margin: -1px;
+
+      /* 개행 금지 */
+      white-space: nowrap;
+
+      /* 영역 밖으로 넘치는건 보이지 않게 */
+      overflow: hidden;
+      
+      /* position: absolute, fixed 된 요소에만 사용 가능한 속성
+      요소의 어느 부분을 보이게 할지 정의
+      rect(top, right, bottom, left) */
+      clip: rect(0,0,0,0);
+    }
 ```
 
 
@@ -596,15 +639,73 @@ English
 * CSS image replacement: technique of replacing a text element (ex. h1) with **image (logo)**
 
 ```css
-.a11y-hidden {
-    background-color: red;
-    position: absolute;
-    width: 1px;
-    height: 1px;
+/* padding을 활용한 IR */
+.brand1 {
+    /* 배경 이미지 지정 */
+    background: url(./images/title.png) no-repeat;
+    
+    /* 배경 이미지 너비 지정 */
+    width: 290px;
+    
+    /* 해당 요소의 높이를 0 처리하여 컨텐츠가 overflow되게끔 설정 */
+    height: 0px;
+    
+    /* 배경 이미지 높이 지정 (요소 패딩에 삽입) */
+    padding-top: 195px;
+    
+    /* 요소의 높이가 0이 되어 overflow된 컨텐츠를 숨김 */
     overflow: hidden;
-    margin: -1px;
-    clip: rect(0,0,0,0);
+}
+
+/* text-indent를 활용한 IR */
+.brand2 {
+    /* 배경 이미지 설정 */
+    background: url(./images/title.png) no-repeat;
+    
+    /* 배경 이미지 너비/높이 설정 */
+    width: 290px;
+    height: 195px;
+    
+    /* 텍스트 시작 전, 배경이미지 너비만큼 공백 삽입 */
+    text-indent: 290px;
+    
+    /* text-indent로 밀려난 텍스트를 개행 금지 처리 */
     white-space: nowrap;
+
+    /* 영역 밖 컨텐츠를 숨김 처리 */
+    overflow: hidden;
+}
+
+/* 위 두 방법의 단점: 서버 연결이 불안정하여 이미지가 로드되지 않으면, 대체 텍스트가 보이지 않음  */
+/* 이미지로 텍스트 덮어버리기, 이미지가 로드되지 않아도, 뒤의 텍스트가 보임 */
+
+.brand3 {
+    /* 이미지 너비/높이 설정 */
+    width: 290px;
+    height: 195px;
+
+    /* 라인 박스의 높이를 설정. line-height를 height과 동일하게 설정하면, 영역내 가운데 정렬
+    (수직 정렬)이 이루어지는 것처럼 설정할 수 있음. 단, height 값이 바뀌면 line-height도
+    다시 바꿔줘야함. */
+    line-height: 195px;
+
+    /* 블록 요소 안의 컨텐츠를 가운데 정렬 */
+    text-align: center;
+
+    font-size: 16px;
+    font-weight: 400;
+    
+    /* 가상요소가 배치될 수 있도록 relative를 설정 */
+    position: relative;
+}
+.brand3::before { /* or ::after */
+    content:"";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(./images/title.png) no-repeat;
 }
 ```
 
@@ -616,11 +717,14 @@ English
 
 * Instead of containing letters or numbers, they contain symbols and glyphs.
 * can be styled with CSS in the same way you style regular text
-
 * https://fontawesome.com/
 * http://fontello.com/
 
+
+
 ---
+
+
 
 ([prev - CSS Selector& Flex Box](./css-selector-flex.md))
 
