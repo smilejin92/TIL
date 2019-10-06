@@ -1,4 +1,4 @@
-# JS Day 3
+# JavaScript Data Type & Operator
 
 ### ch.5 데이터 타입
 

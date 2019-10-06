@@ -1,4 +1,4 @@
-# JS Day 1, 2
+# Introduction to JavaScript
 
 [Lecture materials](https://poiemaweb.com/fastcampus.html)
 
