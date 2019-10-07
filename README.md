@@ -38,6 +38,7 @@
 
 * [**Introduction to JavaScript, Variable**](./JavaScript/notes/intro-js-variable.md)
 * [**Data Type & Operator**](./JavaScript/notes/js-dataType-operator.md)
+* [**Control Flow Statement & Type Casting**](./JavaScript/notes/controlStatement-typeCasting.md)
 
 
 
