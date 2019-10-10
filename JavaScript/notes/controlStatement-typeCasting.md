@@ -306,7 +306,7 @@ if (1) { }
 ``` javascript
 // 숫자 타입
 0 + ''              // "0"
--0 + ''             // "0"  ?????????????
+-0 + ''             // "0"
 1 + ''              // "1"
 -1 + ''             // "-1"
 NaN + ''            // "NaN"
@@ -354,7 +354,7 @@ console.log(`1 + 1 = ${1 + 1}`); // "1 + 1 = 2"
 '1' > 0    // true
 ```
 
-**(질문)** 문자열과 숫자 타입의 값에서 **+** 연산자는 무조건 문자열 타입으로만 변환되는지? (number 타입으로 더해지지는 않는건지?)
+**(질문)** 문자열과 숫자 타입의 값 사이 **+** 연산자는 무조건 문자열 타입으로만 변환되는지? 어느 한쪽이 string이라면 string이 아닌 쪽을 문자열로 변환
 
 
 
@@ -520,7 +520,7 @@ console.log(Boolean(null));      // false
 // undefined 타입 => 불리언 타 입
 console.log(Boolean(undefined)); // false
 // 객체 타입 => 불리언 타입
-console.log(Boolean({}));        // true ----------------- why?
+console.log(Boolean({}));        // true - 객체는 비어있어도 true
 console.log(Boolean([]));        // true
 
 // 2. ! 부정 논리 연산자를 두번 사용하는 방법
@@ -548,17 +548,54 @@ console.log(!![]);        // true
 
 #### 단축 평가
 
-"**OR (||), AND (&&)** does not always return **boolean value**." 이 두 연산자는 **언제나 피연산자 중 어느 한쪽 값을 반환한다.**
+**OR (|| - 논리합), AND (&& - 논리곱)** 연산자의 결과 값은 **불리언 값이 아닐 수도 있다.** 이  두 연산자는 **언제나 피연산자 중 어느 한쪽 값을 반환한다.** 
 
 ``` javascript
 // 논리합(||) 연산자
-'Cat' || 'Dog'  // 'Cat'
-false || 'Dog'  // 'Dog'
-'Cat' || false  // 'Cat'
+'Cat' || 'Dog'  // 'Cat' - truthy value
+false || 'Dog'  // 'Dog' - truthy value
+'Cat' || false  // 'Cat' - truthy value
 
 // 논리곱(&&) 연산자
 'Cat' && 'Dog'  // Dog
 false && 'Dog'  // false
 'Cat' && false  // false
 ```
+
+논리곱 연산자 `&&`와 논리합 연산자 `||`는 이와 같이 **논리 평가를 결정한 피연산자를 그대로 반환한다. 이를 단축 평가 (Short-circuit evaluation)라 부른다. **단축 평가는 아래의 규칙을 따른다.
+
+| 단축 평가 표현식    | 평가 결과 |
+| ------------------- | --------- |
+| true \|\| anything  | true      |
+| false \|\| anything | anything  |
+| true && anything    | anything  |
+| false && anything   | false     |
+
+
+
+단축 평가는 아래와 같은 상황에서 유용하게 사용된다.
+
+* 객체가 null인지 확인하고 프로퍼티를 참고할 때
+
+  ``` javascript
+  var elem = null;
+  
+  console.log(elem.value); // 일반 변수에 프로퍼티를 참조하려 하면 TypeError가 발생한다
+  console.log(elem && elem.value); // elem은 null (falsy) 값을 가지고 있으므로 && 이후의 연산을 할 필요 없이 바로 null을 출력한다.
+  ```
+
+
+
+* 함수 매개변수에 기본값을 설정할 때
+
+  ```javascript
+  function getStringLength(str) {
+      // 매개변수 str이 true (길이가 있다면)면 str = str로 설정
+      // 매개변수 str이 false (길이가 없다면)면 str = ''로 설정
+      str = str || ''; 
+      return str.length;
+  }
+  ```
+
+  
 

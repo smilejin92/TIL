@@ -21,13 +21,13 @@ var counter = {
     increase: function() { // method
         this.num++;
     }
-}
+};
 ```
 
 또한, 자바스크립트에서 사용할 수 있는 모든 값은 property 값이 될 수 있다. 따라서, **자바스크립드의 함수 역시 한 객체의 property 값으로 취급할 수 있다.** property 값이 함수일 경우, 일반 함수와 구분하기 위해 **method**라고 부른다.
 
 * property : 객체의 상태 (state)를 나타내는 값 (data)
-* method: property를 참조하고 조작할 수 있는 동작 (behavior)
+* method: property를 참조하고 조작할 수 있는 동작 (behavior) - 상태를 변경한다
 
 ---
 
@@ -270,7 +270,7 @@ person.address = 'Seoul';
 console.log(person); // {name: "Lee", address: "Seoul"}
 ```
 
-**Computed Property name은??**
+
 
 ---
 
