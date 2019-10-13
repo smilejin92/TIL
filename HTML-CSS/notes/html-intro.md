@@ -1,3 +1,8 @@
+---
+title: Introduction to Web & HTML5
+thumbnail: /images/html5.png
+toc: true
+---
 # HTML5 개요
 
 ### 웹의 역사
@@ -6,7 +11,7 @@
 - **www (World Wide Web)** : 인터넷에 연결된 컴퓨터를 통해 사람들이 정보를 공유할 수 있는 정보공간
 
 
-
+<!-- more -->
 ---
 
 ### 인터넷의 시작
