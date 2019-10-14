@@ -133,3 +133,145 @@ Object.getOwnPropertyDescriptor(function() {}, 'prototype');
 
 ## 4. 프로퍼티 어트리뷰트
 
+데이터 프로퍼티와 접근자 프로퍼티는 자신의 상태와 동작을 정의한 내부 슬롯 / 메소드를 가지고 있다. 이들을 **프로퍼티 어트리뷰트(property attribute)**라 한다. 프로퍼티 어트리뷰트는 자바스크립트 엔진이 프로퍼티를 생성할 때, 기본값으로 자동 정의된다. 이후 정의된 프로퍼티 어트리뷰트를 설정하는 것으로 각각의 프로퍼티의 세부 동작(프로퍼티 값의 변경 가능 여부, 열거 가능 여부, 재정의 가능 여부)을 제어할 수 있다.
+
+**데이터 프로퍼티 어트리뷰트**
+
+| 프로퍼티 어트리뷰트 | 설명                                                         | 프로퍼티 디스크립터 객체의 프로퍼티 |
+| ------------------- | ------------------------------------------------------------ | ----------------------------------- |
+| [[Value]]           | - 프로퍼티 키로 프로퍼티 값에 접근하면 내부 메소드 [[Get]]에 의해 반환되는 값이다.<br />- 프로퍼티 키로 프로퍼티 값을 저장하면 [[Value]]에 값을 저장한다. 이때 프로퍼티가 없으면 프로퍼티를 생성하고 생성된 프로퍼티의 [[Value]]에 값을 저장한다. | value                               |
+| [[Writable]]        | - 프로퍼티 값의 변경 가능 여부를 나타내며 불리언 값을 갖는다.<br />- [[Writable]]의 값이 false인 경우, 해당 프로퍼티의 [[Value]]의 값을 변경할 수 없다. | writable                            |
+| [[Enumerable]]      | - 프로퍼티의 열거 가능 여부를 나타내며 불리언 값을 갖는다.<br />- [[Enumerable]]의 값이 false인 경우, 해당 프로퍼티는 `fot...in` 문이나 `Object.keys`메소드 등으로 열거할 수 없다. | enumerable                          |
+| [[Configurable]]    | - 프로퍼티의 재정의 가능 여부를 나타내며 불리얼 값을 갖는다.<br />- [[Configurable]]의 값이 false인 경우, 해당 프로퍼티의 삭제, 프로퍼티 어트리뷰트 값의 변경이 금지된다. 단, [[Writable]]이 true인 경우, [[Value]]의 변경과 [[Writable]]을 false로 변경하는 것은 허용된다. | configurable                        |
+
+
+
+**접근자 프로퍼티**
+
+| 프로퍼티 어트리뷰트 | 설명                                                         | 프로퍼티 디스크립터 객체의 프로퍼티 |
+| ------------------- | ------------------------------------------------------------ | ----------------------------------- |
+| [[Get]]             | 접근자 프로퍼티를 통해 데이터 프로퍼티의 값을 **읽을 때** 호출되는 접근자 함수이다. 즉, 접근자 프로퍼티 키로 프로퍼티 값에 접근하면 프로퍼티 어트리뷰트 [[Get]]의 값인 getter 함수가 호출되고 그 결과가 프로퍼티 값으로 **반환된다**. | get                                 |
+| [[Set]]             | 접근자 프로퍼티를 통해 데이터 프로퍼티의 값을 **저장할 때** 호출되는 접근자 함수이다. 즉, 접근자 프로퍼티 키로 프로퍼티 값을 저장하면 프로퍼티 어트리뷰트 [[Set]]의 값인 SETTER 함수가 호출되고 그 결과가 프로퍼티 값으로 **저장된다**. | set                                 |
+| [[Enumerable]]      | 데이터 프로퍼티의 [[Enumerable]]과 같다.                     | enumarable                          |
+| [[Configurable]]    | 데이터 프로퍼티의 [[Configurable]]과 같다.                   | configurable                        |
+
+
+
+```javascript
+// Object.defineProperty 메소드를 사용하면 프로퍼티의 어트리뷰트를 정의할 수 있다.
+// 인수는 객체의 참조, 데이터 프로퍼티의 키인 문자열, 프로퍼티 디스크립터 객체를 전달한다.
+const person = {};
+
+// 데이터 프로퍼티 정의
+Object.defineProperty(person, 'firstName', {
+  value: 'Jinhyun',
+  wirtable: true,
+  enumerable: true,
+  configurable: true
+});
+
+Object.defineProperty(person, 'lastname', {
+  value: 'Kim'
+});
+// 디스크립터 객체의 프로퍼티를 누락시키면 undefined, false가 기본값이다
+// lastName {value: "Lee", writable: false, enumerable: false, configurable: false}
+
+// [[Enumerable]]의 값이 false인 경우,
+// 해당 프로퍼티는 for…in 문이나 Object.keys 등으로 열거할 수 없다.
+// lastName 프로퍼티는 [[Enumerable]]의 값이 false이므로 열거되지 않는다.
+console.log(Object.keys(person)); // ["firstName"]
+
+// [[Writable]]의 값이 false인 경우, 해당 프로퍼티의 [[Value]]의 값을 변경할 수 없다.
+// 에러는 발생하지 않고 무시된다.
+// lastName 프로퍼티는 [[Writable]]의 값이 false이므로 값을 변경할 수 없다.
+person.lastName = 'Lee';
+
+// [[Configurable]]의 값이 false인 경우, 해당 프로퍼티를 삭제할 수 없다.
+// 에러는 발생하지 않고 무시된다.
+// lastName 프로퍼티는 [[Configurable]]의 값이 false이므로 삭제할 수 없다.
+delete person.lastName;
+
+// [[Configurable]]의 값이 false인 경우, 해당 프로퍼티를 재정의할 수 없다.
+Object.defineProperty(person, 'lastName', {
+  enumerable: true
+});
+// Uncaught TypeError: Cannot redefine property: lastName
+
+descriptor = Object.getOwnPropertyDescriptor(person, 'lastName');
+console.log('lastName', descriptor);
+// lastName {value: "Lee", writable: false, enumerable: false, configurable: false}
+
+// 접근자 프로퍼티 정의
+Obejct.defineProperty(person, 'fullnName', {
+  // getter 함수
+  get: function() { // === get() {
+    return this.firstName + ' ' + this.lastName;
+  },
+  // setter 함수
+  set: function() { // === set(name) {
+    [this.firstName, this.lastName] = name.split(' ');
+  },
+  enumerable: true,
+  configurable: true
+});
+
+descriptor = Object.getOwnPropertyDescriptor(person, 'fullName');
+console.log('fullName', descriptor);
+// fullName {get: ƒ, set: ƒ, enumerable: true, configurable: true}
+
+person.fullName = 'Jinhyun Kim';
+console.log(person); // {firstName: "Jinhyun", lastName: "Lee"}
+```
+
+
+
+`Object.defineProperty` 메소드로 프로퍼티 정의할 때 프로퍼티 디스크립터 객체의 프로퍼티를 일부 누락할 수 있다. 프로퍼티 디스크립터 객체에서 누락된 어트리뷰트는 아래와 같이 기본값이 적용된다.
+
+| 프로퍼티 디스크립터 객체의 프로퍼티 | 대응하는 프로퍼티 어트리뷰트 | 디스크립터 객체의 프로퍼티 누락 시의 기본값 |
+| ----------------------------------- | ---------------------------- | ------------------------------------------- |
+| value                               | [[Value]]                    | undefined                                   |
+| get                                 | [[Get]]                      | undefined                                   |
+| set                                 | [[Set]]                      | undefined                                   |
+| writable                            | [[Writable]]                 | false                                       |
+| enumerable                          | [[Enumerable]]               | false                                       |
+| configurable                        | [[Configurable]]             | false                                       |
+
+`Object.defineProperty` 메소드는 한번에 하나의 프로퍼티만 정의할 수 있다. `Object.defineProperties` 메소드를 사용하면 여러 개의 프로퍼티를 한번에 정의할 수 있다.
+
+```javascript
+const person = {};
+
+Object.defineProperties(person, {
+  // 데이터 프로퍼티 정의
+  firstName: {
+    value: 'Jinhyun',
+    writable: true,
+    enumerable: true,
+    configurable: true
+  },
+  lastName: {
+    value: 'Kim',
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  },
+  // 접근자 프로퍼티 정의
+  fullName: {
+    // getter 함수
+    get() {
+      return this.firstName + ' ' + this.lastName;
+    },
+    set(name) {
+      [this.firstName, this.lastName] = name.split(' ');
+    },
+    enumerable: true,
+    configurable: true
+  }
+});
+
+person.fullName = 'Jinhyun Kim';
+console.log(person); // {firstName: "Jinhyun", lastName: "Kim"}
+
+// where is fullName??
+```
+
