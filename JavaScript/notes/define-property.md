@@ -2,7 +2,7 @@
 
 ## 1. 프로퍼티 정의란?
 
-프로퍼티 정의란 **프로퍼티 어트리뷰트의 값을 정의하여 프로퍼티의 상태를 관리하는 것을 말한다.** 예를 들어 프로퍼티 값을 **갱신** 가능하도록 할 것인지 (ex. `setX()`, `setY()`), 프로퍼티를 **열거** 가능하도록 할 것인지 (ex. `getX()`), 프로퍼티를 **재정의** 가능하도록 할 것인지 정의할 수 있다. 이를 통해 객체의 프로퍼티가 어떻게 동작해야 하는지를 명확히 정의할 수 있다.
+프로퍼티 정의란 **프로퍼티 어트리뷰트의 값을 정의하여 프로퍼티의 상태를 관리하는 것을 말한다.** 예를 들어 프로퍼티 값을 **갱신** 가능하도록 할 것인지, 프로퍼티를 **열거** 가능하도록 할 것인지, 프로퍼티를 **재정의** 가능하도록 할 것인지 정의할 수 있다. 이를 통해 객체의 프로퍼티가 어떻게 동작해야 하는지를 명확히 정의할 수 있다.
 
 **자바스크립트 엔진은 프로퍼티를 생성(객체 리터럴의 평가 혹은 프로퍼티 동적 생성)할 때, 프로퍼티의 상태를 나타내는 프로퍼티 어트리뷰트를 기본값으로 자동 정의한다.**
 
@@ -13,7 +13,7 @@ const obj = {};
 obj.prop = 10;
 
 // 정의된 프로퍼티 어트리뷰트는 Object.getOwnPropertyDescriptor 메소드로 확인 가능
-// 객체 obj의 'prop'의 프로퍼티 디스크립터를 descriptor에 저장
+// 객체 obj의 'prop'의 프로퍼티 디스크립터를 descriptor에 할당
 const descriptor = Object.getOwnPropertyDescriptor(obj, 'prop');
 console.log(descriptor);
 // {value: 10, writable: true, enumerable: true, configurable: true} - 기본값
@@ -39,7 +39,16 @@ console.log(descriptor); // undefined;
 
 내부 슬롯과 내부 메소드는 자바스크립트 엔진의 내부 구현 사양을 정의한 것으로 자바스크립트 엔진은 ECMAScript 스펙에서 정의한 내부 슬롯과 내부 메소드의 사양을 만족시키는 것이 요구될 뿐, 이를 외부로 노출시키지는 않는다.
 
-(즉, 내부 슬롯과 내부 메소드는 **객체의 프로퍼티가 아니다.** 따라서 내부 슬롯과 내부 메소드는 직접적으로 접근하거나 호출할 수 있는 방법을 원칙적으로 제공하지 않는다. 단, 일부 내부 슬롯과 내부 메소드에 **간접적으로 접근할 수 있는 수단은 있다.**)
+즉, 내부 슬롯과 내부 메소드는 **객체의 프로퍼티가 아니다.** 따라서 내부 슬롯과 내부 메소드는 직접적으로 접근하거나 호출할 수 있는 방법을 원칙적으로 제공하지 않는다. 단, 일부 내부 슬롯과 내부 메소드에 **간접적으로 접근할 수 있는 수단은 있다.** [[Get]] 내부 메소드는 아래와 같이 동작한다.
+
+프로퍼티 키로 프로퍼티 값에 접근하면,
+
+1. 프로퍼티 키가 유효한지 확인한다. 프로퍼티 키는 문자열 또는 심볼이어야 한다.
+2. 프로토타입 체인에서 프로퍼티를 검색한다.
+   * 해당 객체에 접근하려는 프로퍼티 또는 메소드가 없다면 상위 객체(프로토타입)의 프로퍼티나 메소드를 차례대로 검색한다.
+
+3. 검색된 프로퍼티가 **데이터 프로퍼티(Data property)**라면 프로퍼티 값, 즉 해당 프로퍼티의 프로퍼티 어트리뷰트 [[Value]]의 값을 그대로 반환한다.
+4. 만약 프로퍼티가 **접근자 프로퍼티(Accessor property)**라면 접근자 프로퍼티의 프로퍼티 어트리뷰터 [[Get]]의 값, 즉 getter 함수를 호출하여 그 결과를 반환한다.
 
 
 
@@ -47,8 +56,8 @@ console.log(descriptor); // undefined;
 
 프로퍼티는 **데이터 프로퍼티**와 **접근자 프로퍼티**로 구분할 수 있다.
 
-* 데이터 프로퍼티(Data property) - 키와 값으로 구성된 일반적인 프로퍼티. value가 있다.
-* 접근자 프로퍼티(Accessor property) - 자체적으로는 값을 갖지 않고, 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 **함수**(Accessor function)로 구성된 프로퍼티 **(프로퍼티이기 때문에 호출해서 쓰지 않는다)**. value가 없다.
+* 데이터 프로퍼티(Data property) - 키와 값으로 구성된 일반적인 프로퍼티. 프로퍼티 어트리뷰트 [[Value]]가 있다.
+* 접근자 프로퍼티(Accessor property) - 자체적으로는 값을 갖지 않고(프로퍼티 어트리뷰트 [[Value]]가 없다), 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 **함수**(Accessor function)로 구성된 프로퍼티 **(프로퍼티이기 때문에 호출해서 쓰지 않는다)**. 
 
 접근자 함수는 **getter / setter** 함수라고도 부른다. 접근자 프로퍼티는 getter와 setter 함수를 모두 정의할 수도 있고 하나만 정의할 수도 있다.
 
@@ -69,7 +78,7 @@ const person = {
   }
 };
 
-// 데이터 프로퍼티를 동한 프로퍼티 값의 참조
+// 데이터 프로퍼티를 통한 프로퍼티 값의 참조
 console.log(person.firstName + ' ' + person.lastName); // Jinhyun Kim
 
 // 접근자 프로퍼티를 통한 프로퍼티 값의 저장
@@ -100,9 +109,9 @@ console.log(descriptor);
 // }
 ```
 
-메소드 앞에 `get`, `set`이 붙은 메소드가 getter와 setter 함수이고 getter/setter 함수의 이름 `fullName`이 접근자 프로퍼티이다. 접근자 프로퍼티는 자체적으로 값(value, 프로퍼티 어트리뷰트 - **???? 왜 안가짐**)을 가지지 않으며, 다만 데이터 프로퍼티의 값을 읽거나 저장할 때 관여할 뿐이다.
+메소드 앞에 `get`, `set`이 붙은 메소드가 getter와 setter 함수이고 getter/setter 함수의 이름 `fullName`이 **접근자 프로퍼티**이다. 접근자 프로퍼티는 자체적으로 값(value, 프로퍼티 어트리뷰트)을 가지지 않으며, 다만 데이터 프로퍼티의 값을 읽거나 저장할 때 관여할 뿐이다.
 
-이를 내부 슬록 / 메소드 관점에서 설명하면 다음과 같다. 접근자 프로퍼티 `fullName`으로 프로퍼티 값에 접근하면 내부적으로 [[Get]] 내부 메소드가 호줄되어 아래와 같이 동작한다.
+이를 내부 슬롯 / 메소드 관점에서 설명하면 다음과 같다. 접근자 프로퍼티 `fullName`으로 프로퍼티 값에 접근하면 내부적으로 [[Get]] 내부 메소드가 호줄되어 아래와 같이 동작한다.
 
 1. 프로퍼티 키가 유효한지 확인한다. 프로퍼티 키 'fullName'은 문자열이므로 유효한 프로퍼티 키이다.
 2. 프로토타입 체인에서 해당 프로퍼티를 검색한다. `person` 객체에 `fullName` 프로퍼티가 존재한다.
@@ -123,7 +132,7 @@ Object.getOwnPropertyDescriptor(Object.prototype, '__proto__');
 //   configurable: true
 // }
 
-// 함수 객체의 prototype의 데이터 프로퍼티이다.
+// 함수 객체의 prototype은 데이터 프로퍼티이다.
 Object.getOwnPropertyDescriptor(function() {}, 'prototype');
 // { value: {}, writable: true, enumerable: false, configurable: false }
 
@@ -151,7 +160,7 @@ Object.getOwnPropertyDescriptor(function() {}, 'prototype');
 | 프로퍼티 어트리뷰트 | 설명                                                         | 프로퍼티 디스크립터 객체의 프로퍼티 |
 | ------------------- | ------------------------------------------------------------ | ----------------------------------- |
 | [[Get]]             | 접근자 프로퍼티를 통해 데이터 프로퍼티의 값을 **읽을 때** 호출되는 접근자 함수이다. 즉, 접근자 프로퍼티 키로 프로퍼티 값에 접근하면 프로퍼티 어트리뷰트 [[Get]]의 값인 getter 함수가 호출되고 그 결과가 프로퍼티 값으로 **반환된다**. | get                                 |
-| [[Set]]             | 접근자 프로퍼티를 통해 데이터 프로퍼티의 값을 **저장할 때** 호출되는 접근자 함수이다. 즉, 접근자 프로퍼티 키로 프로퍼티 값을 저장하면 프로퍼티 어트리뷰트 [[Set]]의 값인 SETTER 함수가 호출되고 그 결과가 프로퍼티 값으로 **저장된다**. | set                                 |
+| [[Set]]             | 접근자 프로퍼티를 통해 데이터 프로퍼티의 값을 **저장할 때** 호출되는 접근자 함수이다. 즉, 접근자 프로퍼티 키로 프로퍼티 값을 저장하면 프로퍼티 어트리뷰트 [[Set]]의 값인 setter 함수가 호출되고 그 결과가 프로퍼티 값으로 **저장된다**. | set                                 |
 | [[Enumerable]]      | 데이터 프로퍼티의 [[Enumerable]]과 같다.                     | enumarable                          |
 | [[Configurable]]    | 데이터 프로퍼티의 [[Configurable]]과 같다.                   | configurable                        |
 
@@ -182,13 +191,13 @@ Object.defineProperty(person, 'lastname', {
 console.log(Object.keys(person)); // ["firstName"]
 
 // [[Writable]]의 값이 false인 경우, 해당 프로퍼티의 [[Value]]의 값을 변경할 수 없다.
-// 에러는 발생하지 않고 무시된다.
 // lastName 프로퍼티는 [[Writable]]의 값이 false이므로 값을 변경할 수 없다.
+// 에러는 발생하지 않고 무시된다.
 person.lastName = 'Lee';
 
 // [[Configurable]]의 값이 false인 경우, 해당 프로퍼티를 삭제할 수 없다.
-// 에러는 발생하지 않고 무시된다.
 // lastName 프로퍼티는 [[Configurable]]의 값이 false이므로 삭제할 수 없다.
+// 에러는 발생하지 않고 무시된다.
 delete person.lastName;
 
 // [[Configurable]]의 값이 false인 경우, 해당 프로퍼티를 재정의할 수 없다.
@@ -270,8 +279,6 @@ Object.defineProperties(person, {
 });
 
 person.fullName = 'Jinhyun Kim';
-console.log(person); // {firstName: "Jinhyun", lastName: "Kim"}
-
-// where is fullName??
+console.log(person); // {firstName: "Jinhyun", lastName: "Kim", fullName: [Getter/Setter]}
 ```
 
