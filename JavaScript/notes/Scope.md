@@ -116,7 +116,7 @@ function foo() {
   x = 10;
 }
 
-foo();
+foo(); // 호출 시 foo 함수 내의 x를 var로 선언하여 전역 변수로 취급
 
 console.log(x); // 10
 ```

@@ -47,8 +47,8 @@ console.log(descriptor); // undefined;
 
 프로퍼티는 **데이터 프로퍼티**와 **접근자 프로퍼티**로 구분할 수 있다.
 
-* 데이터 프로퍼티(Data property) - 키와 값으로 구성된 일반적인 프로퍼티
-* 접근자 프로퍼티(Accessor property) - 자체적으로는 값을 갖지 않고, 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수(Accessor function)로 구성된 프로퍼티
+* 데이터 프로퍼티(Data property) - 키와 값으로 구성된 일반적인 프로퍼티. value가 있다.
+* 접근자 프로퍼티(Accessor property) - 자체적으로는 값을 갖지 않고, 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 **함수**(Accessor function)로 구성된 프로퍼티 **(프로퍼티이기 때문에 호출해서 쓰지 않는다)**. value가 없다.
 
 접근자 함수는 **getter / setter** 함수라고도 부른다. 접근자 프로퍼티는 getter와 setter 함수를 모두 정의할 수도 있고 하나만 정의할 수도 있다.
 
