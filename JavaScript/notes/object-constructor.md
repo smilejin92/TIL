@@ -437,10 +437,11 @@ const circle = Circle(5);
 
 하지만 `String` 생성자 함수는 `new` 연산자와 함께 호출했을 때 `String` 객체를 생성하여 반환하지만, `new` 연산자 없이 호출하면 문자열 리터럴을 반환한다. 즉 문자열로 타입을 변환한다.
 
-```javascript
+``` javascript
 let s = new String('abc');
 console.log(s); // String {"abc"}
 
 s = String('abc');
 console.log(s); // abc
 ```
+
