@@ -73,7 +73,7 @@ console.log(circle1.getArea());
 
 
 
-`Circle` 생성자 함수가 생성한 모든 인스턴스는 자신의 **프로토타입 객체** 열학을 하는 `Circle.prototype`의 모든 프로퍼티와 메소드를 상속 받는다.
+`Circle` 생성자 함수가 생성한 모든 인스턴스는 자신의 **프로토타입 객체** 열학을 하는 `Circle.prototype`의 모든 프로퍼티와 메소드를 상속 받는다. 각 인스턴스의 프로퍼티(상태)는 해당 인스턴스가 가지고 있는 것이 논리적이나, 중복되는 메소드는 프로토타입에 추가하여 모든 인스턴스에게 공유하는 것이 효율적이다.
 
 
 
@@ -88,11 +88,9 @@ console.log(circle1.getArea());
 ![](./images/object-prototye-constructor.png)
 
 * 모든 객체는 `__proto__` 접근자 프로퍼티를 통해 자신의 `[[Prototype]]` 내부 슬롯이 가리키는 객체에 접근할 수 있다 (자식은 어머님이 누구냐는 질문을 통해 어머니의 위치를 가리키는 객체에 접근할 수 있다).
-
 * 프로토타입은 `constructor` 프로퍼티를 통해 생성자 함수에 접근할 수 있다.
 * 생성자 함수는 `prototype` 프로퍼티를 통해 프로토타입에 접근할 수 있다.
-
-(그래서 프로토타입과 생성자 함수는 무슨 관계냐..)
+* 생성자 함수는 본인이 생성한 인스턴스를 찾아갈 수 없다(참조할 수 없다).
 
 
 
@@ -227,8 +225,10 @@ const me = new Person('Jin');
 // me의 실질적 부모는 Person 생성자 함수지만,
 // 생성자 함수(실질적 부모)는 인스턴스(자식)를 생성하는 동시에
 // 양육권을 Person 생성자 함수의 프로퍼티인 Person.prototype 객체에게 양도한다.
-// Person.prototype 객체는 constructor라는 프로퍼티 안에 실질적 부모인
-// Person 생성자 함수의 참조(주소) 값을 갖고 있다.
+// Person.prototype 객체는 constructor라는 프로퍼티만 가지고 있으며,
+// 그 안에 실질적 부모인 Person 생성자 함수의 참조(주소) 값을 갖고 있다.
+// Person.prototype 객체에 constructor 프로퍼티 밖에 없는 이유는
+// 개발자가 직접 필요한 프로퍼티를 추가할 수 있도록 디자인한 것이다.
 // 따라서, me 객체는 생성됨과 동시에 부모가 Person.prototype으로 정의되며
 // Person.prototype의 상위 객체인 Object.prototype를 조상으로 가진다.
 // 따라서 me 객체는 Object.prototype의 프로퍼티를 모두 상속 받는다.
@@ -277,6 +277,10 @@ const regexr = /is/ig;
 | 배열 리터럴        | Array       | Array.prototype    |
 | 정규 표현식 리터럴 | RegExp      | RegExp.prototype   |
 
+Object 함수는 `new` 키워드를 만나면 **반드시 빈 객체를 생성하지만**, 객체 리터럴로 생성한 인스턴스는 Object가 `createObject`라는 추상 연산을 통해 생성한다. 하지만 Object 생성자 함수도 `createObject` 추상 연산을 하지 않는 것은 아니다 (using `new.target`)
+
+객체 리터럴로 생성한 객체는 Object 생성자 함수가 생성한 것이라 생각할 수 있다.
+
 
 
 ## 5. 프로토타입의 생성 시점
@@ -323,6 +327,8 @@ function Person(name) {
 
 
 ## 7. 프로토타입 체인
+
+객체의 프로퍼티를 탐색하는 메커니즘
 
 ## 8. 캡슐화
 
