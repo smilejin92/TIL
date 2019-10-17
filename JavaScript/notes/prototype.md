@@ -217,7 +217,21 @@ console.log(me.constructor === Person); // true
 ![](./images/property-constructor.png)
 
 ```javascript
-// me의 부모는 Person {}
+// 생성자 함수 Person
+function Person(name) {
+  this.name = name;
+}
+// 생성자 함수 Person이 생성한 인스턴스 me
+const me = new Person('Jin');
+
+// me의 실질적 부모는 Person 생성자 함수지만,
+// 생성자 함수(실질적 부모)는 인스턴스(자식)를 생성하는 동시에
+// 양육권을 Person 생성자 함수의 프로퍼티인 Person.prototype 객체에게 양도한다.
+// Person.prototype 객체는 constructor라는 프로퍼티 안에 실질적 부모인
+// Person 생성자 함수의 참조(주소) 값을 갖고 있다.
+// 따라서, me 객체는 생성됨과 동시에 부모가 Person.prototype으로 정의되며
+// Person.prototype의 상위 객체인 Object.prototype를 조상으로 가진다.
+// 따라서 me 객체는 Object.prototype의 프로퍼티를 모두 상속 받는다.
 console.log(me.__proto__);
 
 // me 객체를 생성한 함수는 Person
