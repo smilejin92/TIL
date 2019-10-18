@@ -115,7 +115,7 @@ console.log({}.__proto__ === Obejct.prototype); // true
 
 
 
-#### **`__proto__`** 접근자 프로퍼티를 통해 프로토타입에 접근하는 이유는 **상호 참조에 의해 프로토타입 테인이 생성되는 것을 방지하기 위함이다.**
+#### **`__proto__`** 접근자 프로퍼티를 통해 프로토타입에 접근하는 이유는 **상호 참조에 의해 프로토타입 체인이 생성되는 것을 방지하기 위함이다.**
 
 
 
@@ -127,7 +127,7 @@ const child = {};
 child.__proto__ = parent;
 
 // parent의 부모를 child로 설정
-parent.__proto__ = child; // TypeError: Cyclic __proto__ value
+parent.__proto__ = child; // TypeError: Cyclic __proto__ value (순환 참조)
 ```
 
 프로토타입 체인은 **단방향**링크드 리스트로 구현되어야 한다.
@@ -277,7 +277,7 @@ const regexr = /is/ig;
 | 배열 리터럴        | Array       | Array.prototype    |
 | 정규 표현식 리터럴 | RegExp      | RegExp.prototype   |
 
-Object 함수는 `new` 키워드를 만나면 **반드시 빈 객체를 생성하지만**, 객체 리터럴로 생성한 인스턴스는 Object가 `createObject`라는 추상 연산을 통해 생성한다. 하지만 Object 생성자 함수도 `createObject` 추상 연산을 하지 않는 것은 아니다 (using `new.target`)
+Object 함수는 `new` 키워드를 만나면 **반드시 빈 객체를 생성하지만**, 객체 리터럴로 생성한 인스턴스는 Object가 `createObject`라는 추상 연산을 통해 생성한다. 하지만 Object 생성자 함수도 `createObject` 추상 연산을 하지 않는 것은 아니다.
 
 객체 리터럴로 생성한 객체는 Object 생성자 함수가 생성한 것이라 생각할 수 있다.
 
@@ -312,7 +312,9 @@ function Person(name) {
 
 
 
-### 5.1 빌트인 생성자 함수와 프로토타입 생성 시점
+### 5.2 빌트인 생성자 함수와 프로토타입 생성 시점
+
+Object, String, Number, Function, Array, RegExp, Date, Promise 등과 같은 빌트인 생성자 함수도 일반 함수와 마찬가지로 빌트인 생성자 함수가 생성되는 시점에 프로토타입이 생성된다. 모든 빌트인 생성자 함수는 **전역 객체가 생성되는 시점에 생성된다.**
 
 
 
@@ -332,27 +334,90 @@ function Person(name) {
 
 ## 8. 캡슐화
 
+ex. 중첩함수
+
+자바스크립트는 클로저를 통해 정보를 은닉한다.
+
+생성자 함수 내에서 `this`에 묶지 않는다. 변수를 활용한다.
+
+렉시컬 스코프 (클로저) - 상위 스코프를 기억하고 죽는다 (in **[[Environment]]**)
+
+
+
 ## 9. 오버라이딩과 프로퍼티 쉐도잉
+
+프로토타입 메소드와 이름이 똑같은 인스턴스 메소드를 정의하면 오바라이드된다.
 
 
 
 ## 10. 프로토타입의 교체
 
+두 방법 다 권장하지 않는다. construcotr 프로퍼티와 생성자 함수 간의 연결을 파괴한다.
+
 ### 10.1 생성자 함수에 의한 프로토타입의 교체
 
+생성자 함수 안에서 프로토타입을 동적으로 교체. 인스턴스의 프로토타입의 프로퍼티인 constructor를 사용자가 정의한다. 생성자 함수의 prototype 프로퍼티에 다은 임의의 객체를 바인딩하는 것은 미래에 생성할 인스턴스의 프로토타입을 교체하는 것이다.
+
+```javascript
+function Person(name) {
+  this.name = name;
+  
+  Person.prototype = {
+    constructor: Person,
+    sayHello() {
+      console.log(`hi`);
+    }
+  }
+}
+```
+
+
+
 ### 10.2 인스턴스에 의한 프로토타입의 교체
+
+인스턴스의 프로퍼티인 `__proto__` 로 프로토타입을 교체, 이미 생성된 객체의 프로토타입을 교체하는 것이다.
 
 
 
 ## 11. `instanceof` 연산자
 
+`객체 instanceof 생성자 함수`
 
+좌변의 객체가 우변의 생성자 함수와 연결된 인스턴스라면 `true` 아니면 `false`이다. `instanceof` 연산자는 상속 관계를 고려한다. 
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+const me = new Person('Kim');
+
+console.log(me instanceof Person); // true
+console.log(me instanceof Object); // true
+```
+
+생성자 함수의 prototype 프로퍼티에 바인딩된 객체가 존재하는 지 검색한다. constructor 프로퍼티가 가리키는 생성자 함수를 찾는 것이 아니라 프로토타입 체인 상에 존재하는 프로토타입에 영향을 받는다. constructor와 링크가 끊어져도 프로토타입 체인에 영향을 주지 않는다. 따라서 `instanceof` 연산자도 영향을 받지 않는다.
 
 ## 12. 직접 상속
 
 ### 12.1 Object.create에 의한 직접 상속
 
+첫번째 매개변수에는 생성할 객체의 프로토타입(필수)을 전잘하고 두번째 매개변수에는 생성할 객체의 프로퍼티를 갖는 객체(옵션)를 전달.
+
+장점
+
+* new 연산자 없이 객체를 생성할 수 있다
+* 프로토타입을 지정하면서 객체를 생성할 수 있다. 생성자 함수와 프로토타입 간의 링크가 파괴되지 않는다.
+* 객체 리터럴에 의해 생성된 객체도 특정 객체를 상속받을 수 있다.
+
 ### 12.2 객체 리터럴 내부에서 `__proto__`에 의한 직접 상속
+
+```javascript
+const obj = {
+  y: 20,
+  __proto__: myProto
+};
+```
 
 
 
@@ -360,9 +425,11 @@ function Person(name) {
 
 
 
+
+
 ## 14. 프로퍼티 존재 확인
 
-
+`prop in object`
 
 ## 15. 프로퍼티 열거
 
