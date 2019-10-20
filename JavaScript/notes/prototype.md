@@ -310,8 +310,6 @@ console.log(obj.constructor === Object); // true
 
 일반 함수(함수 선언문, 함수 표현식)로 정의한 함수 객체는 `[[Construct]]` 내부 메소드를 가지고 있으며,  `new` 연산자와 함께 생성자 함수로서 호출할 수 있다. **프로토타입은 함수 정의가 평가되어 함수 객체를 생성하는 시점에 함께 생성된다.** 생성된 프로토타입의 프로토타입은 언제나 `Object.prototype`이다.
 
-**질문. Function 생성자 함수는?**
-
 ```javascript
 // 생성자 함수
 function Person(name) {
@@ -762,15 +760,152 @@ console.log(Object.getPrototypeOf(child) === parent); // true
 
 ## 13. 정적 프로퍼티/메소드
 
+정적(static) 프로퍼티(메소드 포함)는 생성자 함수로 인스턴스를 생성하지 않아도 참조/호출할 수 있는 프로퍼티를 말한다.
 
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+// Person 생성자 함수는 객체이므로 자신의 프로퍼티를 소유할 수 있다.
+Person.staticProp = 'static prop';
+Person.staticMethod = function () {
+  console.log('static method');
+};
+
+const me = new Person('Jin');
+
+// 생상자 함수에 추가한 정적 프로퍼티는 생성자 함수로 참조/호출한다.
+console.log(Person.staticProp); // static prop
+Person.staticMethod(); // static method
+
+// 정적 프로퍼티는 생성자 함수가 생성한 인스턴스로 참조/호출할 수 없다.
+console.log(me.staticProp); // undefined
+me.staticMethod(); // TypeError: me.staticMethod is not a function
+```
+
+<img src="./images/staticProperties.png" style="zoom:50%;" />
+
+**정적 프로퍼티는 생성자 함수에 의해 생성된 인스턴스의 프로토타입 체인에 속한 객체의 프로퍼티가 아니므로 인스턴스로 접근할 수 없다.**
+
+만약 인스턴스/프로토타입 메소드 내에서 `this`를 참조하지 않는다면, 그 메소드는 정적 메소드로 변경할 수 있다. 정적 메소드는 인스턴스를 생성하지 않아도 호출할 수 있다.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+// 함수도 객체로서 프로퍼티(메소드 포함)을 가질 수 있다.
+Person.sayHi = function () {
+  console.log('Hi');
+};
+
+Person.sayHi(); // Hi
+```
 
 
 
 ## 14. 프로퍼티 존재 확인
 
-`prop in object`
+`in` 연산자는 객체 내에 프로퍼티가 존재하는지 여부를 확인한다.
+
+```javascript
+// prop: 프로퍼티 키를 나타내는 문자열
+// object: 객체로 평가되는 표현식
+prop in object
+
+const person = {
+  name: 'Lee',
+  address: 'Seoul'
+};
+
+console.log('name' in person); // true
+console.log('address' in person); // true
+console.log('age' in person); // false
+```
+
+`in` 연산자는 확인 대상 객체의 프로퍼티 뿐만 아니라 확인 대상 객체가 **상속 받는 모든 프로토타입의 프로퍼티를 확인하므로 주의해야한다.**
+
+```javascript
+// person 객체는 Object.prototype의 프로퍼티 또한 상속 받는다.
+console.log('toString' in person); // true
+
+// 반면 Object.prototype.hasOwnProperty()는 자신을 호출한
+// 객체(인스턴스)를 this에 바인딩하여 해당 객체가 명시된 프로퍼티를
+// 가지고 있는지에 대해 참거짓을 반환한다.
+console.log(person.hasOwnProperty('name')); // true
+console.log(person.hasOwnProperty('toString')); // false
+```
 
 
 
 ## 15. 프로퍼티 열거
+
+### 15.1 `for...in` 문
+
+`for...in` 문은 객체의 **프로토타입 체인 상에 존재하는 모든 프로토타입의 프로퍼티 중에서 프로퍼티 어트리뷰트 `[[Enumerable]]`의 값이 `true`인 프로퍼티**를 순회하며 열거한다. (단, 순서는 보장되지 않는다.) 또한, 프로퍼티 키가 **심볼**인 프로퍼티는 열거하지 않는다. 
+
+```javascript
+const person = {
+  name: 'Lee',
+  address: 'Seoul',
+  [sym]: 10
+};
+
+// for...in 문의 변수 prop에 person 객체의 프로퍼티 키가 할당된다.
+// 단, 순서는 보장되지 않는다.
+for (const prop in person) {
+  // 프로토타입에 존재하는 프로퍼티 중 [[Enumerable]]이 true인 프로퍼티만 출력
+  // 프로퍼티 키가 심볼인 프로퍼티는 열거하지 않는다.
+  console.log(prop + ': ' + person[prop]);
+}
+
+// name: Lee
+// address: Seoul
+```
+
+상속받은 프로퍼티는 제외하고 객체 자신의 프로퍼티 만을 열거하려면 `Object.prototype.hasOwnProperty`메소드를 사용하여 객체 자신의 프로퍼티인지 확인해야 한다.
+
+```javascript
+for (const prop in person) {
+  // 객체 자신의 프로퍼티인지 확인한다.
+  if (person.hasOwnProperty(prop)) {
+    console.log(prop + ': ' + person[prop]);
+  }
+}
+```
+
+
+
+### 15.2 `Object.keys/values/entries` 메소드
+
+객체 자신의 프로퍼티만을 열거할 때는 `Object.keys/values/entries` 메소드를 사용하는 것을 권장한다.
+
+`Object.keys` 메소드는 객체 자신의 열거 가능한 프로퍼티 키를 배열로 반환한다.
+
+```javascript
+const person = {
+  name: 'Lee',
+  address: 'Seoul',
+  __proto__: { age: 20 }
+};
+
+console.log(Object.keys(person)); // ["name", "address"]
+```
+
+
+
+`Object.values` 메소드는 객체 자신의 열거 가능한 프로퍼티 값을 배열로 반환한다.
+
+```javascript
+console.log(Object.values(person)); // ["Lee", "Seoul"]
+```
+
+
+
+`Object.entries` 메소드는 객체 자신의 열거 가능한 프로퍼티 키와 값의 쌍을 배열에 담아 반환한다.
+
+```javascript
+console.log(Object.entries(person)); // [["name", "Lee"], ["address", "Seoul"]]
+```
 
