@@ -271,7 +271,8 @@ function printList() {
 // case 1 - 일반 함수로서 호출
 // window
 // ''
-// 질문 (arguments의 길이가 undefined로 잡힘. 전역 변수 arguments와 함수 내 arguments가 참조하는 객체가 다른 것 같음)
+// arguments의 길이가 undefined로 잡힘.
+// 전역 변수 arguments가 아닌 함수 내부의 arguments 객체를 참조하기 때문이다.
 printList();
 
 // case 2 - apply로 호출

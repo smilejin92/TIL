@@ -29,9 +29,13 @@ console.log(person); // {name: "Kim", sayHello: f}
 person.sayHello(); // Hi! My name is Kim
 ```
 
+
+
 생성자(constructor) 함수란 `new` 연산자와 함께 호출하여 객체(인스턴스)를 생성하는 함수를 말한다. 생성자 함수에 의해 생성된 객체를 **인스턴스(instance)**라 한다.
 
 > 인스턴스는 객체가 메모리에 저장되어 실제로 존재하는 것에 초점을 맞춘 용어이다. 생성자 함수도 객체이기 때문에 생성자 함수나 클래스가 생성한 객체를 다른 객체와 구분하기 위해 인스턴스라고 부른다.
+
+
 
 자바스크립트는 Object 생성자 함수 이외에도 다양한 빌트인 생성자 함수를 제공한다.
 
@@ -135,9 +139,10 @@ console.log(circle2.getDiameter()); // 20
 | 일반 함수로서 호출   | 전역 객체 (window, global)                |
 | 메소드로서 호출      | 메소드를 호출한 객체 (**person**.sayHi()) |
 | 생성자 함수로서 호출 | 생성자 함수가 생성할 인스턴스             |
-| 객체 리터럴????      | 자신????                                  |
 
 (more in ch. 21)
+
+
 
 자바스크립트에서 생성자 함수는 **일반 함수와 동일한 방법으로 정의하고 `new` 연산자와 함께 호출하면 해당 함수는 생성자 함수로 동작한다.**
 
@@ -164,8 +169,8 @@ console.log(radius); // 15;
 const person1 = new Person('Jinhyun');
 
 function Person(name) {
-  // 1. 빈 객체 Person {} 생성
-  // 2. this에 빈 객체 {} 할당
+  // 1. 빈 객체 {} 생성
+  // 2. this에 빈 객체 {} 바인딩
   // 3. 프로퍼티 동적 추가
   this.name = name;
   this.sayHi = function () {
@@ -196,19 +201,17 @@ foo.method = function() {
 foo.method(); // 10
 ```
 
+
+
 또한, 함수 객체는 함수로서 동작하기 위해 (호출, 생성) 추가적인 내부 슬롯과 내부 메소드를 가지고 있다.
 
-![](./images/function-internal-slots.png)
+<img src="./images/function-internal-slots.png" style="zoom:50%;" />
 
-(Internal Slots of ECMAScript Function Objects)
-
-![](./images/function-internal-methods.png)
-
-(Additional Essential Internal Methods of Function Objects)
+<img src="./images/function-internal-methods.png" style="zoom:50%;" />
 
 
 
-내부 메소드 [[Call]]을 갖는 함수 객체를 **callalble**이라 하며, 내부 메소드인 [[Construct]]를 갖는 함수 객체를 **constructor**, [[Construct]]를 갖지 않는 함수 객체를 **non-constructor**라고 부른다. 다시 말해, 모든 함수는 callable이지만 생성자 함수로서 호출할 수 있는 constructor 함수와 생성자 함수로서 호출할 수 없는 non-constructor로 함수로 나뉜다.
+내부 메소드 [[Call]]을 갖는 함수 객체를 **callalble**이라 하며, 내부 메소드인 [[Construct]]를 갖는 함수 객체를 **constructor**, [[Construct]]를 갖지 않는 함수 객체를 **non-constructor**라고 부른다. 다시 말해, **모든 함수는 callable**이지만 생성자 함수로서 호출할 수 있는 constructor 함수와 생성자 함수로서 호출할 수 없는 non-constructor로 함수로 나뉜다.
 
 
 
@@ -234,7 +237,7 @@ foo();
 new foo();
 ```
 
-함수가 힐반적은 함수로서 호출되면 함수 객체의 내부 메소드 [[Call]]이 호출되고, `new` 연산자와 함께 생성자 함수로서 호출되면 내부 메소드 [[Construct]]가 호출된다. 그렇다면 [[Construct]]를 갖지 않는 함수 객체 non-constructor는 어떻게 구분하는가?
+함수가 **일반 함수로서 호출되면 함수 객체의 내부 메소드 [[Call]]이 호출되고, `new` 연산자와 함께 생성자 함수로서 호출되면 내부 메소드 [[Construct]]가 호출된다.** 그렇다면 [[Construct]]를 갖지 않는 함수 객체 non-constructor는 어떻게 구분하는가?
 
 자바스크립트 엔진은 함수를 생성할 때, `FunctionCreate`이라는 추상 연산(abstract operation)을 사용한다. 추상 연산 `FunctionCreate`은 함수 정의가 평가될 때 호출된다. 이때 함수 정의 방식에 따라 `FunctionCreate`의 첫 번째 매개변수 `kind`에 함수의 종류를 나타내는 문자열이 전달된다.
 
@@ -279,23 +282,26 @@ new obj.x(); // TypeError: obj.x is not a constructor
 
 ### 2.5 생성자 함수의 인스턴스 생성 과정
 
-생성자 함수의 역할은 **인스턴스를 생성**하는 것과 인**스턴스를 초기화(인스턴스 프로퍼티 추가 및 초기값 할당)**하는 것이다. 인스턴스 생성은 필수이며, 생성된 인스턴스를 초기화하는 것은 옵션이다.
+생성자 함수의 역할은 **인스턴스를 생성**하는 것과 **생성된 인스턴스를 초기화(인스턴스 프로퍼티 추가 및 초기값 할당)**하는 것이다. 인스턴스 생성은 필수이고, 생성된 인스턴스를 초기화하는 것은 옵션이다.
 
 ```javascript
 // 생성자 함수
 function Circle(radius) {
+  // 빈 객체 {} 생성
+  // this에 빈 객체 {} 바인딩
   // 인스턴스 초기화
   this.radius = radius;
   this.getDiameter = function () {
     return 2 * this.radius;
   };
+  // return this;
 }
 
 // 인스턴스 생성
 const circle1 = new Circle(5); // 반지름이 5인 Circle 객체를 생성
 ```
 
-위의 생성자 함수 예제에서 인스턴스를 생성하고 반환하는 코드는 보이지 않는다. 이는 자바스크립트 엔진이 암묵적인 처리를 통해 인스턴스를 생성하고 반환하기 때문이다. `new` 연산자와 함께 생성자 함수가 호출되면 자바스크립트 엔진은 **아래의 과정**을 거쳐 인스턴스를 생성하고 인스턴스를 초기화한 후, 인스턴스를 반환한다.
+위의 생성자 함수 예제에서 인스턴스를 생성하고 반환하는 코드는 보이지 않는다. 이는 **자바스크립트 엔진이 암묵적인 처리를 통해 인스턴스를 생성하고 반환하기 때문이다.** `new` 연산자와 함께 생성자 함수가 호출되면 자바스크립트 엔진은 **아래의 과정**을 거쳐 인스턴스를 생성하고 인스턴스를 초기화한 후, 인스턴스를 반환한다.
 
 
 
@@ -381,7 +387,7 @@ console.log(circle); // {}
 
 ### 2.6 new.target
 
-`new` 연산자 없이 생성자 함수를 호출하는 것을 방지하기 위해 사용한다. `new.target`은 `this`와 유사하게 모든 함수 내부에서 암묵적인 지역 변수와 같이 사용되며 메타 프로퍼티(meta property)라고 부른다. 단, IE에서는 `new.target`을 지원하지 않는다.
+`new` 연산자 없이 생성자 함수를 호출하는 것을 방지하기 위해 사용한다. `new.target`은 `this`와 유사하게 모든 함수 내부에서 암묵적인 지역 변수와 같이 사용되며 **메타 프로퍼티(meta property)**라고 부른다. 단, IE에서는 `new.target`을 지원하지 않는다.
 
 **함수 내부에서 `new.target`을 사용하면 `new` 연산자와 함께 함수가 호출되었는지 확인할 수 있다.** `new` 연산자와 함께 호출되면 함수 내부의 `new.target`은 함수 자신을 가리킨다. `new` 연산자 없이 호출된 함수 내부의 `new.target`은 `undefined`이다.
 
@@ -411,11 +417,13 @@ console.log(circle.getDiameter()); // 10
 >
 > `new.target`은 ES6에서 도입된 최신 문법으로 IE에서는 지원하지 않는다. `new.target`을 사용할 수 없는 상황이라면 스코프 세이프 생성자 패턴을 사용할 수 있다.
 
+
+
 ```javascript
 // Scope-Safe Constructor Pattern
 function Circle(radius) {
   // 이 함수가 new 연산자와 함께 호출되지 않았다면 이 시점의 this는 전역 객체 window를 가리킨다.
-  // this (window)가 Circle의 인스턴스인가?
+  // this(window)가 Circle의 인스턴스인가?
   if (!(this instanceof Circle)) {
     // new 연산자와 함께 호출하여 생성된 인스턴스를 반환한다.
     return new Circle(radius);
