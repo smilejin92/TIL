@@ -646,42 +646,116 @@ me.sayHello(); // Hi! My name is Lee
 
 ## 11. `instanceof` 연산자
 
-`객체 instanceof 생성자 함수`
+`instanceof` 연산자는 이항 연산자로서 **좌변에 객체를 가리키는 식별자, 우변에 생성자 함수를 가리키는 식별자**를 피연산자로 받는다. 만약 **우변의 피연산자가 함수가 아닌 경우 TypeError가 발생한다.**
 
-좌변의 객체가 우변의 생성자 함수와 연결된 인스턴스라면 `true` 아니면 `false`이다. `instanceof` 연산자는 상속 관계를 고려한다. 
+좌변의 객체가 우변의 생성자 함수와 연결된 인스턴스라면 `true`로 평가되며, 그렇지 않을 경우 `false`로 평가된다. `instanceof` 연산자는 **상속 관계를 고려한다**.
 
 ```javascript
+// 생성자 함수
 function Person(name) {
   this.name = name;
 }
 
-const me = new Person('Kim');
+const me = new Person('Lee');
 
+// me 객체는 Person 생성자 함수에 의해 생성된 인스턴스이다.
 console.log(me instanceof Person); // true
-console.log(me instanceof Object); // true
+
+// instanceof 연산자는 상속 관계를 고려한다.
+// me 객체는 Object.prototype도 상속 받는다.
+console.log(me instanceof Object.prototype); // true
 ```
 
-생성자 함수의 prototype 프로퍼티에 바인딩된 객체가 존재하는 지 검색한다. constructor 프로퍼티가 가리키는 생성자 함수를 찾는 것이 아니라 프로토타입 체인 상에 존재하는 프로토타입에 영향을 받는다. constructor와 링크가 끊어져도 프로토타입 체인에 영향을 주지 않는다. 따라서 `instanceof` 연산자도 영향을 받지 않는다.
+`instanceof` 연산자는 프토토타입의 `constructor` 프로퍼티가 가리키는 생성자 함수를 찾는 것이 아니라, 프로토타입 체인 상에 존재하는 프로토타입에 영향을 받는다. **즉, `instanceof` 연산자는 `생성자 함수.prototype`이 가리키는 객체가 프로토타입 체인 상에 존재하는지 확인한다.**
+
+
 
 ## 12. 직접 상속
 
 ### 12.1 Object.create에 의한 직접 상속
 
-첫번째 매개변수에는 생성할 객체의 프로토타입(필수)을 전잘하고 두번째 매개변수에는 생성할 객체의 프로퍼티를 갖는 객체(옵션)를 전달.
+`Object.create` 메소드는 명시적으로 프로토타입을 지정하여 새로운 객체를 생성한다. 
 
-장점
+**Object.create(O, Properties)**
+
+**첫번째 매개변수에는 생성할 객체의 프로토타입(필수)을 전달하고** 두번째 매개변수에는 생성할 객체의 프로퍼티를 갖는 객체(옵션)를 전달.
+
+```javascript
+// 프로토타입이 null인 객체 생성
+let obj = Object.create(null);
+console.log(Object.getPrototypeOf(obj) === null); // true
+
+// 프로토타입이 Object.prototype인 객체 생성
+obj = Object.create(Object.prototype); // obj = {};
+console.log(Object.getPrototypeOf(obj) === Object.prototype); // true
+
+// 프로토타입이 Object.prototype인 객체에 프로퍼티 x를 1로 정의
+obj = Object.create(Object.prototype, {
+  x : {
+    value: 1
+  }
+});
+console.log(obj.x); // 1
+console.log(Object.getPrototypeOf(obj) === Object.prototype); // true
+
+// 객체를 직접 상속
+const myProto = { x: 10 };
+obj = Object.create(myProto);
+
+console.log(obj.x); // 10
+// obj -> myProto -> Object.prototype -> null
+console.log(Object.getPrototypeOf(obj) === myProto); // true
+
+// 생성자 함수
+function Person(name) {
+  this.name = name;
+}
+
+// obj = new Person('Lee');
+// obj -> Person.prototype -> Object.prototype -> null
+obj = Object.create(Person.prototype);
+obj.name = 'Lee';
+console.log(obj.name); // Lee
+console.log(Object.getPrototypeOf(obj) === Person.prototype); // true
+
+```
+
+`Object.create`의 장점
 
 * new 연산자 없이 객체를 생성할 수 있다
 * 프로토타입을 지정하면서 객체를 생성할 수 있다. 생성자 함수와 프로토타입 간의 링크가 파괴되지 않는다.
 * 객체 리터럴에 의해 생성된 객체도 특정 객체를 상속받을 수 있다.
 
+```javascript
+const parent = { a: 1 };
+const child = Object.create(parent);
+
+console.log(parent.hasOwnProperty('a')); // true
+console.log(parent.isPrototypeOf(child)); // true
+console.log(parent.propertyIsEnumerable('a')); // true
+```
+
+ESLint에서는 위 예제와 같이 `Object.create`의 빌트인 메소드를 객체가 직접 호출하는 것을 비추천하고 있다. 그 이유는 **`Object.create` 메소드를 통해 프로토타입 체인을 생성하지 않는 객체(종점에 위치하는) 객체를 생성할 수 있기 때문이다. 이러한 객체는 `Object.prototype`의 빌트인 메소드를 사용할 수 없다 (사용하려면 `this` 바인딩을 해줘야한다).**
+
+
+
 ### 12.2 객체 리터럴 내부에서 `__proto__`에 의한 직접 상속
 
+ES6에서는 객체 리터럴 내부에서 `__proto__` 접근자 프로퍼티를 사용하여 직접 상속을 구현할 수 있다.
+
 ```javascript
-const obj = {
+const parent = { x: 10 };
+
+// 객체 리터럴에 의해 객체를 생성하면서 프로토타입을 지정하여 직접 상속받을 수 있다.
+const child = {
   y: 20,
-  __proto__: myProto
+  // 객체를 직접 상속 받는다.
+  // const child = Object.create(parent, { y: { value: 20} });
+  __proto__: parent
 };
+
+console.log(obj.x, obj.y); // 10 20
+console.log(Object.getPrototypeOf(child) === parent); // true
 ```
 
 
@@ -695,6 +769,8 @@ const obj = {
 ## 14. 프로퍼티 존재 확인
 
 `prop in object`
+
+
 
 ## 15. 프로퍼티 열거
 
