@@ -6,14 +6,24 @@
 
 메소드는 자신이 속한 객체의 프로퍼티를 **참조하고 상태를 변경할 수 있어야한다.** 이때 메소드가 자신이 속한 객체의 프로퍼티를 참조하려면 먼저 **자신이 속한 객체를 가리키는 식별자를 참조할 수 있어야 한다.** 
 
-**`this`는 객체 자신의 프로퍼티나 메소드를 참조하기 위한 자기 참조 변수(self-referencing variable)이다. 단, 자바스크립트에서 `this`가 가리키는 값(`this` 바인딩)은 함수 호출 방식에 의해 동적으로 결정된다.** 
+**`this`는 객체 자신의 프로퍼티나 메소드를 참조하기 위한 자기 참조 변수(self-referencing variable)이다.** 함수를 호출하면 `arguments` 객체와 `this`가 암묵적으로 함수 내부에 전달된다. 함수 내부에서 `arguments` 객체를 지역 변수처럼 사용할 수 있는 것 처럼 `this`도 지역 변수처럼 사용할 수 있다. **단, 자바스크립트에서 `this`가 가리키는 값은 함수 호출 방식에 의해 동적으로 결정된다.**
+
+> **바인딩(binding)**
+>
+> 식별자와 값을 연결하는 과정을 의미한다.
 
 
 
 **전역에서 `this`를 참조할 경우 / 일반 함수로서 호출**
 
 ```javascript
-console.log(this); // window
+console.log(this); // window (global variable)
+
+function foo() {
+  console.log(this); // window (global variable)
+}
+
+foo();
 ```
 
 
@@ -25,6 +35,7 @@ const circle = {
   radius: 5,
   getDiameter() {
     // this는 메소드를 호출한 객체를 가리킨다.
+    console.log(this); // { radius: 5, getDiameter: f }
     return 2 * this.radius;
   }
 };
@@ -39,6 +50,7 @@ console.log(circle.getDiameter()); // 10
 ```javascript
 function Circle(radius) {
   // this는 생성자 함수가 미래에 생성할 인스턴스를 가리킨다.
+  console.log(this); // Circle { radius: 5 }
   this.radius = radius;
 }
 
@@ -56,6 +68,14 @@ const circle = new Cirlce(5);
 ## 2. 함수 호출 방식과 `this` 바인딩
 
 **`this`가 가리키는 값, 즉 `this` 바인딩은 함수가 어떻게 호출되었는지에 따라 동적으로 결정된다.**
+
+
+
+> **렉시컬 스코프와 this 바인딩은 결정 시기가 다르다.**
+>
+> 함수의 상위 스코프를 결정하는 방식인 렉시컬 스코프는 함수 정의가 평가되어 함수 객체가 생성되는 시점에 상위 스코프를 결정한다. 반면 `this`에 바인딩될 객체는 **함수 호출 시점에 결정된다.**
+
+
 
 | 함수 호출 방식                                      | this가 가리키는 값                        |
 | --------------------------------------------------- | ----------------------------------------- |
@@ -107,15 +127,52 @@ function foo() {
 }
 
 foo();
+// window
+// window
 ```
 
-**어떠한 함수라도 일반 함수로 호출되면 `this`에는 전역 객체(Global object)가 바인딩된다.**
-
-
+**어떠한 함수라도 일반 함수로 호출되면 `this`에는 전역 객체(Global object)가 바인딩된다.** 다만, `this`는 객체의 프로퍼티나 메소드를 참조하기 위한 자기 참조 변수이므로 **객체를 생성하지 않는 일반 함수에서 `this`는 의미가 없다.** 따라서 strict mode(엄격모드)가 적용된 일반 함수 내부의 `this`에는 `undefined`가 바인딩된다.
 
 ```javascript
-var value = 1; // 전역 변수
+function foo() {
+  'use strict';
+  
+  console.log("foo's this: ", this); // undefined
+  function bar() {
+    console.log("bar's this: ", this); // undefined
+  }
+  bar();
+}
+foo();
+// undefined
+// undefined
+```
 
+
+
+메소드 내에서 정의한 **중첩 함수도 일반 함수로 호출되면 중첩 함수 내부의 `this`에는 전역 객체가 바인딩된다.**
+
+```javascript
+const obj = {
+  value: 100,
+  // 메소드
+  foo() {
+    console.log("foo's this: ", this); // { value: 100, foo: f }
+    // 메소드 내에서 정의한 중첩 함수
+    function bar() {
+      console.log("bar's this: ", this); // window
+    }
+    bar(); // window
+  }
+}
+obj.foo();
+// { value: 100, foo: f }
+// window
+```
+
+콜백 함수 내부의 `this`에도 전역 객체가 바인딩된다.
+
+```javascript
 const obj = {
   value: 100,
   foo() {
@@ -124,7 +181,6 @@ const obj = {
     // 콜백 함수 내부의 this에는 전역 객체가 바인딩된다.
     setTimeout(function () {
       console.log(this); // window
-      console.log(this.value); // 1
     }, 100);
   }
 };
@@ -133,6 +189,8 @@ obj.foo();
 ```
 
 **메소드 내에서 정의한 중첩 함수 또는 메소드에게 전달한 콜백 함수의 `this`가 전역 객체를 바인딩하는 것은 문제가 있다.** 중첩 함수 또는 콜백 함수는 외부 함수를 돕는 헬퍼 함수로서 외부 함수의 일부 로직을 대신하는 경우가 대부분이다. 하지만 외부 함수인 메소드와 중첩 함수의 `this`가 일치하지 않는다는 것은 문맥상 맞지 않는다.
+
+
 
 아래의 코드로 메소드와 콜백 함수의 `this`를 맞춰준다.
 
@@ -144,9 +202,12 @@ const obj = {
   foo() {
     setTimeout(function () {
       console.log(this.value); // 100
-    }.bind(this), 100)
+    }.bind(this), 100);
+  // 메소드 foo가 정의될 때 기억하는 this(foo를 호출한 객체)를 콜백 함수에 바인딩한다.
   }
 };
+
+obj.foo();
 ```
 
 
@@ -167,6 +228,8 @@ const person = {
 // 메소드 getName을 호출한 객체는 person이다.
 console.log(person.getName());
 ```
+
+
 
 **주의할 것은 메소드 내부의 `this`는 메소드를 소유한 객체가 아닌 메소드를 호출한 객체에 바인딩된다는 것이다.** 위 예제의 `getName` 메소드는 `person` 객체의 메소드로 정의되었다. **메소드는 프로퍼티에 바인딩된 함수이다.** 즉, `person` 객체와 `getName` 프로퍼티가 가리키는 함수 객체는 **별도의 객체이다.**
 
@@ -192,8 +255,16 @@ console.log(anotherPerson.getName()); // Kim
 const getName = person.getName;
 
 // 메소드 getName을 일반 함수로 호출
-console.log(getName()); // '' 질문 ---------- 왜 브라우저에서도 undefined가 아닌가?
+console.log(getName()); // ''
+// getName()을 일반함수로 호출하면, getnName() 내부의 this는 전역 객체를 나타낸다.
+// 따라서, 브라우저 환경에서는 this가 window를 가리키며, window에는
+// 브라우저 창의 이름을 나타내는 name이라는 빌트인 프로퍼티가 존재한다.
+// window.name의 값은 ''이다.
 ```
+
+![](./images/this-binding.png)
+
+따라서 메소드 내부의 `this`는 메소드를 소유한 객체와는 관계가 없고, 메소드를 호출한 객체에 바인딩된다.
 
 
 
@@ -257,10 +328,9 @@ Function.prototype.bind(this)
 <img src="./images/apply-call-bind.png" style="zoom:50%;" />
 
 ```javascript
-var arguments = [1, 2, 3];
-
 function printList() {
   let result = '';
+  console.log(arguments);
   for (let i = 0; i < arguments.length; i++) {
     result += `${arguments[i]} `;
   }
@@ -268,32 +338,34 @@ function printList() {
   console.log(result);
 }
 
+printList();
 // case 1 - 일반 함수로서 호출
+// {}
 // window
 // ''
-// arguments의 길이가 undefined로 잡힘.
-// 전역 변수 arguments가 아닌 함수 내부의 arguments 객체를 참조하기 때문이다.
-printList();
+// 인수를 전달하지 않았으므로 arguments의 길이가 0으로 잡힘.
 
 // case 2 - apply로 호출
 // this로 사용할 객체
 const this1 = {name: 'apply'};
-// this1 {name: 'apply'};
-// 2, 3, 4
 printList.apply(this1, [2, 3, 4]);
+// { '0': 2, '1': 3, '2': 4 }
+// { name: 'apply' };
+// 2 3 4
 
 // case 3 - call로 호출
 // this 로 사용할 객체
 const this2 = {name: 'call'};
-// this2 {name: 'call'};
-// 3, 4, 5
 printList.call(this2, 3, 4, 5);
+// {'0': 3, '1': 4, '2': 5}
+// {name: 'call'};
+// 3 4 5
 
 ```
 
 **`apply`와 `call` 메소드의 본질적인 기능은 함수를 호출하는 것이다.** `apply`와 `call` 메소드는 호출할 함수에 인수를 전달하는 방식만 다를 뿐 동일하게 동작한다. 
 
-`apply`와 `call` 메소드의 대표적인 용도는 `arguments` 객체와 같은 유사 배열 객체에 **배열 메소드를 사용하는 경우이다.** `arguments` 객체는 배열이 아니기 때문에 `Arrays.prototype.slice`와 같은 배열의 메소드를 사용할 수 없으니 `apply`와 `call` 메소드를 이용하면 가능하다.
+`apply`와 `call` 메소드의 대표적인 용도는 `arguments` 객체와 같은 유사 배열 객체에 **배열 메소드를 사용하는 경우이다.** `arguments` 객체는 배열이 아니기 때문에 `Arrays.prototype.slice`와 같은 배열의 메소드를 사용할 수 없으나 `apply`와 `call` 메소드를 이용하면 가능하다.
 
 ```javascript
 function convertArgstoArray() {
@@ -303,7 +375,8 @@ function convertArgstoArray() {
   // apply는 Function.prototype의 메소드이고 함수 객체만 사용할 수 있다.
   // 즉, Array.prototype.slice까지를 함수로 취급한다
   const arr = Array.prototype.slice.apply(arguments);
-  
+  // const arr = Array.prototype.slice.apply(arguments);
+  console.lg(arr);
   return arr;
 }
 
@@ -342,12 +415,14 @@ Person.prototype.doSomething = function (callback) {
   callback.bind(this)();
 };
 
+// callback 함수
 function foo() {
   console.log(this.name);
 }
 
 const person = new Person('Lee');
 
+// callback 함수로 foo를 전달
 person.doSomething(foo); // Lee
 ```
 
