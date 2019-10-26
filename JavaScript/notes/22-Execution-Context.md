@@ -271,17 +271,17 @@ window.__proto__.__proto__.__proto__.__proto__ === Object.prototype; // true
 
 ### 7.2 전역 코드 평가
 
+```javascript
 1. 전역 실행 컨텍스트 생성
-
 2. 전역 렉시컬 환경 생성
-
    1. 전역 환경 레코드 생성
       1. 객체 환경 레코드 생성
       2. 선언적 환경 레코드 생성
    2. 외부 렉시컬 환경에 대한 참조 할당
    3. this 바인딩
+```
 
-   
+
 
 ![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\execution-context.png)
 
@@ -442,11 +442,13 @@ foo(20); // 42
 
  `foo` 함수가 호출되면 전역 코드의 실행을 일시 중단하고 `foo` 함수 내부로 코드의 제어권이 이동한다. 그리고 함수 코드를 평가하기 시작한다. 함수 코드 평가는 아래 순서로 진행된다.
 
+```javascript
 1. 함수 실행 컨텍스트
 2. 함수 렉시컬 환경 생성
    1. 함수 환경 레코드 생성
    2. 외부 렉시컬 환경에 대한 참조 할당
    3. this 바인딩
+```
 
 <img src="./images/flow-8.png" style="zoom:50%;" />
 
@@ -469,6 +471,8 @@ foo(20); // 42
 #### 2.1 함수 환경 레코드 생성
 
 함수 렉시컬 환경을 구성하는 컴포넌트 중 하나인 **함수 환경 레코드(Function Environment Record)**는 매개 변수, `arguments` 객체, 함수 내에서 선언한 변수와 중첩 함수 정의를 등록하고 관리한다.
+
+(질문. 함수 환경 레코드는 `var` 키워드로 선언된 변수나 `let`, `const` 키워드로 선언된 변수 구분 없이 한꺼번에 관리 하는지?)
 
 ![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-10.png)
 
@@ -602,6 +606,8 @@ console.log(x); // 1
 ```
 
 `if` 문이 실행되면 `if` 문의 블록 레벨 스코프를 생성해야 한다. 이를 위해 `if` 문을 위한 **선언적 환경 레코드를 갖는 렉시컬 환경을 새롭게 생성하여 기존의 전역 렉시컬 환경을 교체한다.** 이때 새롭게 생성된 `if` 문을 위한 렉시컬 환경의 외부 렉시컬 환경(상위 스코프)에 대한 참조는 교체된 이전의 전역 렉시컬 환경을 가리킨다.
+
+(질문. 블록 렉시컬 환경에서 `var` 키워드로 변수를 선언하면, 환경 레코드에 OER-객체환경 레코드가 생성되는지?)
 
 <img src="./images/block-lexical-envir.png" style="zoom:50%;" />
 
