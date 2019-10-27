@@ -678,6 +678,119 @@ console.log(me); // Person { name: 'Kim' }
 
 최신 브라우저와 최신 Node.js는 표준 사양으로 승급이 확실시되는 이 제안을 미리 구현해 놓았다. 따라서 최신 브라우저와 최신 Node.js에서는 아래 예제와 같이 클래스 필드를 클래스 몸체에 정의할 수 있다.
 
+```javascript
+class Person {
+  // 클래스 필드 정의
+  name = 'Kim';
+}
+
+const me = new Person();
+console.log(me); // Person {name: "Kim"}
+```
+
+---
+
+클래스 몸체에서 클래스 필드를 정의하는 경우, `this`에 클래스 필드를 바인딩해서는 안된다. **`this`는 클래스의 constructor와 메소드 내에서만 유효하다.**
+
+```javascript
+class Person {
+  // this에 클래스 필드를 바인딩해서는 안된다.
+  this.name = ''; // SyntaxError: Unexpected token .
+}
+```
+
+---
+
+**클래스 필드를 참조하는 경우**, Java와 같은 클래스 기반 객체지향 언어에서는 `this`를 생략할 수 있으나 **자바스크립트에서는 `this`를 반드시 사용해야 한다.**
+
+```javascript
+class Person {
+  // 클래스 필드
+  name = 'Kim';
+
+  counstructor() {
+    console.log(name); // ReferenceError: name is not defined
+  }
+}
+```
+
+---
+
+클래스 필드에 초기값을 할당하지 않으면 `undefined`를 갖는다.
+
+```javascript
+class Person {
+  // 클래스 필드를 초기화하지 않으면 undefined를 갖는다.
+  name;
+}
+
+const me = new Person();
+console.log(me); // Person {name: undefined}
+```
+
+---
+
+인스턴스를 생성할 때, 외부의 초기값으로 클래스 필드를 초기화해야 할 필요가 있다면 constructor에서 클래스 필드를 초기화해야한다.
+
+```javascript
+class Person {
+  name;
+    
+  counstructor(name) {
+    // 클래스 필드 초기화
+    this.name = name;
+  }
+}
+const me = new Person('Kim');
+console.log(me); // Person {name: 'Kim'}
+```
+
+이처럼 인스턴스를 생성할 때, 클래스 필드를 초기화할 필요가 있다면 constructor 밖에서 클래스 필드를 정의할 필요가 없다. 클래스 필드를 초기화할 필요가 있다면 어차피 constructor 내부에서 클래스 필드를 참조하여 초기값을 할당해야 한다. 클래스가 생성한 인스턴스에 클래스 필드에 해당하는 프로퍼티가 없다면 자동 추가되기 때문이다.
+
+```javascript
+class Person {
+  firstName;
+  constructor(lastName) {
+    this.lastName = lastName;
+  }
+}
+
+const me = new Person('Kim');
+
+console.log(me); // Person { firstName: undefined, lastName: 'Kim }
+
+```
+
+---
+
+함수는 일급 객체이므로 **함수를 클래스 필드에 할당할 수 있다.** 따라서 클래스 필드를 통해 메소드를 정의할 수도 있다.
+
+```javascript
+class Person {
+  // 클래스 필드에 문자열을 할당.
+  name = 'Kim';
+
+  // 클래스 필드에 함수를 할당
+  getName = function () {
+    return this.name;
+  };
+  // getName = () => this.name;
+}
+
+const me = new Person();
+console.log(me); // Person {name: 'Kim', getName: f}
+console.log(me.getName()); // Kim
+```
+
+클래스 필드에 함수를 할당하는 경우, 이 함수는 **인스턴스의 메소드가 된다. 모든 클래스 필드는 인스턴스 프로퍼티가 되기 때문이다.**
+
+---
+
+클래스 필드 정의 제안으로 인해 인스턴스 프로퍼티를 정의하는 방식은 2가지가 되었다.
+
+* 인스턴스를 생성할 때 외부 초기값으로 **클래스 필드를 초기화할 필요가 있다면** 기존의 constructor에서 인스턴스 프로퍼티를 정의하는 방식을 사용
+*  인스턴스를 생성할 때 외부 초기값으로 **클래스 필드를 초기화할 필요가 없다면** 기존의 constructor에서 인스턴스 프로퍼티를 정의하는 방식과 클래스 필드 정의 제안 모두 사용할 수 있다. 
+
 
 
 ### 7.4 private 필드 정의 제안
