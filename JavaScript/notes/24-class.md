@@ -795,13 +795,469 @@ console.log(me.getName()); // Kim
 
 ### 7.4 private 필드 정의 제안
 
+constructor 메소드 내부에서 `this`를 통해 정의한 인스턴스 프로퍼티는 인스턴스를 통해 클래스 외부에서 언제나 참조할 수 있다 (public 하다).
+
+ES6의 클래스는 다른 객체지향 언어처럼 `private`, `public`, `protected` 키워드와 같은 접근 제한자(access modifier)를 지원하지 않는다.
+
+생성자 함수에서는 클로저를 사용하여 private한 프로퍼티를 흉내낼 수 있었다. 단, private한 프로퍼티를 흉내낸 자유 변수에 접근하면 에러가 발생하지 않고 `undefined`를 반환하므로 아쉬움이 남는다.
+
+```javascript
+// ES5
+var Person = (function () {
+  // 자유 변수이며 private하다
+  var _name = '';
+    
+  // 생성자 함수
+  function Person(name) {
+    _name = name;
+  }
+  
+  // 프로토타입 메소드. 이 메소드는 클로저이다.
+  Person.prototype.sayHi = function () {
+    console.log('Hi! My name is ' + _name);
+  }
+    
+  // 생성자 함수를 반환
+  return Person;
+}());
+
+// 인스턴스 생성
+var me = new Person('Kim');
+
+// _name에 접근할 수 없다.
+console.log(me); // Person {}
+
+// private한 프로퍼티를 흉내낸 자유 변수에 접근하면
+// 에러가 발생하지 않고 undefined를 반환한다.
+// 질문. me._name 참조하면 undefined가 나오는게 me 객체에 _name 프로퍼티를
+// 동적으로 추가하여 undefined로 초기화 하는게 아니었는지?
+console.log(me); // Person { _name: undefined }
+
+console.log(me._name); // undefined
+
+// 클로저인 Person.prototype.sayHi만 private한 자유 변수 _name을 기억한다.
+me.sayHi(); // Hi! My name is Kim
+
+```
+
+하지만 클래스는 클래스 몸체에 변수를 선언할 수 없으므로 위 예제와 같은 방식으로 private한 프로퍼티를 흉내낼 수 없다.
+
+```javascript
+class Person {
+  // 클래스 몸체에 변수를 선언할 수 없다.
+  let name = ''; // SyntaxError: Unexpected identifier
+}
+```
+
+클래스 필드 정의 제안을 사용해도 클래스 필드는 기본적으로 public하기 때문에 외부에 그대로 노출된다.
+
+```java
+class Person {
+  // 클래스 필드는 기본적으로 public하다.
+  name = 'Kim';
+}
+
+// 인스턴스 생성
+const me = new Person();
+console.log(me.name); // Kim
+```
+
+
+
+2019년 11월 TC39 프로세스의 stage 3(candidate)에는 **private 필드를 정의할 수 있는 새로운 표준 사양이 제안되어 있다.** 표준 사양으로 승급이 확실시 되는 이 제안도 최신 브라우저(Chrome 74 이상)와 최신 Node.js(버전 12 이상)에 이미 구현되어 있다.
+
+private 필드의 선두에는 `#`을 붙여준다. private 필드를 참조할 때도 `#`을 붙여주어야 한다.
+
+```javascript
+class Person {
+  // private 필드 정의
+  #name = '';
+  
+  constructor(name) {
+    // private 필드 참조
+    this.#name = name;
+  }
+}
+
+const me = new Person('Kim');
+
+// private 필드 #name은 클래스 외부에서 참조할 수 없다.
+console.log(me.#name);
+// SyntaxError: Private field '#name' must be declared in an enclosing class
+```
+
+자바스크립트에서는 클래스 객체지향 언어처럼 `private`, `public`, `protected` 키워드와 같은 접근 제한자(access modifier)가 지원되지는 않는다.
+
+> **TypeScript**
+>
+> 자바스크립트의 Superset(상위 확장)인 TypeScript는 클래스 기반 객체 지향 언어가 지원하는 접근 제한자를 모두 지원하며 의미 또한 기본적으로 동일하다.
+
+public 필드는 어디서든지 참조할 수 있지만 **private 필드는 클래스 내부에서만 참조할 수 있다.**
+
+| 접근 가능성                 | public | private |
+| --------------------------- | ------ | ------- |
+| 클래스 내부                 | O      | O       |
+| 자식 클래스 내부            | O      | X       |
+| 클래스 인스턴스를 통한 접근 | O      | X       |
+
+부모 클래스를 포함한 클래스 외부에서 private 필드에 직접 접근할 수 있는 방법은 없다. 다만 **접근자 프로퍼티를 통해 간접적으로 접근하는 방법은 유효하다.**
+
+```javascript
+class Person {
+  // private 필드 정의
+  #_name; // undefined
+  
+  constructor(name) {
+    this.#_name = name;
+  }
+
+  // name은 접근자 프로퍼티이며, Person.prototype의 프로퍼티가 된다.
+  get name() {
+    return this.#_name;
+  }
+}
+
+const me = new Person('Kim');
+console.log(me.name); // Kim
+console.log(me.hasOwnProperty('name')); // false
+console.log(Person.prototype.hasOwnProperty('name')); // true
+```
+
+
+
+**private 필드는 반드시 클래스 몸체에 정의해야 한다.** private 필드를 직접 constructor에 정의하면 에러가 발생한다.
+
+```javascript
+class Person {
+  constructor(name) {
+    // private 필드는 클래스 몸체에서 정의해야 한다.
+    this.#name = name;
+    // SyntaxError: Private field '#name' must be declared in an enclosing class
+  }
+}
+```
+
+
+
+
+
 ### 7.5 static 필드 정의 제안
+
+클래스에는 static **메소드**를 정의할 수 있지만, static **필드**를 정의할 수는 없다. 하지만 static public 필드, static private 필드, static private 메소드를 정의할 수 있는 새로운 표준 사양인 **Static class features**가 2019년 11월 TC39 프로세스의 stage 3(candidate)에 제안되어 있다. 이 제안 중에 static public/private 필드는 2019년 11월 최신 브라우저(Chrome 72 이상)와 최신 Node.js(버전 12 이상)에 이미 구현되어 있다.
+
+```javascript
+class MyMath {
+  // static public 필드 정의
+  static PI = 22 / 7;
+
+  // static private 필드 정의
+  static #num = 10;
+  
+  // static 메소드
+  static increment() {
+    return ++MyMath.#num;
+  }
+}
+```
+
+
+
+
 
 
 
 ## 8. 상속에 의한 클래스 확장
 
+### 8.1 클래스 상속과 생성자 함수 상속
 
+프로토타입 기반 상속은 프로토타입 체인에 의해 객체의 리소스를 상속 받는다. **상속에 의한 클래스 확장은 기존의 클래스를 상속 받아 새로운 클래스를 확장하여 정의하는 것이다.**
+
+<img src="./images/class-6.png" style="zoom:48%;" />
+
+클래스와 생성자 함수는 둘 다 인스턴스를 생성하는 함수라는 점에서 매우 유사하다. 하지만 클래스는 상속을 통해 기존의 클래스를 확장할 수 있는 문법이 제공되지만 생성자 함수는 그렇지 않다.
+
+예를 들어 동물을 나타내는 Animal 클래스와 새와 사자를 나타내는 Bird, Lion 클래스를 정의한다고 했을때, 새와 사자는 모두 동물의 속성을 갖는다. 하지만 새와 사자는 자신만의 고유한 속성도 갖는다. 이때 Animal 클래스는 동물의 속성을 표현하고 Bird, Lion 클래스는 Animal 클래스의 속성을 상속 받으며 자신만의 고유한 속성만을 추가하여 확장할 수 있다.
+
+<img src="./images/class-7.png" style="zoom:48%;" />
+
+
+
+이처럼 상속에 의한 클래스 확장은 **코드 재사용 관점에서 매우 유용하다.** 상속을 통해 Animal 클래스를 확장한 Bird 클래스를 구현하면 아래와 같다.
+
+```javascript
+class Animal {
+  constructor(age, weight) {
+    this.age = age;
+    this.weight = weight;
+  }
+    
+  eat() {
+    return 'eat';
+  }
+    
+  move() {
+    return 'move';
+  }
+}
+
+class Bird extends Animal {
+  fly () {
+    return 'fly';
+  }
+}
+
+const bird = new Bird(1, 5);
+
+console.log(bird); // Bird { age: 1, weight: 5 }
+console.log(bird instanceof Bird); // true
+console.log(bird instanceof Animal); // true
+
+console.log(bird.ear()); // eat
+console.log(bird.move()); // move
+console.log(bird.fly()); // fly
+```
+
+확장된 클래스 Bird에 의해 생성된 인스턴스의 프로토타입 체인은 아래와 같다.
+
+<img src="./images/class-8.png" style="zoom:48%;" />
+
+
+
+클래스는 상속을 통해 다른 클래스를 확장할 수 있는 문법인 `extends` 키워드가 기본적으로 제공된다.
+
+
+
+### 8.2 `extends` 키워드
+
+상속을 통해 클래스를 확장하려면 `extends` 키워드를 사용하여 상속 받을 클래스를 정의한다.
+
+```javascript
+// 수퍼(부모) 클래스
+class Parent {}
+
+// 서브(자식) 클래스
+class Child extends Parent {}
+```
+
+`extends` 키워드의 역할은 부모 클래스와 자식 클래스 간의 상속 관계를 설정한다. 클래스도 프로토타입을 통해 상속 관계를 구현한다.
+
+<img src="./images/class-9.png" style="zoom:48%;" />
+
+부모 클래스와 자식 클래스는 인스턴스의 프로토타입 체인과 클래스 간의 프로토타입 체인도 생성한다. 이를 통해 **프로토타입 메소드, 정적 메소드 모두 상속이 가능하다.**
+
+
+
+### 8.3 동적 상속
+
+`extends` 키워드는 **생성자 함수를 상속받아 클래스를 확장할 수도 있다. 단, `extends` 키워드 앞에는 반드시 클래스가 위치해야 한다.**
+
+```javascript
+// 생성자 함수 
+function Parent(a) {
+  this.a = a;
+}
+
+// 생성자 함수를 상속받는 자식 클래스
+class Child extends Parent {}
+
+const child = new Child(1);
+console.log(child); // Child { a: 1 }
+```
+
+
+
+`extends` 키워드 다음에는 클래스뿐만이 아니라 [[Construct]] 내부 메소드를 갖는 모든 함수 객체를 사용할 수 있다. 이를 통해 동적으로 상속 받을 대상을 결정할 수 있다.
+
+```javascript
+function Parent1() {}
+
+class Parent2() {}
+
+const Parent3() = function () {};
+
+let condition = true;
+
+// 조건에 따라 동적으로 상속 대상을 결정하는 자식 클래스
+class Child extends (condition ? Parent1 : Parent2) {}
+
+const child = new Child();
+console.log(child); // Child {}
+
+console.log(child instanceof Parent1); // true
+console.log(child instanceof Parent2); // false
+```
+
+
+
+### 8.4 서브 클래스의 constructor
+
+클래스에 constructor 메소드를 생략하면 디폴트 constructor 메소드가 **암묵적으로 정의된다.**
+
+```javascript
+class Foo {
+  // constructor() {
+  //   1. 빈 객체 생성
+  //   2. this에 빈 객체 바인딩
+  //   3. return this;
+  // }
+}
+
+const foo = new Foo();
+console.log(foo); // Foo {}
+```
+
+
+
+부모 클래스를 상속 받아 확장시킨 자식 클래스에 constructor 메소드를 생략하면 아래와 같이 디폴트 constructor 메소드가 암묵적으로 정의된다. args는 `new` 연상자와 함께 클래스를 호출할 때 전달한 인수의 리스트이다.
+
+```javascript
+constructor(...args) {
+  super(...args);
+}
+```
+
+
+
+아래의 예제는 부모 클래스와 자식 클래스 모드 constructor를 생략한 경우이다.
+
+```javascript
+class Parent {
+  // 암묵적으로 constructor 메소드를 정의
+  constructor() {}
+}
+
+class Child extends Parent {
+  // 암묵적으로 constructor 메소드를 정의, 부모 클래스의 constructor 메소드를 호출
+  constructor() {
+    super();
+  }
+}
+
+const child = new Child();
+console.log(child); // Child {}
+```
+
+위 예제와 같이 수퍼 클래스와 서브 클래스 모두 constructor 메소드를 생략하면 빈 객체가 생성된다. 프로퍼티를 소유하는 인스턴스를 생성하려면 construcotor 메소드 내부에서 인스턴스에 프로퍼티를 추가해야 한다.
+
+
+
+### 8.5 `super` 키워드
+
+`super` 키워드는 함수처럼 **호출할 수도 있고** `this`와 같이 식별자처럼 **참조할 수 있는** 특수한 키워드이다. `super`는 아래와 같이 동작한다.
+
+* super를 호출하면 부모 클래스의 constructor 메소드를 호출한다.
+* super를 참조하면 부모 클래스의 메소드를 호출할 수 있다.
+
+
+
+#### super 호출
+
+`super`를 호출하면 부모 클래스의 constructor 메소드를 호출한다.
+
+아래 예제와 같이 부모 클래스의 constructor 메소드 내부에서 추가한 프로퍼티를 그대로 갖는 인스턴스를 생성한다면 자식 클래스의 constructor 메소드를 생략할수 있다. 이때 `new` 연산자와 함께 자식 클래스를 호출하면서 전달한 인수는 **모두 자식 클래스에 암묵적으로 정의된 디폴트 constructor 메소드의 super 호출을 통해 부모 클래스의 constructor 메소드로 전달된다. **
+
+```javascript
+class Parent {
+  constructor(a, b) {
+    this.a = a;
+    this.b = b;
+  }
+}
+
+class Child extends Parent {
+  // 아래와 같이 암묵적으로 디폴트 constructor가 정의된다.
+  constructor(...args) {
+    super(...args); 
+  }
+}
+
+const child = new Child(1, 2);
+console.log(child); // Child { a: 1, b: 2 }
+```
+
+
+
+아래 예제와 같이 부모 클래스에서 추가한 프로퍼티와 자식 클래스에 추가한 프로퍼티를 **모두 갖는 인스턴스를 생성한다면 자식 클래스의 constructor 메소드를 생략할 수 없다.** 이때 `new` 연산자와 함께 자식 클래스를 호출하며 전달한 인수 중에서 부모 클래스의 constructor에게 전달할 필요가 있는 인수는 자식 클래스의 constructor 메소드에서 호출한 super를 통해 전달된다.
+
+```javascript
+class Parent {
+  constructor(a, b) { // 4
+    this.a = a;
+    this.b = b;
+  }
+}
+
+class Child extends Parent {
+  constructor(a, b, c) { // 2
+    super(a, b); // 3
+    this.c = c;
+  }
+}
+
+const child = new Child(1, 2, 3); // 1
+console.log(child); // Child { a: 1, b: 2, c: 3 }
+```
+
+1. `new` 연산와 함께 `Child` 클래스를 호출하며 전달한 인수는
+2. `Child` 클래스의 constructor 메소드의 인수로 전달되고,
+3. `super` 호출을 통해
+4. `Parent` 클래스의 constructor 메소드에게 전달된다.
+
+이처럼 인스턴스 초기화를 전달한 인수는 부모 클래스와 자식 클래스에 배분되고 상속 관계의 두 클래스는 서로 협력하여 인스턴스를 생성한다.
+
+
+
+#### Super 호출 시 주의사항
+
+1. **자식 클래스에서 constructor를 생략하지 않는 경우**, 자식 클래스의 constructor 메소드에서는 **반드시 super를 호출해야 한다.**
+
+```javascript
+class Parent {}
+
+class Child extends Parent {
+  constructor() {
+    // super();
+    // ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+    console.log('constructor call');
+  }
+}
+
+const child = new Child();
+```
+
+
+
+2. **자식 클래스의 constructor에서 super를 호출하기 전에는 this를 참조할 수 없다.**
+
+```javascript
+class Parent {}
+
+class Child extends Parent {
+  constructor() {
+    // ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+    this.a = 1;
+    super();
+  }
+}
+
+const child = new Child(1);
+```
+
+
+
+3. super는 반드시 자식 클래스의 constructor 메소드에서만 호출한다. 자식 클래스가 아닌 클래스 또는 함수에서 호출하면 에러를 발생시킨다.
+
+```javascript
+class Parent {
+  constructor() {
+    super(); // SyntaxError: 'super' keyword unexpected here
+  }
+}
+
+function Foo() {
+  super(); // SyntaxError: 'super' keyword unexpected here
+}
+```
 
 
 
