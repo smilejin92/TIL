@@ -830,7 +830,7 @@ console.log(me); // Person {}
 // private한 프로퍼티를 흉내낸 자유 변수에 접근하면
 // 에러가 발생하지 않고 undefined를 반환한다.
 // 질문. me._name 참조하면 undefined가 나오는게 me 객체에 _name 프로퍼티를
-// 동적으로 추가하여 undefined로 초기화 하는게 아니었는지?
+// 동적으로 추가하여 undefined로 초기화 하는게 아니었는지? 할당할때만
 console.log(me); // Person { _name: undefined }
 
 console.log(me._name); // undefined
@@ -1261,6 +1261,282 @@ function Foo() {
 
 
 
+#### super 참조
+
+1. **서브 클래스의 프로토타입 메소드 내에서 super.prop은 수퍼 클래스의 프로토타입 메소드 prop을 가리킨다.**
+
+```javascript
+// 수퍼 클래스
+class Parent {
+  constructor(name) {
+    this.name = name;
+  }
+  
+  sayHi() {
+    return `Hi! ${this.name}`;
+  }
+}
+
+// 서브 클래스
+class Child extends Parent {
+  sayHi() {
+    // super.sayHi는 수퍼 클래스의 프로토타입 메소드를 가리킨다.
+    return `${super.sayHi()}. How are you doing?`;
+  }
+}
+
+const child = new Child('Kim');
+console.log(child.sayHi()); // Hi! Kim. How are you doing?
+```
+
+`super` 키워드를 통해 수퍼 클래스의 메소드를 참조하려면, super가 수퍼 클래스의 prototype 프로퍼티에 바인딩된 프로토타입을 참조할 수 있어야 한다. 이 과정을 코드로 표현하면 아래와 같다.
+
+```javascript
+class Parent {
+  constructor(name) {
+    this.name = name;
+  }
+  
+  sayHi() {
+    return `Hi! ${this.name}.`;
+  }
+}
+
+class Child extends Parent {
+  sayHi() {
+    // __super는 Child의 sayHi가 바인딩된 객체의 프로토타입을 가리킨다.
+    // sayHi는 Child.prototype에 바인딩되었으므로 __super는 Parent.prototype을 가리킨다.
+    const __super = Object.getPrototypeOf(Child.prototype);
+    return `${__super.sayHi.call(this)} How are you doing?`;
+  }
+}
+```
+
+super는 자신이 바인딩되어 있는 객체의 프로토타입([[HomeObject]])을 가리킨다. 위 예제에서 `Child` 클래스의 `sayHi`는 `Child.prototype`에 바인딩되어 있고 super는 `Child.prototype`의 프로토타입인 `Base.prototype`을 가리킨다. 따라서 super.sayHi는 `Base.prototype.sayHi`를 가리킨다. 단, `Base.prototype.sayHi`를 호출할 때 `call` 메소드를 사용해 `this`를 전달하여야 한다. `Base.prototype.sayHi`에는 `name` 프로퍼티가 **누구의 프로퍼티인지 모르기 때문이다.**
+
+이처럼 super 참조가 동작하기 위해서는 **메소드가 자신이 바인딩되어 있는 객체의 프로토타입을 기억해야 한다.**  이를 위해 메소드는 자신이 바인딩된 객체의 참조를 내부 슬롯 [[HomeObject]]에 저장한다.
+
+super 참조를 의사 코드로 표현하면 아래와 같다.
+
+```javascript
+super = Obejct.getPrototypeOf([[HomeObject]])
+```
+
+**ES6 사양에서 새롭게 정의한 메소드(메소드 축약 표현으로 정의된 함수)만이 [[HomeObject]] 내부 슬롯을 갖는다.**
+
+super 참조는 객체 리터럴에서도 사용할 수 있다. 단, ES6의 메소드 축약 표현으로 정의된 함수만 가능하다.
+
+```javascript
+const parent = {
+  name: 'Lee',
+  sayHi() {
+    return `Hi! ${this.name}.`;
+  }
+};
+
+const child = {
+  __proto__: parent,
+  sayHi() {
+    return `${super.sayHi()} How are you doing?`;
+  }
+}
+```
+
+
+
+2. **서브 클래스의 정적 메소드 내에서 super.prop은 수퍼 클래스의 정적 메소드 prop을 가리킨다.**
+
+```javascript
+class Parent {
+  static sayHi() {
+    return 'Hi!';
+  }
+}
+
+class Child extends Parent {
+  static sayHi() {
+    return `${super.sayHi()} How are you doing?`;
+  }
+}
+console.log(Child.sayHi()); // Hi! How are you doing?
+```
+
+
+
+### 8.6 상속 클래스의 인스턴스 생성 과정
+
+```javascript
+// 수퍼 클래스
+class Rectangle {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+    
+  getArea() {
+    return this.width * this.height;
+  }
+    
+  toString() {
+    return `width = ${this.width}, height = ${this.height}`;
+  }
+}
+
+// 서브 클래스
+class ColorRectangle extends Rectangle {
+  constructor(width, height, color) {
+    super(width, height);
+    this.color = color;
+  }
+    
+  // 메소드 오버라이딩
+  toString() {
+    return super.toString() + `, color = ${this.color}`;
+  }
+}
+
+const colorRectangle = new ColorRectangle(2, 4, 'red');
+```
+
+
+
+서브 클래스가 `new` 연산자와 함께 호출되면 아래의 과정을 통해 인스턴스를 생성한다.
+
+#### 1. 서브 클래스의 super 호출
+
+클래스는 수퍼 클래스와 서브 클래스를 구분하기 위해 내부 슬롯 [[ConstructorKind]]를 갖는다. 다른 클래스를 상속받지 않는 클래스(및 생성자 함수)는 내부 슬롯 [[ConstructorKind]]의 값이 **base**로 설정되고, 다른 클래스를 상속 받는 서브 클래스는 내부 슬롯 [[ConstructorKind]]의 값이 **derived**로 설정된다. 때문에, 수퍼 클래스와 서브 클래스는 `new` 연산자와 함께 호출되었을 때 동작이 구분된다.
+
+**[[ConstructorKind]] = base**
+
+1. 빈 객체(인스턴스)를 생성한다.
+2. this에 바인딩한다.
+3. this에 바인딩되어 있는 인스턴스를 초기화한다.
+4. this를 반환한다.
+
+
+
+**[[ConstructorKind]] = derived**
+
+1. 인스턴스 생성을 수퍼 클래스에게 위임한다 (`super` 호출).
+
+---
+
+#### 2. 수퍼 클래스의 인스턴스 생성과 `this` 바인딩
+
+1. 수퍼 클래스가 실행되기 시작하여 암묵적으로 빈 객체(인스턴스)를 생성한다.
+2. 암묵적으로 생성한 빈 객체를 `this`에 바인딩한다.
+
+따라서 수퍼 클래스의 constructor 내부의 this는 생성된 인스턴스를 가리킨다.
+
+```java
+// 수퍼 클래스
+class Rectangle {
+  constructor(width, height) {
+    // 암묵적으로 빈 객체(인스턴스)가 생성되고 this에 바인딩된다.
+    console.log(this); // ColorRectangle {}
+      
+    // new 연산자와 함께 호출된 함수(new.target)은 ColorRectangle이다.
+    console.log(new.target); // ColorRectangle
+  }
+  .
+  .
+  .
+```
+
+실질적으로 인스턴스를 생성한 클래스는 수퍼 클래스이다. **하지만 `new` 연산자와 함께 호출된 클래스는 서브 클래스(`new.target`)이다.** 따라서 인스턴스는 `new.target`이 가리키는 서브 클래스가 생성한것으로 처리된다.
+
+또한, 생성된 인스턴스의 프로토타입은 서브 클래스(`new.target`)의 prototype 프로퍼티가 가리키는 객체(ColorRectangle.prototye)이다. 
+
+```javascript
+// 수퍼 클래스
+class Rectangle {
+  constructor(width, height) {
+    // 암묵적으로 빈 객체(인스턴스)가 생성되고 this에 바인딩된다.
+    console.log(this); // ColorRectangle {}
+      
+    // new 연산자와 함께 호출된 함수(new.target)은 ColorRectangle이다.
+    console.log(new.target); // ColorRectangle
+      
+    // 생성된 인스턴스의 프로토타입으로 ColorRectangle.prototype이 설정된다.
+    console.log(Object.getPrototypeOf(this) === ColorRectangle.prototype); // true
+    console.log(this instanceof ColorRectangle); // true
+    console.log(this instanceof Rectangle); // true
+  }
+  .
+  .
+  .
+```
+
+---
+
+#### 3. 수퍼 클래스의 인스턴스 초기화
+
+수퍼 클래스의 constructor가 실행되어 this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고, constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티를 초기화한다.
+
+```javascript
+// 수퍼 클래스
+class Rectangle {
+  constructor(width, height) {
+    // 인스턴스 초기화
+    this.width = width;
+    this.height = height;
+      
+    console.log(this); // ColorRectangle {width: 2, height: 4}
+  }
+  .
+  .
+  .
+```
+
+---
+
+#### 4. 수퍼 클래스의 프로토타입 / 정적 메소드 추가
+
+수퍼 클래스 몸체에 프로토타입 메소드가 존재하면 수퍼 클래스의 prototype 프로퍼티가 가리키는 객체에 메소드로 추가된다. 수퍼 클래스 몸체에 정적 메소드가 존재하면 수퍼 클래스의 메소드로 추가된다.
+
+---
+
+#### 5. 서브 클래스 constructor로의 복귀와 this 바인딩
+
+super의 호출이 종료되고 컨트롤이 서브 클래스 constructor로 복귀한다. **이때 super가 반환한 인스턴스가 `this`에 바인딩된다.** super 호출이 종료하기 전에는 `this`를 참조할 수 없다. 서브 클래스는 별도의 인스턴스를 생성하지 않고 **super가 반환한 인스턴스를 `this`에 바인딩하여 그대로 사용한다.**
+
+```javascript
+class ColorRectangle extends Rectangle {
+  constructor(width, height, color) {
+    super(width, height);
+      
+    // super가 반환한 인스턴스가 this에 바인딩된다.
+    console.log(this); // ColorRectangle {width: 2, height: 4}
+  }
+  .
+  .
+  .   
+```
+
+서브 클래스 constructor 내부의 인스턴스 초기화는 반드시 super 호출 이후에 처리되어야 한다.
+
+
+
+#### 6. 서브클래스의 인스턴스 초기화
+
+super 호출 이후, 서브 클래스의 constructor에 기술되어 있는 인스턴스 초기화가 실행된다.
+
+
+
+#### 7. 인스턴스 반환
+
+클래스의 모든 처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
+
+
+
+## 8.7 네이티브 생성자 함수 확장
+
+동적 상속에서 살펴본 바와 같이 `extends` 키워드 뒤에는 클래스뿐만이 아니라 [[Construct]] 내부 메소드를 갖는 함수 객체를 사용할 수 있었다.
+
+
+
+
+
 
 
 
@@ -1328,7 +1604,4 @@ const person2 = new Person();
 
 `super`는 super 클래스의 메소드를 부를때 사용
 
-
-
-## 2. 클래스 정의
 
