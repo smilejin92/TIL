@@ -11,9 +11,13 @@ console.log(str.toUpperCase()); // 'HELLO WORLD!'
 
 
 
+배열, 유사 배열 객체(String, DOM NodeList, HTMLCollection)는 ES6에서부터 내부적으로 Symbol.iterator라는 메소드를 가지고 있다. 따라서 순회할 수 있다(`for..of`). 이러한 객체들을 이터러블이라고 한다. 또한 이 객체들은 스프레드 문법의 대상이된다. ES5에서는 함수의 arguments 객체를 사용했다. 이 역시 이터러블이다.
+
+
+
 ## 1. String Constructor
 
-String 객체는 String 생성자 함수를 통해 생성할 수 있다. 이때 전달된 인자는 모두 문자열로 변환된다.
+**String 객체는** String 생성자 함수를 통해 생성할 수 있다. 이때 **전달된 인자는 모두 문자열로 변환된다.**
 
 ```javascript
 // new String(value);
@@ -29,12 +33,12 @@ console.log(strObj); // [String: 'undefined']
 
 
 
-`new` 연산자를 사용하지 않고 String 생성자 함수를 호출하면 **String 객체가 아닌 문자열 리터럴로 반환한다.**
+`new` 연산자를 사용하지 않고 String 생성자 함수를 호출하면 **String 객체가 아닌 문자열을 반환한다.**
 
 ```javascript
-var name = String('Jin');
-
-console.log(typeof x, x); // string Jin
+String(1); // "1"
+String(NaN); // "NaN"
+String(true); // "true"
 ```
 
 
@@ -324,14 +328,12 @@ console.log(str.includes('hello')); // true
 console.log(str.includes(' ')); // true
 console.log(str.includes('wo')); // true
 console.log(str.includes('wow')); // false
-console.log(str.includes('')); // true ?????????????????????????????????????????????
-console.log(str.includes()); // false ??????????????????????????????????????????????
+console.log(str.includes('')); // true, 문자열 사이에 틈이 있다고 생각 
+console.log(str.includes()); // false, 에러를 안내기 위해 설계
 
 // String.prototype.indexOf 메소드로 대체할 수 있다.
 console.log(str.indexOf('hello')); // 0 (-1이 아니면 존재한다는 뜻이다)
 ```
-
-
 
 
 
