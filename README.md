@@ -41,6 +41,5 @@
 * [**Control Flow Statement & Type Casting**](./JavaScript/notes/controlStatement-typeCasting.md)
 * [**Obejct**](./JavaScript/notes/object.md)
 * [**Primitive Type vs. Object**](./JavaScript/notes/primitiveVSobject.md)
-
-
+* 
 
