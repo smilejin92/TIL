@@ -263,9 +263,9 @@ elem.lastChild.className = 'blue';
 
 위 예제를 실행하면 예상대로 동작하지 않는다. 그 이유는 **IE를 제외한 대부분의 브라우저는 요소 사이의 공백 또는 줄바꿈 문자를 텍스트 노드로 취급**하기 때문이다. 위 예제 `elem`은 `<ul>` 태그를 가리키며, `<ul>` 태그의 `firstChild` 프로퍼티와 `lastChild` 프로퍼티는 `text`로 설정되어있다.
 
-<img src="./images/firstChild.png" style="zoom:60%;" />
+<img src="./images/firstChild.PNG" style="zoom:60%;" />
 
-<img src="./images/lastChild.png" style="zoom:60%;" />
+<img src="./images/lastChild.PNG" style="zoom:60%;" />
 
 
 
