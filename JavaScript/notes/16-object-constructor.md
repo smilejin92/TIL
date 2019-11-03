@@ -205,9 +205,9 @@ foo.method(); // 10
 
 또한, 함수 객체는 함수로서 동작하기 위해 (호출, 생성) 추가적인 내부 슬롯과 내부 메소드를 가지고 있다.
 
-<img src="./images/function-internal-slots.png" style="zoom:50%;" />
+<img src="./images/function-internal-slots.PNG" style="zoom:60%;" />
 
-<img src="./images/function-internal-methods.png" style="zoom:50%;" />
+<img src="./images/function-internal-methods.PNG" style="zoom:60%;" />
 
 
 
