@@ -228,7 +228,7 @@ foo(); // 6
 
 세 가지 컴포넌트로 구성된다.
 
-<img src="./images/lexical-envir-components.png" style="zoom:100%;" />
+<img src="./images/lexical-envir-components.PNG" style="zoom:75%;" />
 
 
 
@@ -283,7 +283,7 @@ window.__proto__.__proto__.__proto__.__proto__ === Object.prototype; // true
 
 
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\execution-context.png)
+<img src="./images/execution-context.png" style="zoom:48%;" />
 
 
 
@@ -312,7 +312,7 @@ window.__proto__.__proto__.__proto__.__proto__ === Object.prototype; // true
 
 ##### 2.1.1. 객체 환경 레코드 생성 (Object Envrionment Record)
 
-![](./images/flow-3.png)
+<img src="./images/flow-3.PNG" style="zoom:75%;" />
 
 아래 두 가지를 등록하고 관리한다.
 
@@ -464,7 +464,7 @@ foo(20); // 42
 1. `foo` 함수 렉시컬 환경(Global Lexical Environment) 생성
 2. `foo` 함수 실행 컨텍스트의 컴포넌트에 바인딩에 렉시컬 환경을 바인딩
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-9.png" style="zoom:50%;" />
+<img src="./images/flow-9.png" style="zoom:48%;" />
 
 
 
@@ -474,7 +474,7 @@ foo(20); // 42
 
 (질문. 함수 환경 레코드는 `var` 키워드로 선언된 변수나 `let`, `const` 키워드로 선언된 변수 구분 없이 한꺼번에 관리 하는지?)
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-10.png)
+<img src="./images/flow-10.png" style="zoom:48%;" />
 
 
 
@@ -484,7 +484,7 @@ foo(20); // 42
 
 `foo` 함수는 전역 코드에 정의된 전역 함수이다. 따라서 `foo` 함수 정의가 평가된 시점의 Running execution context는 전역 렉시컬 환경이므로, `foo` 렉시컬 환경의 외부 렉시컬 환경 컴포넌트에는 전역 렉시컬 환경의 참조가 저장된다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-11.png" style="zoom:50%;" />
+<img src="./images/flow-11.png" style="zoom:48%;" />
 
 
 
@@ -498,7 +498,7 @@ foo(20); // 42
 
 `foo` 렉시컬 환경의 ThisBinding 컴포넌트에는 `foo` 함수가 가리키는 `this`에 바인딩 되어있는 객체 (위 예제에서는 `foo`가 전역에서 정의되었고, 일반 함수로 호출되었으므로 `this`는 전역객체를 가리킨다)의 참조를 저장한다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-12.png" style="zoom:50%;" />
+<img src="./images/flow-12.png" style="zoom:48%;" />
 
 (질문: `new` 연산자로 호출되었으면 ThisBinding에는 생성될 객체가 잡히는가?)
 
@@ -514,7 +514,7 @@ foo(20); // 42
    * 만약 running execution context의 렉시컬 환경에서 식별자를 검색할 수 없으면 외부 렉시컬 환경에 대한 참조가 기리키는 렉시컬 환경(상위 스코프)으로 이동하여 식별자를 검색한다.
 2. 검색된 식별자에 값을 바인딩한다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-13.png" style="zoom:50%;" />
+<img src="./images/flow-13.png" style="zoom:48%;" />
 
 
 
@@ -522,7 +522,7 @@ foo(20); // 42
 
 `bar` 함수가 호출되면 함수 내부로 코드의 제어권이 이동한다. 그리고 함수 코드를 평가하기 시작한다. 실행 컨텍스트와 생성 과정은 `foo` 함수 코드 평가와 동일하다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-14.png" style="zoom:50%;" />
+<img src="./images/flow-14.png" style="zoom:48%;" />
 
 
 
@@ -530,7 +530,7 @@ foo(20); // 42
 
 `bar` 함수 코드가 순차적으로 실행되기 시작한다. 매개 변수에 인수가 할당되고, 변수 할당문이 실행되어 지역 변수 `z`에 값이 할당된다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-15.png" style="zoom:50%;" />
+<img src="./images/flow-15.png" style="zoom:48%;" />
 
 그리고 `console.log(a + b + x + y + z);` 가 실행된다.
 
@@ -554,7 +554,7 @@ Running execution context의 렉시컬 환경에서 시작하여 스코프 체�
 
 `z`는 `bar` 함수 렉시컬 환경에서 검색된다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-16.png" style="zoom:50%;" />
+<img src="./images/flow-16.png" style="zoom:48%;" />
 
 
 
@@ -568,7 +568,7 @@ Running execution context의 렉시컬 환경에서 시작하여 스코프 체�
 
 `console.log` 메소드가 호출되고 종료하면 더 이상 실행할 코드가 없으므로 `bar` 함수 코드의 실행이 종료된다. 콜 스택에서 `bar` 함수 실행 컨텍스트가 pop된다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-17.png" style="zoom:50%;" />
+<img src="./images/flow-17.png" style="zoom:48%;" />
 
 
 
@@ -580,7 +580,7 @@ Running execution context의 렉시컬 환경에서 시작하여 스코프 체�
 
 `bar` 함수가 종료되면 더 이상 실행할 코드가 없으므로 `foo` 함수 코드의 실행이 종료된다. 콜 스택에서 `foo` 함수 실행 컨텍스트가 pop된다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\flow-18.png" style="zoom:50%;" />
+<img src="./images/flow-18.png" style="zoom:48%;" />
 
 
 
@@ -615,12 +615,8 @@ console.log(x); // 1
 
 if 문 실행이 종료되면 if 문이 실행되기 이전의 렉시컬 환경으로 되돌린다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\block-lexical-envir2.png" style="zoom:50%;" />
+![](./images/block-lexical-envir2.png)
 
 이는 if 문 뿐만이 아니라 모든 블록문에 적용된다.
-
-
-
-
 
 실행 컨텍스트라는 자료구조가 렉시컬 환경으로 이루어져있다.
