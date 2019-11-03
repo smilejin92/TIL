@@ -139,35 +139,27 @@ innerFunc(); // ?
 
 위 예제의 경우, `outer` 함수가 평가되어 함수 객체를 생성할 때 Running execution context의 렉시컬 환경을 `outer` 함수 객체의 [[Environment]] 내부 슬롯에 상위 스코프로서 저장한다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\closure-1.png" style="zoom:50%;" />
-
-
-
-
+![](./images/closure-1.png)
 
 `outer` 함수를 호출하면 `outer` 함수의 렉시컬 환경이 생성되고 앞서 `outer` 함수 객체의 [[Environment]] 내부 슬롯에 저장된 전역 렉시컬 환경을 `outer` 렉시컬 환경의 Outer Lexical Environment에 할당한다.
 
 그리고 중첩함수 `inner`가 평가되며 `inner`의 내부 슬롯 [[Environment]]에 Running execution context의 렉시컬 환경을 상위 스코프로서 저장한다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\closure-2.png" style="zoom:50%;" />
-
-
+<img src="./images/closure-2.png" style="zoom:48%;" />
 
 
 
 `outer` 함수의 실행이 종료되면 `inner` 함수를 반환하면서 `outer` 실행 컨텍스트는 콜 스택에서 pop된다. 이때 `outer` 렉시컬 환경은 **소멸되지 않는다.** `outer` 렉시컬 환경은 `inner` 함수의 내부 슬롯 [[Environment]]에 의해 참조되고 있으므로 가비지 컬렉션의 대상이 되지 않기 때문이다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\closure-3.png" style="zoom:50%;" />
+<img src="./images/closure-3.png" style="zoom:48%;" />
 
 
 
 `outer` 함수가 반환한 `inner` 함수를 호출하면 `inner` 실행 컨텍스트가 생성되고 콜 스택에 push된다. 그리고 `inner` 렉시컬 환경의 Outer Lexical Environment에 대한 참조에는 `inner` 함수 객체의 내부 슬롯 [[Environment]]의 값이 할당된다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\closure-4.png" style="zoom:50%;" />
+<img src="./images/closure-4.png" style="zoom:48%;" />
 
 중첩 함수 `inner`는 외부 함수 `outer`보다 더 오래 생존하였다. 이때 함수는 외부 함수 실행 컨텍스트의 유무와 상관 없이 자신이 정의된 위치에 의해 결정된 상위 스코프를 기억한다. 따라서, 중첩 함수의 내부에서 상위 스코프를 참조할 수 있으므로 상위 스코프의 식별자를 참조할 수 있고, 식별자의 값을 변경할 수도 있다.
-
-
 
 이론적으로, 자바스크립트의 모든 함수는 상위 스코프를 기억하므로 클로저이다. 하지만 일반적으로 모든 함수를 클로저라고 하지는 않으며, **클로저가 되기 위해서는 두 가지 조건이 필요하다.**
 
@@ -288,16 +280,14 @@ console.log(decreaser()); // -2
 3. `makeCounter` 함수가 반환한 함수는 변수 `increaser`에 할당된다.
 4. `makeCounter` 실행 컨텍스트는 콜 스택에서 pop되었지만, `makeCounter` 렉시컬 환경은 3에서 반환한 함수의 내부 슬롯 [[Environment]]에 의해 참조되어 있기 때문에 `makeCounter` 렉시컬 환경은 소멸되지 않는다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\closure-5.png" style="zoom:50%;" />
-
-
+<img src="./images/closure-5.png" style="zoom:48%;" />
 
 5. `decreaser` 변수에 `makeCounter(decrease)`를 할당할 때 `makeCounter` 함수가 호출되어 `makeCounter` 실행 컨텍스트가 **다시 생성된다.**
 6. `makeCounter` 함수는 인수로 전달받은 보조 함수를 사용하여 함수 객체를 생성하여 반환한 후 소멸된다.
 7. `makeCounter` 함수가 반환한 함수는 변수 `decreaser`에 할당된다.
 8. `makeCounter` 실행 컨텍스트는 콜 스택에서 pop되었지만, `makeCounter` 렉시컬 환경은 7에서 반환한 함수의 내부 슬롯 [[Environment]]에 의해 참조되어 있기 때문에 `makeCounter` 렉시컬 환경은 소멸되지 않는다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\closure-6.png" style="zoom:50%;" />
+<img src="./images/closure-6.png" style="zoom:48%;" />
 
 
 
@@ -397,7 +387,7 @@ for (let i = 0; i < arr.length; i++) {
 
 위 예제의 경우 `for`문 안에서 정의된 각 함수(`arr[i]`)는 자신의 상위 스코프를 `for`문이 반복될 때 마다 생성된 독립적인 렉시컬 환경으로 인식한다. 각각의 독립적인 렉시컬 환경에서 식별자(초기화 변수 및 `for`문 내 지역 변수 등)의 값을 유지한다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\closure-7.png" style="zoom:50%;" />
+<img src="./images/closure-7.png" style="zoom:48%;" />
 
 1. 초기화 문에 `let` 키워드로 선언한 변수를 사용한 `for`문이 평가되면 먼저 새로운 렉시컬 환경(LOOP Lexical Environment)을 생성하고 초기화 문의 식별자와 값을 등록한다. 그리고 새롭게 생성된 렉시컬 환경을 **Running execution context의 렉시컬 환경으로 교체한다.**
 2. `for`문의 반복이 시작되면 새로운 렉시컬 환경(PRE-ITERATION Lexical Environment)을 생성하고 반복 시의 `for`문 코드 블록 내의 식별자와 값(증감문 반영 이전)을 등록한다. 그리고 새롭게 생성된 렉시컬 환경을 Running execution context의 렉시컬 환경으로 교체한다.
