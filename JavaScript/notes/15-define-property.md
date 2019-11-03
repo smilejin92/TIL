@@ -35,7 +35,7 @@ console.log(descriptor); // undefined;
 
 내부 슬롯(Internal Slot)과 내부 메소드(Internal method)는 **ECMAScript 스펙에서 요구하는 객체와 관련된 내부 상태와 내부 동작을 정의한 것이다.** 다시 말해, 내부 슬롯과 내부 메소드는 자바스크립트 엔진이 코드를 실행하는 알고리즘을 설명하기 위해 ECMAScript 스펙에서 사용하는 **의사 프로퍼티(Pseudo property)와 의사 메소드(Pseudo method)이다.** ECMAScript 스펙에 등장하는 이중 대괄호(`[[...]]`)로 감싼 이름들이 내부 슬롯과 내부 메소드이다. 슬롯은 **상태** (value)를 나타내고 메소드는 **동작**(behavior)을 설명한다.
 
-<img src="./images/internal-method.png" style="zoom:60%;" />
+<img src="./images/internal-method.PNG" style="zoom:60%;" />
 
 내부 슬롯과 내부 메소드는 자바스크립트 엔진의 내부 구현 사양을 정의한 것으로 자바스크립트 엔진은 ECMAScript 스펙에서 정의한 내부 슬롯과 내부 메소드의 사양을 만족시키는 것이 요구될 뿐, **이를 외부로 노출시키지는 않는다.**
 
