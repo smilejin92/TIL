@@ -39,7 +39,7 @@ x = 100;
 
 **연산자(Operator)**는 하나 이상의 표현식을 대상으로 산술, 할당, 비교, 논리, 타입, 지수 **연산(operation) 등을 수행해 하나의 값을 만든다.** 이때 연산의 대상을 **피연산자 (Operand)라 한다.** 
 
-<img src="./images/operation.png" style="zoom:75%;" />
+![](./images/operation.PNG)
 
 
 
