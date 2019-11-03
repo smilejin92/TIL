@@ -107,7 +107,7 @@
 
 즉, **표현식은 하나의 값으로 평가될 수 있는 문(statement)이다** (리터럴 <= 표현식). 또한, **변수에 할당할 수 있는 문은 표현식이다.**
 
-<img src="./images/expression.png" style="zoom:50%;" />
+<img src="./images/expression.png" style="zoom:30%;" />
 
 
 
