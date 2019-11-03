@@ -33,7 +33,7 @@ x = 100;
 
 <img src="./images/completion-value.PNG" style="zoom:75%;" />
 
-<img src="./images/completion-value2.png" style="zoom:75%;" />
+<img src="./images/completion-value2.PNG" style="zoom:75%;" />
 
 ## 3. 연산자란?
 
