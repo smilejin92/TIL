@@ -123,7 +123,7 @@ Person.sayHello(); // Hello!
 
 클래스 정의와 생성자 함수에 의해 인스턴스 생성 방식을 비교해 보면 아래와 같다.
 
-<img src="C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\class-1.png" style="zoom:50%;" />
+<img src="./images/class-1.png" style="zoom:48%;" />
 
 
 
