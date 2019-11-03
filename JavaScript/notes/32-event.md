@@ -640,25 +640,280 @@ ver1의 코드와 달리 2자 이상이라는 규칙이 바뀌면 `MIN_LENGTH`�
 
 event 객체는 이벤트를 발생시킨 요소와 발생한 이벤트에 대한 유용한 정보를 제공한다. **이벤트가 발생하면 event 객체는 동적으로 생성되며 이벤트를 처리할 수 있는 이벤트 핸들러에 인자로 전달된다.** 
 
+```html
+<script>
+    function showCoords(e) {
+        const mst = document.querySelector('.message');
+        msg.innerHTML = `
+			clientX value: ${e.clientX} <br>
+			clientY value: ${e.clientY}`;
+    }
+    addEventListener('click', showCoords);
+</script>
+```
+
+위와 같이 event 객체는 이벤트 핸들러에 **암묵적으로 전달된다.** 그러나 이벤트 핸들러를 선언할 때, event 객체를 전달받을 **첫번째 매개변수를 명시적으로 선언하여야 한다.**
+
+### 7.1.1 Event.target
+
+**실제로 이벤트를 발생시킨 요소를 가리킨다.**
+
+```html
+...
+<body>
+    <div class="container">
+        <button id="btn1">Hide me 1</button>
+        <button id="btn2">Hide me 2</button>
+    </div>
+</body>
+
+<script>
+	function hide(e) {
+        e.target.style.visibility = 'hidden';
+        // 동일하게 동작한다.
+        // this.style.visibility = 'hidden';
+    }
+    
+    document.querySelector('#btn1').addEventListener('click', hide);
+    document.querySelector('#btn2').addEventListener('click', hide);
+</script>
+...
+```
+
+`hide` 함수를 특정 노드에 한정하여 사용하지 않고, 범용적으로 사용하기 위해 evenet 객체의 `target` 프로퍼티를 사용하였다. 위 예제의 경우, `hide` 함수 내부의 `e.target`은 언제나 이벤트가 바인딩된 요소를 가리키는 `this`와 일치한다. 하지만 버튼별로 이벤트를 바인딩하고 있기 때문에 버튼이 많은 경우 위 방법은 바람직하지 않아 보인다.
+
+**이벤트 위임**을 사용하여 위 예제를 수정하여 보자.
+
+```html
+...
+<body>
+    <div class="container">
+        <button id="btn1">Hide me 1</button>
+        <button id="btn2">Hide me 2</button>
+    </div>
+</body>
+
+<script>
+	function hide(e) {
+        e.target.style.visibility = 'hidden';
+        // this는 이벤트에 바인딩된 DOM 요소(.container)를 가리킨다. 따라서 .containier 요소를 감춘다.
+        // this.style.visibility = 'hidden';
+    }
+    
+    document.querySelector('.container').addEventListener('click', hide);
+</script>
+...
+```
+
+위 예제의 경우, Event.target은 this와 반드시 일치하지는 않는다 (div 영역이 아닌 button 영역을 클릭했을 경우 버블링을 통해 div.container가 반응한다).
+
+
+
+### 7.1.2. Event.currentTarget
+
+이벤트에 바인딩된 DOM 요소를 가리킨다. 즉, `addEventListener` 앞에 기술된 객체를 가리킨다.
+
+`addEventListener` 메소드에서 지정한 이벤트 핸들러 내부의 `this`는 이벤트에 바인딩된 DOM 요소를 가리키며 이것은 이벤트 객체의 `currentTarget` 프로퍼티와 같다. 따라서 이벤트 핸들러 함수 내에서 `currentTarget`과 `this`는 언제나 일치한다.
+
+```html
+<body>
+    <div>
+        <button>Click Me</button>
+    </div>
+</body>
+<script>
+	function example(e) {
+        // this: 이벤트에 바인딩된 DOM 요소 (div 요소)
+        console.log('this: ', this);
+        
+        // target: 실제로 이벤트를 발생시킨 요소 (button 혹은 div)
+        console.log('e.target: ', e.target);
+        
+        // currentTarget: 이벤트에 바인딩된 DOM 요소(div 요소)
+        console.log('e.currentTarget: ', e.currentTarget);
+        
+        // 언제나 true
+        console.log(this === e.currentTarget); // true
+        
+        // currentTarget과 target이 같은 객체일 때 true
+        console.log(this === e.target);
+        
+        // click 이벤트가 발생하면 이벤트를 발생시킨 요소(target)와는 상관없이
+        // this (이벤트에 바인딩된 div 요소)의 배경색이 변경된다.
+        this.style.backgroundColor = 'lime';
+    }
+    
+    document.querySelector('div').addEventListener('click', example);
+</script>
+```
+
+
+
+### 7.1.3. Event.type
+
+발생한 이벤트의 종류를 나타내는 문자열을 반환한다.
+
+
+
+### 7.1.4. Event.cancelable
+
+요소의 기본 동작을 취소시킬 수 있는지 여부(true/false)를 나타낸다.
+
+```html
+...
+<body>
+  <a href="poiemaweb.com">Go to poiemaweb.com</a>
+  <script>
+  const elem = document.querySelector('a');
+
+  elem.addEventListener('click', function (e) {
+    console.log(e.cancelable); // true
+
+    // 기본 동작을 중단시킨다.
+    e.preventDefault();
+  });
+  </script>
+</body>
+```
+
+
+
+### 7.1.5. Event.eventPhase
+
+이벤트 흐름(event flow) 상에서 어느 단계(event phase)에 있는지를 반환한다.
+
+| 반환값 | 의미        |
+| ------ | ----------- |
+| 0      | 이벤트 없음 |
+| 1      | 캡처링 단계 |
+| 2      | 타깃        |
+| 3      | 버블링 단계 |
+
 
 
 ## 8. Event Delegation (이벤트 위임)
 
+```html
+<ul id="post-list">
+  <li id="post-1">Item 1</li>
+  <li id="post-2">Item 2</li>
+  <li id="post-3">Item 3</li>
+  <li id="post-4">Item 4</li>
+  <li id="post-5">Item 5</li>
+  <li id="post-6">Item 6</li>
+</ul>
+```
 
+위 예제에서 모든 `<li>` 요소의 클릭 이벤트에 반응하는 처리를 구현하고 싶은 경우, `<li>` 요소에 이벤트 핸들러를 각각 바인딩하면 총 6개의 이벤트 핸들러를 바인딩하여야 한다.
+
+만일 `<li>` 요소가 100개라면 100개의 이벤틑 핸들러를 바인딩하여야 한다. 또한, **동적으로 HTML 요소가 추가되는 경우, 아직 추가되지 않은 요소는 DOM에 존재하지 않으므로 이벤트 핸들러를 바인딩할 수 없다.** 이러한 경우 이벤트 위임을 사용한다.
+
+**이벤트 위임 (Event Delegation)은 다수의 자식 요소에 각각 이벤트 핸들러를 바인딩하는 대신 하나의 부모 요소에 이벤트 핸들러를 바인딩하는 방법이다.** 위 예제의 경우, `<li>` 요소의 부모 요소인 `<ul>` 요소에 이벤트 핸들러를 바인딩하여 이벤트를 관리한다.
+
+또한 DOM 트리에 새로운 `<li>` 요소를 추가하더라도 이벤트 처리는 부모 요소인 `<ul>` 요소에 위임되었기 때문에 새로운 요소에 이벤트 핸들러를 바인딩할 필요가 없다.
+
+이는 이벤트가 **이벤트 흐름**에 의해 이벤트를 발생시킨 요소의 부모 요소에도 영향(버블링)을 미치기 때문에 가능한 것이다.
+
+```html
+<body>
+    <ul class="post-list">
+        <li id="post-1">Item 1</li>
+        <li id="post-2">Item 2</li>
+        <li id="post-3">Item 3</li>
+        <li id="post-4">Item 4</li>
+        <li id="post-5">Item 5</li>
+        <li id="post-6">Item 6</li>
+    </ul>
+    <div class="msg"></div>
+    
+    <script>
+    	const msg = document.querySelector('.msg');
+        const list = document.querySelector('.post-list');
+        
+        list.addEventListener('click', function (e) {
+        	// 이벤트를 발생시킨 요소
+            console.log('[target]: ' + e.target.nodeName);
+            
+            // 이벤트를 발생시킨 요소의 nodeName
+            console.log('[target.nodeName]: ' e.target.nodeName);
+            
+            // li 요소 이외의 요소에서 발생한 이벤트는 대응하지 않는다.
+            if (e.target && e.target.nodeNmae === 'LI') {
+                msg.innerHTML = 'li#' + e.target.id + ' was clicked!';
+            }
+        });
+    </script>
+</body>
+```
 
 
 
 ## 9. 기본 동작의 변경
 
+**이벤트 객체는** 요소의 기본 동작과 요소의 부모 요소들이 이벤트에 대응하는 방법을 변경하기 위한 메소드를 가지고 있다.
+
+### 9.1. Event.preventDefault()
+
+폼을 submit 하거나 링크를 클릭하면 다른 페이지로 이동하게 된다. 이와 같이 요소가 가지고 있는 기본 동작을 중단시키기 위한 메소드가 `preventDefault()`이다.
+
+```html
+<body>
+  <a href="http://www.google.com">go</a>
+  <script>
+  	document.querySelector('a').addEventListener('click', function (e) {
+        console.log(e.target, e.target.nodeName);
+
+        // a 요소의 기본 동작을 중단한다.
+        e.preventDefault();
+  });
+  </script>
+</body>
+```
 
 
 
+### 9.2. Event.stopPropagation()
 
-왜 콜스택이 비어질 때 이벤트 큐에서 넘어가나?
+어느 한 요소를 이용하여 이벤트를 처리한 후 이벤트가 부모 요소로 전파되는 것을 중단시키기 위한 메소드이다. **부모 요소에 동일한 이벤트에 대한 다른 핸들러가 지정되어 있을 경우 사용된다.**
 
-실행되고 있던 컨텍스트가 멈추고 다른 일이 발생함
+아래 예제에서 부모 요소와 자식 요소에 모두 `mousedown` 이벤트에 대한 핸들러가 지정되어 있다. 하지만 부모 요소와 자식 요소의 이벤트를 별도로 처리하기 위해 button 요소의 **이벤트 전파(버블링)를 중단시키기 위해** `stopPropagation` 메소드를 사용한다.
 
-고속으로 동작하기 때문에 일이 동시에 일어나는 것 처럼 보임
+```html
+<body>
+  <p>버튼을 클릭하면 이벤트 전파를 중단한다. <button>버튼</button></p>
+  <script>
+    const body = document.querySelector('body');
+    const para = document.querySelector('p');
+    const button = document.querySelector('button');
 
-싱글 스레드이지만 동시성을 갖는다.
+    // 버블링
+    body.addEventListener('click', function () {
+      console.log('Handler for body.');
+    });
+
+    // 버블링
+    para.addEventListener('click', function () {
+      console.log('Handler for paragraph.');
+    });
+
+    // 버블링
+    button.addEventListener('click', function (event) {
+      console.log('Handler for button.');
+
+      // 이벤트 전파를 중단한다.
+      event.stopPropagation();
+    });
+  </script>
+</body>
+```
+
+
+
+### 9.3. preventDefault & stopPropagation
+
+**기본 동작의 중단과 버블링 또는 캡처링의 중단**을 동시에 실시하는 방법은 아래와 같다.
+
+```javascript
+return false;
+```
 
