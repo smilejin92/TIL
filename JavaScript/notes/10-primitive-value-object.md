@@ -28,7 +28,7 @@ console.log(o); // {a: 1};
 
 
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\reassign.png)
+![](./images/reassign.png)
 
 변수가 참조하던 메모리 공간의 주소를 변경한 이유는, **변수에 할당된 원시 값이 변경 불가능한 값이기 때문이다.** 따라서 변수의 값을 변경하기 위해 원시 값을 재할당하면 새로운 메모리 공간을 확보하고 재할당한 값을 저장한 후, 변수가 참조하던 메모리 공간의 주소를 변경한다. 이러한 원시 값의 특성은 데이터의 신뢰성을 보장한다. 
 
@@ -77,7 +77,7 @@ console.log(score, copy); // 80  80
 
 변수(copy)에 변수(score)를 할당하는 경우, 할당되는 변수(score)가 원시값을 갖는 변수라면, 할당받는 변수(copy)에는 원시 값이 복사되어 전달된다 (**pass by value**).
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\passbyvalue.png)
+![](./images/passbyvalue.png)
 
 **변수 score와 copy의 값 80은 다른 메모리 공간에 저장된 별개의 값이다.** 따라서, 둘 중 어느 하나의 값을 변경하여도 다른 하나의 값에는 **어떠한 영향도 주지 않는다**.
 
@@ -139,7 +139,7 @@ var copy = person;
 
 객체를 가리키는 변수 (person)를 다른 변수 (copy)에 할당하면 person의 **참조 값**이 복사되어 전달된다. 이를 **참조에 의한 전달(Pass by reference)라 한다.**
 
-![](C:\Users\Jinhyun Kim\Documents\dev\TIL\JavaScript\notes\images\passbyreferecne.png)
+![](./images/passbyreferecne.png)
 
 person을 copy에 할당하면 원본 person의 참조 값을 복사하여 copy에 저장한다. 이때 person과 copy는 같은 참조 값을 갖는다 (동일한 객체를 가리키고 있다). 이것은 두개의 식별자가 하나의 객체를 공유한다는 것을 의미한다. 따라서 person 또는 copy 어떤 한쪽에서 객체를 변경(변수에 새로운 객체를 재할당하는 것이 아니라 객체의 프로퍼티 값 변경 또는 추가, 삭제)이 하면 서로 영향을 주고 받는다.
 
