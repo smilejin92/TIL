@@ -11,7 +11,7 @@
 
 <img src="./images/statement.png" style="zoom:48%;" />
 
-문은 구성되며 세미콜론(;)으로 끝나야하지만, 코드 블록 뒤에는 세미콜론을 붙이지 않는다.
+문은 구성되며 세미콜론(`;`)으로 끝나야하지만, 코드 블록 뒤에는 세미콜론을 붙이지 않는다.
 
 
 
@@ -33,13 +33,13 @@ x = 100;
 
 <img src="./images/completion-value.png" style="zoom:75%;" />
 
-![](C:/Users/Jinhyun Kim/Documents/dev/TIL/JavaScript/notes/images/completion-value2.png)
+<img src="./images/completion-value2.png" style="zoom:75%;" />
 
 ## 3. 연산자란?
 
 **연산자(Operator)**는 하나 이상의 표현식을 대상으로 산술, 할당, 비교, 논리, 타입, 지수 **연산(operation) 등을 수행해 하나의 값을 만든다.** 이때 연산의 대상을 **피연산자 (Operand)라 한다.** 
 
-<img src=".//images/operation.png" style="zoom:75%;" />
+<img src="./images/operation.png" style="zoom:75%;" />
 
 
 
@@ -356,4 +356,3 @@ Math.pow(5, -2);  // -> 0.04
 ```
 
 지수 연산자는 **모든 이항 연산자보다 우선 순위가 높다.**
-
