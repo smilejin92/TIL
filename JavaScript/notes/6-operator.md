@@ -31,7 +31,7 @@ x = 100;
 
 **완료 값 (Completion value)** - 표현식이 아닌 문은 언제나 `undefined`를 출력한다. 이를 **완료 값**이라 한다. 완료 값은 다른 값과 같이 변수에 할당할 수 없다.
 
-<img src="./images/completion-value.png" style="zoom:75%;" />
+<img src="./images/completion-value.PNG" style="zoom:75%;" />
 
 <img src="./images/completion-value2.png" style="zoom:75%;" />
 
