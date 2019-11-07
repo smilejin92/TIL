@@ -60,4 +60,6 @@
 * [**Document Object Model**](./JavaScript/notes/30-DOM.md)
 * [**Asynchronous Processing Model**](./JavaScript/notes/31-async.md)
 * [**Event**](./JavaScript/notes/32-event.md)
+* [**Ajax**](./JavaScript/notes/34-ajax.md)
+* [**RESTAPI**](./JavaScript/notes/35-RESTAPI.md)
 
