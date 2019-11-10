@@ -19,11 +19,13 @@ IP - 전 세계 유니크한 통신 주소
 
 그걸 브라우저 메모리에 그대로 받아서 파싱하여 렌더링한다.
 
+<img src="./images/ajax-webpage-lifecycle.png" style="zoom:48%;" />
+
 
 
 ## 2. JSON (JavaScirpt Object Notation)
 
-JSON (JavaScript Object Notation)은 클라이언트와 서버 간 데이터 교환을 위한 데이터 포맷을 말한다.
+**JSON** (JavaScript Object Notation)은 클라이언트와 서버 간 데이터 교환을 위한 **데이터 포맷**을 말한다.
 
 자바스크립트의 객체 리터럴과 매우 흡사하다. 하지만 **JSON은 순수한 텍스트로 구성된 규칙이 있는 데이터 구조이다.**
 
@@ -57,9 +59,9 @@ const strPrettyObj = JSON.strignify(obj, null, 2);
 console.log(typeof strPrettyObj, strPrettyObj);
 /*
 string {
-	"name": "Kim",
-	"gender": "male",
-	"age": 20
+  "name": "Kim",
+  "gender": "male",
+  "age": 20
 }
 */
 
@@ -75,8 +77,8 @@ const strFilteredObj = JSON.stringify(obj, filter, 2);
 console.log(typeof strFilteredObj, strFilteredObj);
 /*
 string {
-	"name": "Lee",
-	"gender": "male"
+  "name": "Lee",
+  "gender": "male"
 }
 */
 ```
@@ -85,9 +87,9 @@ string {
 
 ### 2.2. JSON.parse
 
-JSON.parse 메소드는 JSON 데이터를 가진 문자열을 객체로 변환한다.
+JSON.parse 메소드는 **JSON 데이터를** 가진 문자열을 **객체로** 변환한다.
 
->  서버로부터 브라우저로 전송된 JSON 데이터는 문자열이다. 이 문자열을 객체로서 사용하려면 객체화하여야 하는데 이를 역직렬화(Deserializing)이라 한다. 역직렬화를 위해 내장 객체 JSON의 static 메소드인 `JSON.parse`를 사용한다.
+>  서버로부터 브라우저로 전송된 JSON 데이터는 문자열이다. 이 문자열을 객체로서 사용하려면 객체화하여야 하는데 이를 역직렬화(**Deserializing**)이라 한다. 역직렬화를 위해 내장 객체 JSON의 static 메소드인 `JSON.parse`를 사용한다.
 
 ```javascript
 const obj = { name: 'Kim', gender: 'male', age: 20 };
@@ -137,7 +139,9 @@ console.log(typeof parsed, parsed);
 
 ## 3. XMLHttpRequest
 
-브라우저는 `XMLHttpRequest` **객체**를 이용하여 Ajax 요청을 생성하고 전송한다. 서버가 브라우저의 요청에 대해 응답을 반환하면 **같은** `XMLHttpRequest` 객체가 그 결과를 처리한다.
+브라우저는 `XMLHttpRequest` **객체**를 이용하여 Ajax 요청을 **생성하고 전송한다**. 서버가 브라우저의 요청에 대해 응답을 반환하면 **같은** `XMLHttpRequest` 객체가 그 결과를 처리한다.
+
+마이크로소프트사에서 개발했다.
 
 ### 3.1. Ajax request
 
@@ -148,6 +152,7 @@ console.log(typeof parsed, parsed);
 const xhr = new XMLHttpRequest();
 
 // 비동기 방식으로 Request를 오픈한다
+// xhr.open(Method, url, async?);
 xhr.open('GET', '/users');
 
 // Request를 전송한다
@@ -168,7 +173,7 @@ XMLHttpRequest.open(method, url[, async]);
 | -------- | ------------------------------------------------------------ |
 | method   | HTTP method ("GET", "POST", "PUT", "DELETE" 등)              |
 | url      | 요청을 보낼 URL                                              |
-| async    | 비동기 조작 여부. 옵션으로 default는 true이며 비동기 방식으로 동작한다. |
+| async    | 비동기 조작 여부. 옵션으로 **default는 true이며 비동기 방식으로 동작**한다. |
 
 
 
@@ -179,7 +184,9 @@ XMLHttpRequest.open(method, url[, async]);
 기본적으로 서버로 전송하는 데이터는 GET, POST 메소드에 따라 그 전송 방식에 차이가 있다.
 
 * GET 메소드의 경우, URL의 일부분인 **쿼리문자열**(query string)로 데이터를 서버로 전송한다.
-* POST 메소드의 경우, 데이터(페이로드)를 **Request Body에 담아** 전송한다.
+* POST 메소드의 경우, 데이터(**페이로드**)를 **Request Body에 담아** 전송한다.
+
+![](./images/HTTP_request+response_message.gif)
 
 `XMLHttpRequest.send` 메소드에는 **request body**에 담아 전송할 인수를 전달할 수 있다. 
 
@@ -197,7 +204,7 @@ xhr.send(null);
 
 #### 3.1.3 `XMLHttpRequest.setRequestHeader`
 
-`XMLHttpRequest.setRequestHeader` 메소드는 HTTP Request Header의 값을 설정한다. `setRequestHeader` 메소드는 **반드시 `XMLHttpRequest.open` 메소드 호출 이후에 호출한다.**
+`XMLHttpRequest.setRequestHeader` 메소드는 **HTTP Request Header**의 값을 설정한다. `setRequestHeader` 메소드는 **반드시 `XMLHttpRequest.open` 메소드 호출 이후에 호출한다.**
 
 아래는 자주 사용하는 Request Header인 Content-type, Accept에 관한 설명이다.
 
@@ -326,7 +333,7 @@ xhr.onreadystatechange = function (e) {
 
 ```
 
-XMLHttpRequest의 readyState가 4인 경우, 서버 응답이 완료된 상태이므로 이후 XMLHttpRequest.status가 200(정상 응답)임을 확인하고 정상인 경우, XMLHttpRequest.responseText를 취득한다. XMLHttpReqeust.responseText에는 서버가 전송한 데이터가 담겨 있다.
+XMLHttpRequest의 readyState가 4인 경우, 서버 응답이 완료된 상태이므로 이후 XMLHttpRequest.status가 200(정상 응답)임을 확인하고 정상인 경우, **XMLHttpRequest.responseText**를 취득한다. XMLHttpReqeust.responseText에는 **서버가 전송한 데이터**가 담겨 있다.
 
 
 
@@ -338,11 +345,15 @@ Ajax는 웹 서버와의 통신이 필요하므로 예제를 실행하기 위해
 
 ```bash
 $ cd ~/Desktop
-$ git clone https://github.com/ungmo2/webserver-express.git
-$ cd webserver-express
+$ mkdir server && cd server
+$ npm init -y
 
-## install express
-$ npm install
+## install express & nodemon
+$ npm install express
+$ nmp install -g nodemon
+
+## controller
+$ touch app.js
 
 ## creat public folder (root directory)
 $ mkdir public
@@ -350,8 +361,6 @@ $ mkdir public
 ## start webserver
 $ npm start
 ```
-
-http://localhost:3000 에 접속하여 Hello World!가 표시되면 웹서버가 정상 작동하는 것이다.
 
 
 
@@ -422,13 +431,11 @@ Ajax를 이용하여 웹페이지에 추가하기 가장 손쉬운 데이터 형
 </div>
 ```
 
-http://localhost:3000/loadhtml.html
-
 
 
 ### 5.2 Load JSON
 
-서버로부터 브라우저로 전송된 JSON 데이터는 문자열이다. 이 문자열을 객체화해야 하는데 이를 역직렬화(Deserializing)이라 한다. 역직렬화를 위해서 내장 객체 JSON의 static 메소드인 `JSON.parse()`를 사용한다.
+서버로부터 브라우저로 전송된 JSON 데이터는 문자열이다. 이 **문자열을 객체화**해야 하는데 이를 역직렬화(**Deserializing**)이라 한다. 역직렬화를 위해서 내장 객체 JSON의 static 메소드인 `JSON.parse()`를 사용한다.
 
 ```html
 <!-- 루트 폴더(webserver-express/public)/loadjson.html -->
@@ -443,7 +450,7 @@ http://localhost:3000/loadhtml.html
 
     <script>
       // XMLHttpRequest 객체의 생성
-      var xhr = new XMLHttpRequest();
+      const xhr = new XMLHttpRequest();
 
       // 비동기 방식으로 Request를 오픈한다
       xhr.open('GET', 'data/data.json');
@@ -518,6 +525,8 @@ http://localhost:3000/loadjson.html
 요청에 의해 웹페이지가 전달된 서버와 동일한 도메인의 서버로 부터 전달된 데이터는 문제없이 처리할 수 있다 (??). 하지만 보안상의 이유로 다른 도메인(http와 https, 포트가 다르면 다른 도메인으로 간주한다)으로의 요청(크로스 도메인 요청)은 제한된다. 이것을 동일출저원칙(Same-origin policy)이라 한다.
 
 ![](./images/cdr.jpg)
+
+**동일출저원칙을 우회**하는 방법은 세 가지가 있다.
 
 #### 1. 웹서버의 프록시 파일
 
@@ -596,4 +605,19 @@ HTTP 헤더에 추가적으로 정보를 추가하여 브라우저와 서버가 
 
 Node.js로 구현한 서버의 경우, CORS Package를 사용하면 간단하게 Cross-Origin Resource Sharing을 구현할 수 있다.
 
-???
+```javascript
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+
+app.get('/products/:id', function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for all origins!'})        
+});
+
+app.listen(80, function () {
+  console.log('CORS-enabled web server listening on port 80') 
+});
+```
+
