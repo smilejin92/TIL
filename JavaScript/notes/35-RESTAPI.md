@@ -61,8 +61,6 @@ DELETE /todos/1
 
 
 
-
-
 ## 4. REST API의 Example
 
 ### 4.1 json-server
@@ -144,7 +142,7 @@ $ curl -X GET http://localhost:5000/todos
 
 
 
-javascript를 사용하여 조회 (질문. 아래 코드를 어디다가 집어 넣는지?)
+javascript를 사용하여 조회
 
 ```javascript
 const xhr = new XMLHttpRequest();
