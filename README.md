@@ -63,4 +63,5 @@
 * [**Ajax**](./JavaScript/notes/34-ajax.md)
 * [**RESTAPI**](./JavaScript/notes/35-RESTAPI.md)
 * [**Promise**](./JavaScript/notes/36-promise.md)
+* [**Module**](./JavaScript/notes/37-module.md)
 
