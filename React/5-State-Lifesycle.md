@@ -15,7 +15,7 @@ function tick() {
 setInterval(tick, 1000);
 ```
 
-지금까지 배운 내용만으로 UI를 업데이트하기 위해서는 한 가지 방법 뿐이었다. 상태가 변경될때마다 `ReactDOM.render` 메소드를 호출하여 UI를 다시 그리는 것이다.
+지금까지 배운 내용만으로 UI를 업데이트하는 방법은 한 가지 뿐이었다. 상태가 변경될때마다 `ReactDOM.render` 메소드를 호출하여 UI를 다시 그리는 것이다.
 
 이번 장에서는 `Clock` 컴포넌트를 어떻게 모듈/캡슐화 시키는지에 대해 알아볼 것이다. 이 과정을 통해 `Clock` 컴포넌트의 내부에서 어떠한 방법으로 직접 타이머를 설정하고 매초 자신의 상태를 업데이트할 수 있는지에 대해 파해쳐보자.
 
@@ -43,7 +43,7 @@ setInterval(tick, 1000);
 
 캡슐화된 `Clock` 컴포넌트에는 한 가지 중요한 부분이 빠져있다. `Clock` 컴포넌트는 자신의 내부에서 직접 타이머를 설정하고 업데이트 해야된다는 점이다. 위의 코드는 `setInterval` 함수의 콜백으로 전달된  `tick` 함수가 매초 UI를 새롭게 그려낸다.
 
-가장 이상적인 방법은 아래 코드를 한번만 작성하여 `Clock` 컴포넌트가 자신의 상태를 스스로 관리하는 것이다.
+가장 이상적인 방법은 아래 코드를 한번만 작성하여 `Clock` 컴포넌트가 자신의 상태를 스스로 관리할 수 있게 하는 것이다.
 
 ```jsx
 ReactDOM.render(
@@ -81,7 +81,7 @@ class Clock extends React.Component {
 }
 ```
 
-위의 예제를 통해 `Clock` 컴포넌트는 함수 컴포넌트가 아닌 클래스 컴포넌트로 정의되었다.
+위의 예제를 통해 `Clock`은 함수 컴포넌트가 아닌 클래스 컴포넌트로 정의되었다.
 
 `render` 메소드는 업데이트가 발생될 때마다 호출된다. 단, `<Clock />` Element는 이전과 같은 DOM 노드 내에서 렌더되어야한다.  `<Clock />` Element는 `Clock` 클래스가 반환한 하나의 인스턴스이다. 따라서, `Clock` 클래스 몸체에서 `Clock` 클래스가 반환하는 인스턴스의 지역 상태(local state)와 생명주기 메소드를 정의할 수 있게된다.
 
@@ -89,7 +89,7 @@ class Clock extends React.Component {
 
 ### 5.2 클래스의 지역 상태 
 
-`props`객체의  `date` 프로퍼티를 (미래에 생성될) 인스턴스의 상태로 옮기는 과정은 아래와 같다.
+`props`객체의  `date` 프로퍼티를 (미래에 생성될) 인스턴스의 상태로 설정하는 과정은 아래와 같다.
 
 1. `Clock` 클래스 `render` 메소드의 `this.props.date`를 `this.state.date`로 변경한다.
 
@@ -106,7 +106,7 @@ class Clock extends React.Component {
    }
    ```
 
-2. 클래스 컨스트럭터를 정의하여 컨스트럭터 내부에서 `this.state`를 초기 값을 설정한다.
+2. 클래스 컨스트럭터를 정의하여 컨스트럭터 내부에서 `this.state`의 초기 값을 설정한다.
 
    ```jsx
    class Clock extends React.Component {
@@ -150,7 +150,7 @@ class Clock extends React.Component {
 
 
 
-아래는 위의 과정을 모두 거친 결과 코드이다.
+아래 코드 예제는 위의 과정을 모두 거친 `Clock` 컴포넌트의 결과이다.
 
 ```jsx
 class Clock extends React.Component {
