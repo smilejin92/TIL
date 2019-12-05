@@ -1,5 +1,7 @@
 # [Intro to Linux](https://www.inflearn.com/course/%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9-%EB%A6%AC%EB%88%85%EC%8A%A4-%EA%B0%95%EC%A2%8C)
 
+ https://www.inflearn.com/course/command-line/lecture/22484 
+
 ### 가상머신
 
 - 하드웨어를 소프트웨어적으로 구현해서 그 위에서 OS가 작동하도록 하는 기술
