@@ -68,3 +68,4 @@ React DOM은 React Element와 React Element의 하위 요소를 이전 상태와
 <img src="./img/dom-update.png" style="zoom:60%;" />
 
 3.2 시계 예제에서는 매초 모든 UI를 새롭게 그리지만, `<h2>` 태그의 텍스트만을 업데이트한다.
+

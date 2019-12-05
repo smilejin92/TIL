@@ -87,4 +87,26 @@ ReactDOM.render(element, document.getElementById('root'));
 
 ### 4.3 컴포넌트 구성
 
-컴포넌트의 반환 값에 다른 컴포넌트
+컴포넌트의 반환 값에 다른 컴포넌트의 반환 값을 사용할 수 있다 (ex. 함수의 반환 값에 다른 함수의 반환 값을 사용할 수 있다). 아래 코드 예제를 살펴보자.
+
+```jsx
+// Welcome 함수 컴포넌트
+function Welcome(props) {
+    return <h1>Hello, {props.name}</h1>;
+}
+
+// App 함수 컴포넌트
+function App() {
+    return (
+        // App 함수 컴포넌트의 반환 값에 Welcome 함수 컴포넌트를 호출할 수 있다.
+    	<div>
+        	<Welcome name="Sara" />
+            <Welcome name="Cahal" />
+            <Welcome name="Edite" />
+        </div>
+    );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
