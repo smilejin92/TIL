@@ -52,7 +52,7 @@ const element = <div />;
 React Element는 사용자가 직접 정의한 컴포넌트의 반환 값이될 수도 있다 (ex. 생성자 함수의 인스턴스).
 
 ```jsx
-// Welcome 컴포넌트가 반환하는 React Element가 할당된다 변수 element에 할당된다.
+// Welcome 컴포넌트가 반환하는 React Element가 변수 element에 할당된다.
 const element = <Welcome name="Jin" />;
 ```
 

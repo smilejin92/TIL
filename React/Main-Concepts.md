@@ -213,4 +213,3 @@ const element = {
 ```
 
 **이러한 객체를 React element(요소)라 부른다.** React는 React Element를 해석하여 DOM을 생성하고 DOM의 상태를 최신으로 유지한다.
-
