@@ -110,3 +110,104 @@ function App() {
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
+일반적으로 새롭게 생성한 React 앱은 최상단에 하나의 `App` 컴포넌트를 가진다.  However, if you integrate React into an existing app, you might start bottom-up with a small component like `Button` and gradually work your way to the top of the view hierarchy. 
+
+
+
+### 4.4 컴포넌트 분리
+
+아래 `Comment` 컴포넌트 예제를 살펴보자.
+
+```jsx
+function Comment(props) {
+    return (
+    	<div className="Comment">
+        	<div className="UserInfo">
+            	<img className="Avatar"
+                    src={props.author.avatarUrl}
+                    alt={props.author.name}
+                />
+                <div className="UserInfo-name">
+                	{props.author.name}
+                </div>
+            </div>
+            <div className="Comment-text">
+            	{props.text}
+            </div>
+            <div className="Comment-date">
+            	{formatDate(props.date)}
+            </div>
+        </div>
+    );
+}
+```
+
+`Comment` 컴포넌트는 `props` 객체를 전달 받고, `props` 객체는 프로퍼티로 `user`(객체), `text`(문자열), `date`(날짜)를 갖는다.
+
+`Comment` 컴포넌트가 반환하는 React Elements는 중첩되어있고, 각 element를 재사용하기 어렵다. 아래 예제를 통해 `Comment` 컴포넌트를 분리시켜보자.
+
+```jsx
+function Avatar(props) {
+    return (
+    	<img className="Avatar"
+            src={props.user.avatarUrl}
+            alt={props.user.name}
+        />
+    );
+}
+
+function UserInfo(props) {
+    return (
+    	<div className="UserInfo">
+            <Avatar user={props.user} />
+            <div className="UserInfo-name">
+                {props.user.name}
+            </div>
+        </div>
+    );
+}
+
+function Comment(props) {
+    return (
+    	<div className="Comment">
+        	<UserInfo user={props.author} />
+            <div className="Comment-text">
+            	{props.text}
+            </div>
+            <div className="Comment-date">
+            	{formatDate(props.date)}
+            </div>
+        </div>
+    );
+}
+```
+
+`props`의 프로퍼티 이름을 지을 때 컴포넌트의 입장으로 짓는 것을 권장한다.
+
+여러 번 사용되는 UI 부분을 컴포넌트화하여 관리하는 것을 권장한다.
+
+
+
+### 4.5 Props 객체는 참조만 가능하다 (Read-Only).
+
+함수 혹은 클래스로 컴포넌트를 정의할 때, 컴포넌트 내부에서 `props` 절대로 변경/재할당하면 안된다. 아래 예제를 살펴보자.
+
+```jsx
+function sum(a, b) {
+    return a + b;
+}
+```
+
+위와 같은 함수(컴포넌트)를 순수(pure) 함수(컴포넌트)라 표현한다. 컴포넌트로 전달된 인자의 값을 변경하지 않고, 전달된 특정 인수를 사용해 반환하는 값이 항상 동일하기 때문이다.
+
+반면 아래 컴포넌트는 비순수하다. 인자 값을 직접 변경하기 때문이다.
+
+```jsx
+function withdraw(account, amount) {
+    account.total -= amount;
+}
+```
+
+React는 비교적 유연하지만 하나의 엄격한 규칙이 있다.
+
+**React의 모든 컴포넌트는 전달 받은 props 객체를 변경하지 않는 순수 함수여야한다.** 이 규칙을 어기지 않고 UI를 동적으로 변경할 수 있는 state(상태) 관리에 대해 다음 장에서 알아보자.
