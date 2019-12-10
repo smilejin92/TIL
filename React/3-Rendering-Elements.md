@@ -24,7 +24,7 @@ HTML 파일에 `<div>` 태그가 있다고 가정해보자.
 
 위 `<div>` 태그의 하위로 들어가는 모든 요소는 React DOM에 의해 관리되므로 위의 `<div>` 태그를 "root"라고 부른다.
 
-React로 개발된 어플리케이션은 보통 한 개의 root DOM 노드를 가진다. 만약 이미 존재하는 앱에 React를 추가한다면, 필요한 만큼의 isolated(독립적인) root DOM 노드를 생성해도된다.
+React로 개발된 어플리케이션은 보통 한 개의 root DOM 노드를 가진다. 만약 이전에 개발된 앱에 React를 추가한다면, 필요한 만큼의 isolated(독립적인) root DOM 노드를 생성해도된다.
 
 React Element를 root DOM 노드에 렌더하고 싶다면 `ReactDOM.render` 메소드에 React Element와 root DOM 노드를 인수로 전달하여 호출한다.
 
