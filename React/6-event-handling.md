@@ -126,7 +126,7 @@ whatIsThis(); // window, global, undefined
 ```jsx
 class LoggingButton extends React.Componenet {
     // 아래 문법은 handleClick 내부의 this가 LoggingButton의
-    // 인스턴스를 가르키도록 바인드한다.
+    // 인스턴스를 가리키도록 바인드한다.
     // 주의: '아직' 표준 사양이 아니다
     handelClick = () => {
         console.log('this is ', this);
@@ -166,7 +166,7 @@ class LoggingButton extends React.Component {
 
 화살표 함수는 함수 자체의 this 바인딩이 없다. 화살표 함수 내부에서 this를 참조하면 상위 컨텍스트의 this를 그대로 참조한다. 이를 Lexical this라 한다. 이는 마치 렉시컬 스코프와 같이 **화살표 함수의 this가 함수가 정의된 위치에 의해 결정된다는 것을 의미한다.**
 
-화살표 함수 사용의 문제점은 `LoggingButton` 컴포넌트가 렌더될 때마다 새로운 콜백이 생성된다는 것이다. 만약 콜백(이벤트 핸들러)가 하위 컴포넌트의 props로 전달되면, 하위 컴포넌트에서 추가적인 re-렌더링이 발생할 수 있다. 컨스트럭터 내부에서 this 바인딩을 해주거나 클래스 필드 정의 제안을 사용하는 것을 권장한다.
+화살표 함수 사용의 문제점은 `LoggingButton` 컴포넌트가 렌더될 때마다 새로운 콜백이 생성된다는 것이다. 만약 콜백(이벤트 핸들러)이 하위 컴포넌트의 props로 전달되면, 하위 컴포넌트에서 추가적인 re-렌더링이 발생할 수 있다. 컨스트럭터 내부에서 this 바인딩을 해주거나 클래스 필드 정의 제안을 사용하는 것을 권장한다.
 
 
 
@@ -182,4 +182,3 @@ class LoggingButton extends React.Component {
 위 예제의 두 버튼 요소는 동일하다. 각각 화살표 함수와 `bind` 함수를 사용한 예제이다.
 
 두 예제 모두 React 이벤트를 의미하는 인수 `e`가 `id` 이후 두 번째 인수로 전달된다. 화살표 함수 사용시, 명시적으로 `e` 객체를 전달해야하지만, `bind` 함수 사용시 추가적인 인수 `e`는 `arguments` 객체의 요소로 추가되어 자동으로 전달된다.
-

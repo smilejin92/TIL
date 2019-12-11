@@ -389,4 +389,3 @@ function FormattedDate(props) {
 ```
 
 이러한 하위 요소로의 데이터 전달 방법을 "top-down" 혹은 "unidirectional (단방향)" 데이터 플로우라고 한다. 예를 들어, a라는 상태와 a를 소유하고 있는 컴포넌트 A가 있다고 가정해보자.  a에서 파생된 데이터 혹은 UI는 A의 하위 컴포넌트에만 영향을 줄 수 있다.
-
