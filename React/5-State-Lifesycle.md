@@ -307,16 +307,30 @@ this.setState({ comment: 'Hello' });
 
 #### 2. 상태 업데이트는 비동기적으로 수행될 수도 있다.
 
-`this.props`와 `this.state`는 비동기적으로 업데이트될 수 있기 때문에, 다음 상태를 계산하기 위해 현재 상태의 값에 의존해서는 안된다.
+React는 내부 알고리즘을 통해 상태를 같은 결과로 만드는 `setState` 하나의 `setState`로 묶어 호출할 수 있다.
 
-예를 들면, 아래의 코드는 `counter`를 업데이트하는 데 실패할 수도 있다.
+```jsx
+this.setState({ counter: 1 });
+this.setState({ counter: 1 });
+this.setState({ counter: 1 });
+this.setState({ counter: 1 });
+
+// 위의 코드는 하나의 setState로 묶여 호출될 수 있다.
+this.setState({ counter: 1 });
+```
+
+
+
+`this.props`와 `this.state`는 비동기적으로 업데이트될 수 있기 때문에 (비동기적으로 업데이트되지 않을 수도 있다), **상태를 변경하기 위해 현재 상태의 값에 의존해서는 안된다.**
+
+예를 들면, 아래의 코드는 `counter`를 업데이트하는 데 **실패할 수도 있다 (성공할 수도 있다).**
 
 ```jsx
 // 잘못된 예제
 this.setState({ counter: this.state.counter + this.props.increment })
 ```
 
-이러한 상황을 피하기 위해서는 객체 대신 함수를 인자로 받는 `setState`의 두 번째 양식을 사용하면된다. 인자로 전달되는 함수의 인자로는 첫번째 인수와 두 번째 인수로 각각 이전의 상태(state)와 업데이트가 발생하는 시점의 props를 두 번째 인수로 전달 받는다.
+이러한 상황을 피하기 위해서는 객체 대신 **함수를 인자로 받는 `setState`의 두 번째 양식을 사용하면된다.** `setState`의 인자로 전달되는 함수의 인수로는 첫번째 인수와 두 번째 인수로 각각 이전의 상태(state)와 **업데이트가 발생하는 시점의 (순서가 보장된다)** props를 두 번째 인수로 전달 받는다.
 
 ```jsx
 // 올바른 예제
@@ -364,17 +378,17 @@ componentDidMount() {
 
 ### 5.5 데이터는 아래로 흐른다.
 
-부모와 자식 컴포넌트 모두 어떠한 컴포넌트가 stateful(상태를 가지고 있는) 혹은 stateless(상태를 가지지 않는)한지 알 수 없다. 또한 어떠한 컴포넌트가 함수형인지 클래스형인지에 대해 알 필요도 없다.
+부모와 자식 컴포넌트 모두 서로가 stateful(상태를 가지고 있는) 혹은 stateless(상태를 가지지 않는)한지 알 수 없다. 또한 서로가 함수 컴포넌트인지 클래스 컴포인지에 대해 알 필요도 없다.
 
 위와 같은 이유 때문에 상태(state)는 종종 local(지역의) 혹은 encapsulated(캡슐화된)라고 불린다. 상태는 상태를 직접 소유하고 있는 컴포넌트에서만 접근이 가능하다.
 
-컴포넌트는 컴포넌트의 상태를 하위 컴포넌트의 props 객체로 전달할 수 있다.
+컴포넌트는 컴포넌트의 상태를 하위 컴포넌트에 props 객체로 전달할 수 있다.
 
 ```jsx
 <h2>It is {this.state.date.toLocalTimeString()}.</h2>
 ```
 
-위 예제는 사용자 정의 컴포넌트에서도 동일하게 동작한다.
+이 개념은 사용자 정의 컴포넌트에서도 동일하게 동작한다.
 
 ```jsx
 <FormattedDate date={this.state.date} />

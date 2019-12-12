@@ -5,7 +5,7 @@
 * React 이벤트는 camelCase로 표기한다.
 * JSX 사용시 함수 식별자를 이벤트 핸들러로서 전달한다.
 
-예를 들면, HTML에서는 DOM의 이벤트에 함수를 아래와 같이 바인딩한다.
+예를 들면, HTML에서는 DOM의 이벤트에 함수를 아래와 같이 바인딩한다 (인라인 이벤트 핸들러).
 
 ```html
 <button onclick="activateLasers()">
@@ -21,7 +21,7 @@ React에서는 이벤트에 함수 정의를 전달하여 핸들러를 바인딩
 </button>
 ```
 
-또한 React에서는 default behavior를 막기 위해 `false`를 반환할 수 없다. default behavior를 막기 위해서는 `preventDefault`를 명시적으로 작성해야한다. 예를 들어, 일반 HTML에서는 앵커 태그 사용시 새창이 열리는 default behavior를 방지하기 위해 아래와 같이 `false`를 반환하였다.
+또한 React에서는 이벤트의 default behavior를 막기 위해 `false`를 반환할 수 없다. default behavior를 막기 위해서는 `preventDefault`를 명시적으로 작성해야한다. 예를 들어, 일반 HTML에서는 앵커 태그 사용시 새창이 열리는 default behavior를 방지하기 위해 아래와 같이 `false`를 반환하였다.
 
 ```html
 <a href="#" onclick="console.log('The link was clicked.'); return false">Click me</a>
@@ -113,11 +113,11 @@ whatIsThis(); // window, global, undefined
 위 `Toggle` 컴포넌트 예제에서
 
 1. `handleClick` 메소드를 `this`와 바인드하지 않고,
-2. `render` 메소드 내부의 `<button>` 요소에 인라인 이벤트 핸들러 방식으로 함수 정의를 바인드하면
+2. `render` 메소드 내부의 `<button>` 요소에 **인라인 이벤트 핸들러 방식으로 함수 정의를 전달하면**,
 3. 이벤트 발생시 핸들러는 **일반 함수로 호출되므로** `handleClick` 메소드 내부의 `this`는 전역 객체를 가리키며,
 4. 바벨 컴파일 이후 엄격 모드가 적용되어 `handleClick` 메소드 내부의 `this`는 `undefined`를 가리킨다.
 
-따라서, `onClick={this.handleClick}`과 같이 함수 정의를 할당하는 경우, this 바인딩을 해주어야한다.
+따라서, `onClick={this.handleClick}`와 같이 인라인 이벤트 핸들러로써 함수 정의를 전달하는 경우, this 바인딩을 해주어야한다.
 
 `bind` 함수를 사용하는 것이 번거롭다면 아래 두 가지 방법으로 우회할 수 있다.
 
@@ -127,7 +127,7 @@ whatIsThis(); // window, global, undefined
 class LoggingButton extends React.Componenet {
     // 아래 문법은 handleClick 내부의 this가 LoggingButton의
     // 인스턴스를 가리키도록 바인드한다.
-    // 주의: '아직' 표준 사양이 아니다
+    // 주의: '아직' 표준 사양이 아니다 (2019/12/12)
     handelClick = () => {
         console.log('this is ', this);
     }
@@ -153,10 +153,10 @@ class LoggingButton extends React.Component {
     }
     
     render() {
-        // 아래 문법은 handleClick 내부의 this가 LoggingButton의
-        // 상위 컨텍스트의 this를 가리키도록 한다.
+        // 아래 문법은 handleClick 내부의 this가
+        // 상위 컨텍스트의 this(LoggingButton 인스턴스)를 가리키도록 한다.
         return (
-        	<button onClick={e => this.handleClick(e)}>
+        	<button onClick={() => this.handleClick()}>
             	Click me
             </button>
         );
@@ -166,7 +166,7 @@ class LoggingButton extends React.Component {
 
 화살표 함수는 함수 자체의 this 바인딩이 없다. 화살표 함수 내부에서 this를 참조하면 상위 컨텍스트의 this를 그대로 참조한다. 이를 Lexical this라 한다. 이는 마치 렉시컬 스코프와 같이 **화살표 함수의 this가 함수가 정의된 위치에 의해 결정된다는 것을 의미한다.**
 
-화살표 함수 사용의 문제점은 `LoggingButton` 컴포넌트가 렌더될 때마다 새로운 콜백이 생성된다는 것이다. 만약 콜백(이벤트 핸들러)이 하위 컴포넌트의 props로 전달되면, 하위 컴포넌트에서 추가적인 re-렌더링이 발생할 수 있다. 컨스트럭터 내부에서 this 바인딩을 해주거나 클래스 필드 정의 제안을 사용하는 것을 권장한다.
+화살표 함수 사용의 문제점은 `LoggingButton` 컴포넌트가 렌더될 때마다 새로운 콜백이 생성된다는 것이다. 만약 콜백(이벤트 핸들러)이 하위 컴포넌트의 props로 전달되면, 하위 컴포넌트에서 추가적인 re-렌더링이 발생할 수 있다. **컨스트럭터 내부에서 this 바인딩을 해주거나 클래스 필드 정의 제안을 사용하는 것을 권장한다.**
 
 
 
@@ -181,4 +181,5 @@ class LoggingButton extends React.Component {
 
 위 예제의 두 버튼 요소는 동일하다. 각각 화살표 함수와 `bind` 함수를 사용한 예제이다.
 
-두 예제 모두 React 이벤트를 의미하는 인수 `e`가 `id` 이후 두 번째 인수로 전달된다. 화살표 함수 사용시, 명시적으로 `e` 객체를 전달해야하지만, `bind` 함수 사용시 추가적인 인수 `e`는 `arguments` 객체의 요소로 추가되어 자동으로 전달된다.
+두 예제 모두 React 이벤트 객체를 의미하는 인수 `e`가 `id` 이후 두 번째 인수로 전달된다. 화살표 함수 사용시, 명시적으로 `e` 객체를 전달해야하지만, `bind` 함수 사용시 추가적인 인수 `e`는 `arguments` 객체의 요소로 추가되어 자동으로 전달된다.
+
