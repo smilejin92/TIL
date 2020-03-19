@@ -18,7 +18,7 @@
 * 모자이크 핵심 개발자 **마크 안데르센**은 이후 **넷스케이프 커뮤니케이션** 설립, 넷스케이프 네비게이터 발표
 * 하지만 Microsoft의 **인터넷 익스플로러(IE)**의 점유율을 따라잡지 못한 채 붕괴
 
-<img src="https://user-images.githubusercontent.com/32444914/77056133-6041bd80-6a15-11ea-881e-9a10f0daa6be.png" style="zoom:50%; text-align: center;" />
+<img src="https://user-images.githubusercontent.com/32444914/77056133-6041bd80-6a15-11ea-881e-9a10f0daa6be.png" style="zoom:50%;" />
 
 ### 플러그인
 
@@ -63,7 +63,7 @@
 * 웹에서 동작하는 프로그램은 예외 (모든 디바이스에서 사용 가능)
 * HTML5를 활용하면 Web을 넘어 Desktop 앱까지 개발 가능함 (ex. Electron, React Native)
 
-<img src="https://user-images.githubusercontent.com/32444914/77058344-a77d7d80-6a18-11ea-8f2a-9848a23eb54b.png" style="zoom:67%;" />
+<img src="https://user-images.githubusercontent.com/32444914/77058344-a77d7d80-6a18-11ea-8f2a-9848a23eb54b.png" style="zoom:67%; margin: 0 auto;" />
 
 ### React Native
 
