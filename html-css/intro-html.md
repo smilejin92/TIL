@@ -34,7 +34,7 @@
 * 2000년대 초반 ActiveX를 기반으로 기업의 **Web Application** 제작
 * Flash를 기반으로 애니메이션 제작 (ex. 졸라맨)
 
-<img src="https://user-images.githubusercontent.com/32444914/77057125-d1ce3b80-6a16-11ea-8668-6993035babfa.jpg" style="zoom:75%; text-align: center;" />
+<img src="https://user-images.githubusercontent.com/32444914/77057125-d1ce3b80-6a16-11ea-8668-6993035babfa.jpg" style="zoom:75%;" />
 
 ### WHATWG
 
@@ -89,4 +89,5 @@ HyperText Markup Language에 줄임말로서, 페이지의 제목, 문단, 표, 
 
 * [HTML5 Markup](https://github.com/seulbinim/PDF/blob/master/HTML5.pdf)
 * [입문자에게 추천하는 HTML, CSS 첫걸음](https://heropy.blog/2019/04/24/html-css-starter/)
-* 내가 읽은 책 뭐였더라?
+* [모던 웹을 위한 HTML5+CSS3 바이블 3판 - 윤인성 지음](https://fliphtml5.com/hkuy/rqll/basic)
+
