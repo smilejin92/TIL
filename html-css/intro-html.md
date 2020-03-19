@@ -89,5 +89,5 @@ HyperText Markup Language에 줄임말로서, 페이지의 제목, 문단, 표, 
 
 * [HTML5 Markup](https://github.com/seulbinim/PDF/blob/master/HTML5.pdf)
 * [입문자에게 추천하는 HTML, CSS 첫걸음](https://heropy.blog/2019/04/24/html-css-starter/)
-* [모던 웹을 위한 HTML5+CSS3 바이블 3판 - 윤인성 지음](https://fliphtml5.com/hkuy/rqll/basic)
+* [모던 웹을 위한 HTML5+CSS3 바이블 3판](https://fliphtml5.com/hkuy/rqll/basic)
 

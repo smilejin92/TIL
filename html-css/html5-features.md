@@ -109,16 +109,23 @@ HTML5의 커다란 변화 중 하나로는 다양한 API의 추가를 들 수 �
   * Web SQL Database / Indexed Database - 클라이언트에서 관리되는 데이터베이스를 제어할 수 있는 API로 구성되어 있다.
   * Application Cache - 웹 애플리케이션을 오프라인에서 사용하는 데 필요한 리소스(html, css, js, image 등)를 클라이언트 쪽에 캐싱하기 위한 기능
 * **실시간 커뮤니케이션 API**
-  * Web Workers: 메인 스레드(UI)와 독립적인 백그라운드 프로세스로 처리되는 스크립트를 말한다. 이를 활용하면 웹 브라우저 내에서 자바스크립트로 멀티스레드 프로그램을 구현할 수 있다.
-  * Web Socket: 클라이언트 <-> 서버 간 양방향 전이중 통신을 구현한 Web Socket 프로토콜을 이용할 수 있는 API이다.
-  * Notifications: 운영 체제로부터 독립적인 플랫폼 수준의 알림 메시지를 보여주는 API
+  * Web Workers - 메인 스레드(UI)와 독립적인 백그라운드 프로세스로 처리되는 스크립트를 말한다. 이를 활용하면 웹 브라우저 내에서 자바스크립트로 멀티스레드 프로그램을 구현할 수 있다.
+  * Web Socket - 클라이언트 <-> 서버 간 양방향 전이중 통신을 구현한 Web Socket 프로토콜을 이용할 수 있는 API이다.
+  * Notifications - 운영 체제로부터 독립적인 플랫폼 수준의 알림 메시지를 보여주는 API
 * **파일/하드웨어 접근 API**
   * File API (Desktop Drag-in / out)
   * Geolocation
-  * Device Orientation: 단말기의 센서를 이용하여 현재 방향과 기울기와 같은 정보를 구할 수 있는 API
-  * Speech Input: 단말기의 마이크를 이용하여 음성을 입력 받은 후 문자로 바꿔주는 새로운 입력 방식
-* GUI를 위한 API
+  * Device Orientation - 단말기의 센서를 이용하여 현재 방향과 기울기와 같은 정보를 구할 수 있는 API
+  * Speech Input - 단말기의 마이크를 이용하여 음성을 입력 받은 후 문자로 바꿔주는 새로운 입력 방식
+* **GUI를 위한 API**
   * Drag & drop
 
-([Web API 목록](https://developer.mozilla.org/en-US/docs/Web/API))
+([HTML5 Web API 목록](https://developer.mozilla.org/en-US/docs/Web/API))
+
+## 참고 자료
+
+* [HTML5 Markup](https://github.com/seulbinim/PDF/blob/master/HTML5.pdf)
+* [Nicôme - The Data Blog](https://gerardnico.com/web/html/palpable)
+* [Content categories](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories)
+* [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API)
 
