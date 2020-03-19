@@ -1,7 +1,6 @@
 # Introduction to HTML5
 
 **인터넷**: 전세계를 연결하고 있는 국제 정보통신망
-
 **www (World Wide Web)**: 인터넷에 연결된 컴퓨터를 통해 사람들이 정보를 공유할 수 있는 정보공간
 
 ## 인터넷의 시작
@@ -19,7 +18,7 @@
 * 모자이크 핵심 개발자 **마크 안데르센**은 이후 **넷스케이프 커뮤니케이션** 설립, 넷스케이프 네비게이터 발표
 * 하지만 Microsoft의 **인터넷 익스플로러(IE)**의 점유율을 따라잡지 못한 채 붕괴
 
-<img src="https://user-images.githubusercontent.com/32444914/77056133-6041bd80-6a15-11ea-881e-9a10f0daa6be.png" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/32444914/77056133-6041bd80-6a15-11ea-881e-9a10f0daa6be.png" style="zoom:50%; text-align: center;" />
 
 ### 플러그인
 
