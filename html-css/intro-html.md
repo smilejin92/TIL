@@ -76,13 +76,13 @@
 
 ### 그래서 HTML이 뭔가요?
 
-<img src="https://user-images.githubusercontent.com/32444914/77059384-2de68f00-6a1a-11ea-92da-fbd4661d4184.png" alt="html5" style="zoom:50%;" />
-
 HyperText Markup Language에 줄임말로서, 페이지의 제목, 문단, 표, 이미지, 동영상 등을 정의하고 그 구조와 의미리를 부여하는 마크업 언어로 웹의 구조를 담당한다. 2007년 3월 W3C가 공개적으로 XHTML 2.0의 실패를 인정한 후 새롭게 HTML을 개발하기로 결정하면서 WHATWG의 표준안을 대부분 수용하여 HTML5가 탄생하게 되었다.
 
 > Markup Language
 >
 > 마크업 언어는 문서가 화면에 표시되는 형식을 나타내거나 데이터의 논리적인 구조를 명시하기 위한 규칙들을 정의한 언어의 일종이다. 데이터를 기술한 어어라는 점에서 프로그래밍 언어와는 차이가 있다.
+
+<img src="https://user-images.githubusercontent.com/32444914/77059384-2de68f00-6a1a-11ea-92da-fbd4661d4184.png" alt="html5" style="zoom:50%;" />
 
 ## 참고 자료
 
