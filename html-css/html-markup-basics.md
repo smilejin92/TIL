@@ -127,5 +127,6 @@ HTML5에서는 문자 인코딩 지정 방법이 간소화 되었다.
 
 * [HTML5 Markup](https://github.com/seulbinim/PDF/blob/master/HTML5.pdf)
 * [HTML DOCTYPE Declaration](https://www.w3schools.com/tags/tag_doctype.asp)
-* [HTML DTD]([https://choboyam.tistory.com/entry/HTML%EB%AC%B8%EC%84%9C%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EC%84%A0%EC%96%B8-DTD](https://choboyam.tistory.com/entry/HTML문서의-종류와-선언-DTD))
+
+
 
