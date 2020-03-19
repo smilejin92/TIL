@@ -33,7 +33,7 @@
 * 2000년대 초반 ActiveX를 기반으로 기업의 **Web Application** 제작
 * Flash를 기반으로 애니메이션 제작 (ex. 졸라맨)
 
-<img src="https://user-images.githubusercontent.com/32444914/77057125-d1ce3b80-6a16-11ea-8668-6993035babfa.jpg" style="zoom:75%;" />
+<img src="https://user-images.githubusercontent.com/32444914/77057125-d1ce3b80-6a16-11ea-8668-6993035babfa.jpg" style="zoom:75%; text-align: center;" />
 
 ### WHATWG
 
