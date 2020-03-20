@@ -66,6 +66,8 @@
 
 <img src="https://user-images.githubusercontent.com/32444914/77058344-a77d7d80-6a18-11ea-8f2a-9848a23eb54b.png" style="zoom:67%; margin: 0 auto;" />
 
+(이미지 출처: https://blog.codechrysalis.io/Build-Your-First-Desktop-App-with-Electron/)
+
 ### React Native
 
 * 2012년 전후로 Adobe PhoneGap을 사용해 HTML5로 모바일 앱을 만드는 시도가 다양히 이루어짐
@@ -74,6 +76,8 @@
 * Facebook, Instagram, Skype, Uber 모두 React Native로 개발됨
 
 <img src="https://user-images.githubusercontent.com/32444914/77058756-35f1ff00-6a19-11ea-9202-7378e873a59f.png" alt="react-native" style="zoom:60%;" />
+
+(이미지 출처: https://codedlines.com/blog/best-practices-for-react-native-apps-part-1/)
 
 ### 그래서 HTML이 뭔가요?
 
@@ -84,6 +88,8 @@ HyperText Markup Language에 줄임말로서, 페이지의 제목, 문단, 표, 
 > 마크업 언어는 문서가 화면에 표시되는 형식을 나타내거나 데이터의 논리적인 구조를 명시하기 위한 규칙들을 정의한 언어의 일종이다. 데이터를 기술한 어어라는 점에서 프로그래밍 언어와는 차이가 있다.
 
 <img src="https://user-images.githubusercontent.com/32444914/77059384-2de68f00-6a1a-11ea-92da-fbd4661d4184.png" alt="html5" style="zoom:50%;" />
+
+(이미지 출처: https://www.w3.org/html/logo/)
 
 ## 참고 자료
 
