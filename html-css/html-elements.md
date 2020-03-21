@@ -907,9 +907,9 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
       It was a bright cold day in April, and the clocks were striking thirteen.
     </p>
     <footer>
-        First sentence in <cite><a href="http://www.george-orwell.org/1984/0.html">Nineteen Eighty-Four</a></cite> by George Orwell (Part 1, Chapter 1).
+    	First sentence in <cite><a href="http://www.george-orwell.org/1984/0.html">Nineteen Eighty-Four</a></cite> by George Orwell (Part 1, Chapter1).
     </footer>
-	</blockquote>
+  </blockquote>
 </body>
 ```
 
