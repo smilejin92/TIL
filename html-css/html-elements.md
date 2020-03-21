@@ -506,3 +506,136 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 
 ---
 
+## &lt;div&gt;
+
+컨텐츠 블록의 시맨틱한 의미를 가지고 있지는 않지만, 디자인이나 개발 이슈로 인해 컨텐츠 블록을 그룹화 하고자 할 때 사용한다.
+
+**카테고리**: 플로우 컨텐츠(Flow content) 
+
+**포함할 수 있는 컨텐츠 모델**: 플로우 컨텐츠(Flow content) 
+
+**display 스타일**: block
+
+```html
+...
+<body>
+  <div class="container">
+    <header>...</header>
+    <main>...</main>
+    <footer>...</footer>
+  </div>
+</body>
+```
+
+---
+
+## &lt;main&gt;
+
+문서의 주요 컨텐츠 영역을 정의할 때 사용하며, **문서에는 하나의 &lt;main&gt; 요소만 존재할 수 있다.**
+
+**카테고리**: 플로우 컨텐츠(Flow content) 
+
+**포함할 수 있는 컨텐츠 모델**: 플로우 컨텐츠(Flow content) 
+
+**display 스타일**: block
+
+```html
+...
+<body>
+  <main>
+  	<section>...</section>
+    <section>...</section>
+  </main>
+</body>
+```
+
+---
+
+## &lt;p&gt;
+
+단락 컨텐츠를 정의할 때 사용한다.
+
+**카테고리**: 플로우 컨텐츠(Flow content) 
+
+**포함할 수 있는 컨텐츠 모델**: 프레이징 컨첸츠(Phrasing content)
+
+**display 스타일**: block
+
+```html
+...
+<body>
+  <p>
+    This is a paragraph.
+  </p>
+</body>
+```
+
+---
+
+## &lt;ul&gt;
+
+비순차 목록(unordered list)을 마크업 할 때 사용한다.
+
+**카테고리**: 플로우 컨텐츠(Flow content) 
+
+**포함할 수 있는 컨텐츠 모델**: &lt;li&gt; 요소
+
+**display 스타일**: block
+
+```html
+...
+<body>
+  <ul>
+    <li>item1</li>
+    <li>item2</li>
+  </ul>
+</body>
+```
+
+---
+
+## &lt;ol&gt;
+
+순차 목록(ordered list)을 마크업 할 때 사용한다.
+
+**카테고리**: 플로우 컨텐츠(Flow content) 
+
+**포함할 수 있는 컨텐츠 모델**: &lt;li&gt; 요소
+
+**고유 속성**
+
+* start
+* reversed
+
+**display 스타일**: block
+
+```html
+...
+<body>
+  <ol start="2">
+    <li>item1</li> <!-- 2. itme1 -->
+    <li>item2</li> <!-- 3. itme1 -->
+  </ol>
+</body>
+```
+
+---
+
+## &lt;li&gt;
+
+순차 또는 비순차 목록의 항목을 정의할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**: 플로우 컨텐츠(Flow content)
+
+**display 스타일**: block
+
+```html
+...
+<body>
+  <ol start="2">
+    <li>item1</li> <!-- 2. itme1 -->
+    <li>item2</li> <!-- 3. itme1 -->
+  </ol>
+</body>
+```
+
