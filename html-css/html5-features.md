@@ -30,11 +30,15 @@
 
 `<blockquote>`, `<body>`, `<detail>`, `<fieldset>`, `<figure>`, `<td>`
 
+---
+
 ##### Metadata Content
 
 메타데이터는 문서의 정보를 포함하는 메타데이터, 스타일 표현을 위한 `<style>` 요소, 행동을 설정하는 `<script>` 요소들을 나타낸다. 웹 브라우저에 직접적으로 표시되지 않으며 문서(document)와 문서 간의 관계를 설정한다.
 
 `<base>`, `<link>`, `<meta>`, `<noscript>`, `<script>`, `<style>`, `<title>`
+
+---
 
 ##### Flow Content
 
@@ -44,17 +48,23 @@
 
 ([flow content 목록](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories))
 
+---
+
 ##### Sectioning Content
 
 섹셔닝 컨텐츠는 **대부분 HTML5에서 새롭게 추가된 요소들**이며, 제목과 그 내용을 포함한 범위를 지정하는 컨텐츠를 나타낸다. **모든 섹셔닝 컨텐츠는** 헤딩과 아웃라인을 가진다.
 
 `<article>`, `<aside>`, `<nav>`, `<section>`
 
+---
+
 ##### Heading Content
 
 헤딩 컨텐치는 섹션의 제목을 나타낸다. 문서의 아웃라인을 고려하여 사용해야한다.
 
 `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`
+
+---
 
 ##### Phrasing Content
 
@@ -66,11 +76,15 @@
 
 ([phrasing content 목록](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories))
 
+---
+
 ##### Embedded Content
 
 문서 안에 외부 자원(외부 리소스) 또는 HTML이 아닌 다른 언어로 표현되는 컨텐츠를 말한다. 외부 자원에는 이미지, 동영상, 플러그인, iframe 컨텐츠 등이 있고, 다른 언어로 된 컨텐츠에는 수학 공식을 표현하는 MathML과 SVG 등이 있다.
 
 `<audio>`, `<canvas>`, `<embed>`, `<iframe>`, `<img>`, `<math>`, `<object>`, `<svg>`, `<video>`
+
+---
 
 ##### Interactive Content
 
@@ -80,6 +94,8 @@
 
 ([interactive content 목록](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories))
 
+---
+
 ##### Palpable Content
 
 팰퍼블 컨텐츠는 기존 컨텐츠 모델에 새롭게 추가된 개념으로 구체적으로 보여지고 이해할 수 있는 컨텐츠 요소를 말한다. 팰퍼블 컨텐츠는 최소한 하나 이상의 요소가 존재해야 하고 이때 해당 요소는 숨김 상태여서는 안된다.
@@ -88,11 +104,15 @@
 
 ([palpable content 목록](https://gerardnico.com/web/html/palpable))
 
+---
+
 ##### Script-supporting Elements
 
 스크립트 지원 요소는 요소 자체가 어떤 정보를 표현하지는 않지만 사용자에 대한 기능 등에 해당하는 스크립트를 지원하는 데 사용된다.
 
 `<script>`
+
+---
 
 ### 2. 아웃라인 알고리즘 (Outline Algorithm)
 
