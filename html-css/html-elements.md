@@ -24,7 +24,7 @@
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;head&gt;
 
@@ -49,7 +49,7 @@
 </html>
 ```
 
-&nbsp;  ---&nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;body&gt;
 
@@ -74,7 +74,7 @@
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ## 2. 메타데이터
 
@@ -95,7 +95,7 @@
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;meta &#47;&gt;
 
@@ -119,7 +119,7 @@
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;style&gt;
 
@@ -148,7 +148,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;link &#47;&gt;
 
@@ -171,7 +171,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;base &#47;&gt;
 
@@ -197,7 +197,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ## 3. 컨텐츠 구분
 
@@ -229,7 +229,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;header&gt;
 
@@ -256,7 +256,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;main&gt;
 
@@ -278,7 +278,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;footer&gt;
 
@@ -304,7 +304,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;section&gt;
 
@@ -335,7 +335,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;nav&gt;
 
@@ -373,7 +373,7 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;article&gt;
 
@@ -406,7 +406,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;aside&gt;
 
@@ -434,7 +434,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;address&gt;
 
@@ -458,7 +458,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 ...
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;div&gt;
 
@@ -481,7 +481,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ## 4. 문자 컨텐츠
 
@@ -504,7 +504,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;ul&gt;
 
@@ -526,7 +526,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;ol&gt;
 
@@ -553,7 +553,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;li&gt;
 
@@ -573,7 +573,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;dl&gt;
 
@@ -614,7 +614,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;blockquote&gt;
 
@@ -644,7 +644,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </blockquote>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;pre&gt;
 
@@ -679,7 +679,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 
 태그 안에 작성한 텍스트와 공백 문자 모두 그대로 출력된다.
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;hr&gt;
 
@@ -689,7 +689,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 
 **display 스타일**: block
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ## 5. 인라인 텍스트
 
@@ -1262,7 +1262,7 @@ figure 요소는 이미지, 오디오, 비디오, 표 등을 포함하는 그�
 
 **display 스타일**: block
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;figcaption&gt;
 
@@ -1282,7 +1282,7 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 </body>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ## 7. 내장 컨텐츠
 
@@ -1355,7 +1355,7 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 </html>
 ```
 
-&nbsp;  --- &nbsp;  
+&nbsp;  ---\n&nbsp;  
 
 ### &lt;noscript&gt;
 
