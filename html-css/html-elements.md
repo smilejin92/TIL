@@ -2,7 +2,7 @@
 
 ## 1. 주요 범위
 
-### &lt;html&gt;
+<h3 class="tag">&lt;html&gt;</h3>
 
 문서의 루트 요소로, 모든 HTML 요소는 루트 요소 내에 포함되어야 한다.
 
@@ -227,7 +227,6 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
     </section>
   </main>
 </body>
-...
 ```
 
 &nbsp;    
@@ -1184,7 +1183,7 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 
 ```html
 <figure>
-	<figcaption>Listen to the T-Rex:</figcaption>
+  <figcaption>Listen to the T-Rex:</figcaption>
   <audio controls src="./media/examples/t-rex-roar.mp3">
     Your broswer does not support the <code>audio</code> element.
   </audio>
