@@ -24,7 +24,11 @@
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;head&gt;
 
@@ -49,7 +53,11 @@
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;body&gt;
 
@@ -74,7 +82,11 @@
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ## 2. 메타데이터
 
@@ -95,7 +107,11 @@
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;meta &#47;&gt;
 
@@ -119,7 +135,11 @@
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;style&gt;
 
@@ -148,7 +168,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;link &#47;&gt;
 
@@ -171,7 +195,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;base &#47;&gt;
 
@@ -197,7 +225,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ## 3. 컨텐츠 구분
 
@@ -229,7 +261,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;header&gt;
 
@@ -256,7 +292,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;main&gt;
 
@@ -278,7 +318,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;footer&gt;
 
@@ -304,7 +348,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;section&gt;
 
@@ -335,7 +383,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;nav&gt;
 
@@ -373,7 +425,11 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;article&gt;
 
@@ -406,7 +462,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;aside&gt;
 
@@ -434,7 +494,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;address&gt;
 
@@ -458,7 +522,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 ...
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;div&gt;
 
@@ -481,7 +549,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ## 4. 문자 컨텐츠
 
@@ -504,7 +576,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;ul&gt;
 
@@ -526,7 +602,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;ol&gt;
 
@@ -553,7 +633,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;li&gt;
 
@@ -573,7 +657,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;dl&gt;
 
@@ -614,7 +702,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;blockquote&gt;
 
@@ -644,7 +736,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </blockquote>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;pre&gt;
 
@@ -679,7 +775,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 
 태그 안에 작성한 텍스트와 공백 문자 모두 그대로 출력된다.
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;hr&gt;
 
@@ -689,7 +789,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 
 **display 스타일**: block
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ## 5. 인라인 텍스트
 
@@ -726,7 +830,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 >
 > 트랜스패어런트 요소의 컨텐츠 모델은, 해당 요소의 부모 요소의 컨텐츠 모델에 의해 결정된다. 또한, 트랜스패어런트 요소 하위에 올 수 있는 요소는, 해당 요소의 부모 요소의 하위에 올 수 있는 요소여야 한다.
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;abbr&gt;
 
@@ -748,7 +856,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;b&gt;
 
@@ -772,7 +884,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;mark&gt;
 
@@ -796,7 +912,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;em&gt;
 
@@ -820,7 +940,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;strong&gt;
 
@@ -844,7 +968,11 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;i&gt;
 
@@ -859,7 +987,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 
 **display 스타일**: inline
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;dfn&gt;
 
@@ -883,7 +1015,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;cite&gt;
 
@@ -912,7 +1048,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;q&gt;
 
@@ -931,7 +1071,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 
 **display 스타일**: inline
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;code&gt;
 
@@ -955,7 +1099,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;kbd&gt;
 
@@ -980,7 +1128,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;sub&gt;, &lt;sub&gt;
 
@@ -1002,7 +1154,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;time&gt;
 
@@ -1030,7 +1186,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;span&gt;
 
@@ -1054,7 +1214,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </body>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;br /&gt;
 
@@ -1065,7 +1229,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 * 플로우 컨텐츠(Flow content)
 * 프레이징 컨텐츠(Phrasing content)
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ## 5. 수정
 
@@ -1087,7 +1255,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 
 **display 스타일**: inline
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;ins&gt;
 
@@ -1105,7 +1277,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 | cite     | 변경을 설명하는 리소스의 URI                                 | URI  |
 | datetime | 변경이 일어난 [유효한 날짜 문자](https://www.w3.org/TR/html51/infrastructure.html#dates-and-times) | Date |
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ## 6. 멀티미디어
 
@@ -1152,7 +1328,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
      
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;audio&gt;
 
@@ -1190,7 +1370,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </figure>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;video&gt;
 
@@ -1230,7 +1414,11 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 </video>
 ```
 
-&nbsp;    
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;source&gt;
 
@@ -1262,7 +1450,11 @@ figure 요소는 이미지, 오디오, 비디오, 표 등을 포함하는 그�
 
 **display 스타일**: block
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;figcaption&gt;
 
@@ -1282,7 +1474,11 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 </body>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ## 7. 내장 컨텐츠
 
@@ -1355,7 +1551,11 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 </html>
 ```
 
-&nbsp;  ---\n&nbsp;  
+&nbsp;  
+
+---
+
+&nbsp;  
 
 ### &lt;noscript&gt;
 
