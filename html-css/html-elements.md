@@ -1112,7 +1112,140 @@ HTML5에서 의미가 변한 요소로, 단순히 이탈릭체로 나타내기 �
 
 ### &lt;img /&gt;
 
+이미지를 삽입할 때 사용한다. 빈 요소이다.
 
+**카테고리**
+
+* 플로우 컨텐츠(Flow content) 
+* 프레이징 컨텐츠(Phrasing content) 
+* 임베디드 컨텐츠(Embedded content)
+* 인터랙티브 컨텐츠(Interactive content) - `usemap` 속성이 있을 때
+
+**포함할 수 있는 컨텐츠 모델**: 빈 컨텐츠
+
+| 속성   | 의미                                                         | 값       |
+| ------ | ------------------------------------------------------------ | -------- |
+| src    | (필수) 이미지 URL                                            | URL      |
+| alt    | (필수) 이미지의 대체 텍스트                                  |          |
+| width  | 이미지의 가로 너비                                           |          |
+| height | 이미지의 세로 너비                                           |          |
+| srcset | 브라우저에게 제시할 이미지 URL과 원본 크기의 목록을 정의     | `w`, `x` |
+| sizes  | 미디어 조건과 해당 조건일 때 이미지 최적화 크기의 목록을 정의 |          |
+
+**display 스타일**: inline-block
+
+```html
+<!-- srcset, sizes -->
+<!-- 다양한 디스플레이 해상도에 맞는 최적의 이미지를 브라우저가 선택해서 사용 -->
+<img srcset="./small.jpb 320w,
+             ./medium.jpg 640w,
+             ./large.jpg 1024w"
+     sizes="(max-width: 480px) 300px,
+            (max-width: 800px) 400px,
+            900px"
+     src="./small.jpg"
+     alt="the image" />
+<img srcset="./image.jpg,
+             ./image-1.5x jpg 1.5x,
+             ./image-2x.jpg 2x"
+     src="./image.jpg"
+     alt="the image" />
+     
+```
+
+&nbsp;    
+
+### &lt;audio&gt;
+
+소리 컨텐츠(ex. mp3)를 삽입할 때 사용한다. `autoplay`가 지정된 경우, `preload`는 무시된다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content)
+* 프레이징 컨텐츠(Phrasing content)
+* 임베디드 컨텐츠(Embedded content)
+* 인터랙티브 컨텐츠(Interactive content) - `controls` 속성이 있을 경우
+
+**포함할 수 있는 컨텐츠 모델**
+
+* `<track>` - `src` 속성이 있는 경우
+* `<source>`, `<track>` - `src` 속성이 없는 경우
+
+| 속성     | 의미                                                  | 값                                                           | 기본값     |
+| -------- | ----------------------------------------------------- | ------------------------------------------------------------ | ---------- |
+| autoplay | 준비되면 바로 재생                                    | Boolean                                                      |            |
+| controls | 제어 메뉴를 표시                                      | Boolean                                                      |            |
+| loop     | 재생이 끝나면 다시 처음부터 재생                      | Boolean                                                      |            |
+| preload  | 페이지가 로드될 때 파일을 로드할지의 지정 (힌트 제공) | `none`: 로드하지 않음&nbsp;   `metadata`: 메타데이터만 로드 &nbsp;  `auto`: 전체 파일 로드 | `metadata` |
+| src      | 컨텐츠 URL                                            | URL                                                          |            |
+| muted    | 음소거 여부                                           | Boolean                                                      |            |
+
+**display 스타일**: inline
+
+```html
+<figure>
+	<figcaption>Listen to the T-Rex:</figcaption>
+  <audio controls src="./media/examples/t-rex-roar.mp3">
+    Your broswer does not support the <code>audio</code> element.
+  </audio>
+</figure>
+```
+
+&nbsp;    
+
+### &lt;video&gt;
+
+동영상 컨텐츠(ex. mp4)를 삽입할 때 사용한다. `autoplay`가 지정된 경우, `preload`는 무시된다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content) 
+* 프레이징 컨텐츠(Phrasing content) 
+* 임베디드 컨텐츠(Embedded content)
+* 인터랙티브 컨텐츠(Interactive content) - `controls` 속성이 있을 경우
+
+**포함할 수 있는 컨텐츠 모델** 
+
+* transparent - `src` 속성이 있을 경우
+* 1개 이상의 `<source>` - `src` 속성이 있을 경우
+
+| 속성     | 의미                                                 | 값                                                           | 기본값     |
+| -------- | ---------------------------------------------------- | ------------------------------------------------------------ | ---------- |
+| autoplay | 준비되면 바로 재생                                   | Boolean                                                      |            |
+| controls | 제어 메뉴를 표시                                     | Boolean                                                      |            |
+| loop     | 재생이 끝나면 다시 처음부터 재생                     | Boolean                                                      |            |
+| muted    | 음소거 여부                                          | Boolean                                                      |            |
+| poster   | 동영상 썸네일 이미지 URL                             | URL                                                          |            |
+| preload  | 페이지가 로드될 때 파일을 로드할지의 지정(힌트 제공) | `none`: 로드하지 않음&nbsp;   `metadata`: 메타데이터만 로드 &nbsp;  `auto`: 전체 파일 로드 | `metadata` |
+| src      | 컨텐츠 URL                                           | URL                                                          |            |
+| width    | 동영상 가로 너비                                     |                                                              |            |
+| height   | 동영상 세로 너비                                     |                                                              |            |
+
+**display 스타일**: inline
+
+```html
+<video controls width="250">
+	<source src="./media/examples/flower.webm" type="video/webm" />
+  <source src="./media/examples/flower.mp4" />
+  Sorry, your browser doesn't support embedded videos.
+</video>
+```
+
+&nbsp;    
+
+### &lt;source&gt;
+
+`<picture>`, `<video>`, `<audio>`의 폴백(fallback) 컨텐츠를 삽입할 때 사용한다. 빈 요소이다.
+
+**포함할 수 있는 컨텐츠 모델**: 빈 컨텐츠
+
+
+
+### &lt;track&gt;
+
+`<audio>`, `<video>` 같은 미디어가 재생 중일 때 표시할 자막, 캡션 파일 등을 지정할 때 사용한다. 빈 요소이다.
+
+&nbsp;    
 
 ### &lt;figure&gt;
 
@@ -1151,6 +1284,46 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 ```
 
 &nbsp;    
+
+## 7. 내장 컨텐츠
+
+### &lt;iframe&gt;
+
+다른 HTML 페이지를 현재 페이지에 삽입할 때 사용한다 (중첩된 브라우저 컨텍스트를 표시).
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content) 
+* 프레이징 컨텐츠(Phrasing content) 
+* 임베디드 컨텐츠 (Embedded content)
+* 인터랙티브 컨텐츠(Interactive content)
+
+**포함할 수 있는 컨텐츠 모델**: 텍스트
+
+| 속성            | 의미                           | 값                                                           | 기본값 |
+| --------------- | ------------------------------ | ------------------------------------------------------------ | ------ |
+| name            | 프레임의 이름                  |                                                              |        |
+| src             | 포함할 문서의 URL              | URL                                                          |        |
+| width           | 프레임의 가로 너비             |                                                              |        |
+| height          | 프레임의 세로 너비             |                                                              |        |
+| allowfullscreen | 전체 화면 모드 사용 여부       | Boolean                                                      |        |
+| frameborder     | 프레임 테두리 사용 여부        | `0`, `1`                                                     | `1`    |
+| sandbox         | 보안을 위한 읽기 전용으로 삽입 | Boolean, &nbsp;  `allow-form`: 양식 제출 가능, &nbsp;  `allow-scripts`: 스크립트 실행 가능, &nbsp;  `allow-same-origin`: 같은 출저(도메인)의 리소스 사용 가능 |        |
+
+**display 스타일**: inline
+
+```html
+<iframe width="1280" 
+        height="720" 
+        src="https://youtu.be/n-wLTtge5wE" 
+        frameborder="0" 
+        allowfullscreen>
+</iframe>
+```
+
+
+
+
 
 ## 9. 스크립트
 
