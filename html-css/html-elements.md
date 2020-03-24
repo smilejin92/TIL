@@ -1649,3 +1649,101 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 ...
 ```
 
+&nbsp;   
+
+### &lt;input /&gt;
+
+사용자에게 입력 받을 데이터 양식. 할 줄 입력 상자, 라디오 버튼, 체크 박스 등 다양한 서식을 마크업할 때 사용한다. HTML5에서 새로운 `<input>` 요소의 속성이 다수 추가되었다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content)
+* 프레이징 컨텐츠(Phrasing content)
+* `type` 속성 값이 `hidden`이 아닐 경우 - 인터랙티브 컨텐츠(Interactive content)
+
+| 속성         | 의미                                                         | 값               | 기본값   | 특징                                                         |
+| ------------ | ------------------------------------------------------------ | ---------------- | -------- | ------------------------------------------------------------ |
+| autocomplete | 사용자가 이전에 입력한 값으로 자동 완성 기능을 사용할 것인지 여부 | `on`, `off`      | `on`     |                                                              |
+| autofocus    | 페이지가 로드될 때 자동으로 포커스                           | Boolean          |          | 문서  내 고유해야 함                                         |
+| checked      | 양식이 선택되었음을 표시                                     | Boolean          |          | `type` 속성 값이 `radio`, `checkbox`일 경우만                |
+| disabled     | 양식을 비활성화                                              | Boolean          |          |                                                              |
+| form         | `<form>`의 `id` 속성 값                                      |                  |          | 해당 `<form>`의 후손이 아닐 경우에만 (form 바깥에 위치해 있을 때) |
+| list         | 참조할 `<datalist>`의 `id` 속성 값                           |                  |          |                                                              |
+| max          | 지정 가능한 최대 값                                          | Number           |          | `type` 속성 값이 `number`일 경우만, `min` 속성보다 큰 값만 허용 |
+| min          | 지정 가능한 최소 값                                          | Number           |          | `type` 속성 값이 `number`일 경우만, `max` 속성보다 작은 값만 허용 |
+| maxlength    | 입력 가능한 최대 문자 수                                     | Number           | `524288` | `type` 속성 값이 `text`, `email`, `password`, `tel`, `url`일 경우만 |
+| multiple     | 둘 이상의 값을 입력 할 수 있는지 여부                        | Boolean          |          | `type` 속성 값이 `email`, `file`일 경우만. `email`일 경우 `,`로 구분 |
+| name         | 양식의 이름                                                  |                  |          |                                                              |
+| placeholder  | 사용자가 입력할 값의 힌트                                    |                  |          | `type` 속성 값이 `text`, `search`, `tel`, `url`, `email`일 경우만 |
+| readonly     | 수정 불가한 읽기 전용                                        | Boolean          |          |                                                              |
+| step         | 유효한 증감 숫자의 간격                                      | Number           | `1`      | `type` 속성 값이 `number`, `range`일 경우만                  |
+| src          | 이미지의 URL                                                 | URL              |          | `type` 속성 값이 `image`일 경우만                            |
+| alt          | 이미지의 대체 텍스트                                         | URL              |          | `type` 속성 값이 `image`일 경우만                            |
+| type         | 입력 받을 데이터의 종류                                      | 아래 테이블 참고 | `text`   |                                                              |
+| value        | 양식의 초기 값                                               |                  |          |                                                              |
+
+&nbsp;  **display 스타일**: inline-block
+
+&nbsp;  
+
+#### 데이터 종류(type)의 값(values)
+
+`type` 속성에 입력할 수 있는 값의 목록.
+
+```html
+<input type="button" />
+<input type="checkbox" />
+<input type="file" />
+<input type="text" />
+...
+```
+
+| 값       | 데이터 종류               | 특징                                                         |
+| -------- | ------------------------- | ------------------------------------------------------------ |
+| button   | 일반 버튼                 | `<button>`처럼 사용                                          |
+| checkbox | 체크박스                  |                                                              |
+| color    | 색상                      | IE 지원 불가                                                 |
+| email    | 이메일                    |                                                              |
+| file     | 파일                      |                                                              |
+| hidden   | 보이지 않지만 전송할 양식 | `value` 속성으로 값을 지정                                   |
+| image    | 이미지 제출 버튼          | `<img />` 처럼 사용                                          |
+| number   | 숫자                      |                                                              |
+| password | 비밀번호                  | 가려지는 양식                                                |
+| radio    | 라디오 버튼               | 같은 `name` 속성 그룹 내 하나만 선택 가능                    |
+| range    | 범위 컨트롤               | `min`, `max`, `step`, `value` 속성 사용. 이때 `value`의 값은 기본 값 |
+| reset    | 초기화                    | 해당 `<form>` 범위 내 모든 양식                              |
+| search   | 검색                      |                                                              |
+| submit   | 제출 버튼                 | 해당 `<form>` 범위 내 고유한 양식                            |
+| tel      | 전화번호                  |                                                              |
+| text     | 일반 텍스트               |                                                              |
+| url      | 절대 URL                  |                                                              |
+
+&nbsp;    
+
+### &lt;button&gt;
+
+전송, 취소 등 버튼 서식을 삽입할 때 사용한다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content)
+* 프레이징 컨텐츠(Phrasing content)
+* 인터랙티브 컨텐츠(Interactive content)
+
+**포함할 수 있는 컨텐츠 모델**: 프레이징 컨텐츠(Phrasing content)
+
+| 속성      | 의미                                    | 값                          | 특징                                                         |
+| --------- | --------------------------------------- | --------------------------- | ------------------------------------------------------------ |
+| autofocus | 페이지가 로드될 때 자동으로 포커스      | Boolean                     | 문서 내 고유해야 함                                          |
+| disabled  | 버튼을 비활성화                         | Boolean                     |                                                              |
+| form      | `<form>`의 `id` 속성 값                 |                             | 해당 `<form>`의 후손이 아닐 경우에만 (form 바깥에 위치해 있을 때) |
+| name      | form 데이터와 함께 전송되는 버튼의 이름 |                             |                                                              |
+| type      | 버튼의 타입                             | `button`, `reset`, `submit` |                                                              |
+
+**display 스타일**: inline-block
+
+&nbsp;    
+
+### &lt;textarea&gt;
+
+여루 줄의 일반 텍스트 양식을 
