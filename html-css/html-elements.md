@@ -1547,7 +1547,7 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 
 &nbsp;  
 
-## 10. 양식
+## 10. form 양식
 
 ```html
 <form action="serverURL.jsp" method="POST">
@@ -1558,7 +1558,7 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
            type="email" 
            id="email" 
            placeholder="이메일을 입력해주세요." />
-    <input type="submit" />
+    <button type="submit">제출</button>
   </fieldset>
 </form>
 ```
@@ -1673,7 +1673,7 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 | min          | 지정 가능한 최소 값                                          | Number           |          | `type` 속성 값이 `number`일 경우만, `max` 속성보다 작은 값만 허용 |
 | maxlength    | 입력 가능한 최대 문자 수                                     | Number           | `524288` | `type` 속성 값이 `text`, `email`, `password`, `tel`, `url`일 경우만 |
 | multiple     | 둘 이상의 값을 입력 할 수 있는지 여부                        | Boolean          |          | `type` 속성 값이 `email`, `file`일 경우만. `email`일 경우 `,`로 구분 |
-| name         | 양식의 이름                                                  |                  |          |                                                              |
+| name         | 서버로 전송될 양식의 이름                                    |                  |          |                                                              |
 | placeholder  | 사용자가 입력할 값의 힌트                                    |                  |          | `type` 속성 값이 `text`, `search`, `tel`, `url`, `email`일 경우만 |
 | readonly     | 수정 불가한 읽기 전용                                        | Boolean          |          |                                                              |
 | step         | 유효한 증감 숫자의 간격                                      | Number           | `1`      | `type` 속성 값이 `number`, `range`일 경우만                  |
@@ -1746,4 +1746,51 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 
 ### &lt;textarea&gt;
 
-여루 줄의 일반 텍스트 양식을 
+여러 줄의 일반 텍스트 양식.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content) 
+* 프레이징 컨텐츠(Phrasing content) 
+* 인터랙티브 컨텐츠(Interactive content) 
+
+**포함할 수 있는 컨텐츠 모델**: 텍스트만 포함 가능
+
+| 속성         | 의미                                                         | 값          | 기본값 | 특징                                                         |
+| ------------ | ------------------------------------------------------------ | ----------- | ------ | ------------------------------------------------------------ |
+| autocomplete | 사용자가 이전에 입력한 값으로 자동 완성 기능을 사용할 것인지 여부 | `on`, `off` | `on`   |                                                              |
+| autofocus    | 페이지가 로드될 때 자동으로 포커스                           | Boolean     |        | 문서 내 고유해야 함                                          |
+| disabled     | 양식을 비활성화                                              | Boolean     |        |                                                              |
+| form         | `<form>`의 `id` 속성 값                                      |             |        | 해당 `<form>`의 후손이 아닐 경우에만 (form 바깥에 위치해 있을 때) |
+| maxlength    | 입력 가능한 최대 문자 수                                     | Number      | 무한   |                                                              |
+| name         | 서버로 전송될 양식의 이름                                    |             |        |                                                              |
+| placeholder  | 사용자가 입력할 값의 힌트                                    |             |        |                                                              |
+| readonly     | 수정 불가한 읽기 전용                                        | Boolean     |        |                                                              |
+| rows         | 양식의 줄 수                                                 | Number      | `2`    |                                                              |
+
+**display 스타일**: inline-block
+
+&nbsp;    
+
+## 11. select, datalist 양식
+
+```html
+<select>
+  <optgroup label="Coffee">
+  	<option>Americano</option>
+    <option>Caffe Mocha</option>
+    <option label="Cappuccino" value="Cappuccino"></option>
+  </optgroup>
+  <optgroup label="Ade" disabled>
+  	<option>Lemon</option>
+    <option>Strawberry</option>
+    <option>Lime</option>
+  </optgroup>
+</select>
+```
+
+
+
+### &lt;select&gt;, &lt;datalist&gt;, &lt;optgroup&gt;, &lt;option&gt;
+
+리스트나 목록 상자로 된 서실을 삽입할 때 사용한다.
