@@ -245,15 +245,14 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 **display 스타일**: block
 
 ```html
-<html lang="ko-KR">
-  <head>...</head>
-  <body>
-    <header>
-    	<h1>HTML5 요소</h1>
-      ...
-    </header>
-  </body>
-</html>
+...
+<body>
+  <header>
+    <h1>HTML5 요소</h1>
+  </header>
+  <body>...</body>
+  <footer>...</footer>
+</body>
 ```
 
 &nbsp;    
@@ -271,10 +270,12 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 ```html
 ...
 <body>
+  <header>...</header>
   <main>
   	<section>...</section>
     <section>...</section>
   </main>
+  <footer>...</footer>
 </body>
 ```
 
@@ -294,14 +295,12 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 **display 스타일**: block
 
 ```html
-<html lang="ko-KR">
-  <head>...</head>
-  <body>
-    <header>...</header>
-    <main>...</main>
-    <footer>...</footer>
-  </body>
-</html>
+...
+<body>
+  <header>...</header>
+  <main>...</main>
+  <footer>...</footer>
+</body>
 ```
 
 &nbsp;     
@@ -321,18 +320,16 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 **display 스타일**: block
 
 ```html
-<html lang="ko-KR">
-  <head>...</head>
-  <body>
-    <header>...</header>
-    <main>
-    	<section>
-      	<h2>section 요소</h2>
-        ...
-      </section>
-    </main>
-  </body>
-</html>
+...
+<body>
+  <header>...</header>
+  <main>
+    <section>
+      <h2>section 요소</h2>
+      ...
+    </section>
+  </main>
+</body>
 ```
 
 &nbsp;    
@@ -355,22 +352,20 @@ CSS를 문서 내에 직접 기술할 때 사용한다. CSS 코드만을 포함�
 **display 스타일**: block
 
 ```html
-<html lang="ko-KR">
-  <head>...</head>
-  <body>
-    <header>
-    	<h1>HTML5 요소</h1>
-      <nav>
-      	<h2>메인 메뉴</h2>
-        <ul class="main-menu">
-          <li>...</li>
-          ...
-        </ul>
-      </nav>
-    </header>
-    <main>...</main>
-  </body>
-</html>
+...
+<body>
+  <header>
+    <h1>HTML5 요소</h1>
+    <nav>
+      <h2>메인 메뉴</h2>
+      <ul class="main-menu">
+        <li>...</li>
+        ...
+      </ul>
+    </nav>
+  </header>
+  <main>...</main>
+</body>
 ```
 
 &nbsp;    
@@ -390,20 +385,18 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 **display 스타일**: block
 
 ```html
-<html lang="ko-KR">
-  <head>...</head>
-  <body>
-    <header>...</header>
-    <main>
-    	<section class="news-room">
-      	<article class="news" id="0">
-        	<h2>HTML6 is coming</h2>
-          ...
-        </article>
-      </section>
-    </main>
-  </body>
-</html>
+...
+<body>
+  <header>...</header>
+  <main>
+    <section class="news-room">
+      <article class="news" id="0">
+        <h2>HTML6 is coming</h2>
+        ...
+      </article>
+    </section>
+  </main>
+</body>
 ```
 
 &nbsp;    
@@ -423,15 +416,13 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 **display 스타일**: block
 
 ```html
-<html lang="ko-KR">
-  <head>...</head>
-  <body>
-    <header>...</header>
-    <main>...</main>
-    <aside>...</aside>
-    <footer>...</footer>
-  </body>
-</html>
+...
+<body>
+  <header>...</header>
+  <main>...</main>
+  <aside>...</aside>
+  <footer>...</footer>
+</body>
 ```
 
 &nbsp;    
@@ -496,12 +487,9 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 **display 스타일**: block
 
 ```html
-...
-<body>
-  <p>
-    This is a paragraph.
-  </p>
-</body>
+<p>
+  This is a paragraph.
+</p>
 ```
 
 &nbsp;    
@@ -517,16 +505,13 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 **display 스타일**: block
 
 ```html
-...
-<body>
-  <ul>
-    <li>item1</li>
-    <li>item2</li>
-  </ul>
-</body>
+<ul>
+  <li>item1</li>
+  <li>item2</li>
+</ul>
 ```
 
-&nbsp;    
+&nbsp;  
 
 ### &lt;ol&gt;
 
@@ -544,16 +529,13 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 **display 스타일**: block
 
 ```html
-...
-<body>
-  <ol start="2">
-    <li>item1</li> <!-- 2. itme1 -->
-    <li>item2</li> <!-- 3. itme1 -->
-  </ol>
-</body>
+<ol start="2">
+  <li>item1</li> <!-- 2. itme1 -->
+  <li>item2</li> <!-- 3. itme1 -->
+</ol>
 ```
 
-&nbsp;    
+&nbsp;  
 
 ### &lt;li&gt;
 
@@ -562,16 +544,6 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 **포함할 수 있는 컨텐츠 모델**: 플로우 컨텐츠(Flow content)
 
 **display 스타일**: block
-
-```html
-...
-<body>
-  <ul>
-    <li>item1</li>
-    <li>item2</li>
-  </ul>
-</body>
-```
 
 &nbsp;    
 
@@ -588,6 +560,8 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 
 **display 스타일**: block
 
+&nbsp;  
+
 ### &lt;dt&gt;
 
 정의형 목록의 용어 제목을 의미한다.
@@ -595,6 +569,8 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 **포함할 수 있는 컨텐츠 모델**: 플로우 컨텐츠(Flow Content)
 
 **display 스타일**: block
+
+&nbsp;  
 
 ### &lt;dd&gt;
 
@@ -605,13 +581,10 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 **display 스타일**: block
 
 ```html
-...
-<body>
-  <dl>
-    <dt>Coffee</dt>
-    <dd>Black hot drink</dd>
-  </dl>
-</body>
+<dl> <!-- description list -->
+  <dt>Coffee</dt> <!-- definition term -->
+  <dd>Black hot drink</dd> <!-- definition details -->
+</dl>
 ```
 
 &nbsp;    
@@ -1322,7 +1295,28 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 
 &nbsp;    
 
-## 9. 스크립트
+### &lt;canvas&gt;
+
+[Canvas API](https://developer.mozilla.org/ko/docs/Web/HTML/Canvas)이나 [WebGL API](https://developer.mozilla.org/ko/docs/Web/API/WebGL_API)를 사용하여 그래픽이나 애니메이션을 랜더링할 때 사용한다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content)
+* 프레이징 컨텐츠(Phrasing content)
+* 임베디드 컨텐츠(Embedded content)
+
+**포함할 수 있는 컨텐츠 모델**: 트랜스페어런트(transparent)
+
+| 속성   | 의미               |
+| ------ | ------------------ |
+| width  | 캔버스의 가로 너비 |
+| height | 캔버스의 세로 너비 |
+
+**display 스타일**: inline
+
+&nbsp;    
+
+## 8. 스크립트
 
 ### &lt;script&gt;
 
@@ -1336,13 +1330,12 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 
 **포함할 수 있는 컨텐츠 모델**: 빈 컨텐츠
 
-**고유 속성**
-
-* async
-* type
-* charset
-* defer
-* src
+| 속성  | 의미                                          | 값                          |
+| ----- | --------------------------------------------- | --------------------------- |
+| async | 스크립트의 비동기적(Asynchronously) 실행 여부 | Boolean                     |
+| defer | 문서 파싱(구문 분석) 후 작동 여부             | Boolean                     |
+| src   | (필수) 참조할 외부 스크립트 URL               | URL                         |
+| type  | MIME 타입                                     | `text/javascript` (기본 값) |
 
 ```html
 <html lang="ko-KR">
@@ -1353,11 +1346,7 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 </html>
 ```
 
-&nbsp;  
-
----
-
-&nbsp;  
+&nbsp;      
 
 ### &lt;noscript&gt;
 
@@ -1371,14 +1360,6 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 
 **포함할 수 있는 컨텐츠 모델**: 빈 컨텐츠
 
-**고유 속성**
-
-* async
-* type
-* charset
-* defer
-* src
-
 ```html
 <html lang="ko-KR">
   <head>...</head>
@@ -1388,5 +1369,283 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
     </noscript>
   </body>
 </html>
+```
+
+&nbsp;    
+
+## 9. 표 컨텐츠
+
+```html
+<table>
+  <caption>Example Table</caption>
+  <colgroup>
+  	<col span="2" style="background-color: yellowgreen;">
+    <col style="background-color: tomato;">
+  </colgroup>
+  <thead>
+  	<tr>
+    	<th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+    	<td>1</td>
+      <td>Apple</td>
+      <td>$22</td>      
+    </tr>
+    <tr>
+    	<td>2</td>
+      <td>Banana</td>
+      <td>$19</td>      
+    </tr>
+  </tbody>
+</table>
+```
+
+### &lt;table&gt;
+
+테이블(표)을 삽입할 때 사용한다.
+
+**카테고리**: 플로우 컨텐츠(Flow content)
+
+**포함할 수 있는 컨텐츠 모델**
+
+* `<caption>`
+* `<colgroup>`
+* `<col>`
+* `<thead>`
+* `<tbody>`
+* `<tfoot>`
+
+**포함할 수 있는 컨텐츠 모델**: border
+
+**display 스타일**: table
+
+&nbsp;   
+
+### &lt;caption&gt;
+
+테이블의 제목을 정의할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**: `<table>`을 제외한 플로우 컨텐츠(Flow content)
+
+**display 스타일**: table-caption
+
+&nbsp;  
+
+### &lt;colgroup&gt;
+
+테이블의 그룹 열을 정의할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**
+
+* 빈 컨텐츠 - `span` 속성 지정 시
+* `<col>` - `span` 속성 미지정 시
+
+| 속성 | 의미           | 값     | 기본값 |
+| ---- | -------------- | ------ | ------ |
+| span | 연속되는 열 수 | Number | `1`    |
+
+**display 스타일**: table-column-group
+
+&nbsp;  
+
+### &lt;col&gt;
+
+테이블의 열을 정의할 때 사용한다. 빈 요소이다.
+
+**포함할 수 있는 컨텐츠 모델**: 빈 컨텐츠
+
+| 속성 | 의미           | 값     | 기본값 |
+| ---- | -------------- | ------ | ------ |
+| span | 연속되는 열 수 | Number | `1`    |
+
+**display 스타일**: table-column
+
+&nbsp;  
+
+### &lt;thead&gt;
+
+테이블 행의 제목을 정의할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**: `<tr>`
+
+**display 스타일**: table-row-group
+
+&nbsp;  
+
+### &lt;tbody&gt;
+
+테이블의 본문 행을 정의할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**: `<tr>`
+
+**display 스타일**: table-header-group
+
+&nbsp;  
+
+### &lt;tfoot&gt;
+
+테이블의 푸터 행을 정의할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**: `<tr>`
+
+**display 스타일**: table-footer-group
+
+&nbsp;  
+
+### &lt;tr&gt;
+
+테이블의 행을 정의할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**
+
+* `<th>` - `<thead>` 요소 안에 있을 경우
+* `<td>` - `<tbody>`, `<tfoot>` 요소 안에 있을 경우
+
+**display 스타일**: table-row
+
+&nbsp;  
+
+### &lt;th&gt;
+
+'머리글 칸'을 정의할 때 사용한다.
+
+**카테고리**: 플로우 컨텐츠(Flow content)
+
+**포함할 수 있는 컨텐츠 모델**: 프레이징 컨텐츠(Phrasing content)
+
+| 속성    | 의미                                           | 값                                                           | 기본값 |
+| ------- | ---------------------------------------------- | ------------------------------------------------------------ | ------ |
+| abbr    | 열에 대한 간단한 설명                          |                                                              |        |
+| headers | 관련된 하나 이상의 다른 머리글 칸 `id` 속성 값 |                                                              |        |
+| colspan | 확장하려는(병합) 열의 수                       |                                                              | `1`    |
+| rowspan | 확장하려는(병합) 행의 수                       |                                                              | `1`    |
+| scope   | 자신이 누구의 '머리글 칸'인지 명시             | `col`: 자신의 열 &nbsp;  `colgroup`: 모든 열 &nbsp;  `row`: 자신의 행 &nbsp;  `rowgroup`: 모든 행 &nbsp;  `auto` | `auto` |
+
+**display 스타일**: table-cell
+
+&nbsp;  
+
+### &lt;td&gt;
+
+테이블의 내용 셀을 정의할 때 사용한다.
+
+**카테고리**: 섹셔닝 컨텐츠(Sectioning content)
+
+**포함할 수 있는 컨텐츠 모델**: 플로우 컨텐츠(Flow content)
+
+| 속성    | 의미                                           | 값   | 기본값 |
+| ------- | ---------------------------------------------- | ---- | ------ |
+| headers | 관련된 하나 이상의 다른 머리글 칸 `id` 속성 값 |      |        |
+| colspan | 확장하려는(병합) 열의 수                       |      | `1`    |
+| rowspan | 확장하려는(병합) 행의 수                       |      | `1`    |
+
+**display 스타일**: table-cell
+
+&nbsp;  
+
+## 10. 양식
+
+```html
+<form action="serverURL.jsp" method="POST">
+  <fieldset name="login">
+    <legend>로그인 양식</legend>
+    <label for="email">이메일</label>
+    <input name="userEmail" 
+           type="email" 
+           id="email" 
+           placeholder="이메일을 입력해주세요." />
+    <input type="submit" />
+  </fieldset>
+</form>
+```
+
+### &lt;form&gt;
+
+웹 서버에 정보를 제출하기 위한 양식 범위를 정의할 때 사용한다. `<form>`이 다른 `<form>`을 자식 요소로 포함할 수 없다.
+
+**카테고리**: 플로우 컨텐츠(Flow content)
+
+**포함할 수 있는 컨텐츠 모델**  `<form>`요소를 제외한 플로우 컨텐츠(Flow content)
+
+| 속성         | 의미                                                         | 값                | 기본값  |
+| ------------ | ------------------------------------------------------------ | ----------------- | ------- |
+| action       | 전송한 정보를 처리할 웹페이지의 URL                          | URL               |         |
+| autocomplete | 사용자가 이전에 입력한 값으로 자동 완성 기능을 사용할 것인지 여부 | `on`, `off`       | `on`    |
+| method       | 서버로 전송할 HTTP 방식                                      | `GET`, `POST`     | `GET`   |
+| name         | 서버로 전송될 양식의 이름                                    |                   |         |
+| novalidate   | 서버로 전송시 양식 데이터의 유효성을 검사하지 않도록 지정    |                   |         |
+| target       | 서버로 전송 후 응답받을 방식을 지정                          | `_self`, `_blank` | `_self` |
+
+**display 스타일**: block
+
+&nbsp;  
+
+### &lt;fieldset&gt;
+
+서로 연관이 있는 **폼 서식을 그룹화**할 때 사용한다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content)
+* 섹셔닝 루트(Sectioning root)
+
+**포함할 수 있는 컨텐츠 모델**
+
+* 첫번째 자식 요소로 `<legend>`가 올 수 있음
+* 이후에 플로우 컨텐츠(Flow content)
+
+| 속성     | 의미                                            | 값      |
+| -------- | ----------------------------------------------- | ------- |
+| disabled | 그룹 내 모든 양식 요소를 비활성화               | Boolean |
+| form     | 그룹이 속할 하나 이상의 `<form>`의 `id` 속성 값 |         |
+| name     | 그룹의 이름                                     |         |
+
+**display 스타일**: block
+
+&nbsp;  
+
+### &lt;legend&gt;
+
+`<fieldset>` 요소로 그룹화한 폼의 목적을 명시할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**: 프레이징 컨텐츠(Phrasing content)
+
+**display 스타일**: block
+
+&nbsp;  
+
+### &lt;label&gt;
+
+폼 서식의 레이블을 정의할 때 사용한다. `for` 속성으로 레이블링 가능한 요소를 참조하거나, 컨텐츠로 포함할 수 있다. 레이블링 가능한 요소는 `<button>`, `<input>`, `<progress>`, `<select>`, `<textarea>`가 있다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content)
+* 프레이징 컨텐츠(Phrasing content)
+* 인터랙티브 컨텐츠(Interactive content)
+
+**포함할 수 있는 컨텐츠 모델**
+
+* `<label>`을 제외한 프레이징 컨텐츠(Phrasing content)
+* 해당 `<label>`이 나타내는 설명과 관련 있는 `<input>`
+
+| 속성 | 의미                                     |
+| ---- | ---------------------------------------- |
+| for  | 참조할 레이블링 가능 요소의 `id` 속성 값 |
+
+**display 스타일**: inline
+
+```html
+...
+<label for="email">이메일</label>
+<input name="userEmail" 
+       type="email" 
+       id="email" 
+       placeholder="이메일을 입력해주세요." />
+...
 ```
 
