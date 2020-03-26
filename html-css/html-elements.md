@@ -625,7 +625,7 @@ RSS 피드로 재배포할 가치가 있는 **독립된 컨텐츠**를 정의할
 
 **카테고리**: 플로우 컨텐츠(Flow content) 
 
-**포함할 수 있는 컨텐츠 모델**: 프레이징 컨텐츠(Phrasing content) 
+**포함할 수 있는 컨텐츠 모델**: 프레이징 컨텐츠(Phrasing content)  
 
 **display 스타일**: block
 
