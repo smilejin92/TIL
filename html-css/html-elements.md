@@ -1793,4 +1793,4 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 
 ### &lt;select&gt;, &lt;datalist&gt;, &lt;optgroup&gt;, &lt;option&gt;
 
-리스트나 목록 상자로 된 서실을 삽입할 때 사용한다.
+리스트나 목록 상자로 된 서실을 삽입할 때 사용한다. 
