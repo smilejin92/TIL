@@ -1900,3 +1900,106 @@ select 요소 혹은 datalist 요소에 사용될 옵션을 정의할 때 사용
 <progress value="70" max="100">70% completed</progress>
 ```
 
+&nbsp;    
+
+## 12. 전역 속성 (Global Attributes)
+
+아래는 모든 HTML 요소에서 공통적으로 사용 가능한 속성이다.
+
+### class
+
+공백으로 구분된 요소의 별칭을 지정한다. CSS 혹은 JavaScript의 요소 선택기를 통해 클래스를 선택하여 특정 요소에 접근할 수 있다.
+
+&nbsp;    
+
+### id
+
+문서에서 고유한 식별자(identifier, ID)를 정의할 때 사용된다. CSS 혹은 JavaScript 요소 선택기를 통해 아이디를 선택하여 특정 요소에 접근할 수 있다.
+
+&nbsp;    
+
+### style
+
+특정 요소에 **인라인 스타일**을 적용할 때 사용된다. 속성 값으로 따옴표 안에 CSS 스타일을 선언한다.
+
+&nbsp;    
+
+### title
+
+속성 값으로 해당 요소의 정보나 툴팁에 제공되는 텍스트로 사용된다.
+
+&nbsp;    
+
+### lang
+
+속성 값으로 요소의 언어(ISO 639-1)를 지정한다.
+
+```html
+<p lang="en">This is a paragraph</p>
+<p lang="ko">단락입니다.</p>
+```
+
+&nbsp;    
+
+### data-*
+
+사용자 정의 데이터 속성을 지정할 때 사용된다. HTML에 JavaScrpt에서 이용할 수 있는 데이터를 저장하는 용도로 사용된다.
+
+```html
+<div id="me" data-my-name="Jin" data-my-age="999">Jin</div>
+
+<script>
+	const $me = document.getElementById('me');
+  console.log($me.dataset.myName, $me.dataset.myName); // "Jin 999"
+</script>
+```
+
+&nbsp;    
+
+### draggable
+
+요소가 Drag and Drop API를 사용 가능한지 여부를 지정할 때 사용된다.
+
+```html
+<div draggable="true">Drag me!</div>
+```
+
+&nbsp;    
+
+### hidden
+
+요소를 숨길 때 사용한다.
+
+```html
+<form id="hidden-form" action="/form-action" hidden>
+  <!-- 숨겨진 양식들 -->
+</form>
+<button form ="hidden-form" type="submit">전송</button>
+```
+
+&nbsp;    
+
+### tabindex
+
+`Tab` 키를 이용하여 요소를 순차적으로 포커스 탐색할 순서를 지정한다.
+
+* 대화형 컨텐츠(Interactive content)는 기본적으로 탭 순서가 normal flow대로 지정된다.
+* 비대화형 컨텐츠에 `tabindex` 속성 값을 0으로 지정하여 대화형 컨텐츠와 같이 탭 순서를 사용할 수 있다.
+* `tabindex`의 값을 음수로 지정하면 포커스는 가능하지만 탭 순서에서 제외 가능하다.
+* `tabindex`의 값을 양수로 지정하면 normal flow의 논리적 흐름을 방해하기 때문에 쓰지 않는 것이 좋다.
+
+```html
+<h1 tabindex="0">Sign In</h1>
+<label>Username: <input type="text"></label>
+<label>Password: <input type="password"></label>
+<label>PS: <input type="text" tabindex="-1"></label>
+<input type="submit" value="Sign In">
+```
+
+&nbsp;    
+
+## 참고 자료
+
+* [HTML5 Markup](https://github.com/seulbinim/PDF/blob/master/HTML5.pdf)
+* [한눈에 보는 HTML 요소(Elements &amp; Attributes) 총정리](https://heropy.blog/2019/05/26/html-elements/)
+
