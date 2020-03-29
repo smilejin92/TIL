@@ -1547,7 +1547,7 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 
 &nbsp;  
 
-## 10. form 양식
+## 10. 데이터 양식
 
 ```html
 <form action="serverURL.jsp" method="POST">
@@ -1775,6 +1775,7 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
 ## 11. select, datalist 양식
 
 ```html
+<!-- select -->
 <select>
   <optgroup label="Coffee">
   	<option>Americano</option>
@@ -1787,10 +1788,115 @@ figcaption은 figure 요소에 포함된 컨텐츠에 대한 캡션을 정의할
     <option>Lime</option>
   </optgroup>
 </select>
+
+<!-- datalist -->
+<input type="text" list="fruits" />
+
+<datalist id="fruits">
+	<option>Apple</option>
+  <option>Banana</option>
+  <option>Grape</option>
+  <option>Peach</option>
+</datalist>
 ```
 
 
 
-### &lt;select&gt;, &lt;datalist&gt;, &lt;optgroup&gt;, &lt;option&gt;
+### &lt;select&gt;
 
-리스트나 목록 상자로 된 서실을 삽입할 때 사용한다. 
+리스트나 목록 상자로 된 서식을 삽입할 때 사용한다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content) 
+* 프레이징 컨텐츠(Phrasing content) 
+* 인터랙티브 컨텐츠(Interactive content) 
+
+**포함할 수 있는 컨텐츠 모델**
+
+* `<option>`
+* `<optgroup>`
+
+| 속성         | 의미                                                         | 값          | 기본값           |
+| ------------ | ------------------------------------------------------------ | ----------- | ---------------- |
+| autocomplete | 사용자가 이전에 입력한 값으로 자동 완성 기능을 사용할 것인지 여부 | `on`, `off` | `on`             |
+| disabled     | 선택 메뉴를 비활성화                                         | Boolean     |                  |
+| form         | 선택 메뉴가 속할 하나 이상의 `<form>`의 `id` 속성 값         |             |                  |
+| multiple     | 다중 선택 여부                                               | Boolean     |                  |
+| name         | 서버로 전송될 선택 메뉴의 이름                               |             |                  |
+| size         | 한 번에 볼 수 있는 행의 개수                                 | Number      | `0` (`1`과 같음) |
+
+**display 스타일**: inline
+
+&nbsp;    
+
+### &lt;datalist&gt;
+
+input 요소에 **미리 정의된 옵션을 지정하여 자동완성(Autocomplete) 기능을 제공**하는 데 사용한다. input 요소의 `list` 속성에 datalist 요소의 `id` 속성을 바인딩하여 사용한다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content)
+* 프레이징 컨텐츠(Phrasing content)
+
+**포함할 수 있는 컨텐츠 모델**
+
+* 프레이징 컨텐츠(Phrasing content)
+* `<option>`
+
+**display 스타일**: inline
+
+&nbsp;    
+
+### &lt;optgroup&gt;
+
+option 요소를 그룹화할 때 사용한다.
+
+**포함할 수 있는 컨텐츠 모델**: `<option>`
+
+| 속성     | 의미                    | 값      |
+| -------- | ----------------------- | ------- |
+| label    | (필수) 옵션 그룹의 이름 |         |
+| disabled | 옵션 그룹을 비활성화    | Boolean |
+
+&nbsp;    
+
+### &lt;option&gt;
+
+select 요소 혹은 datalist 요소에 사용될 옵션을 정의할 때 사용한다. 선택적 빈 요소로 사용 가능하다.
+
+**포함할 수 있는 컨텐츠 모델**: 텍스트만 포함할 수 있다.
+
+| 속성     | label                    | selected | value                                |
+| -------- | ------------------------ | -------- | ------------------------------------ |
+| disabled | 옵션을 비활성화          | Boolean  |                                      |
+| label    | 표시될 옵션의 제목       |          | 생략되면 포함된 텍스트를 표시        |
+| selected | 옵션이 선택되었음을 표시 | Boolean  |                                      |
+| value    | 양식으로 제출될 값       |          | 생략되면 포함된 텍스트를 값으로 사용 |
+
+&nbsp;    
+
+### &lt;progress&gt;
+
+작업의 진행 상황을 표현하고자 할 때 사용한다.
+
+**카테고리**
+
+* 플로우 컨텐츠(Flow content) 
+* 프레이징 컨텐츠(Phrasing content) 
+
+**포함할 수 있는 컨텐츠 모델**
+
+* `<progress>`를 제외한 프레이징 컨텐츠(Phrasing content)
+
+| 속성  | 의미          | 값     | 특징                                                  |
+| ----- | ------------- | ------ | ----------------------------------------------------- |
+| max   | 작업의 총량   | Number |                                                       |
+| value | 작업의 진행량 | Number | `max` 속성을 생략할 경우 `0` ~ `1` 사이의 숫자여야 함 |
+
+**display 스타일**: inline
+
+```html
+<progress value="70" max="100">70% completed</progress>
+```
+
