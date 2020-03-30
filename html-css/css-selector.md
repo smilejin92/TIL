@@ -295,8 +295,19 @@ button::after {
 
 ## 선택자 우선순위
 
+| 선택자 예제 | id * 100 | class * 10 | tag * 1 | 구체성 | 우선순위 |
+| ----------- | -------- | ---------- | ------- | ------ | -------- |
+| li          | 0        | 0          | 1       | 1      | 5        |
+| ul li       | 0        | 0          | 2       | 2      | 4        |
+| div.note    | 0        | 1          | 1       | 11     | 3        |
+| #list li    | 1        | 0          | 1       | 101    | 2        |
+| ul#list li  | 1        |            | 2       | 102    | 1        |
 
+&nbsp;  
 
 ## 참고자료
 
 * [CSS3 Design](https://github.com/seulbinim/PDF/blob/master/CSS3.pdf)
+* [MDN How is specificity calculated?](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
+* [MDN Pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
+
