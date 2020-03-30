@@ -7,4 +7,6 @@
 * [HTML5 Markup의 기초](./html-css/html-markup-basics.md)
 * [HTML5 요소 총정리](./html-css/html-elements.md)
 * [CSS에 대하여](./html-css/intro-css.md)
+* [CSS 기초](./html-css/css-syntax.md)
+* [CSS 선택자](./html-css/css-selector.md)
 
