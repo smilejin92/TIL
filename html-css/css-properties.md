@@ -84,9 +84,9 @@ HTML 요소의 스타일을 지정하는 CSS 속성의 종류는 크게 두 가�
 | transition-delay                                             | 0s                | 변환이 진행되기 전 지연되는 시간을 지정                      |
 | transition                                                   | 개별 속성 값 참조 | transition 관련 속성 값들을 일괄 적용하는 대표 속성          |
 | @keyframes                                                   | 사용자 정의       | animation 속성에 적용할 키프레임을 생성하기 위한 규칙        |
-|                                                              |                   |                                                              |
-|                                                              |                   |                                                              |
-|                                                              |                   |                                                              |
+| animation-name                                               | none              | @keyframes 규칙으로 생성한 애니메이션 이름을 지정하여 해당 애니메이션이 실행되도록 하는 속성 |
+| animation-duration                                           | 0s                | animation-name 속성으로, 실행된 애니메이션 진행 시간을 지정  |
+| animation-timing-function                                    | ease              | 애니메이션 진행속도의 변화 형태를 지정하는 속성. transition-timing-function 속성 값과 동일하다. |
 |                                                              |                   |                                                              |
 |                                                              |                   |                                                              |
 |                                                              |                   |                                                              |
