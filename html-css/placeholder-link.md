@@ -51,3 +51,11 @@ placeholder 링크는 개발 목적으로만 사용되는 것은 아니다. plac
 
 이러한 방법을 통해 메뉴 요소의  `class` 속성값을 변경하거나, 메뉴 탭의 부모 요소에 "active" 상태를 추가하는 방법을 사용하지 않아도 현재 방문 중인 메뉴에 대한 피드백을 구현할 수 있다.
 
+&nbsp;  
+
+## 참고 자료
+
+* [The Purpose of HTML Placeholder Link](https://www.lifewire.com/html5-placeholder-links-3468070)
+* [Valid to use anchor without href attribute?](https://stackoverflow.com/questions/10510191/valid-to-use-a-anchor-tag-without-href-attribute)
+* [HTML5 Placeholder Links](https://www.enovate.co.uk/blog/2013/07/16/html5-placeholder-links)
+
