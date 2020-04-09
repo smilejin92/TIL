@@ -11,4 +11,5 @@
 * [CSS 선택자](./html-css/css-selector.md)
 * [CSS 속성 Overview](./html-css/css-properties.md)
 * [HTML 섹션과 아웃라인 사용](./html-css/html-sections-outline.md)
+* [HTML Placeholder 링크의 사용 목적](./html-css/placeholder-link.md)
 
