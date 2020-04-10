@@ -1,4 +1,4 @@
-# ARIA
+# ARIA는 무엇인가?
 
 **Accessible Rich Internet Applications (ARIA)** 는 장애를 가진 사용자가 웹 컨텐츠와 웹 어플리케이션(특히 자바스크립트를 사용하여 만든)에 더 쉽게 접근할 수 있는 방법을 정의하는 여러 특성을 말한다.
 
