@@ -150,6 +150,8 @@ user name <input type="text" />
 >
 > 위 예제는 ARIA 위젯에 관한 예제이다. 일반 HTML input 요소에 대해서는 ARIA 사용의 첫 번째 규칙에 따라 label 요소의 for 속성을 사용하여 input 요소를 연결한다.
 
+&nbsp;  
+
 ### HTML label 요쇼와 labelable 요소
 
 label 요소는, [label로 연결할 수 있는 네이티브 HTML 요소](https://www.w3.org/TR/html51/sec-forms.html#labelable-element)를 참조하지 않는 한, 사용자 정의 컨트롤에 accessible name을 제공하기 위한 수단으로 사용될 수 없다.
