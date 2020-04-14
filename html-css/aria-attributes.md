@@ -107,13 +107,42 @@ ARIA는 HTML 요소의 의미(sematics)를 정의한다. 적용된 의미는 역
 | [toolbar](https://www.w3.org/TR/wai-aria-1.2/#toolbar)       | 자주 쓰이는 기능 버튼 혹은 컨트롤의 모음                     |
 | [tooltip](https://www.w3.org/TR/wai-aria-1.2/#tooltip)       | 요소에 대한 설명을 표시하는 팝업                             |
 
+meter, paragraph, math, strong, subscript, superscript, term, time,
+
 &nbsp;  
 
 ### 5. 랜드마크 역할(Landmark roles)
 
+랜드마크는 보조 기기를 사용하는 사용자가 페이지를 더 쉽게 탐색할 수 있도록 페이지의 영역을 의미론적으로 정의하는 역할이다.
+
+| 역할                                                         | 요약                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [banner](https://www.w3.org/TR/wai-aria-1.2/#banner)         | 페이지별 컨텐츠가 아닌 사이트 지향(site-oriented) 컨텐츠를 담는 랜드마크. 사이트 지향 컨텐츠로는 로고, 사이트 검색 툴 등 주로 사이트 상단에 위치한 요소들을 말한다. |
+| [complementary](https://www.w3.org/TR/wai-aria-1.2/#complementary) | 메인 컨텐츠를 보완하도록 설계된 랜드마크지만, 메인 컨텐츠와 분리되어도 의미를 가질 수 있는 컨텐츠 영역이다. |
+| [contentinfo](https://www.w3.org/TR/wai-aria-1.2/#contentinfo) | 상위 문서에 대한 정보가 들어 있는 랜드마크.                  |
+| [form](https://www.w3.org/TR/wai-aria-1.2/#form)             | 양식을 이루는 항목과 객체를 포함하는 랜드마크                |
+| [main](https://www.w3.org/TR/wai-aria-1.2/#main)             | 문서의 메인 컨텐츠를 포함하는 랜드마크                       |
+| [navigation](https://www.w3.org/TR/wai-aria-1.2/#navigation) | 문서를 탐색하기 위한 navigational 요소(ex. 링크)를 모아놓은 랜드마크 |
+| [region](https://www.w3.org/TR/wai-aria-1.2/#region)         | 컨텐츠가 충분히 중요하여 사용자가 쉽게 탐색할 수 있고, 페이지 요약에 나열되어 있을만한 영역. |
+| [search](https://www.w3.org/TR/wai-aria-1.2/#search)         | 검색 영역을 이루는 항목과 객체를 포함하는 랜드마크.          |
+
+&nbsp;  
+
+### 6. 실시간 영역 역할(Live Region roles)
+
+아래는 실시간 영역을 나타내는 역할 목록이다. 실시간 영역은 실시간 영역 속성([live region attributes](https://www.w3.org/TR/wai-aria-1.2/#attrs_liveregions))에 의해 변경될 수 있다.
+
+| 역할    | 요약 |
+| ------- | ---- |
+| alert   |      |
+| log     |      |
+| marquee |      |
+| status  |      |
+| timer   |      |
 
 
-meter, paragraph, math, strong, subscript, superscript, term, time,
+
+&nbsp;  
 
 ## 관련 링크
 
