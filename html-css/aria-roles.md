@@ -27,7 +27,7 @@ WAI-ARIA 역할(role)은 `role` 속성을 사용해 HTML 요소에 지정된다.
 | [range](https://www.w3.org/TR/wai-aria-1.2/#range)           | 값의 범위를 나타내는 요소                                    |
 | [roletype](https://www.w3.org/TR/wai-aria-1.2/#roletype)     | 다른 모든 역할이 상속되는 기본 역할(base role)               |
 | [section](https://www.w3.org/TR/wai-aria-1.2/#section)       | 문서 혹은 어플리케이션의 렌더링 가능한 구조적 격납 장치(structural containment unit) |
-| [sectionhead](https://www.w3.org/TR/wai-aria-1.2/#sectionhead) | 관련된 섹션의 주제를 명명하거나 요약하는 구조                |
+| [sectionhead](https://www.w3.org/TR/wai-aria-1.2/#sectionhead) | 관련된 섹션의 주제를 명시하거나 요약하는 구조                |
 | [select](https://www.w3.org/TR/wai-aria-1.2/#select)         | 사용자가 선택 항목 그룹에서 선택할 수 있는 양식 위젯         |
 | [structure](https://www.w3.org/TR/wai-aria-1.2/#structure)   | 문서 구조 요소                                               |
 | [widget](https://www.w3.org/TR/wai-aria-1.2/#widget)         | 상호작용 가능한 GUI 컴포넌트                                 |
@@ -89,7 +89,7 @@ WAI-ARIA 역할(role)은 `role` 속성을 사용해 HTML 요소에 지정된다.
 | [applicattion](https://www.w3.org/TR/wai-aria-1.2/#application) | 사용자 입력을 요구하는(또한 포커스 가능한) 요소를 한 개 이상 포함하는 문서 구조 요소. `application`에서 사용자 입력이란 키보드 혹은 제스처 이벤트와 같이 일반 `widget` 역할이 지원하는 표준 상호작용 패턴을 따르지 않는 것을 말한다. |
 | [article](https://www.w3.org/TR/wai-aria-1.2/#article)       | 문서, 페이지, 혹은 사이트로부터 독립적인 컨텐츠를 포함하는 영역을 정의할 때 사용 |
 | [blockquote](https://www.w3.org/TR/wai-aria-1.2/#blockquote) | 외부 자료에서 인용한 컨텐츠를 정의할 때 사용                 |
-| [caption](https://www.w3.org/TR/wai-aria-1.2/#caption)       | `figure`, `table`, 혹은 `grid`을 명명하거나 설명하는 visible 컨텐츠. `figure`, `table`, 혹은 `grid` 요소에 `aria-labelledby` 속성 값으로 `caption`의 `id`를 참조해야한다. |
+| [caption](https://www.w3.org/TR/wai-aria-1.2/#caption)       | `figure`, `table`, 혹은 `grid`의 이름을 나타내거나 설명하는 visible 컨텐츠. `figure`, `table`, 혹은 `grid` 요소에 `aria-labelledby` 속성 값으로 `caption`의 `id`를 참조해야한다. |
 | [cell](https://www.w3.org/TR/wai-aria-1.2/#cell)             | 테이블 형식 컨테이너의 셀(cell). `cell` 요소는 반드시 `row` 요소에 포함되어야 한다. |
 | [columnheader](https://www.w3.org/TR/wai-aria-1.2/#columnheader) | 열(column)의 헤더 정보를 포함하는 셀. HTML의 `th` 요소와 구조적으로 동일한 의미를 갖는다. |
 | [definition](https://www.w3.org/TR/wai-aria-1.2/#definition) | 용어나 개념을 정의하는 요소                                  |
