@@ -1,4 +1,4 @@
-# ARIA: 역할
+# ARIA: Roles
 
 ARIA는 HTML 요소의 의미(sematics)를 정의한다. 적용된 의미는 역할과(UI 요소의 타입을 정의), 상태 및 속성으로 이루어져 있다. 상태 및 속성 정보는 적용된 역할에 따라 달라진다. 이미 만들어진(네이티브) HTML 요소 중 적절한 의미를 가진 요소가 없다면, 개발자는 특정 요소에 ARIA 역할과 상태 및 속성을 추가하여 해당 요소의 생존 주기(life cycle)동안 접근 가능케 해야한다. ARIA를 사용하는 것은 브라우저의 접근성 API에 추가적인 정보를 노출시키는 것 뿐, DOM에 영향을 주지 않는다.
 
@@ -161,9 +161,9 @@ meter, paragraph, math, strong, subscript, superscript, term, time,
 | [alertdialog](https://www.w3.org/TR/wai-aria-1.2/#alertdialog) | 알림 메시지를 포함하는 `dialog`. 최초 포커스는 `dialog` 안의 요소에 맞춰진다. |
 | [dialog](https://www.w3.org/TR/wai-aria-1.2/#dialog)         | 웹 어플리케이션 메인 창의 하위 창. HTML 페이지에서 어플리케이션의 메인 창은 웹 문서 전체를 말한다(ex. `body` 요소) |
 
+&nbsp;  
 
-
-## 관련 링크
+## 참고 자료
 
 * [Using ARIA: Roles, states, and properties](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques)
 * [WAI-ARIA Authoring Practices 1.2](https://www.w3.org/TR/wai-aria-practices-1.2)
