@@ -182,5 +182,5 @@ label 요소는, [label로 연결할 수 있는 네이티브 HTML 요소](https:
 
 ## 참고 자료
 
-* [Using ARIA](https://w3c.github.io/using-aria)
+* [Using ARIA](https://www.w3.org/TR/using-aria/)
 

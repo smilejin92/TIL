@@ -6,7 +6,7 @@ ARIA는 HTML 요소의 의미(sematics)를 정의한다. 적용된 의미는 역
 
 ## 역할 (Roles)
 
-WAI-ARIA 역할(role)은 `role` 속성을 사용해 HTML 요소에 지정된다.
+WAI-ARIA 역할(role)은 `role` 속성을 통해 HTML 요소에 지정된다.
 
 ```html
 <li role="menuitem">Open file...</li>
@@ -18,12 +18,12 @@ WAI-ARIA 역할(role)은 `role` 속성을 사용해 HTML 요소에 지정된다.
 
 ### 1. 추상 역할 (Abstract roles)
 
-추상 역할은 온톨로지(ontology)에 사용된다. **추상 역할을 컨텐츠에 사용하면 안된다**.
+전반적인 역할 개념을 정의하기 위한 목적으로 WAI-ARIA 역할 모델 지원하는 데 사용된다. 따라서 **추상 역할을 컨텐츠에 사용하면 안된다**.
 
 | 역할                                                         | 요약                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [command](https://www.w3.org/TR/wai-aria-1.2/#command)       | 작업을 수행하지만 입력 데이터를 받지 않는 위젯 형식          |
-| [composite](https://www.w3.org/TR/wai-aria-1.2/#composite)   | navigable descendants 혹은 owned children을 포함하는 위젯    |
+| [command](https://www.w3.org/TR/wai-aria-1.2/#command)       | 역할을 수행하지만 입력 데이터를 받지 않는 위젯               |
+| [composite](https://www.w3.org/TR/wai-aria-1.2/#composite)   | navigable descendants 혹은 owned children을 포함할 수 있는 위젯 |
 | [input](https://www.w3.org/TR/wai-aria-1.2/#input)           | 데이터를 입력 받을 수 있는 제네릭 타입의 위젯                |
 | [landmark](https://www.w3.org/TR/wai-aria-1.2/#landmark)     | 특정 목적과 관련이 있으며 중요한 내용을 포함하는 **인지 가능한 섹션**. 페이지 요약에 나열되어 사용자가 해당 영역을 쉽게 탐색할 수 있을만한 부문. |
 | [range](https://www.w3.org/TR/wai-aria-1.2/#range)           | 값의 범위를 나타내는 요소                                    |
@@ -68,7 +68,7 @@ WAI-ARIA 역할(role)은 `role` 속성을 사용해 HTML 요소에 지정된다.
 
 ### 3. 컴포짓 역할 (Composite role)
 
-컴포짓 역할은 복합(composite) UI 위젯의 역할로서 사용된다. 컴포짓 역할은 대개 하위 위젯을 포함하는 상위의 컨테이너로서 사용된다.
+복합(composite) UI 위젯의 역할로서 사용된다. 컴포짓 역할은 보통 하위 위젯을 포함하는 컨테이너로서 사용된다.
 
 | 역할                                                         | 요약                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -85,6 +85,8 @@ WAI-ARIA 역할(role)은 `role` 속성을 사용해 HTML 요소에 지정된다.
 &nbsp;  
 
 ### 4. 문서 구조 역할 (Document structure roles)
+
+페이지 컨텐츠의 구조를 설명한다. 문서 구조는 보통 비대화형(non-interactive)이다.
 
 | 역할                                                         | 요약                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
