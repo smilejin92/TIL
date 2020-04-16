@@ -73,17 +73,17 @@ WAI-ARIA는 다양한 운영 체제 플랫폼에서 접근성 API를 지원하�
 
 | 속성                                                         | 요약                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [aria-autocomplete](https://www.w3.org/TR/wai-aria-1.2/#aria-autocomplete) |                                                              |
-| [aria-checked](https://www.w3.org/TR/wai-aria-1.2/#aria-checked) | `checkbox`, `radio` 등 체크 가능한 요소의 상태를 나타내는 속성. |
-| [aria-disabled](https://www.w3.org/TR/wai-aria-1.2/#aria-disabled) | 인지할 수 있지만 사용할 수 없는 요소임을 나타내는 상태       |
-| [aria-errormessage](https://www.w3.org/TR/wai-aria-1.2/#aria-errormessage) | 자신에 대한 에러 메시지를 나타내는 요소의 참조. (속성)       |
-| [aria-expanded](https://www.w3.org/TR/wai-aria-1.2/#aria-expanded) | 자신이 포함하는(제어하는) 그룹 요소가 펼쳐져 있는지에 대한 상태 |
-| [aria-haspopup](https://www.w3.org/TR/wai-aria-1.2/#aria-haspopup) | 현재 요소가 `menu` 혹은 `dialog` 같은 팝업 요소를 포함하고 있는지 명시하는 속성 |
-| [aria-hidden](https://www.w3.org/TR/wai-aria-1.2/#aria-hidden) | 접근성 API에 현재 요소를 노출시킬 것인지 명시하는 속성       |
-| [aria-invalid](https://www.w3.org/TR/wai-aria-1.2/#aria-invalid) | 입력된 값이 어플리케이션의 양식에 맞지 않음을 나타내는 상태  |
-| [aria-label](https://www.w3.org/TR/wai-aria-1.2/#aria-label) | 현재 요소의 이름을 나타내는 문자열 속성                      |
-| [aria-level](https://www.w3.org/TR/wai-aria-1.2/#aria-level) | 요소의 계층 레벨을 나타내는 속성                             |
-| [aria-modal](https://www.w3.org/TR/wai-aria-1.2/#aria-modal) | 요소가 표시될 때 modal 형식인지에 속성                       |
+| [aria-autocomplete](https://www.w3.org/TR/wai-aria-1.2/#aria-autocomplete) | `combobox`, `searchbox`, `textbox`에 텍스트를 입력하면, 사용자가 의도한 값의 예상치를  한 개 이상 표시하는지에 대한 여부를 나타낸다. 또한 예상 값을 어떻게(ex. `inline`, `list`, `both`, `none`) 나타낼 것인지 명시한다. |
+| [aria-checked](https://www.w3.org/TR/wai-aria-1.2/#aria-checked) | `checkbox`, `radio` 등 체크 가능한 요소의 현재 "checked" 상태를 나타낸다. |
+| [aria-disabled](https://www.w3.org/TR/wai-aria-1.2/#aria-disabled) | 요소가 인지 가능하지만 사용할 수 없는 상태(disabled)임을 나타낸다. 즉, 수정 불가능하나 운용가능한(operable) 요소임을 나타낸다. |
+| [aria-errormessage](https://www.w3.org/TR/wai-aria-1.2/#aria-errormessage) | 현재 요소에 대한 에러 메시지를 제공하는 요소를 식별한다.     |
+| [aria-expanded](https://www.w3.org/TR/wai-aria-1.2/#aria-expanded) | 현재 요소에 의해 제어되는(혹은 현재 요소가 소유하는) 그룹화 요소가 펼쳐져 있는지에 대한 여부를 나타낸다. |
+| [aria-haspopup](https://www.w3.org/TR/wai-aria-1.2/#aria-haspopup) | 요소가 표시할 수 있는 팝업 요소의 타입(메뉴 혹은 대화창 같은)과 사용 가능 여부를 나타낸다. |
+| [aria-hidden](https://www.w3.org/TR/wai-aria-1.2/#aria-hidden) | 접근성 API에 현재 요소가 노출되어 있는지에 대한 여부를 나타낸다. |
+| [aria-invalid](https://www.w3.org/TR/wai-aria-1.2/#aria-invalid) | 입력된 값이 어플리케이션의 양식에 맞지 않음을 나타낸다.      |
+| [aria-label](https://www.w3.org/TR/wai-aria-1.2/#aria-label) | 현재 요소를 레이블하는 문자열을 정의한다.                    |
+| [aria-level](https://www.w3.org/TR/wai-aria-1.2/#aria-level) | 구조 속 요소의 계층적 레벨을 나타내는 속성                   |
+| [aria-modal](https://www.w3.org/TR/wai-aria-1.2/#aria-modal) | 요소가 modal 형식으로 표시되는지에 대한 여부를 나타낸다.     |
 | [aria-multiline](https://www.w3.org/TR/wai-aria-1.2/#aria-multiline) | 텍스트 박스가 여러 줄을 입력 받을 것인지에 대한 속성         |
 | [aria-multiselectable](https://www.w3.org/TR/wai-aria-1.2/#aria-multiselectable) | 선택 가능한 후손 요소 중 두 개 이상의 항목을 선택할 수 있는지 나타내는 속성 |
 | [aria-orientation](https://www.w3.org/TR/wai-aria-1.2/#aria-orientation) | 요소의 진행 방향(horizontal, vertical)을 나타내는 속성       |
