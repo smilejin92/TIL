@@ -197,8 +197,25 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 html {
   box-sizing: border-box;
 }
+
 *, *::before, *::after {
   box-sizing: inherit;
 }
 ```
+
+&nbsp;  
+
+### 브라우저 개발자 도구를 이용한 박스 모델 분석
+
+브라우저 개발자 도구를 사용하여 박스 모델를 더욱 쉽게 이해할 수 있다. 예를 들어, Firefox의 개발자 도구를 사용하여 요소 검사를 실행할 경우, 아래 그림과 같이 마진, 패딩, 보더가 더해진 요소의 크기를 한 눈에 파악할 수 있다.
+
+<img src="/Users/smilejin92/Desktop/box-model-devtools.png" style="zoom:38%;" />
+
+(이미지 출처: [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model))
+
+&nbsp;  
+
+## 참고 자료
+
+* [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model)
 
