@@ -17,7 +17,7 @@ CSS에서는 크게 **블록 상자**와 **인라인 상자** 두 가지 타입�
 
 **인라인 상자**
 
-* 개행되지 않는다.
+* 줄바뀜이 생기지 않는다.
 * `width`와 `height` 속성이 적용되지 않는다.
 * padding, margin, border이 적용되지만, 다른 인라인 상자를 밀어내지 않는다.
 
@@ -29,7 +29,7 @@ CSS에서는 크게 **블록 상자**와 **인라인 상자** 두 가지 타입�
 
 CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디스플레이 타입을 가지고 있다. 또한 박스는 **자신의 내부 요소들이 어떻게 배치되어야하는지** 결정하는 **inner** 디스플레이 타입을 가지고 있다. 기본적으로 박스 내부의 요소는 다른 블록 요소 혹은 인라인 요소와 같이 [**normal flow**](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Normal_Flow)로 배치되어 있다.
 
-`display` 속성에 `flex`와 같은 값을 사용하여 inner 디스플레이 타입을 변경할 수 있다. 요소에 `display: flex` 속성을 지정하면, outer 디스플레이 타입은 블록이지만, inner 디스플레이 타입은 `flex`로 변경된다. 이러한 요소의 직계 자식 요소는 flex items으로 취급되며 [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)의 규칙에 따라 배치된다.
+`display` 속성에 `flex` 같은 값을 사용하여 inner 디스플레이 타입을 변경할 수 있다. 요소에 `display: flex` 속성을 지정하면, outer 디스플레이 타입은 블록이지만, inner 디스플레이 타입은 `flex`로 변경된다. 이러한 요소의 직계 자식 요소는 flex items으로 취급되며 [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)의 규칙에 따라 배치된다.
 
 블록과 인라인 레이아웃은 웹 상의 요소들이 동작하는 기본적인 방법이다. 다른 instruction이 없다면 박스는 블록 혹은 인라인 박스로 배치되기 때문에, 이러한 방법을 normal flow라 부른다.
 
@@ -131,7 +131,7 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 
 ## 그래서 CSS 박스 모델은 무엇인가?
 
-블록 박스는 전체 CSS 박스 모델의 특성을 사용하며, 인라인 박스는 박스 모델의 일부 특성만 사용한다. 박스 모델은 margin, border, padding, 컨텐츠가 박스를 형성할 때 어떻게 동작하는지를 정의한다. 박스 모델의 종류와 특징은 아래와 같다.
+블록 박스는 CSS 박스 모델의 모든 특성을 사용하며, 인라인 박스는 CSS 박스 모델의 일부 특성만 사용한다. 박스 모델은 margin, border, padding, 컨텐츠가 박스를 형성할 때 어떻게 동작하는지를 정의한다. 박스 모델의 종류와 특징은 아래와 같다.
 
 * **Content box**: `width`, `height` 속성으로 크기를 조절할 수 있는 컨텐츠가 표시되는 영역
 * **Padding box**: 패딩은 컨텐츠 주변의 공백 영역으로 위치한다. 패딩 박스의 사이즈는 `padding` 속성으로 조절될 수 있다.
@@ -146,7 +146,7 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 
 ### 스탠다드 CSS 박스 모델
 
-스탠다드 박스 모델에서 박스의 `width`와 `height` 속성을 지정하면, **컨텐트 박스(content box)**의 너비와 높이가 정의된다. **패딩과 보더는** 컨텐트 박스의 영역이 계산된 이후 **추가로 더해져 박스의 전체 사이즈를 정의한다.** 아래 예제를 통해 스탠다드 CSS 박스 모델의 사이즈 계산 방법을 알아보자.
+스탠다드 박스 모델에서 박스의 `width`와 `height` 속성을 지정하면, **컨텐트 박스(content box)**의 너비와 높이가 정의된다. **패딩과 보더는** 컨텐트 박스의 영역이 계산된 후 **추가로 더해져 박스의 전체 사이즈를 정의한다.** 아래 예제를 통해 스탠다드 CSS 박스 모델의 사이즈 계산 방법을 알아보자.
 
 ```css
 .box {
@@ -158,7 +158,7 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 }
 ```
 
-위와 같은 CSS 속성 값을 지정할 경우, 스탠다드 박스 모델의 영역은
+요소에 위와 같은 CSS 속성 값을 지정할 경우, 스탠다드 박스 모델의 영역은 아래와 같이 계산된다.
 
 * 컨텐트 박스: 350px * 150px
 * 패딩 박스: (25px * 2 + 컨텐트 박스 너비) * (25px * 2 + 컨텐트 박스 높이)
@@ -171,9 +171,34 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 
 (이미지 출처: [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model))
 
-> **Note**: 마진은 박스의 실제 사이즈에 포함되지 않는다. 마진은 박스의 전체 영역에 영향을 주지만, 박스의 **바깥쪽 여백**에 해당된다. 박스의 실질적 영역은 보더까지이며, 바깥쪽 여백(마진)까지 늘어나지 않는다.
+> **Note**: 마진은 박스의 실제 사이즈에 포함되지 않는다. 마진은 박스의 전체 영역에 영향을 주지만, 박스의 **바깥쪽 여백**에 해당된다. 박스의 실질적 사이즈는 보더까지이며, 바깥쪽 여백(마진)까지 늘어나지 않는다.
 
 &nbsp;  
 
-### 다른 CSS 박스 모델
+### 대체 CSS 박스 모델
+
+ 박스의 실질적인 사이즈를 계산하기 위해 border와 padding을 더해야하는 것이 불편하게 느껴질 수 있다. 이러한 이유로, CSS에서는 스탠다드 박스 모델 이후 대체(alternative) 박스 모델을 출시했다. **대체 박스 모델을 사용하는 경우**, 너비는 페이지에 표시되는 상자의 너비이기 때문에 **컨텐츠 영역의 너비는 패딩 및 보더의 너비를 제외한 너비이다**. 위의 예제에서 사용된 동일한 CSS 속성은 아래와 같은 결과를 생성한다 (width = 350px, height = 150px).
+
+![](/Users/smilejin92/Desktop/alternate-box-model.png)
+
+(이미지 출처: [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model))
+
+기본적으로 브라우저는 스탠다드 박스 모델을 사용한다. 요소에 `box-sizing: border-box` 속성을 지정하면 대체 박스 모델을 사용할 수 있다. 해당 속성을 지정하는 것은 브라우저에게 지정한 크기의 영역을 보더 박스로서 인식하게끔 한다.
+
+```css
+.box {
+  box-sizing: border-box;
+}
+```
+
+만약 모든 요소의 영역을 대체 박스 모델로서 사용하고 싶다면, `<html>` 요소의 `box-sizing` 속성에 `border-box` 값을 지정하여 모든 요소로 하여금 `box-sizing` 속성을 상속 받을 수 있게 설정할 수 있다.
+
+```css
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+```
 
