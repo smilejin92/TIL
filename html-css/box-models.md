@@ -45,6 +45,8 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 
 세 번째 요소는 두 개의 `<span>` 요소를 포함하는 블록 레벨 `<p>` 요소이다. 두 `<span>` 요소는 일반적으로 `inline` 상자이지만, 하나는 block 클래스를 가지고 있으며 `display: block` 속성으로 지정되었다.
 
+<img src="/Users/smilejin92/Desktop/Screen Shot 2020-04-18 at 7.39.35 PM.png" style="zoom:50%;" />
+
 ```html
 <style>
 	p,
@@ -79,10 +81,99 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 </body>
 ```
 
-<img src="/Users/smilejin92/Desktop/Screen Shot 2020-04-18 at 7.39.35 PM.png" style="zoom:50%;" />
-
 &nbsp;  
 
 ### 예제 2
 
-아래 예제를 통해 `inline` 요소가 어떻게 동작하는지 살펴 볼 수 있다.
+아래 예제를 통해 `inline` 요소가 어떻게 동작하는지 살펴 볼 수 있다. 첫 번째 `<p>` 요소 내부의 `<span>` 요소는 기본적으로 인라인 속성을 가지기 때문에 줄바뀜이 발생하지 않는다.
+
+두 번째 `<ul>` 요소는 `display: inline-flex` 속성을 가지고 있으며, flex items를 감싸는 인라인 상자를 생성한다.
+
+마지막 두 개의 `<p>` 요소는 `display: inline`으로 지정되었다. 인라인 flex 속성을 가진 `<ul>`과 두 개의 `<p>` 요소가 개행되지 않고, 같은 줄에서 진행되는 것을 확인할 수 있다.
+
+<img src="/Users/smilejin92/Desktop/Screen Shot 2020-04-18 at 8.28.05 PM.png" style="zoom:50%;" />
+
+```html
+<style>
+	p,
+  ul {
+  	border: 2px solid rebeccapurple;
+  }
+  span,
+  li {
+    border: 2px solid blue;
+  }
+  ul {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+  }
+  .inline {
+    display: inline;
+  }
+</style>
+
+<body>
+  <p>
+    I am a paragraph. Some of the <span>words</span> have been wrapped in a <span>span element</span>.
+  </p>
+  <ul>
+    <li>Item One</li>
+    <li>Item Two</li>
+    <li>Item Three</li>
+  </ul>
+  <p class="inline">I am a paragraph. A short one.</p>
+  <p class="inline">I am another paragraph. Also a short one.</p>
+</body>
+```
+
+&nbsp;  
+
+## 그래서 CSS 박스 모델은 무엇인가?
+
+블록 박스는 전체 CSS 박스 모델의 특성을 사용하며, 인라인 박스는 박스 모델의 일부 특성만 사용한다. 박스 모델은 margin, border, padding, 컨텐츠가 박스를 형성할 때 어떻게 동작하는지를 정의한다. 박스 모델의 종류와 특징은 아래와 같다.
+
+* **Content box**: `width`, `height` 속성으로 크기를 조절할 수 있는 컨텐츠가 표시되는 영역
+* **Padding box**: 패딩은 컨텐츠 주변의 공백 영역으로 위치한다. 패딩 박스의 사이즈는 `padding` 속성으로 조절될 수 있다.
+* **Border box**: 보더 박스는 컨텐츠와 패딩을 감싼다. 보더 박스의 사이즈와 스타일은 `border` 속성으로 조절될 수 있다.
+* **Margin box**: 마진은 요소 사이의 공백으로서 컨텐츠, 패딩, 보더를 감싸는 가장 바깥 쪽 레이어이다. 마진은 `margin` 속성으로 조절될 수 있다.
+
+![](/Users/smilejin92/Desktop/box-model.png)
+
+(이미지 출처: [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model))
+
+&nbsp;  
+
+### 스탠다드 CSS 박스 모델
+
+스탠다드 박스 모델에서 박스의 `width`와 `height` 속성을 지정하면, **컨텐트 박스(content box)**의 너비와 높이가 정의된다. **패딩과 보더는** 컨텐트 박스의 영역이 계산된 이후 **추가로 더해져 박스의 전체 사이즈를 정의한다.** 아래 예제를 통해 스탠다드 CSS 박스 모델의 사이즈 계산 방법을 알아보자.
+
+```css
+.box {
+  width: 350px;
+  height: 150px;
+  padding: 25px;
+  border: 5px solid black;
+  margin: 10px;
+}
+```
+
+위와 같은 CSS 속성 값을 지정할 경우, 스탠다드 박스 모델의 영역은
+
+* 컨텐트 박스: 350px * 150px
+* 패딩 박스: (25px * 2 + 컨텐트 박스 너비) * (25px * 2 + 컨텐트 박스 높이)
+* 보더 박스: (5px * 2 + 패딩 박스 너비) * (5px * 2 + 패딩 박스 높이)
+* 마진 박스: (10px * 2 + 보더 박스 너비) * (10px * 2 + 보더 박스 높이)
+* **상자의 전체 영역 = 보더 박스 = 410px * 210px**
+* 요소의 전체 영역 = 마진 박스 = 430px * 230px
+
+![](/Users/smilejin92/Desktop/standard-box-model.png)
+
+(이미지 출처: [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model))
+
+> **Note**: 마진은 박스의 실제 사이즈에 포함되지 않는다. 마진은 박스의 전체 영역에 영향을 주지만, 박스의 **바깥쪽 여백**에 해당된다. 박스의 실질적 영역은 보더까지이며, 바깥쪽 여백(마진)까지 늘어나지 않는다.
+
+&nbsp;  
+
+### 다른 CSS 박스 모델
+
