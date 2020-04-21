@@ -45,7 +45,7 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 
 세 번째 요소는 두 개의 `<span>` 요소를 포함하는 블록 레벨 `<p>` 요소이다. 두 `<span>` 요소는 일반적으로 `inline` 상자이지만, 하나는 block 클래스를 가지고 있으며 `display: block` 속성으로 지정되었다.
 
-<img src="/Users/smilejin92/Desktop/Screen Shot 2020-04-18 at 7.39.35 PM.png" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/32444914/79850013-432a5100-83fe-11ea-8bdc-299a9c4fc875.png" style="zoom:50%;" />
 
 ```html
 <style>
@@ -91,7 +91,7 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 
 마지막 두 개의 `<p>` 요소는 `display: inline`으로 지정되었다. 인라인 flex 속성을 가진 `<ul>`과 두 개의 `<p>` 요소가 개행되지 않고, 같은 줄에서 진행되는 것을 확인할 수 있다.
 
-<img src="/Users/smilejin92/Desktop/Screen Shot 2020-04-18 at 8.28.05 PM.png" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/32444914/79850211-884e8300-83fe-11ea-9687-1b4facb8ce62.png" style="zoom:50%;" />
 
 ```html
 <style>
@@ -138,7 +138,7 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 * **Border box**: 보더 박스는 컨텐츠와 패딩을 감싼다. 보더 박스의 사이즈와 스타일은 `border` 속성으로 조절될 수 있다.
 * **Margin box**: 마진은 요소 사이의 공백으로서 컨텐츠, 패딩, 보더를 감싸는 가장 바깥 쪽 레이어이다. 마진은 `margin` 속성으로 조절될 수 있다.
 
-![](/Users/smilejin92/Desktop/box-model.png)
+![](https://user-images.githubusercontent.com/32444914/79850221-8b497380-83fe-11ea-96df-229a5068fd94.png)
 
 (이미지 출처: [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model))
 
@@ -167,7 +167,7 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 * **상자의 전체 영역 = 보더 박스 = 410px * 210px**
 * 요소의 전체 영역 = 마진 박스 = 430px * 230px
 
-![](/Users/smilejin92/Desktop/standard-box-model.png)
+![](https://user-images.githubusercontent.com/32444914/79850222-8be20a00-83fe-11ea-9331-58764e0aacff.png)
 
 (이미지 출처: [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model))
 
@@ -179,7 +179,7 @@ CSS에서 박스는 **블록인지 인라인인지** 결정하는 **outer** 디�
 
  박스의 실질적인 사이즈를 계산하기 위해 border와 padding을 더해야하는 것이 불편하게 느껴질 수 있다. 이러한 이유로, CSS에서는 스탠다드 박스 모델 이후 대체(alternative) 박스 모델을 출시했다. **대체 박스 모델을 사용하는 경우**, 너비는 페이지에 표시되는 상자의 너비이기 때문에 **컨텐츠 영역의 너비는 패딩 및 보더의 너비를 제외한 너비이다**. 위의 예제에서 사용된 동일한 CSS 속성은 아래와 같은 결과를 생성한다 (width = 350px, height = 150px).
 
-![](/Users/smilejin92/Desktop/alternate-box-model.png)
+![](https://user-images.githubusercontent.com/32444914/79850228-8c7aa080-83fe-11ea-8cbc-fb57b8339d4d.png)
 
 (이미지 출처: [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model))
 
