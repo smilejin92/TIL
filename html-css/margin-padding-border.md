@@ -37,7 +37,7 @@
 </div>
 ```
 
-<img src="/Users/smilejin92/Desktop/Screen Shot 2020-04-20 at 8.49.02 PM.png" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/32444914/79850879-7b7e5f00-83ff-11ea-98a9-3fe45e1677bf.png" style="zoom:50%;" />
 
 위 예제에서 `.box` 클래스(연두색)를 가진 요소가 자신의 컨테이너 요소(주황색) 밖으로 튀어나온 것을 볼 수 있다. 이처럼 음수 마진 값을 적용하여 요소가 끌어당겨진 것 같은 효과를 연출할 수 있다. 단, 위 예제의 경우 컨테이너 요소에 마진 혹은 패딩 속성을 지정하여 연두색 요소가 끌어당겨질 수 있는 영역을 만들어 주어야한다.
 
@@ -51,7 +51,7 @@
 
 두 번째 단락 요소의 `margin-top` 속성 값으로 0을 지정하여도 변화는 없다. 두 요소가 맞닿는 부분의 마진 값으로 각각 50px, 0씩 가지기 때문에 50px의 여백은 그대로 존재한다. 만약 두 번째 단락 요소의 `margin-top` 속성 값을 -10px으로 지정할 경우, 전체 영역(50px)에서 음수 값을 차감한만큼(40px) 여백이 생성된다.
 
-<img src="/Users/smilejin92/Desktop/Screen Shot 2020-04-20 at 10.35.39 PM.png" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/32444914/79850888-7e794f80-83ff-11ea-877e-1327d4731b5f.png" style="zoom:50%;" />
 
 ```html
 <style>
@@ -110,7 +110,7 @@
 
 아래는 단축 표기법와 일반 표기법을 사용하여 보더의 스타일을 지정한 예제이다.
 
-<img src="/Users/smilejin92/Desktop/Screen Shot 2020-04-21 at 6.09.23 PM.png" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/32444914/79850893-7faa7c80-83ff-11ea-84ce-e77fcad8a8a6.png" style="zoom:50%;" />
 
 ```html
 <style>
@@ -138,4 +138,107 @@
 &nbsp;  
 
 ## Padding
+
+패딩은 보더와 컨텐트 영역 사이에 존재하는 박스 안쪽의 여백을 말한다. 마진과 다르게 패딩 속성은 음수 값을 가질 수 없다. 따라서 패딩 속성의 값은 0 이상이어야 한다. 요소에 적용된 배경은 패딩 뒤편에 적용되며, 일반적으로 컨텐츠를 보더에서 밀어내기 위해 사용한다.
+
+`padding` 속성을 사용하여 박스 각 면의 패딩을 지정할 수 있다. 또한 개별 속성을 사용하여도 각 면의 패딩을 지정할 수 있다. 개별 속성은 아래와 같다.
+
+* `padding-top`
+* `padding-right`
+* `padding-bottom`
+* `padding-left`
+
+아래 예제에서 `container` 클래스를 가진 요소는, `box` 클래스를 가진 요소를 안쪽으로 밀어낸다. 또한 `box` 클래스를 가진 요소는 자신이 포함하는 텍스트를 오른쪽으로 밀어낸다.
+
+![](https://user-images.githubusercontent.com/32444914/79854172-03666800-8404-11ea-9821-5e55de05c0ae.png)
+
+```html
+<style>
+	.box {
+    padding-top: 0;
+    padding-right: 30px;
+    padding-bottom: 40px;
+    padding-left: 4em;
+  }
+
+  .container {
+    padding: 20px;
+  }
+</style>
+
+<div class="container">
+  <div class="box">box with padding</div>
+</div>
+```
+
+&nbsp;  
+
+## 박스 모델과 인라인 상자
+
+위에서 설명한 마진, 보더, 패딩 속성은 블록 상자에 전체적으로 적용된다. 각 속성은 `<span>` 요소와 같은 인라인 상자에도 일부 적용된다.
+
+아래 예제에서 단락 요소는 `width`, `height`, `margin`, `border`, `padding` 속성이 적용된 `<span>` 요소를 포함하고있다. 인라인 상자는 `width`, `height` 속성이 적용되지 않는다. `margin`, `padding`, `border` 속성은 적용되었지만, 주변 요소와의 관계를 무너트리지 않는다. 패딩과 보더가 주변 글자와 겹쳐지는 것을 보면 이러한 내용을 확인할 수 있다. 단, 주의해야할 것은 **인라인 상자는 주변 요소를 자신의 좌우 패딩, 보더, 마진 값만큼 밀어낸다는 것**이다.
+
+![](https://user-images.githubusercontent.com/32444914/79855841-7a046500-8406-11ea-960a-312b9ae616a8.png)
+
+```html
+<style>
+	.paragraph {        
+    border: 5px solid black;
+    padding: 20px;
+  }
+
+  .inlinebox {
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border: 2px solid blue;
+    margin: 10px;
+  }
+</style>
+
+<p class="paragraph">
+  I am a paragraph and this is a <span class="inlinebox">span</span> inside that paragraph. A span is an inline element and so does not respect width and height.
+</p>
+```
+
+&nbsp;  
+
+## display: inline-block 사용
+
+`inline-block` 디스플레이 타입은 `inline`과 `block` 디스플레이 타입의 특징을 모두 가진 속성이다. 해당 속성을 가진 요소는 줄바뀜이 발생하지 않고, `width`와 `height` 속성이 적용될 수 있다. 또한 `padding`, `margin`, `border` 속성이 적용되며, 적용된 값만큼 인접한 상하좌우의 요소를 밀어낸다.
+
+`inline-block` 속성을 가진 요소에 `width와 `height`을 지정하지 않으면, 컨텐트 상자는 컨텐츠의 크기에 맞게 생성된다.
+
+![](https://user-images.githubusercontent.com/32444914/79862171-aae99780-8410-11ea-9253-d553981c3f66.png)
+
+```html
+<style>
+	p {        
+    border: 5px solid black;
+    padding: 20px;
+  }
+
+  span {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border: 10px solid blue;
+    margin: 10px;
+  }
+</style>
+
+<p>
+  I am a paragraph and this is a <span>span</span> inside that paragraph. A span is an inline element and so does not respect width and height.
+</p>
+```
+
+`inline-block` 속성은 클릭/터치될 수 있는 영역이 넓은 링크를 제공할 때 유용하다. `<a>` 요소는 `<span>` 요소와 같은 인라인 요소지만, `display: inline-block` 속성을 지정한 후 패딩 영역을 확장하면 사용자가 링크를 쉽게 클릭/터치할 수 있다. 
+
+&nbsp;  
+
+## 참고 자료
+
+* [MDN Web Docs - The box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model)
 
