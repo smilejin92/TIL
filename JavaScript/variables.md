@@ -8,7 +8,7 @@
 * 변수에 값을 저장하는 것을 **할당(assignment)**이라 하고, 변수에 저장된 값을 읽어들이는 것을 **참조(reference)**라고 한다.
 * 좋은 변수 이름(식별자)은 가독성을 높여준다
 
-
+&nbsp;  
 
 애플리케이션은 데이터를 다룬다. 아무리 복잡한 애플리케이션이라 해도 데이터를 입력(input) 받아 처리하고, 그 결과를 출력(output)하는 것이 전부이다. **변수는 데이터를 관리하기 위한 핵심 개념이다.**
 
@@ -26,7 +26,7 @@
 
 숫자 값 10과 20은 메모리 상의 임의의 위치(메모리 주소)에 기억(저장)되고 CPU는 이 값을 읽어들여 연산을 수행한다. 연산 결과로 생성된 숫자 값 30도 메모리 상의 임의의 위치에 저장된다.
 
-<img src="https://user-images.githubusercontent.com/32444914/79930737-3e0fe500-8484-11ea-93bc-dfc9e181aef1.png" width="50%" />
+<img src="https://user-images.githubusercontent.com/32444914/79930737-3e0fe500-8484-11ea-93bc-dfc9e181aef1.png"  />
 
 (이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
 
@@ -67,7 +67,7 @@ var result = 10 + 20;
 
 10 + 20은 연산을 통해 사로운 값 30을 생성한다. 그리고 연산을 통해 생성된 값 30은 메모리 공간에 저장된다. 이때 저장된 값 30을 다시 읽어들여 재사용할 수 있도록 **메모리 공간에 상징적인 이름을 붙인 것이 바로 변수이다.**
 
-<img src="https://user-images.githubusercontent.com/32444914/79930744-41a36c00-8484-11ea-97ee-80a5a3a5982a.png" width="50%" />
+<img src="https://user-images.githubusercontent.com/32444914/79930744-41a36c00-8484-11ea-97ee-80a5a3a5982a.png"  />
 
 (이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
 
@@ -90,7 +90,7 @@ var result = 10 + 20;
 * 변수 선언은 두 개의 단계를 거쳐 수행된다 - 선언 단계, 초기화 단계
 * 식별자는 실행 컨텍스트에 등록된다.
 
-
+&nbsp;  
 
 변수 이름을 식별자(identifier)라고도 부른다. **식별자는 어떤 값을 구별하여 식별해낼 수 있는 고유한 이름**을 말한다. 사람을 이름으로 구별하여 식별하듯, 값도 식별자로 구별하여 식별할 수 있다.
 
@@ -100,7 +100,7 @@ var result = 10 + 20;
 
 이처럼 **식별자는 값이 아니라 메모리 주소를 기억하고 있다.** 식별자로 값을 구별하여 식별한다는 것은, 식별자가 기억하고 있는 **메모리 주소를 통해 메모리 공간에 저장된 값이 접근**할 수 있다는 것을 의미한다. 즉, 식별자는 메모리 주소에 붙인 이름이라고 할 수 있다.
 
-<img src="https://user-images.githubusercontent.com/32444914/79930745-423c0280-8484-11ea-8f62-ed434b11cce8.png" width="50%" />
+<img src="https://user-images.githubusercontent.com/32444914/79930745-423c0280-8484-11ea-8f62-ed434b11cce8.png"  />
 
 (이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
 
@@ -124,7 +124,7 @@ var result = 10 + 20;
 * 모든 선언문은 런타임 이전 Syntax analysis 단계에서 실행된다(호이스팅).
 *  만약 선언하지 않은 식별자에 접근하면 `ReferenceError`(참조 에러)가 발생한다.
 
-
+&nbsp;  
 
 변수 선언(Variable declaration)이란 변수를 생성하는 것을 말한다. 더 자세히 말하면, **값을 저장하기 위한 메모리 공간을 확보(allocate)하고 변수 이름과 확보된 메모리 공간의 주소를 연결(name binding)하여 값을 저장할 수 있도록 준비하는 것**이다. 변수 선언에 의해 확보된 메모리 공간은 확보가 해제(release)되기 이전까지 누구도 사용할 수 없도록 보호되므로 안전하게 사용할 수 있다.
 
@@ -152,7 +152,7 @@ var score; // 변수 선언(변수 선언문)
 
 위 변수 선언문은 아래와 같이 변수 이름을 등록(변수 이름은 어디에 등록되는가? 참고)하고 값을 저장할 메모리 공간을 확보한다.
 
-<img src="https://user-images.githubusercontent.com/32444914/79930749-42d49900-8484-11ea-8649-d248457cc81e.png" width="50%" />
+<img src="https://user-images.githubusercontent.com/32444914/79930749-42d49900-8484-11ea-8649-d248457cc81e.png"  />
 
 (이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
 
@@ -191,7 +191,7 @@ var score = 30; // 5. score = 30 할당문 실행.
 * `var` 키워드를 사용한 변수 선언은 선언 단계와 초기화 단계가 동시에 진행된다.
 * 런타임에서는 선언문을 제외한 나머지 코드가 실행된다.
 
-
+&nbsp;  
 
 ``` javascript
 console.log(score); // undefined
@@ -211,7 +211,7 @@ var score; // 변수 선언
 * 자바스크립트 엔진은 변수 선언과 값의 할당을 구분하여 실행한다.
 * 모든 선언은 런타임 이전에 먼저 실행되지만(`var` 키워드로 선언한 변수는 초기화까지 함께 실행), 할당은 런타임에서 순차적으로 진행된다.
 
-
+&nbsp;  
 
 변수에 값을 할당(assign)할 때는 할당 연산자 `=`를 사용한다. 할당 연산자는 우변의 값을 좌변의 변수에 할당한다.
 
@@ -238,7 +238,7 @@ console.log(score); // 80
 
 `var` 키워드로 선언한 변수는 런타임 이전에 선언 단계와 초기화 단계가 함께 실행되기 때문에, 엄밀히 말하자면 런타임에 할당된 값 `80`은 재할당된 값이다.
 
-<img src="https://user-images.githubusercontent.com/32444914/79976640-e8fdbe80-84d7-11ea-87a0-a740e89109b6.png" width="50%" />
+<img src="https://user-images.githubusercontent.com/32444914/79976640-e8fdbe80-84d7-11ea-87a0-a740e89109b6.png"  />
 
 (이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
 
@@ -255,7 +255,7 @@ var score = 80; // 변수 선언과 값의 할당
 score = 90; // 값의 재할당
 ```
 
-<img src="https://user-images.githubusercontent.com/32444914/79977555-6c6bdf80-84d9-11ea-899f-37082c17925a.png" width="50%" />
+<img src="https://user-images.githubusercontent.com/32444914/79977555-6c6bdf80-84d9-11ea-899f-37082c17925a.png"  />
 
 (이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
 
@@ -280,6 +280,8 @@ score = 90; // 값의 재할당
 * 예약어는 식별자로 사용할 수 없다 (ex. `this`, `await`, `break`, `case`...).
 * 변수의 존재 목적을 쉽게 이해할 수 있도록 의미를 명확히 표현한다.
 * 자주 사용되는 네이밍 컨벤션을 따른다.
+
+&nbsp;  
 
 ```javascript
 var person, $elem, _name, first_name, val1; // 가능
