@@ -21,7 +21,7 @@
 
 &nbsp;  
 
-## [JavaScript](./javascript)
+## [JavaScript](./JavaScript)
 
 * [**프로그래밍**](./JavaScript/programming.md)
 * [**자바스크립트란?**](./JavaScript/intro-javascript.md)
