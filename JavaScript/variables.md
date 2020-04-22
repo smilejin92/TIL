@@ -102,6 +102,8 @@ var result = 10 + 20;
 
 <img src="https://user-images.githubusercontent.com/32444914/79930745-423c0280-8484-11ea-8f62-ed434b11cce8.png" width="50%" />
 
+(이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
+
 * **변수** = 하나의 값이 저장된 메모리 공간
 
 * **식별자** = 값이 저장된 메모리 공간의 주소에 붙인 이름
@@ -151,6 +153,8 @@ var score; // 변수 선언(변수 선언문)
 위 변수 선언문은 아래와 같이 변수 이름을 등록(변수 이름은 어디에 등록되는가? 참고)하고 값을 저장할 메모리 공간을 확보한다.
 
 <img src="https://user-images.githubusercontent.com/32444914/79930749-42d49900-8484-11ea-8649-d248457cc81e.png" width="50%" />
+
+(이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
 
 변수를 선언한 이후, 아직 변수에 값을 할당하지 않았다. 따라서 변수 선언에 의해 확보된 메모리 공간은 비어 있을 것으로 생각할 수 있으나, 확보된 메모리 공간에는 자바스크립트 엔진에 의해 `undefined`라는 값이 **암묵적으로 할당되어 초기화된다.** 이것은 자바스크립트의 독특한 특징이다.
 
@@ -204,27 +208,95 @@ var score; // 변수 선언
 
 ## 5. 값의 할당
 
+* 자바스크립트 엔진은 변수 선언과 값의 할당을 구분하여 실행한다.
+* 모든 선언은 런타임 이전에 먼저 실행되지만(`var` 키워드로 선언한 변수는 초기화까지 함께 실행), 할당은 런타임에서 순차적으로 진행된다.
 
+
+
+변수에 값을 할당(assign)할 때는 할당 연산자 `=`를 사용한다. 할당 연산자는 우변의 값을 좌변의 변수에 할당한다.
+
+```javascript
+var score; // 변수 선언
+score = 80; // 값의 할당
+```
+
+변수 선언과 값의 할당을 아래와 같이 하나의 문(statement)으로 단축 표현할 수 있다.
+
+```javascript
+var score = 80; // 변수 선언과 값의 할당
+```
+
+변수의 선언과 값의 할당을 하나의 문장으로 단축 표현해도 자바스크립트 엔진은 변수의 선언과 값의 할당을 구분하여 실행한다. **변수 선언은 런타임 이전에 먼저 실행되지만, 값의 할당은 소스 코드가 순차적으로 실행되는 시점인 런타임에 실행된다.**
+
+```javascript
+console.log(score); // undefined
+
+var score = 80;
+
+console.log(score); // 80
+```
+
+`var` 키워드로 선언한 변수는 런타임 이전에 선언 단계와 초기화 단계가 함께 실행되기 때문에, 엄밀히 말하자면 런타임에 할당된 값 `80`은 재할당된 값이다.
+
+<img src="https://user-images.githubusercontent.com/32444914/79976640-e8fdbe80-84d7-11ea-87a0-a740e89109b6.png" width="50%" />
+
+(이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
+
+위 그림처럼 변수에 값을 할당할 때는 이전 값 `undefined`가 저장되어 잇던 메모리 공간에 값 `80`을 덮어쓰는 것이 아닌, 새로운 메모리 공간에 저장한다.
 
 &nbsp;  
 
 ## 6. 값의 재할당
 
-원시 값
+재할당이란 이미 값이 할당되어 있는 변수에 새로운 값을 다시 할당하는 것을 말한다.
 
-* 변경 불가능(immutable) - 같은 메모리 주소의 값을 변경할 수 없다. 주소 변경이 불가피하다. 재할당을 하지 않으면 값이 변경될 수 없다(장점).
+```javascript
+var score = 80; // 변수 선언과 값의 할당
+score = 90; // 값의 재할당
+```
 
-객체
+<img src="https://user-images.githubusercontent.com/32444914/79977555-6c6bdf80-84d9-11ea-899f-37082c17925a.png" width="50%" />
 
-* 변경 가능(mutable) - 같은 메모리 주소의 값을 변경 할 수 있음. 주소 변경이 불필요하다. 재할당을 하지 않아도 값이 변경될 수 있다(단점 - 자신이 바꼈는지 안바꼈는지 모른다. 값의 변경을 추적하기 어렵다). 
+(이미지 출처 - [poiemaweb.com - 변수](https://poiemaweb.com/fastcampus/variable))
+
+현재 변수 `score`의 값은 90이다. 변수 `score`의 이전 값인 `undefined`와 80은 어떤 변수도 값으로 갖고 있지 않다. 이러한 불필요한 값들은 가비지 컬렉터(garbage collector)에 의해 메모리에서 자동 해제된다. 단, 메모리에서 언제 해제될 지는 예측할 수 없다.
+
+> **가비지 컬렉터(garbage collector)**
+>
+> 가비지 컬렉터는 애플리케이션이 할당(allocate)한 메모리 공간을 주기적으로 검사하여 더 이상 사용되고 있지 않는 메모리 해제(release)하는 기능을 말한다. 이 기능을 통해 메모리 누수(memory leak)를 방지한다.
+
+**만약 재할당이 불가능하여 변수에 저장된 값을 변경할 수 없다면 변수가 아니라 상수(Constant)라 부른다.** 상수는 한번 정해지면 변하지 않는 값이다.
+
+> **const 키워드**
+>
+> ES6에서 도입된 `const` 키워드로 선언한 변수는 재할당이 금지된다. 따라서 `const` 키워드를 사용하면 상수를 표현할 수 있다. 하지만 `const` 키워드는 반드시 상수만을 위해 사용하지는 않는다.
 
 &nbsp;  
 
-## 7. 값의 교환
+## 7. 식별자 네이밍 규칙
 
-&nbsp;  
+* 식별자는 특수문자를 제외한 문자, 숫자, underscore(`_`), 달러 기호(`$`)를 포함할 수 있다.
+* 식별자는 특수문자를 제외한 문자, underscore, 달러 기호로 시작해야한다 (숫자 시작 X).
+* 예약어는 식별자로 사용할 수 없다 (ex. `this`, `await`, `break`, `case`...).
+* 변수의 존재 목적을 쉽게 이해할 수 있도록 의미를 명확히 표현한다.
+* 자주 사용되는 네이밍 컨벤션을 따른다.
 
-## 8. 식별자 네이밍 규칙
+```javascript
+var person, $elem, _name, first_name, val1; // 가능
+var first-name, 1st, this; // 불가능
+
+// camelCase - 변수, 함수, 메소드 식별자
+var firstName;
+
+// snake_case
+var first_name;
+
+// PascalCase - 생성자 함수, 클래스 식별자
+var FirstName;
+
+// typeHungarianCase
+var strFirstName;
+```
 
 &nbsp;  
 
