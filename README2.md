@@ -26,4 +26,5 @@
 * [**프로그래밍**](./JavaScript/programming.md)
 * [**자바스크립트란?**](./JavaScript/intro-javascript.md)
 * [**변수**](./JavaScript/variables.md)
+* [**표현식과 문**](./JavaScript/expression.md)
 
