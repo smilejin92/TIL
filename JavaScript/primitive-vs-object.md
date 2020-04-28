@@ -17,7 +17,7 @@
 * 원시 타입의 값은 변경 불가능한 값이다.
 * 값을 변경할 수 없다는 것과 재할당을 할 수 없다는 것은 다른 의미이다.
 * 원시 값은 변경 불가능한 값이므로 데이터의 신뢰성을 보장한다.
-* 원시 값을 가진 변수는 재할당 이외에 변수 값을 변경할 수 있는 방법이 없다.
+* 원시 값을 가진 변수는 재할당(메모리 주소 변경) 이외에 변수 값을 변경할 수 있는 방법이 없다.
 
 
 
@@ -146,6 +146,15 @@ console.log(copy); // ?
 
 ### 2.1. 변경 가능한 값
 
+* 객체는 변경 가능한 값(mutable value)이다.
+* 객체를 할당한 변수는 생성된 객체의 참조 값(reference value)을 가진다.
+* 참조 값은 생성된 객체가 저장된 메모리 공간의 주소 그 자체이다.
+* 객체를 할당한 변수를 참조하면 메모리에 저장되어 있는 참조 값을 통해 실제 객체에 접근한다.
+* 객체를 할당한 변수는 재할당 없이 객체를 직접 변경할 수 있다.
+* 여러 개의 식별자가 하나의 객체를 참조할 수 있는 부작용이 있다.
+
+
+
 **객체(참조) 타입의 값, 즉 객체는 변경 가능한 값(mutable value)이다.**
 
 ```javascript
@@ -246,6 +255,50 @@ console.log(personDeep2.sayHi); // function
 &nbsp;  
 
 ### 2.2. 참조에 의한 전달
+
+```javascript
+var person = {
+  name: 'Kim'
+};
+
+// 참조 값을 복사
+var copy = person;
+```
+
+객체를 가리키는 변수(원본, person)를 다른 변수(사본, copy)에 할당하면 원본의 참조 값이 복사되어 전달된다. 이를 **참조에 의한 전달(pass by reference)**라 한다.
+
+<img src="https://user-images.githubusercontent.com/32444914/80502990-41d3c800-89ac-11ea-9d93-a949b088b207.png" width="80%" />
+
+(이미지 출처 - [poiemaweb.com - 원시 값과 객체의 비교](https://poiemaweb.com/fastcampus/primitive-vs-object))
+
+위 그림처럼 원본 person을 사본 copy에 할당하면 원본 person의 참조 값을 복사하여 copy에 저장한다. 이때 원본 person과 사본 copy는 저장된 메모리 주소는 다르지만 동일한 참조 값을 갖는다(둘 다 동일한 객체를 가리키고 있다). 이것은 두개의 식별자가 하나의 객체를 공유한다는 것을 의미한다. 따라서 원본 또는 사본 어느 한 쪽에서 객체를 변경하면 서로 영향을 주고 받는다.
+
+```javascript
+var person = {
+  name: 'Kim'
+};
+
+// 참조 값을 복사. copy와 person은 동일한 참조 값을 가진다.
+var copy = person;
+
+// copy와 person은 동일한 객체를 참조한다.
+console.log(copy === person); // true
+
+// copy를 통해 객체를 변경한다.
+copy.name = 'Park';
+
+// person을 통해 객체를 변경한다.
+person.address = 'Seoul';
+
+// copy와 person은 동일한 객체를 가리키고 있다.
+// 따라서 어느 한쪽에서 객체를 변경하면 서로 영향을 주고 받는다.
+console.log(person); // { name: 'Park', address: 'Seoul' }
+console.log(copy); // { name: 'Park', address: 'Seoul' }
+```
+
+결국 **"값에 의한 전달"과 "참조에 의한 전달"은 변수 값을 복사하여 전달한다는 면에서 동일하다.** 다만 변수 값이 원시 값인지 참조 값인지의 차이만 있을 뿐이다. 따라서 **자바스크립트에는 "참조에 의한 전달"은 존재하지 않고 "값에 의한 전달"만이 존재한다고 말할 수 있다.**
+
+&nbsp;  
 
 ## 참고 자료
 
