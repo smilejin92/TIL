@@ -32,6 +32,7 @@
 * [**제어문**](./JavaScript/control-flow.md)
 * [**타입 변환과 단축 평가**](./JavaScript/type-casting.md)
 * [**객체 리터럴**](./JavaScript/object-literal.md)
+* [**원시 값과 객체의 비교**](./JavaScript/primitive-vs-object.md)
 
 
 
