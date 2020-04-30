@@ -15,14 +15,14 @@
 
 ## HTML+CSS
 
-* [**Introduction to HTML5, Tags, Attributes**](./HTML-CSS/notes/html-intro.md)
-* [**Web Accessibility & Web Standards, HTML5 Markup**](./HTML-CSS/notes/wa-ws-html-markup.md)
-* [**CSS Selector, Box Model, Display Flex**](./HTML-CSS/notes/css-selector-flex.md)
-* [**CSS Position, Float, Font, and Markup GNB**](./HTML-CSS/notes/css-float-gnb.md)
-* [**CSS Animation**](./HTML-CSS/notes/css-float-animation.md)
-* [**Form Tag & WAI-ARIA**](./HTML-CSS/notes/form-waiAria.md)
-* [**Markup Board using jQuery**](./HTML-CSS/notes/markup-board-jQuery.md)
-* [**Markup News & Events**](./HTML-CSS/notes/markup-news-events.md)
+* [**Introduction to HTML5, Tags, Attributes**](./html-css/notes/html-intro.md)
+* [**Web Accessibility & Web Standards, HTML5 Markup**](./html-css/notes/wa-ws-html-markup.md)
+* [**CSS Selector, Box Model, Display Flex**](./html-css/notes/css-selector-flex.md)
+* [**CSS Position, Float, Font, and Markup GNB**](./html-css/notes/css-float-gnb.md)
+* [**CSS Animation**](./html-css/notes/css-float-animation.md)
+* [**Form Tag & WAI-ARIA**](./html-css/notes/form-waiAria.md)
+* [**Markup Board using jQuery**](./html-css/notes/markup-board-jQuery.md)
+* [**Markup News & Events**](./html-css/notes/markup-news-events.md)
 
 
 
