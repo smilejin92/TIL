@@ -55,3 +55,4 @@ console.log(Object.getOwnPropertyDescriptor(Object.prototype, '__proto__'));
 this, arguments, new.target은 함수 몸체내서 참조할 수 있다.
 
 p.hasOwnProperty(); // hasOwnProperty에 빨간 줄이 그어지는 이유는 해당 메소드를 사용하는 객체는 Object.prototype과 같은 프로토타입 체인에 존재해야한다고 가정하기 때문이다. 객체 중에는 프로토타입이 Object.prototype이 아닐 수도 있다.(ex. Object.create(null))
+
