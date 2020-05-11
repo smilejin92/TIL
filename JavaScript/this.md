@@ -53,7 +53,125 @@ const circle = new Circle(5);
 
 ## 2. 함수 호출 방식과 this 바인딩
 
+**this 바인딩(this에 연결되는 값)은 함수가 어떻게 호출되었는지에 따라 동적으로 결정된다.**
+
+> **렉시컬 스코프와 this 바인딩은 결정 시기가 다르다.**
+>
+> 함수의 상위 스코프를 결정하는 방식인 렉시컬 스코프(Lexical scope)는 함수 정의가 평가되어 함수 객체가 생성되는 시점에 상위 스코프를 결정한다. 반면, this에 바인딩될 객체는 함수 호출 시점에 결정된다.
+
+함수를 호출하는 방식은 아래와 같이 다양하다.
+
+1. 일반 함수 호출
+2. 메소드 호출
+3. 생성자 함수 호출
+4. Function.prototype.apply / call / bind 메소드에 의한 간접 호출
+
+주의할 것은 **동일한 함수도 다양한 방식으로 호출할 수 있다는 것이다.**
+
+```javascript
+// this 바인딩은 함수 호출 방식에 따라 동적으로 결정된다.
+const foo = function () {
+  console.dir(this);
+};
+
+// 1. 일반 함수 호출
+foo(); // window
+
+// 2. 메소드 호출
+const obj = { foo };
+obj.foo(); // obj
+
+// 3. 생성자 함수 호출
+new foo(); // foo {}
+
+// 4. Function.prototype.apply / call / bind 메소드에 의한 간접 호출
+const bar = { name: 'bar' };
+foo.call(bar); // bar
+foo.apply(bar); // bar
+foo.bind(bar); // bar
+```
+
+다양한 함수의 호출 방식에 따라 this 바인딩이 어떻게 결정되는지 알아보자.
+
+&nbsp;  
+
 ### 2.1. 일반 함수 호출
+
+**기본적으로 this에는 전역 객체(global object)가 바인딩된다.**
+
+```javascript
+function foo() {
+  console.log(`foo's this: ${this}`); // window
+  
+  function bar() {
+    console.log(`bar's this: ${this}`); // window
+  }
+  bar();
+}
+foo();
+```
+
+위 예제처럼 전역 함수는 물론, 중첩 함수를 **일반 함수로 호출하면 함수 내부의 this에는 전역 객체가 바인딩된다.** 다만, this는 객체의 프로퍼티나 메소드를 참조하기 위한 자기 참조 변수이므로 **객체를 생성하지 않는 일반 함수에서 this는 의미가 없다.** 따라서 엄격 모드(strict mode)가 적용된 일반 함수 내부의 this에는 undefined가 바인딩된다.
+
+```javascript
+function foo() {
+  console.log(`foo's this: ${this}`); // undefined
+  
+  function bar() {
+    console.log(`bar's this: ${this}`); // undefined
+  }
+  bar();
+}
+foo();
+```
+
+&nbsp;  
+
+메소드 내에서 정의한 중첩 함수도 일반 함수로 호출되면 중첩 함수 내부의 this에는 전역 객체가 바인딩된다.
+
+```javascript
+const obj = {
+  value: 100,
+  foo() {
+    console.log(`foo's this: ${this}`); // { value: 100, foo: function }
+    
+    // 메소드 내에서 정의한 중첩 함수
+    function bar() {
+      console.log(`bar's this: ${this}`); // window
+    }
+    // 메소드 내에서 정의한 중첩 함수도 일반 함수로 호출되면 중첩 함수 내부의 this에는 전역 객체가 바인딩된다.
+    bar();
+  }
+};
+
+obj.foo();
+```
+
+&nbsp;  
+
+콜백 함수가 일반 함수로 호출된다면 콜백 함수 내부의 this에도 전역 객체가 바인딩된다.
+
+```javascript
+const obj = {
+  value: 100,
+  foo() {
+    console.log(`foo's this: ${this}`); // { value: 100, foo: function }
+    
+    // 콜백 함수 내부의 this에는 전역 객체가 바인딩된다.
+    setTimeout(function () {
+      console.log(`callback's this: ${this}`); // window
+    }, 100);
+  }
+};
+
+obj.foo();
+```
+
+**이처럼 일반 함수로 호출된 모든 함수(중첩 함수, 콜백 함수 포함) 내부의 this에는 전역 객체가 바인딩된다.**
+
+하지만 메소드 내에서 정의한 중첩 함수 또는 메소드에게 전달한 콜백 함수(보조 함수) 내부의 this가 전역 객체를 바인딩하는 것은 문제가 있다. **외부 함수인 메소드와 중첩 함수 혹은 콜백 함수의 this가 일치하지 않으면, 중첩 함수 혹은 콜백 함수를 헬퍼 함수로 사용하기 어렵기 때문이다.**
+
+&nbsp;  
 
 ### 2.2. 메소드 호출
 
