@@ -35,6 +35,7 @@
 * [**원시 값과 객체의 비교**](./JavaScript/primitive-vs-object.md)
 * [**함수**](./JavaScript/function.md)
 * [**스코프**](./JavaScript/scope.md)
+* [**전역 변수의 문제점**](./JavaScript/global-variable.md)
 * [**함수와 일급 객체**](./JavaScript/first-class-object.md)
 * [**this**](./JavaScript/this.md)
 
