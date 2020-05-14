@@ -114,20 +114,18 @@ console.log(x + y); // 3
 ```
 
 1. **전역 코드 평가**
-   1. 전역 실행 컨텍스트 생성
+   1. 전역 실행 컨텍스트 생성, 실행 컨텍스트 스택에 push
    2. 전역 코드의 모든 변수, 함수 선언문을 우선적으로 실행
    3. 2에서 생성된 식별자를 전역 실행 컨텍스트의 렉시컬 환경에 등록
-   4. 실행 컨텍스트 스택에 push
 2. **전역 코드 실행**
    1. const 키워드로 선언된 전역 변수는 런타임에 초기화가 실행된다.
    2. foo 함수 호출
    3. 전역 코드 실행 일시 중지, 코드의 제어권이 foo 함수 내부로 이동
 3. **함수 코드 평가**
-   1. 함수 실행 컨텍스트 생성
+   1. 함수 실행 컨텍스트 생성, 실행 컨텍스트 스택에 push
    2. 함수 코드의 매개 변수, 지역 변수 선언문을 우선적으로 실행
    3. 2에서 생성된 식별자를 함수 실행 컨텍스트의 렉시컬 환경에 등록
    4. this 바인딩 결정
-   5. 실행 컨텍스트 스택에 push
 4. **함수 코드 실행**
    1. 매개 변수와 지역 변수의 값 할당
    2. `console.log` 메소드 호출 (실행 컨텍스트 스택에 push, pop)
@@ -241,12 +239,12 @@ function foo (a) {
   
   function bar (b) {
     const z = 5;
-    console.log(a + b + x + y + z);
   }
-  bar(10);
+  
+  console.log(a + x + y);
 }
 
-foo(20); // 42
+foo(20); // 27
 ```
 
 &nbsp;  
@@ -295,7 +293,7 @@ foo(20); // 42
 
 <img src="https://user-images.githubusercontent.com/32444914/81912710-eb9c9100-9609-11ea-8bc9-ecdfe90e0819.png" width="70%" />
 
-##### 2.1. 전역 환경 레코드 생성
+#### 2.1. 전역 환경 레코드 생성
 
 * 전역 렉시컬 환경을 구성하는 컴포넌트
 * var 키워드로 선언한 전역 변수와 ES6의 let, const 키워드로 선언한 전역 변수를 구분하여 관리하기 위해 전역 환경 레코드는 두 가지 컴포넌트와 [[GlobalThisValue]] 내부 슬롯 한 가지로 구성되어 있다.
@@ -306,7 +304,7 @@ foo(20); // 42
 
 &nbsp;  
 
-###### 2.1.1. 객체 환경 레코드 생성
+#### 2.1.1. 객체 환경 레코드 생성
 
 * BindingObject라고 부르는 객체와 연결된다. BindingObject는 6.1.에서 생성된 전역 객체이다.
 * BindingObject를 통해 빌트인 전역 프로퍼티, 빌트인 전역 함수, 표준 빌트인 객체, 호스트 객체를 검색할 수 있다.
@@ -331,7 +329,7 @@ function foo (a) {...}
 
 &nbsp;  
 
-###### 2.1.2. 선언적 환경 레코드
+#### 2.1.2. 선언적 환경 레코드
 
 * let, const 키워드로 선언한 전역 변수를 관리하는 영역
 * let, const 키워드로 선언한 전역 변수는 전역 객체의 프로퍼티가 되지 않는다.
@@ -343,7 +341,7 @@ function foo (a) {...}
 
 &nbsp;  
 
-###### 2.1.3. this 바인딩
+#### 2.1.3. this 바인딩
 
 전역 환경 레코드의 [[GlobalThisValue]] 내부 슬롯에 this가 바인딩된다. 일반적으로 전역 코드에서 this는 전역 객체를 가리키므로 전역 환경 레코드의 [[GlobalThisValue]] 내부 슬록에는 전역 객체가 바인딩된다.
 
@@ -353,7 +351,7 @@ this 바인딩은 전역 환경 레코드와 함수 환경 레코드에만 존�
 
 &nbsp; 
 
-##### 2.2. 외부 렉시컬 환경에 대한 참조 할당
+#### 2.2. 외부 렉시컬 환경에 대한 참조 할당
 
 * 현재 평가 중인 코드를 포함하는 외부 코드의 렉시컬 환경(상위 스코프)
 * 스코프 체인을 구성
@@ -385,6 +383,24 @@ this 바인딩은 전역 환경 레코드와 함수 환경 레코드에만 존�
 &nbsp;  
 
 ### 6.4. foo 함수 코드 평가
+
+```javascript
+var x = 1;
+const y = 2;
+
+function foo (a) {
+  var x = 3;
+  const y = 4;
+  
+  function bar (b) {
+    const z = 5;
+  }
+  
+  console.log(a + x + y);
+}
+
+foo(20); // 27
+```
 
 foo 함수가 호출되면 전역 코드의 실행을 일시 중단하고 foo 함수 내부로 코드의 제어권이 이동한다. 그리고 함수 코드를 아래와 같은 순서로 평가하기 시작한다.
 
@@ -419,7 +435,7 @@ foo 함수 렉시컬 환경(Function Lexical Environment)을 생성하고 foo �
 
 &nbsp;  
 
-##### 2.1. 함수 환경 레코드 생성
+#### 2.1. 함수 환경 레코드 생성
 
 함수 환경 레코드는 아래의 네 가지를 등록하고 관리한다.
 
@@ -432,7 +448,7 @@ foo 함수 렉시컬 환경(Function Lexical Environment)을 생성하고 foo �
 
 &nbsp;  
 
-##### 2.2. 외부 렉시컬 환경에 대한 참조 할당
+#### 2.2. 외부 렉시컬 환경에 대한 참조 할당
 
 외부 렉시컬 환경에 대한 참조에는 foo 함수 정의가 평가된 시점의 running execution context의 렉시컬 환경의 참조(전역 렉시컬 환경)가 할당된다.
 
@@ -444,7 +460,7 @@ foo 함수 렉시컬 환경(Function Lexical Environment)을 생성하고 foo �
 
 &nbsp;  
 
-##### 2.3. this 바인딩
+#### 2.3. this 바인딩
 
 함수 환경 레코드의 [[ThisValue]] 내부 슬롯에 this가 바인딩된다. [[ThisValue]] 내부 슬롯에 바인딩될 객체는 함수 호출 방식에 따라 동적으로 결정된다.
 
@@ -455,4 +471,79 @@ foo 함수는 함수로 호출되었으므로 this는 전역 객체를 가리킨
 &nbsp;  
 
 ### 6.5. foo 함수 코드 실행
+
+런타임이 시작되어 foo 함수 코드가 순차적으로 실행되기 시작한다. 매개 변수에 인수가 할당되고, 변수 할당문이 실행되어 지역 변수 x, y에 값이 할당된다. 그리고 함수 bar가 호출된다.
+
+이때 식별자 결정을 위해 running execution context의 렉시컬 환경에서부터 식별자 검색을 시작하고, 검색된 식별자에 값을 바인딩한다.
+
+<img src="https://user-images.githubusercontent.com/32444914/81937698-ebfb5300-962e-11ea-8344-c307e0743ee6.png" width="80%" />
+
+그리고 `console.log(a + x + y);`가 아래의 순서로 실행된다.
+
+#### 1. 식별자 console 검색
+
+1. Running execution context 렉시컬 환경(foo 렉시컬 환경)의 환경 레코드 검색
+2. foo 렉시컬 환경의 외부 렉시컬 환경에 대한 참조를 타고 전역 렉시컬 환경으로 이동
+3. 전역 렉시컬 환경의 객체 환경 레코드의 BindingObject를 통해 전역 객체에서 검색 (성공)
+
+#### 2. log 메소드 검색
+
+1. console 객체의 프로토타입 체인에서 log 메소드를 검색 (성공)
+
+#### 3. 표현식 a + x + y 평가
+
+1. 식별자 a, x, y 모두 running execution context의 렉시컬 환경에서 검색 가능
+
+#### 4. console.log 메소드 호출
+
+3에서 표현식(a + x + y)을 평가하여 생성한 값을 console.log 메소드에 인수로 전달하여 호출
+
+&nbsp;  
+
+### 6.6. foo 함수 코드 실행 종료
+
+console.log 메소드가 호출되고 종료하면 더 이상 실행할 코드가 없으므로 foo 함수 코드의 실행이 종료된다. 이때 실행 컨텍스트 스택에서 foo 함수 실행 컨텍스트가 pop되어 제거되고, 전역 실행 컨텍스트가 running execution context가 된다.
+
+<img src="https://user-images.githubusercontent.com/32444914/81939939-f5d28580-9631-11ea-9a9a-223c1904a222.png" width="80%" />
+
+&nbsp;  
+
+### 6.7. 전역 코드 실행 종료
+
+foo 함수가 종료하면 더 이상 실행할 전역 코드가 없으므로 전역 코드의 실행이 종료되고 전역 실행 컨텍스트도 실행 컨텍스트 스택에서 pop되어 제거된다. 이때 실행 컨텍스트 스택에는 아무것도 남아있지 않게 된다.
+
+&nbsp;  
+
+## 7. 실행 컨텍스트와 블록 레벨 스코프
+
+let, const 키워드로 선언한 변수는 모든 코드 블록(함수, if 문, for 문, while 문, try/catch 문 등)을 지역 스코프로 인정하는 블록 레벨 스코프(block-level scope)를 따른다.
+
+```javascript
+let x = 1;
+
+if (true) {
+  let x = 10;
+  console.log(x); // 10
+}
+
+console.log(x); // 1
+```
+
+if 문의 코드 블록 내에서 let 키워드로 변수가 선언되었다. 따라서 if 문이 실행되면 if 문의 블록 레벨 스코프를 생성해야 한다. 따라서 if 문을 위한 선언적 환경 레코드를 가지는 렉시컬 환경을 새롭게 생성하여, 기존의 전역 렉시컬 환경을 교체한다. 이때 새롭게 생성된 if 문을 위한 렉시컬 환경의 Outer Lexical Environment Reference는 전역 렉시컬 환경을 가리킨다.
+
+<img src="https://user-images.githubusercontent.com/32444914/81940873-09322080-9633-11ea-8382-58f15b23b35b.png" width="80%" />
+
+if 문 실행이 종료되면 if 문이 실행되기 이전의 렉시컬 환경으로 되돌린다.
+
+<img src="https://user-images.githubusercontent.com/32444914/81941021-3bdc1900-9633-11ea-9207-79d1d44c353a.png" width="80%" />
+
+이는 if 문 뿐만이 아니라 모든 블록문에 적용된다.
+
+for 문의 경우, 초기문에 let 키워드를 사용한 for 문은 반복될 때마다 새로운 렉시컬 환경을 생성한다.
+
+&nbsp;  
+
+## 참고 자료
+
+* [poiemaweb.com - 실행 컨텍스트](https://poiemaweb.com/fastcampus/execution-context)
 
