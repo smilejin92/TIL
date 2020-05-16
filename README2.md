@@ -38,4 +38,8 @@
 * [**전역 변수의 문제점**](./JavaScript/global-variable.md)
 * [**함수와 일급 객체**](./JavaScript/first-class-object.md)
 * [**this**](./JavaScript/this.md)
+* [**실행 컨텍스트**](./JavaScript/execution-context.md)
+* [**클로저**](JavaScript/closure.md)
+
+
 
