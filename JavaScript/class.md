@@ -171,11 +171,6 @@ const Person = '';
 
 ## 4. 인스턴스 생성
 
-* 클래스는 생성자 함수이며 `new` 연산자와 함께 호출되어 인스턴스를 생성한다.
-* 클래스는 인스턴스를 생성하는 것이 유일한 존재 이유이므로 반드시 `new` 연산자와 함께 호출하여야 한다.
-
-&nbsp;  
-
 **클래스는 함수로 평가된다.**
 
 ```javascript
@@ -184,7 +179,7 @@ class Person {}
 console.log(typeof Person); // function
 ```
 
-즉, 클래스는 생성자 함수이며 `new` 연산자와 함께 호출되어 인스턴스를 생성한다.
+즉, **클래스는 생성자 함수이며 `new` 연산자와 함께 호출되어 인스턴스를 생성한다.**
 
 ```javascript
 class Person {}
@@ -305,7 +300,7 @@ function Person(name) {
 
 &nbsp;  
 
-클래스 몸체에서 정의한 메소드는 클래스.prototype 프로퍼티에 메소드를 추가하지 않아도 기본적으로 프로토타입 메소드가 된다.
+클래스 몸체에서 정의한 메소드는 `클래스.prototype` 프로퍼티에 메소드를 추가하지 않아도 기본적으로 프로토타입 메소드가 된다.
 
 ```javascript
 class Person {
@@ -379,11 +374,15 @@ class Person {
 
 ### 5.4. 정적 메소드와 프로토타입 메소드의 차이
 
-정적 메소드와 프로토타입 메소드의 차이는 아래와 같다.
+* 메소드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 있다면 this를 사용해야 한다. 이러한 경우, 프로토타입 메소드로 정의해야 한다
+* 메소드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 없다면 정적 메소드로 정의하는 것이 좋다.
+* 클래스 또는 생성자 함수를 하나의 **네임 스페이스**로 사용하여 정적 메소드를 모아 놓으면 이름 충돌 가능성을 줄여 주고, 관련 있는 함수들을 구조화 할 수 있는 효과가 있다.
+* 정적 메소드와 프로토타입 메소드의 차이는 아래와 같다.
+  * 정적 메소드와 프로토타입 메소드는 자신이 속해 있는 **프로토타입 체인이 다르다.**
+  * 정적 메소드는 클래스로 호출하고, 프로토타입 메소드는 인스턴스로 호출한다.
+  * 정적 메소드는 인스턴스 프로퍼티를 참조할 수 없지만, 프로토타입 메소드는 인스턴스 프로퍼티를 참조할 수 있다.
 
-1. 정적 메소드와 프로토타입 메소드는 자신이 속해 있는 프로토타입 체인이 다르다.
-2. 정적 메소드는 클래스로 호출하고, 프로토타입 메소드는 인스턴스로 호출한다.
-3. 정적 메소드는 인스턴스 프로퍼티를 참조할 수 없지만, 프로토타입 메소드는 인스턴스 프로퍼티를 참조할 수 있다.
+&nbsp;  
 
 아래 예제를 살펴보자.
 
@@ -423,7 +422,7 @@ console.log(square.area()); // 100
 
 정적 메소드는 클래스로 호출해야 하므로 정적 메소드 내부의 this는 인스턴스가 아닌 클래스를 가리킨다. 즉, 프로토타입 메소드와 정적 메소드 내부의 this 바인딩이 다르다.
 
-따라서 메소드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 있다면 this를 사용해야 한다. 이러한 경우, 프로토타입 메소드로 정의해야 한다. 하지만 메소드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 없다면 정적 메소드로 정의하는 것이 좋다.
+**따라서 메소드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 있다면 this를 사용해야 한다. 이러한 경우, 프로토타입 메소드로 정의해야 한다. 하지만 메소드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 없다면 정적 메소드로 정의하는 것이 좋다.**
 
 표준 빌트인 객체인 `Math`, `Number`, `JSON`, `Object`, `Reflect` 등은 다양한 정적 메소드를 가지고 있다.
 
@@ -435,7 +434,7 @@ Object.create(null);
 Reflect.has({ a: 1 }, 'a');
 ```
 
-이처럼 클래스 또는 생성자 함수를 하나의 **네임 스페이스**로 사용하여 정적 메소드를 모아 놓으면 이름 충돌 가능성을 줄여 주고, 관련 있는 함수들을 구조화 할 수 있는 효과가가 있다.
+이처럼 클래스 또는 생성자 함수를 하나의 **네임 스페이스**로 사용하여 정적 메소드를 모아 놓으면 이름 충돌 가능성을 줄여 주고, 관련 있는 함수들을 구조화 할 수 있는 효과가 있다.
 
 &nbsp;  
 
@@ -447,7 +446,7 @@ Reflect.has({ a: 1 }, 'a');
 * for...in 문 혹은 Object.keys 메소드 등으로 클래스의 메소드를 열거할 수 없다([[Enumerable]] 내부 슬롯의 값이 false이다.)
 * 내부 메소드 [[Construct]]를 갖지 않는 non-constructor이다. 따라서 `new` 연산자와 함께 호출할 수 없다.
 
-
+&nbsp;  
 
 ## 6. 클래스의 인스턴스 생성 과정
 
@@ -455,15 +454,23 @@ Reflect.has({ a: 1 }, 'a');
 
 ### 1. 인스턴스 생성과 this 바인딩
 
-`new` 연산자와 함께 클래스를 호출하면 constructor의 내부 코드가 실행되기에 앞서 암묵적으로 빈 객체가 생성된다. 이 빈 객체가 바로 (아직 완성되지는 않았지만) 클래스가 생성한 인스턴스이다. 이때 클래스가 생성한 인스턴스의 프로토타입으로 클래스.prototype 객체가 설정된다. 그리고 암묵적으로 생성된 빈 객체, 즉 인스턴스는 this에 바인딩된다. 따라서 constructor 내부의 this는 클래스가 생성한 인스턴스를 가리킨다.
+1. `new` 연산자와 함께 클래스를 호출하면 constructor 내부 코드가 실행되기 전, 암묵적으로 빈 객체(인스턴스) 생성된다.
+2. 인스턴스의 프로토타입 결정 (`클래스.prototype`)
+3. 인스턴스를 this에 바인딩한다. 따라서 constructor 내부의 this는 클래스가 생성한 인스턴스를 가리킨다.
+
+&nbsp;  
 
 ### 2. 인스턴스 초기화
 
 constructor의 내부 코드가 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티 값을 초기화한다. 만약 constructor가 생략되었다면 이 과정도 생략된다.
 
+&nbsp;  
+
 ### 3. 프로토타입 / 정적 메소드 추가
 
-클래스 몸체에 정의한 프로토타입 메소드가 존재하면 클래스.prototype에 추가한다. 클래스 몸체에 정의한 정적 메소드가 존재하면 클래스에 추가한다.
+클래스 몸체에 정의한 프로토타입 메소드가 존재하면 `클래스.prototype`에 추가한다. 클래스 몸체에 정의한 정적 메소드가 존재하면 클래스에 추가한다.
+
+&nbsp;  
 
 ### 4. 인스턴스 반환
 
@@ -501,11 +508,200 @@ class Person {
 
 ### 7.1. 인스턴스 프로퍼티
 
+인스턴스 프로퍼티는 constructor 내부에서 정의해야 한다.
+
+```javascript
+class Person {
+  constructor(name) {
+    // 인스턴스 프로퍼티
+    this.name = name;
+  }
+}
+
+const me = new Person('Kim');
+console.log(me); // Person { name: 'Kim' }
+```
+
+constructor 내부 코드가 실행되기 이전에 이미 인스턴스는 this에 바인딩되어 있다. 생성자 함수에서 생성자 함수가 생설할 인스턴스의 프로퍼티를 정의하는 것과 마찬가지로 constructor 내부에서 this에 인스턴스 프로퍼티를 추가한다. 이로써 클래스가 암묵적으로 생성한 빈 객체, 즉 인스턴스에 프로퍼티가 추가되어 인스턴스가 초기화된다.
+
+```javascript
+class Person {
+  constructor(name) {
+    // 인스턴스 프로퍼티
+    this.name = name; // name 프로퍼티는 public하다.
+  }
+}
+
+const met = new Person('Kim');
+
+// name은 public하다.
+console.log(me.name); // Kim
+```
+
+constructor 내부에서 this에 추가한 프로퍼티는 언제나 클래스가 생성한 인스턴스의 프로퍼티가 된다. ES6의 클래스는 다른 객체지향 언어처럼 private, public, protected 키워드와 같은 접근 제한자(access modifier)를 지원하지 않는다. 따라서 인스턴스 프로퍼티는 언제나 public하다.
+
+&nbsp;  
+
 ### 7.2. 접근자 프로퍼티
+
+접근자 프로퍼티(accessor property)는 자체적으로는 값([[Value]] 내부 슬롯)을 갖지 않고, 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수(accessor function)로 구성된 프로퍼티이다.
+
+접근자 프로퍼티는 클래스에서도 사용할 수 있다.
+
+```javascript
+class Person {
+  constructor(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+  
+  // fullName은 접근자 함수로 구성된 접근자 프로퍼티이다.
+  // getter 함수
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+  
+  // setter 함수
+  set fullName(name) {
+    [this.firstName, this.lastName] = name.split(' ');
+  }
+}
+
+const me = new Person('Jin', 'Kim');
+
+// 데이터 프로퍼티를 통한 프로퍼티 값의 참조
+console.log(`${me.firstName} ${me.lastName}`);
+
+// 접근자 프로퍼티를 통한 프로퍼티 값의 저장
+// 접근자 프로퍼티 fullName에 값을 할당하면 setter 함수가 호출된다.
+me.fullName = 'Joon Park';
+
+// 접근자 프로퍼티를 통한 프로퍼티 값의 참조
+// 접근자 프로퍼티 fullName에 접근하면 getter 함수가 호출된다.
+console.log(me.fullName); // Joon Park
+```
+
+**getter는 인스턴스 프로퍼티에 접근할 때마다** 프로퍼티 값을 조작하는 행위가 필요할 때 사용한다. getter는 메소드 이름 앞에 `get` 키워드를 사용해 정의한다. **setter는 인스턴스 프로퍼티에 값을 할당할 때마다** 프로퍼티 값을 조작하는 행위가 필요할 때 사용한다. setter는 메소드 이름 앞에 `set` 키워드를 사용해 정의한다.
+
+이때 **getter와 setter는 호출하는 것이 아니라 프로퍼티처럼 참조하는 형식으로 사용**한다. getter를 참조하면 내부적으로 getter 함수가 호출된다. setter에 값을 할당하면 내부적으로 setter가 호출된다.
+
+getter는 이름 그대로 무언가를 취득할 때 사용하므로 반드시 무언가를 반환해야 하고, setter는 무언가를 프로퍼티에 할당해야 할 때 사용하므로 반드시 매개 변수가 있어야 한다. 단, **setter는 단 하나의 값만을 할당 받기 때문에 단 하나의 매개 변수만을 선언할 수 있다.**
+
+클래스의 메소드는 기본적으로 프로토타입 메소드가 된다. 따라서 **클래스의 접근자 프로퍼티 또한 인스턴스 프로퍼티가 아닌 프로토타입의 프로퍼티가 된다.**
+
+&nbsp;  
 
 ### 7.3. 클래스 필드 정의 제안
 
+* 클래스 필드 정의 제안으로 인해 인스턴스 프로퍼티를 정의하는 방식은 2가지가 되었다.
+* 인스턴스를 생성할 때 외부 초기값으로 클래스 필드를 초기화할 필요가 있다면 constructor에서 인스턴스 프로퍼티를 정의하는 방식을 사용한다.
+* 인스턴스를 생성할 때 외부 초기값으로 클래스 필드를 초기화할 필요가 없다면 2가지 방법 모두 사용할 수 있다.
+
+&nbsp;  
+
+**클래스 필드는** 클래스 기반 객체지향 언어에서 클래스가 생성할 **인스턴스의 프로퍼티를 가리키는 용어**이다. 자바스크립트의 경우, 인스턴스 프로퍼티를 선언하고 초기화하려면 반드시 생성자 함수 몸체 또는 클래스의 constructor 내부에서 this에 프로퍼티를 추가해야 한다. 하지만 클래스 필드 정의 제안 문법을 사용하면 클래스 몸체에서도 클래스 필드(인스턴스의 프로퍼티)를 정의할 수 있다.
+
+```javascript
+class Person {
+  // 클래스 필드 정의
+  name = 'Kim';
+}
+
+const me = new Person(); // Person { name: 'Kim' }
+```
+
+자바스크립트의 경우, 클래스 몸체에 메소드 만을 선언할 수 있다. 따라서 위 예제를 실행하면 문법 에러(SyntaxError)가 발생해야한다. 하지만 클래스 필드 정의 제안은 현재 TC39 프로세스의 stage 3(candidate)에 제안되어 있고, 최신 브라우저와 최신 Node.js는 ECMAScript 표준 사양으로 승급이 확실시되는 이 제안을 미리 구현해 놓았다. 따라서 최신 브라우저와 최신 Node.js에서는 위 예제와 같이 클래스 필드를 클래스 몸체에 정의할 수 있다.
+
+클래스 몸체에서 클래스 필드를 정의하는 경우 this에 클래스 필드를 바인딩해서는 안된다. this는 클래스의 constructor와 메소드 내에서만 유효하다.
+
+```javascript
+class Person {
+  // this에 클래스 필드를 바인딩해서는 안된다.
+  this.name = ''; // SyntaxError: Unexpected token '.'
+}
+```
+
+클래스 필드를 참조하는 경우, 자바스크립트에서는 this를 반드시 사용해야 한다.
+
+```javascript
+class Person {
+  // 클래스 필드
+  name = 'Kim';
+
+	constructor() {
+    console.log(name); // ReferenceError: name is not defined
+  }
+}
+
+new Person();
+```
+
+클래스 필드에 초기값을 할당하지 않으면 undefined를 갖는다.
+
+```javascript
+class Person {
+  // 클래스 필드를 초기화하지 않으면 undefined를 갖는다.
+  name;
+}
+
+const me = new Person();
+console.log(me); // Person { name: undefined }
+```
+
+인스턴스를 생성할 때, 외부의 초기값으로 클래스 필드를 초기화해야 할 필요가 있다면 constructor에서 클래스 필드를 초기화해야 한다.
+
+```javascript
+class Person {
+  name;
+  
+  constructor(name) {
+    // 클래스 필드 초기화
+    this.name = name;
+  }
+}
+
+const me = new Person('Kim');
+console.log(me); // Person { name: 'Kim' }
+```
+
+이처럼 인스턴스를 생성할 때, 클래스 필드를 초기화할 필요가 없다면 constructor 밖에서 클래스 필드를 정의할 필요가 없다. 클래스 필드를 초기화할 필요가 있다면 어차피 constructor 내부에서 클래스 필드를 참조하여 초기값을 할당해야 한다. 이때 this, 즉 클래스가 생성한 인스턴스에 클래스 필드에 해당하는 프로퍼티가 없다면 자동 추가되기 때문이다.
+
+```javascript
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+const me = new Person('Kim');
+console.log(me); // Person { name: 'Kim' }
+```
+
+함수는 일급 객체이므로 함수를 클래스 필드에 할당할 수 있다. 이때 할당된 함수는 인스턴스의 메소드로 추가된다.
+
+```javascript
+class Person {
+  // 클래스 필드에 문자열을 할당
+  name = 'Kim';
+	
+	// 클래스 필드에 함수를 할당
+	getName = function () {
+    return this.name;
+  }
+	// 화살표 함수로 정의할 수도 있다.
+	// getName = () => this.name;
+}
+
+const me = new Person();
+console.log(me); // Person { name: 'Kim', getName: f }
+console.log(me.getName()); // Kim
+```
+
+&nbsp;  
+
 ### 7.4. private 필드 정의 제안
+
+
 
 ### 7.5. static 필드 정의 제안
 
