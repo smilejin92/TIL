@@ -452,7 +452,7 @@ Reflect.has({ a: 1 }, 'a');
 
 `new` 연산자와 함께 클래스를 호출하면 생성자 함수와 마찬가지로 클래스의 내부 메소드 [[Construct]]가 호출된다. 클래스는 `new` 연산자 없이 호출할 수 없다.
 
-### 1. 인스턴스 생성과 this 바인딩
+**1. 인스턴스 생성과 this 바인딩**
 
 1. `new` 연산자와 함께 클래스를 호출하면 constructor 내부 코드가 실행되기 전, 암묵적으로 빈 객체(인스턴스) 생성된다.
 2. 인스턴스의 프로토타입 결정 (`클래스.prototype`)
@@ -460,19 +460,19 @@ Reflect.has({ a: 1 }, 'a');
 
 &nbsp;  
 
-### 2. 인스턴스 초기화
+**2. 인스턴스 초기화**
 
 constructor의 내부 코드가 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티 값을 초기화한다. 만약 constructor가 생략되었다면 이 과정도 생략된다.
 
 &nbsp;  
 
-### 3. 프로토타입 / 정적 메소드 추가
+**3. 프로토타입 / 정적 메소드 추가**
 
 클래스 몸체에 정의한 프로토타입 메소드가 존재하면 `클래스.prototype`에 추가한다. 클래스 몸체에 정의한 정적 메소드가 존재하면 클래스에 추가한다.
 
 &nbsp;  
 
-### 4. 인스턴스 반환
+**4. 인스턴스 반환**
 
 클래스의 모든 처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
 
@@ -701,23 +701,634 @@ console.log(me.getName()); // Kim
 
 ### 7.4. private 필드 정의 제안
 
+constructor 내부에서 this를 통해 정의한 인스턴스 프로퍼티는 인스턴스를 통해 클래스 외부에서 언제나 참조할 수 있다. 즉, 언제나 public이다.
 
+생성자 함수에서는 클로저를 사용하여 private한 프로퍼티를 흉내낼 수 있었다. 단, private한 프로퍼티를 흉내낸 자유 변수와 같은 이름의 프로퍼티에 접근하면 에러가 발생하지 않고 undefined를 반환하는 아쉬움이 있다. 또한, 여러 개의 인스턴스를 생성하면 프로토타입 메소드 내부에서 참조하는 자유변수의 값이 변경된다는 치명적 약점이 있다.
+
+```javascript
+// ES5
+var Person = (function () {
+  var _name = '';
+  
+  // 생성자 함수
+  function Person(name) {
+    _name = name;
+  }
+  
+  // 프로토타입 메소드
+  Person.prototype.sayHi = function () {
+    console.log('Hi ' + _name);
+  }
+  
+  return Person;
+}());
+
+// 인스턴스 생성
+var me = new Person('Kim');
+console.log(me._name); // undefined
+me.sayHi(); // Hi Kim
+
+var you = new Person('Park');
+you.sayHi(); // Hi Park
+me.sayHi(); // Hi Park
+```
+
+클래스 필드 정의 제안을 사용하더라도 클래스 필드는 인스턴스의 프로퍼티이기 때문에 마찬가지로 pulbic하다.
+
+```javascript
+class Person {
+  // 클래스 필드는 인스턴스의 프로퍼티이므로 public하다
+  name = 'Kim';
+}
+
+const me = new Person();
+console.log(me.name); // Kim
+```
+
+2020년 5월 현재, TC39 프로세스의 stage 3(candidate)에는 **private 필드를 정의할 수 있는 새로운 표준 사양이 제안되어 있다.** 표준 사양으로 승급이 확실시 되는 이 제안도 최신 브라우저와 최신 Node.js에 이미 구현되어 있다.
+
+private 필드의 선두에는 `#`을 붙여준다. private 필드를 참조할 때도 `#`을 붙어주어야 한다.
+
+```javascript
+class Person {
+  // public 필드 정의
+  name = '';
+  // private 필드 정의
+  #age;
+  
+  constructor(name, age) {
+    // public 필드 참조
+    this.name = name;
+    // private 필드 참조
+    this.#age = age;
+  }
+}
+
+const me = new Person('Kim', 100);
+console.log(me.name); // Kim
+console.log(me.#age); // private 필드 #name은 클래스 외부에서 참조할 수 없다.
+// SyntaxError: Private field '#name' must be declared in an enclosing class
+```
+
+public 필드는 어디서든지 참조할 수 있지만, private 필드는 클래스 내부에서만 참조할 수 있다.
+
+| 접근 가능성                 | public | private |
+| --------------------------- | ------ | ------- |
+| 클래스 내부                 | O      | O       |
+| 자식 클래스 내부            | O      | X       |
+| 클래스 인스턴스를 통한 접근 | O      | X       |
+
+즉, 부모 클래스를 포함한 클래스 외부에서 private 필드에 직접 접근할 수 있는 방법은 없다. 다만, 접근자 프로퍼티를 통해 간접적으로 접근하는 방법은 유효하다.
+
+```javascript
+class Person {
+  // private 필드 정의
+  #age;
+  
+  constructor(age) {
+    this.#age = age;
+  }
+
+	get age() {
+    return this.#age;
+  }
+
+	set age(age) {
+    this.#age = age;
+  }
+}
+
+const me = new Person(10);
+// console.log(me.#name); // 접근 불가
+console.log(me.age); // 10 (getter 접근자 프로퍼티 참조)
+me.age = 100; // setter 프로퍼티 값 할당
+console.log(me.age); // 100 (getter 접근자 프로퍼티 참조)
+```
+
+private 필드는 반드시 클래스 몸체에 정의해야 한다. private 필드를 직접 constructor에 정의하면 에러가 발생한다.
+
+```javascript
+class Person {
+  constructor(name) {
+    // private 필드는 클래스 몸체에서 정의해야 한다.
+    this.#name = name;
+    // SyntaxError: Private field '#name' must be declared in an enclosing class
+  }
+}
+```
+
+&nbsp; 
 
 ### 7.5. static 필드 정의 제안
+
+클래스에는 `static` 키워드를 사용하여 정적 메소드를 정의할 수 있다. 하지만 `static` 키워드를 사용하여 정적 필드를 정의할 수는 없었다. 하지만 static public 필드, static private 필드, static private 메소드를 정의할 수 있는 새로운 표준 사양인 "Static class features"가 2020년 5월 현재, TC39 프로세스의 stage 3(candidate)에 제안되어 있다. 이 제안 중 static public / private 필드는 최신 브라우저와 최신 Node.js에 이미 구현되어 있다.
+
+```javascript
+class MyMath {
+  // static public 필드 정의
+  static PI = 22 / 7;
+
+	// static private 필드 정의
+  static #num = 10;
+  
+  // static 메소드
+  static increment() {
+    return ++MyMath.#num;
+  }
+}
+
+console.log(MyMath.PI); // 3.14.....
+console.log(MyMath.increment()); // 11
+console.log(MyMath.#num); // SyntaxError
+```
+
+&nbsp;  
 
 ## 8. 상속에 의한 클래스 확장
 
 ### 8.1. 클래스 상속과 생성자 함수 상속
 
+프로토타입 기반 상속은 프로토타입 체인에 의해 다른 객체의 자산을 상속 받는 개념이지만, **상속에 의한 클래스 확장은 기존의 클래스를 상속받아 새로운 클래스를 확장(extends)하여 정의**하는 것이다.
+
+<img src="https://user-images.githubusercontent.com/32444914/82306071-8a096780-99f9-11ea-9a42-88b971e2ab5a.png" width="80%" />
+
+클래스와 생성자 함수는 인스턴스를 생성할 수 있는 함수라는 점에서 매우 유사하다. 하지만 클래스는 상속을 통해 기존의 클래스를 확장할 수 있는 문법이 기본적으로 제공되지만, 생성자 함수는 그렇지 않다.
+
+예를 들어 동물을 추상화한 Animal 클래스와 새와 사자를 추상화한 Bird, Lion 클래스를 정의한다고 생각해보자. 새와 사자는 동물에 속하므로 동물의 속성을 가진다. 하지만 새와 사자는 자신만의 고유한 속성도 가진다. 이때 Animal 클래스는 동물의 속성을 표현하고, Bird, Lion 클래스는 상속을 통해 동물 클래스의 속성을 그대로 사용하고 자신만의 고유한 속성을 추가하여 확장할 수 있다.
+
+<img src="https://user-images.githubusercontent.com/32444914/82306680-524eef80-99fa-11ea-8dad-23a7201c0bd7.png" width="60%" />
+
+이처럼 상속에 의한 클래스 확장은 코드 재사용 관점에서 매우 유용하다. 상속을 통해 Animal 클래스를 확장한 Bird 클래스를 구현해 보자.
+
+```javascript
+class Animal {
+  constructor(age, weight) {
+    this.age = age;
+    this.weight = weight;
+  }
+  
+  eat() { return 'eat'; }
+  
+  move() { return 'move'; }
+}
+
+class Bird extends Animal {
+  fly() { return 'fly'; }
+}
+
+const bird = new Bird(1, 5);
+
+console.log(bird); // Bird {age: 1, weight: 5}
+console.log(bird instanceof Bird); // true
+console.log(bird instanceof Animal); // true
+
+console.log(bird.eat()); // eat
+console.log(bird.move()); // move
+console.log(bird.fly()); // fly
+```
+
+상속에 의해 확장된 클래스 `Bird`가 생성한 인스턴스의 프로토타입 체인은 아래와 같다.
+
+<img src="https://user-images.githubusercontent.com/32444914/82307249-0cdef200-99fb-11ea-9395-7fd111d63357.png" width="60%" />
+
+클래스는 상속을 통해 다른 클래스를 확장할 수 있는 문법인 **extends 키워드**가 기본적으로 제공된다. `extends` 키워드를 사용한 클래스 확장은 간편하고 직관적이다. 하지만 생성자 함수는 클래스와 같이 상속을 통해 다른 생성자 함수를 확장할 수 있는 문법이 제공되지 않는다.
+
+&nbsp;  
+
 ### 8.2. extends 키워드
+
+상속을 통해 클래스를 확장하려면 `extends` 키워드를 사용하여 상속받을 클래스를 정의한다.
+
+```javascript
+// 수퍼(베이스/부모) 클래스
+class Base {}
+
+// 서브(파생/자식) 클래스
+class Derived extends Base {}
+```
+
+상속을 통해 확장된 클래스를 서브 클래스(sub class), 파생 클래스(derived class), 혹은 자식 클래스(child class)라 부르고, 서브 클래스에게 상속된 클래스를 수퍼 클래스(super class), 베이스 클래스(base class), 혹은 부모 클래스(parent class)라 부른다.
+
+`extends` 키워드의 역할은 **수퍼 클래스와 서브 클래스 간의 상속 관계를 설정하는 것이다.** 클래스도 프로토타입을 통해 상속 관계를 구현한다.
+
+<img src="https://user-images.githubusercontent.com/32444914/82309213-d35bb600-99fd-11ea-8a8a-972a2906cb0e.png" width="60%" />
+
+수퍼 클래스와 서브 클래스는 인스턴스의 프로토타입 체인 뿐만 아니라, 클래스 간의 프로토타입 체인도 생성한다. 이를 통해 프로토타입 메소드, 정적 메소드 모두 상속이 가능하다.
+
+&nbsp;  
 
 ### 8.3. 동적 상속
 
+`extends` 키워드는 생성자 함수를 상속받아 클래스를 확장할 수도 있다. 단, `extends` 키워드 앞에는 반드시 클래스가 와야 한다.
+
+```javascript
+// 생성자 함수
+function Base(a) {
+  this.a = a;
+}
+
+// 생성자 함수를 상속받는 서브 클래스
+class Derived extends Base {}
+
+const derived = new Derived(1);
+console.log(derived); // Derived {a: 1}
+```
+
+`extends` 키워드 다음에는 클래스 뿐만 아니라 [[Construct]] 내부 메소드를 갖는 함수 객체를 반환하는 모든 표현식을 사용할 수 있다. 이를 통해 **동적으로 상속받을 대상을 결정할 수 있다.**
+
+```javascript
+function Base1() {}
+
+class Base2 {}
+
+let condition = true;
+
+// 조건에 따라 동적으로 상속 대상을 결정하는 서브 클래스
+class Derived extends (condition ? Base1 : Base2) {}
+
+const derived = new Derived();
+console.log(derived); // Derived {}
+
+console.log(derived instanceof Base1); // true
+console.log(derived instanceof Base2); // false
+```
+
+&nbsp;  
+
 ### 8.4. 서브 클래스의 constructor
+
+클래스에 constructor를 생략하면 클래스에 아래와 같이 디폴트 constructor가 암묵적으로 정의된다.
+
+```javascript
+constructor() {}
+```
+
+수퍼 클래스를 상속 받는 서브 클래스의 constructor를 생략하면 아래와 같이 디폴트 constructor가 암묵적으로 정의된다. `args`는 `new` 연산자와 함께 클래스를 호출할 때 전달한 인수의 리스트이다.
+
+`super()`는 수퍼 클래스의 constructor(super-constructor)를 호출하여 인스턴스를 생성한다.
+
+```javascript
+constructor(...args) { super(...args); }
+```
+
+아래 예제에서 수퍼 클래스와 서브 클래스 모두 constructor를 생략하였다.
+
+```javascript
+// 수퍼 클래스
+class Base {}
+
+// 서브 클래스
+class Derived extends Base {}
+```
+
+위 예제는 아래와 같이 암묵적으로 디폴트 constructor가 정의된다.
+
+```javascript
+// 수퍼 클래스
+class Base {
+  constructor() {}
+}
+
+// 서브 클래스
+class Derived extends Base {
+  constructor() { super(); }
+}
+
+const derived = new Derived();
+console.log(derived); // Derived {}
+```
+
+위 예제와 같이 수퍼 클래스와 서브 클래스 모두 constructor를 생략하면 빈 객체가 생성된다. 프로퍼티를 소유하는 인스턴스를 생성하려면 constructor 내부에서 인스턴스에 프로퍼티를 추가해야 한다.
+
+&nbsp;  
 
 ### 8.5. super 키워드
 
+super 키워드는 함수처럼 호출할 수도 있고, this와 같이 식별자처럼 참조할 수 있는 특수한 키워드이다. super는 아래와 같이 동작한다.
+
+* super를 호출하면 수퍼 클래스의 constructor(super-constructor)를 호출한다.
+* super를 참조하면 수퍼 클래스의 메소드를 호출할 수 있다.
+
+
+
+#### super 호출
+
+super를 호출하면 수퍼 클래스의 constructor(super-constructor)를 호출한다.
+
+아래 예제와 같이 수퍼 클래스의 constructor 내부에서 추가한 프로퍼티를 그대로 갖는 인스턴스를 생성한다면, 서브 클래스의 constructor를 생략할 수 있다. 이때 `new` 연산자와 함께 서브 클래스를 호출하면서 전달한 인수는 모두 서브 클래스에 암묵적으로 정의된 디폴트 constructor의 super 호출을 통해 수퍼 클래스의 constructor에게 전달된다.
+
+```javascript
+// 수퍼 클래스
+class Base {
+  constructor(a, b) {
+    this.a = a;
+    this.b = b;
+  }
+}
+
+// 서브 클래스
+class Derived extends Base {
+  // constructor(...args) { super(...args); }
+}
+
+const derived = new Derived(1, 2);
+console.log(derived); // Derived {a: 1, b: 2}
+```
+
+아래 예제와 같이 수퍼 클래스에서 추가한 프로퍼티와 서브 클래스에서 추가한 프로퍼티를 모두 가지는 인스턴스를 생성한다면, 서브 클래스의 constructor를 생략할 수 없다. 이때 new 연산자와 함께 서브 클래스를 호출하면서 전달한 인수 중 수퍼 클래스의 constructor에게 전달할 필요가 있는 인수는 서브 클래스의 constructor에서 호출한 super를 통해 전달된다.
+
+```javascript
+// 수퍼 클래스
+class Base {
+  constructor(a, b) { // 4. 인수 전달
+    this.a = a;
+    this.b = b;
+  }
+}
+
+// 서브 클래스
+class Derived extends Base {
+  constructor(a, b, c) { // 2. 인수 전달
+    super(a, b); // 3. Base 클래스의 constructor(super) 호출
+    this.c = c;
+  }
+}
+
+const derived = new Derived(1, 2, 3); // 1. Derived 클래스 호출
+console.log(derived); // Derived {a: 1, b: 2, c: 3}
+```
+
+**super 호출 시 주의사항**
+
+1. 서브 클래스에서 constructor를 생략하지 않는 경우, 서브 클래스의 constructor에서는 반드시 super를 호출해야 한다.
+2. 서브 클래스의 constructor에서 super를 호출하기 전에는 this를 참조할 수 없다.
+3. super는 반드시 서브 클래스의 constructor에서만 호출한다. 서브 클래스가 아닌 클래스 또는 함수에서 호출하면 에러가 발생한다.
+
+&nbsp;  
+
+#### super 참조
+
+메소드 내에서 super를 참조하면 수퍼 클래스의 메소드를 호출할 수 있다.
+
+**1. 서브 클래스의 프로토타입 메소드 내에서 super.prop은 수퍼 클래스의 프로토타입 메소드 prop을 가리킨다.**
+
+```javascript
+// 수퍼 클래스
+class Base {
+  constructor(name) {
+    this.name = name;
+  }
+  
+  sayHi() {
+    return `Hi! ${this.name}`;
+  }
+}
+
+// 서브 클래스
+class Derived extends Base {
+  sayHi() {
+    // super.sayHi는 수퍼 클래스의 프로토타입 메소드를 가리킨다.
+    return `${super.sayHi()}. How are you doing?`;
+  }
+}
+
+const derived = new Derived('Jin');
+console.log(derived.sayHi()); // Hi! Jin. How are you doing?
+```
+
+super 참조를 통해 수퍼 클래스의 메소드를 참조하려면, super가 `수퍼클래스.prototype` 객체를 참조할 수 있어야 한다. 위 예제는 아래 예제와 동일하게 동작한다.
+
+```javascript
+// 수퍼 클래스
+class Base {
+  constructor(name) {
+    this.name = name;
+  }
+  
+  sayHi() {
+    return `Hi! ${this.name}`;
+  }
+}
+
+// 서브 클래스
+class Derived extends Base {
+  sayHi() {
+    // __super는 Derived의 sayHi가 바인딩된 객체의 프로토타입을 가리킨다.
+    // sayHi는 Derived.prototype에 바인딩되었으므로 __super는 Base.prototype을 가리킨다.
+    const __super = Object.getPrototypeOf(Derived.prototype);
+    return `${__super.sayHi.call(this)}. How are you doing?`;
+  }
+}
+```
+
+super는 자신이 바인딩되어 있는 객체의 프로토타입을 가리킨다. 위 예제에서 `Derived` 클래스의 `sayHi`는 `Derived.prototype`에 바인딩되어 있고, super는 `Derived.prototype`의 프로토타입인 `Base.prototype`을 가리킨다.  즉,  `수퍼클래스.prototype` 객체를 가리킨다. 따라서 위 예제의 `super.sayHi` 메소드는 `Base.prototype.sayHi` 메소드를 가리킨다.
+
+`Base.prototype.sayHi`를 호출할 때 `call` 메소드로 this를 전달하지 않으면, `Base.prototype.sayHi` 메소드 내부의 this는 `Base.prototype`을 가리킨다. `Base.prototype.sayHi` 메소드는 프로토타입 메소드이기 때문에 내부의 this는 인스턴스를 가리켜야한다. `name` 프로퍼티는 인스턴스에 존재하기 때문이다.
+
+이처럼 super 참조가 동작하기 위해서는 메소드가 자신을 바인딩하고 있는 객체(`Derived.prototype`)의 프로토타입(`Base.prototype`)를 찾을 수 있어야한다. 이를 위해 메소드는 내부 슬롯 [[HomeObject]]을 가지며 자신을 바인딩한 객체를 가리킨다.
+
+super 참조를 의사 코드로 표현하면 아래와 같다.
+
+```javascript
+/*
+[[HomeObject]]는 메소드 자신을 바인딩한 객체를 가리킨다.
+이를 통해 메소드가 자신을 바인딩하고 있는 객체의 프로토타입을 찾을 수 있다.
+예를 들어, Derived 클래스의 sayHi 메소드는 Derived.prototype에 바인딩된다.
+따라서 Derived 클래스의 sayHi 메소드의 [[HomeObject]]는 Derived.prototype이고
+이를 통해 Derived 클래스의 sayHi 메소드 내부의 super 참조가 Base.prototype으로 결정된다.
+따라서 super.sayHi는 Base.prototype.sayHi를 가리키게 된다.
+*/
+super = Object.getPrototypeOf([[HomeObject]])
+```
+
+super 참조는 클래스의 전유물은 아니다. 객체 리터럴에서도 super 참조를 사용할 수 있다. 단, ES6의 메소드 축약 표현으로 정의된 함수만 가능하다.
+
+```javascript
+const base = {
+  name: 'Kim',
+  sayHi() {
+    return `Hi! ${this.name}`
+  }
+};
+
+const derived = {
+  __proto__: base,
+  // ES6 메소드 축약 표현으로 정의한 메소드이다. 따라서 [[HomeObject]]를 가진다.
+  sayHi() {
+    return `${super.sayHi()}. How are you doing?`;
+  }
+};
+
+console.log(derived.sayHi()); // Hi! Kim. How are you doing?
+```
+
+&nbsp;  
+
+**2. 서브 클래스의 정적 메소드 내에서 super.prop은 수퍼 클래스의 정적 메소드 prop을 가리킨다.**
+
+```javascript
+// 수퍼 클래스
+class Base {
+  static sayHi() {
+    return `Hi!`;
+  }
+}
+
+// 서브 클래스
+class Derived extends Base {
+  static sayHi() {
+    // super.sayHi는 수퍼 클래스의 정적 메소드를 가리킨다.
+    return `${super.sayHi()} How are you doing?`;
+  }
+}
+
+console.log(Derived.sayHi()); // Hi! How are you doing?
+```
+
+&nbsp;  
+
 ### 8.6. 상속 클래스의 인스턴스 생성 과정
 
+클래스가 단독으로 인스턴스를 생성하는 것 보다 상속 관계에 있는 두 클래스가 협력하여 인스턴스를 생성하는 과정은 좀 더 복잡하다.
+
+직사각형을 추상화한 Rectangle 클래스와 상속을 통해 상속을 통해 클래스를 확장한 ColorRectangle 클래스를 정의해 보자.
+
+```javascript
+// 수퍼 클래스
+class Rectangle {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+  
+  getArea() {
+    return this.width * this.height;
+  }
+  
+  toString() {
+    return `width = ${this.width}, height = ${this.height}`;
+  }
+}
+
+// 서브 클래스
+class ColorRectangle extends Rectange {
+  constructor(width, height, color) {
+    super(width, height);
+    this.color = color;
+  }
+  
+  // 메소드 오버라이딩
+  toString() {
+    return super.toString() + `, color = ${this.color}`;
+  }
+}
+
+const colorRectangle = new ColorRectangle(2, 4, 'red');
+console.log(colorRectangle); // ColorRectangle { width: 2, height: 4, color: 'red' }
+
+// 상속을 통해 getArea 메소드를 호출
+console.log(colorRectangle.getArea()); // 8
+// 오버라이딩된 toString 메소드를 호출
+console.log(colorRectangle.toString()); // width = 2, height = 4, color = red
+```
+
+ColorRectangle 클래스에 의해 생성된 인스턴스의 프로토타입 체인은 아래와 같다.
+
+<img src="https://user-images.githubusercontent.com/32444914/82334298-bbe2f400-9a22-11ea-8be6-9463e5e3f72e.png" width="60%" />
+
+서브 클래스(ColorRectangle)가 new 연산자와 함께 호출되면, 아래의 과정을 통해 인스턴스를 생성한다.
+
+**1. 서브 클래스의 super 호출**
+
+클래스는 내부 슬롯 [[ConstructorKind]]을 갖는다. [[ContructorKind]] 내부 슬롯은 클래스가 자바스크립트 엔진에 의해 평가될 때, 수퍼 클래스와 서브 클래스를 구분하기 위해 'base' 또는 'derived'를 자신의 값으로 가진다. 다른 클래스를 상속받지 않는 클래스는 그 값이 'base'이고, 다른 클래스를 상속 받는 서브 클래스는 그 값이 'derived'이다. 이를 통해 수퍼 클래스와 서브 클래스는 new 연산자와 함께 호출되었을 때의 동작이 구분된다.
+
+다른 클래스를 상속받지 않는 클래스(그리고 생성자 함수)는 new 연산자와 함께 호출되었을 때 암묵적으로 빈 객체(인스턴스)를 생성하고 이를 this에 바인딩한다.
+
+하지만 서브 클래스는 자신이 직접 인스턴스를 생성하지 않고, 인스턴스 생성을 수퍼 클래스에게 위임한다. 이것이 바로 서브 클래스의 constructor에서 반드시 super를 호출해야하는 이유이다.
+
+서브 클래스(ColorRectangle)가 new 연산자와 함께 호출되면 서브 클래스 constructor 내부의 super 키워드가 함수처럼 호출된다. super를 호출하면 수퍼 클래스의 constructor(super-constructor)가 호출된다. 좀 더 정확히 말하자면 수퍼 클래스가 평가되어 생성된 함수 객체의 코드가 실행되기 시작한다.
+
+만약 서브 클래스 constructor 내부에 super 호출이 없으면 에러가 발생한다. 실제로 인스턴스를 생성하는 주체는 수퍼 클래스이므로, 수퍼 클래스의 constructor를 호출하는 super가 호출되지 않으면 인스턴스를 생성할 수 없기 때문이다.
+
+**2. 수퍼 클래스의 인스턴스 생성과 this 바인딩**
+
+수퍼 클래스의 constructor 내부의 코드가 실행되기 이전에 암묵적으로 빈 객체를 생성한다. 이 빈 객체가 바로 (아직 완성되지는 않았지만) 클래스가 생성한 인스턴스이다. 그리고 암묵적으로 생성된 빈 객체(인스턴스)는 this에 바인딩된다. 따라서 수퍼 클래스의 constructor 내부의 this는 생성된 인스턴스를 가리킨다.
+
+```javascript
+// 수퍼 클래스
+class Rectangle {
+  constructor(width, height) {
+    // 암묵적으로 빈 객체(인스턴스) 생성 후 this에 바인딩
+    console.log(this); // ColorRectangle {}
+    // new 연산자와 함께 호출된 함수는 ColorRectangle이다.
+    console.log(new.target); // ColorRectangle
+    // ...
+  }
+  // ...
+}
+```
+
+이때 인스턴스는 수퍼 클래스가 생성한 것이다. 하지만 new 연산자와 함께 호출된 클래스가 서브 클래스라는 것이 중요하다. 즉, new 연산자와 함께 호출된 함수를 가리키는 `new.target`은 서브 클래스를 가리킨다. 따라서 **인스턴스는 new.target이 가리키는 서브 클래스가 생성한 것으로 처리된다.**
+
+이때 생성된 인스턴스의 프로토타입은 Rectangle.prototype이 아니라 new.target(서브 클래스)의 prototype 프로퍼티가 가리키는 객체 Color.prototype이다.
+
+**3. 수퍼 클래스의 인스턴스 초기화**
+
+수퍼 클래스의 constructor가 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티를 초기화한다.
+
+**4. 수퍼 클래스의 프로토타입 / 정적 메소드 추가**
+
+수퍼 클래스 몸체에 프로토타입 메소드가 존재하면, `수퍼클래스.prototype`의 메소드로 추가된다. 수퍼 클래스 몸체에 정적 메소드가 존재하면 클래스 메소드로 추가된다.
+
+**5. 서브 클래스 constructor로의 복귀와 this 바인딩**
+
+super의 호출이 종료되고 컨트롤이 서브 클래스 constructor로 복귀한다. **이때 super가 반환한 인스턴스가 this에 바인딩된다. 이처럼 서브 클래스는 별도의 인스턴스를 생성하지 않고 super가 반환한 인스턴스를 this에 바인딩하여 그대로 사용한다.**
+
+```javascript
+// 서브 클래스
+class ColorRectangle extends Rectangle {
+  constructor(width, height, color) {
+    super(width, height);
+    
+    // super가 반환한 인스턴스가 this에 바인딩된다.
+    console.log(this); // ColorRectangle {width: 2, height: 4}
+  }
+}
+```
+
+**이처럼 super가 호출되지 않으면 인스턴스가 생성되지 않으며 this 바인딩도 할 수 없다. 서브 클래스의 constructor에서 super를 호출하기 이전에 this를 참조할 수 없는 이유가 바로 이 때문이다.** 따라서 서브 클래스 constructor 내부의 인스턴스 초기화는 반드시 super 호출 이후에 처리되어야 한다.
+
+**6. 서브 클래스의 인스턴스 초기화**
+
+super 호출 이후, 서브 클래스의  constructor에 기술되어 있는 인스턴스 초기화가 실행된다. 즉,  this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티를 초기화한다.
+
+**7. 서브 클래스의 프로토타입 / 정적 메소드 추가**
+
+서브 클래스 몸체에 프로토타입 메소드가 존재하면, `서브클래스.prototype`의 메소드로 추가된다. 서브 클래스 몸체에 정적 메소드가 존재하면 서브 클래스 메소드로 추가된다.
+
+**8. 인스턴스 반환**
+
+클래스의 모든 처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
+
+&nbsp;  
+
 ### 8.7. 표준 빌트인 생성자 함수 확장
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
