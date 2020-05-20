@@ -167,13 +167,127 @@ const derived = {
 
 ## 3. 화살표 함수
 
+화살표 함수(arrow function)는 `function` 키워드 대신 화살표(`=>`, fat arrow)를 사용하여 기존의 함수 정의 방식보다 간략하게 함수를 정의할 수 있다. 화살표 함수는 표현만 간략한 것이 아니라 내부 동작도 기존의 함수보다 간략하다. 특히 화살표 함수는 콜백 함수 내부에서 this가 전역 객체를 가리키는 문제를 해결하기 위한 대안으로 유용하다.
 
+### 3.1. 화살표 함수 정의
 
+**1. 매개 변수 선언**
 
+매개 변수가 여러 개인 경우, 소괄호 `()` 안에 매개 변수를 선언한다.
 
+```javascript
+(x, y) => { ... }
+```
 
+매개 변수가 한 개인 경우, 소괄호 `()`를 생략할 수 있다.
 
+```javascript
+x = > { ... }
+```
 
+매개 변수가 없는 경우, 소괄호 `()`를 생략할 수 없다.
+
+```javascript
+() => { ... }
+```
+
+&nbsp;  
+
+**2. 함수 몸체 정의**
+
+함수 몸체가 한 줄의 문으로 구성된다면 함수 몸체를 감싸는 중괄호 `{}`를 생략할 수 있다. 이때 문은 암묵적으로 반환된다.
+
+```javascript
+x => x * x;
+x => { return x * x; } // 위 표현과 동일하다.
+
+// 1. 매개 변수가 없는 화살표 함수
+const now = () => Date.now();
+now(); // 1589970230108
+
+// 1. 함수 표현식
+var now = function() {
+  return Date.now();
+};
+now(); // 1589970230108
+
+// 2. 매개 변수가 한 개인 화살표 함수
+const identity = value => value;
+
+// 2. 함수 표현식
+var identity = function (value) {
+  return value;
+};
+
+// 3. 매개 변수가 여러 개인 화살표 함수
+const sum = (a, b) => a + b;
+
+// 3. 함수 표현식
+var sum = function (a, b) {
+  return a + b;
+};
+```
+
+함수 몸체가 여러 줄의 문으로 구성된다면 함수 몸체를 감싸는 중괄호 `{}`를 생략할 수 없다. 이때 반환값이 있다면 **명시적으로 반환해야 한다.**
+
+```javascript
+// 화살표 함수
+const sum = (a, b) => {
+  const result = a + b;
+  return result;
+};
+
+// 함수 표현식
+var sum = function (a, b) {
+  const result = a + b;
+  return result;
+};
+```
+
+객체 리터럴을 반환하는 경우, 객체 리터럴을 소괄호 `()`로 감싸 주어야 한다.
+
+```javascript
+() => { return { a: 1 } };
+() => ({ a: 1 }); // 위 표현과 동일하다.
+
+// 화살표 함수
+const create = (id, content) => ({ id, content });
+
+// 함수 표현식
+var create = function (id, content) {
+  return { id, content };
+};
+
+create(1, 'JavaScript'); // { id: 1, content: 'JavaScript' }
+```
+
+화살표 함수도 즉시 실행 함수(IIFE)로 사용할 수 있다.
+
+```javascript
+const person = (name => ({
+  sayHi() { return `Hi! My name is ${name}` }
+}))('Kim');
+
+console.log(person.sayHi()); // Hi! My name is Kim
+```
+
+화살표 함수도 일급 객체이므로 `Array.prototype.map`, `Array.prototype.filter`, `Array.prototype.reduce`와 같은 고차 함수(HOF)에 인수로 전달할 수 있다. 이 경우, 일반적인 함수 표현식보다 표현이 간결하고 가독성이 좋다.
+
+```javascript
+// ES5
+[1, 2, 3].map(function (v) {
+  return v * 2;
+});
+
+// ES6
+[1, 2, 3].map(v => v * 2); // [2, 4, 6]
+```
+
+이처럼 화살표 함수는 콜백 함수로서 정의할 때 유용하다. 표현과 기능을 간략화 했으며 this를 사용하는 것도 편리하게 설계되었다.
+
+&nbsp;  
+
+### 3.2. 화살표 함수와 일반 함수의 차이
 
 
 
