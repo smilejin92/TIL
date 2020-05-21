@@ -569,11 +569,143 @@ console.log(result); // [1, 2, 3]
 
 원본 배열을 직접 변경하는 메소드는 외부 상태를 직접 변경하는 부수 효과(side effect)가 있으므로 사용에 주의해야 한다. 따라서 가급적 원본 배열을 직접 변경하지 않는 메소드(accessor)를 사용하는 편이 좋다.
 
-| 메소드                                   | 요약                                                         |
-| ---------------------------------------- | ------------------------------------------------------------ |
-| Array.isArray(value)                     | value가 배열이면 true, 아니면 false를 반환                   |
-| Array.prototype.indexOf(value, startIdx) | * 배열에 value가 있는 경우, 해당 요소의 인덱스를 반환(중복되는 요소가 있는 경우, 첫번째 인덱스를 반환).<br />* 배열에 value가 없는 경우 -1을 반환.<br />* startIdx는 검색을 시작할 인덱스이며, 생략 가능하다. |
-|                                          |                                                              |
+| 메소드                                               | 요약                                                         |
+| ---------------------------------------------------- | ------------------------------------------------------------ |
+| Array.isArray(value)                                 | value가 배열이면 true, 아니면 false를 반환                   |
+| Array.prototype.indexOf(value, startIdx)             | * 배열에 value가 있는 경우, 해당 요소의 인덱스를 반환(중복되는 요소가 있는 경우, 첫번째 인덱스를 반환).<br />* 배열에 value가 없는 경우 -1을 반환.<br />* (옵션) startIdx는 검색을 시작할 인덱스이다.<br />* 배열에 특정 요소가 존재하는지 확인할 때 유용하다. |
+| Array.prototype.push(value1, value2, value3 ...)     | * 인수로 전달받은 모든 값을 원본 배열의 마지막 요소로 추가한다.<br />* 변경된 length 프로퍼티 값을 반환한다.<br />* mutator |
+| Array.prototype.pop()                                | * 원본 배열의 마지막 요소를 제거한다.<br />* 제거한 요소를 반환한다.<br />* 원본 배열이 빈 배열이면 undefined를 반환한다.<br />* 스택 구현에 사용된다.<br />* mutator |
+| Array.prototype.unshift(value1, value2, value3 ...)  | * 인수로 전달받은 모든 값을 원본 배열의 선두에 추가한다.<br />* 변경된 length 프로퍼티 값을 반환한다.<br />* mutator |
+| Array.prototype.shift()                              | * 원본 배열의 첫번째 요소를 제거한다.<br />* 제거한 요소를 반환한다.<br />* 원본 배열이 빈 배열이면 undefined를 반환한다.<br />* 큐(Queue) 구현에 사용된다.<br />* mutator |
+| Array.prototype.splice(startIdx, deleteCount, items) | * 원본 배열의 중간에 요소를 추가하거나 중간에 있는 요소를 제거한다.<br />* startIdx는 원본 배열의 요소를 제거하기 시작할 인덱스이다.<br />* (옵션) deleteCount는 startIdx부터 제거할 요소의 개수이다.<br />* (옵션) items는 제거한 위치에 삽입될 요소들의 목록이다.<br /><br />* 원본 배열에서 제거된 요소를 담은 배열을 반환한다.<br />* mutator |
+| Array.prototype.concat(value)                        | * value(배열 또는 원시값)을 원본 배열의 마지막 요소로 추가한 새로운 배열을 반환한다.<br />* value가 배열일 경우 배열을 해체하여 새로운 배열의 요소로 추가한다.<br />* push와 unshift 메소드를 대체할 수 있다.<br />* accessor |
+| Array.prototype.slice(startIdx, endIdx)              | * 인수로 전달된 범위의 요소들을 복사하여 배열로 반환한다.<br />* (옵션) startIdx는 복사를 시작할 인덱스이다.<br />* (옵션) endIdx는 복사를 종료할 인덱스이다.(exclusive)<br />* 인수를 모두 생략하면 원본 배열의 새로운 복사본을 생성하여 반환한다.<br />* 생성된 복사본은 얕은 복사(shallow copy)를 통해 생성된다.<br />* accessor |
+| Array.prototype.join(seperator)                      | * 원본 배열의 모든 요소를 문자열로 변환한 후, seperator로 연결한 문자열을 반환한다.<br />* (옵션) seperator는 문자열이며, 생략하면 기본 seperator는 `,`이다.<br />* accessor |
+| Array.prototype.reverse()                            | * 원본 배열의 요소 순서를 반대로 변경한다.<br />* 변경된 배열을 반환한다.<br />* mutator |
+| Array.prototype.fill(value, startIdx, endIdx)        | * 인수로 전달 받은 값을 요소로 배열의 처음부터 끝까지 채운다.<br />* (옵션) startIdx는 요소 채우기를 시작할 인덱스이다.<br />* (옵션) endIdx는 요소 채우기를 멈출 인덱스이다.(exclusive)<br />* mutator |
+| Array.prototype.includes(value, startIdx)            | * 배열 내에 특정 요소가 포함되어 있는지 확인하여 true 혹은 false를 반환한다.<br />* value는 검색할 대상을 의미한다.<br />* (옵션) startIdx는 검색을 시작할 인덱스이다.<br />* NaN이 포함되어 있는지 확일할 수 있다. |
+| Array.prototype.flat(depth)                          | * 인수로 전달한 깊이만큼 재귀적으로 배열을 평탄화한다.<br />* 평탄화한 배열을 반환한다.<br />* (옵션) depth는 중첩 배열을 평탄화할 깊이를 의미한다.<br />* depth를 지정하지 않으면 기본값은 1이다.<br />* depth를 Infinity로 설정하면 중첩 배열 모두를 평탄화한다. |
+
+&nbsp;  
+
+## 9. 배열 고차 함수
+
+고차 함수(High-Order Function, HOF)는 함수를 인자로 전달받거나, 함수를 반환하는 함수를 말한다. 자바스크립트의 함수는 일급 객체이므로 값처럼 인자로 전달할 수 있으며 반환할 수도 있다. 고차 함수는 외부 상태 변경이나 가변(mutable) 데이터를 피하고 **불변성(immutability)을 지향**하는 함수형 프로그래밍에 기반을 두고 있다.
+
+함수형 프로그래밍은 순수 함수(pure function)와 보조 함수의 조합을 통해 로직 내에 존재하는 **조건문과 반복문을 제거하여 복잡성을 해결**하고 **변수의 사용을 억제**하여 상태 변경을 피하려는 프로그래밍 패러다임이다. 조건문이나 반복문은 로직의 흐름을 이해하기 어렵게 하여 가독성을 해치고, 변수의 값은 누군가에 의해 언제든지 변경될 수 있어 오류 발생의 근본적 원인이 될 수 있기 때문이다. 함수형 프로그래밍은 결국 **순수 함수를 통해 부수 효과(side effect)를 최대한 억제**하여 오류를 피하고 프로그램의 안정성을 높이려는 노력의 한 방법이라고 할 수 있다.
+
+&nbsp;  
+
+### 9.1. Array.prototype.sort
+
+sort 메소드는 배열의 요소를 정렬한다. **원본 배열을 직접 변경**하며(mutator) 정렬된 배열을 반환한다. sort 메소드는 기본적으로 요소를 오름차순으로 정렬한다.
+
+```javascript
+const fruits = ['Banana', 'Orange', 'Apple'];
+
+// 오름차순(ascending) 정렬
+fruits.sort();
+
+// sort 메소드는 원본 배열을 직접 변경한다.
+console.log(fruits); // ['Apple', 'Banana', 'Orange']
+```
+
+문자열 요소들로 이루어진 배열의 정렬은 아무 문제가 없다. 하지만 **숫자 요소들로 이루어진 배열을 정렬할 때는 주의가 필요하다.**
+
+```javascript
+const points = [40, 100, 1, 5, 2, 25, 10];
+
+points.sort();
+
+// 숫자 요소들로 이루어진 배열은 의도한 대로 정렬되지 않는다.
+console.log(points); // [1, 10, 100, 2, 25, 40, 5]
+```
+
+**sort 메소드의 기본 정렬 순서는 문자열 Unicode 포인트 순서에 따른다.** 배열의 요소가 숫자 타입이라 할지라도 배열의 요소를 **일시적으로 문자열로 변환한 후, 정렬한다.**
+
+따라서 숫자 요소를 정렬하기 위해서는 sort 메소드에 **정렬 순서를 정의하는 비교 함수를 인수로 전달**한다. 비교 함수를 생략하면 배열의 각 요소는 일시적으로 문자열로 변환되어 Unicode 포인트 순서에 따라 정렬된다.
+
+```javascript
+const points = [40, 100, 1, 5, 2, 25, 10];
+
+// 숫자 배열 오름차순 정렬
+// 비교 함수의 반환 값이 0보다 작은 경우, a를 우선하여 정렬한다.
+points.sort((a, b) => a - b);
+cosole.log(points); // [1, 2, 5, 10, 25, 40, 100]
+
+// 숫자 배열 내림차순 정렬
+// 비교 함수의 반환값이 0보다 큰 경우, b를 우선하여 정렬한다.
+points.sort((a, b) => b - a);
+console.log(points); // [100, 40, 25, 10, 5, 2, 1]
+
+// 요소가 문자열인 경우 산술 연산으로 비교하면 NaN이 나오므로 비교 연산을 사용한다.
+points.sort((a, b) => a < b ? -1 : (a > b ? 1 : 0));
+```
+
+> **Array.prototype.sort 메소드의 알고리즘**
+>
+> Array.prototype.sort 메소드는 10개 이상의 요소가 있는 배열을 정렬할 때 불안정하다고 알려진 quickSort 알고리즘을 사용했었다. ECMAScript 2019(ES10)에서는 timesort 알고리즘을 적용하도록 변경되었다. timesort 알고리즘은 합병 정렬과 삽입 정렬을 이용해 구현되었다 한다.
+
+&nbsp;  
+
+### 9.2. Array.prototype.forEach
+
+forEach 메소드는 for 문을 대체할 수 있는 메소드이다. forEach 메소드는 배열을 순회하며 배열의 각 요소에 대하여 인수로 전달된 콜백 함수를 호출한다.
+
+```javascript
+const numbers = [1, 2, 3];
+let pows = [];
+
+// for 문으로 배열 순회
+for (let i = 0; i < number.length; i++) {
+  pows.push(numbers[i] ** 2);
+}
+console.log(pows); // [1, 4, 9]
+
+// forEach 메소드로 배열 순회
+numbers.forEach(item => pows.push(item ** 2));
+console.log(pows); // [1, 4, 9]
+```
+
+forEach 메소드의 콜백 함수는 요소값, 인덱스, forEach 메소드를 호출한 배열(this)를 전달 받을 수 있다.
+
+```javascript
+// forEach 메소드는 콜백 함수를 호출하면서 3개(요소값, 인덱스, this)의 인수를 전달한다.
+[1, 2, 3].forEach((item, index, arr) => {
+  console.log(`${arr}의 ${index}번째 요소 = ${item}`);
+});
+/*
+1,2,3의 0번째 요소 = 1
+1,2,3의 1번째 요소 = 2
+1,2,3의 2번째 요소 = 3
+*/
+```
+
+forEach 메소드는 원본 배열을 변경하지 않는다. 하지만 콜백 함수를 통해 원본 배열을 변경할 수는 있다.
+
+```javascript
+const numbers = [1, 2, 3];
+
+// forEach 메소드는 원본 배열을 변경하지 않는다.
+// 하지만 콜백 함수를 통해 원본 배열을 변경할 수는 있다.
+// 원본 배열을 직접 변경하려면 콜백 함수의 3번째 인자를 사용한다.
+numbers.forEach((item, index, arr) => {
+  arr[index] = item ** 2;
+});
+
+console.log(numbers); // [1, 4, 9]
+```
+
+forEach 메소드의 반환값은 언제나 undefined이다.
+
+```javascript
+const result = [1, 2, 3].forEach(item => console.log(item));
+// 1
+// 2
+// 3
+
+console.log(result); // undefined
+```
 
 
 
