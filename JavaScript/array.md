@@ -18,9 +18,9 @@
 const arr = ['apple', 'banana', 'orange'];
 ```
 
-배열이 가지고 있는 값을 **요소(element)**라고 부른다. **자바스크립트의 모든 값은 배열의 요소가 될 수 있다.**
+배열이 가지고 있는 값을 <strong>요소(element)</strong>라고 부른다. **자바스크립트의 모든 값은 배열의 요소가 될 수 있다.**
 
-배열의 요소는 배열에서 **자신의 위치**를 나타내는 0 이상의 정수인 **인덱스(index)**를 갖는다. 인덱스는 배열의 요소에 접근할 때 사용한다. 대부분의 프로그래밍 언어에서 인덱스는 0부터 시작한다.
+배열의 요소는 배열에서 **자신의 위치**를 나타내는 0 이상의 정수인 <strong>인덱스(index)</strong>를 갖는다. 인덱스는 배열의 요소에 접근할 때 사용한다. 대부분의 프로그래밍 언어에서 인덱스는 0부터 시작한다.
 
 배열의 요소에 접근할 때는 대괄호 표기법을 사용한다. 대괄호 내에는 접근하고 싶은 요소의 인덱스를 지정한다.
 
@@ -99,13 +99,15 @@ for (let i = 0; i < arr.length; i++) {
 
 &nbsp;  
 
-일반적으로 배열이라는 자료 구조의 개념은 **동일한 크기의 메모리 공간이 빈틈없이 연속적으로 나열된 자료 구조**를 말한다. 즉, 배열의 요소는 **하나의 타입**으로 통일되어 있으며 서로 연속적으로 인접해 있다. 이러한 배열은 **밀집 배열(dense array)**이라 한다.
+일반적으로 배열이라는 자료 구조의 개념은 **동일한 크기의 메모리 공간이 빈틈없이 연속적으로 나열된 자료 구조**를 말한다. 즉, 배열의 요소는 **하나의 타입**으로 통일되어 있으며 서로 연속적으로 인접해 있다. 이러한 배열은 <strong>밀집 배열(dense array)</strong>이라 한다.
 
 <img src="https://user-images.githubusercontent.com/32444914/82526770-bf37c600-9b6f-11ea-974a-9bc12ed42164.png" width="60%" />
 
 이처럼 자료 구조(data structure)에서 말하는 배열의 경우, 각 요소는 동일한 크기를 가지며 빈틈없이 연속적으로 이어져 있으므로 인덱스를 통해 단 한번의 연산으로 임의의 요소에 접근(random access, O(1))할 수 있다. 이는 매우 효율적이며 고속으로 동작한다.
 
 > 검색 대상 요소의 메모리 주소 = 배열의 시작 메모리 주소 + 인덱스 * 요소의 바이트 수
+
+&nbsp;  
 
 예를 들어, 위 그림처럼 메모리 주소 1000에서 시작하고 각 요소의 크기가 8byte인 배열을 생각해 보자.
 
@@ -119,7 +121,7 @@ for (let i = 0; i < arr.length; i++) {
 
 <img src="https://user-images.githubusercontent.com/32444914/82527158-b267a200-9b70-11ea-8370-3eabbafa4d27.png" width="60%" />
 
-자바스크립트의 배열은 지금까지 살펴본 자료 구조에서 말하는 일반적이 의미의 배열과 다르다. 즉, 배열의 요소를 위한 각각의 메모리 공간은 동일할 크기를 갖지 않을 수 있으며, 연속적으로 이어져 있지 않을 수도 있다. 배열의 요소가 연속적으로 이어져 있지 않는 배열을 **희소 배열(sparse array)**이라 한다.
+자바스크립트의 배열은 지금까지 살펴본 자료 구조에서 말하는 일반적이 의미의 배열과 다르다. 즉, 배열의 요소를 위한 각각의 메모리 공간은 동일할 크기를 갖지 않을 수 있으며, 연속적으로 이어져 있지 않을 수도 있다. 배열의 요소가 연속적으로 이어져 있지 않는 배열을 <strong>희소 배열(sparse array)</strong>이라 한다.
 
 이처럼 자바스크립트의 배열은 엄밀히 말해 일반적 의미의 배열이 아니다. **자바스크립트의 배열은 일반적인 배열의 동작을 흉내낸 특수한 객체이다.**
 
@@ -127,9 +129,9 @@ for (let i = 0; i < arr.length; i++) {
 console.log(Object.getOwnPropertyDescriptors([1, 2, 3]));
 /*
 {
-	'0': {value: 1, writable: true, enumerable: true, configurable: true}
-  '1': {value: 2, writable: true, enumerable: true, configurable: true}
-  '2': {value: 3, writable: true, enumerable: true, configurable: true}
+	'0': {value: 1, writable: true, enumerable: true, configurable: true},
+	'1': {value: 2, writable: true, enumerable: true, configurable: true},
+  '2': {value: 3, writable: true, enumerable: true, configurable: true},
   length: {value: 3, writable: true, enumerable: false, configurable: false}
 }
 */
@@ -274,7 +276,7 @@ console.log(Object.getOwnPropertyDescriptors(sparse));
 * Array.of
 * Array.from
 
-
+&nbsp;  
 
 ### 4.1. 배열 리터럴
 
@@ -515,7 +517,7 @@ console.log(arr.length); // 2
 * `delete` 연산자
 * `Array.prototype.splice`
 
-
+&nbsp;  
 
 배열은 사실 객체이기 때문에 배열의 특정 요소를 삭제하기 위해 `delete` 연산자를 사용할 수 있다.
 
@@ -552,7 +554,7 @@ console.log(arr.length); // 2
 
 배열은 배열을 다룰 때 필요한 다양한 메소드를 제공한다. Array 생성자 함수는 정적 메소드를 제공하며, 배열 객체의 프로토타입인 `Array.prototype`은 프로토타입 메소드를 제공한다.
 
-배열 메소드는 결과물을 반환하는 패턴이 2가지이므로 주의가 필요하다. 배열에는 **원본 배열을 직접 변경하는 메소드(mutator)**와 원본 배열을 직접 변경하지 않고 **새로운 배열 생성하여 반환하는 메소드(accessor)**가 있다.
+배열 메소드는 결과물을 반환하는 패턴이 2가지이므로 주의가 필요하다. 배열에는 <strong>원본 배열을 직접 변경하는 메소드(mutator)</strong>와 원본 배열을 직접 변경하지 않고 <strong>새로운 배열 생성하여 반환하는 메소드(accessor)</strong>가 있다.
 
 ```javascript
 const arr = [1];
@@ -705,6 +707,146 @@ const result = [1, 2, 3].forEach(item => console.log(item));
 // 3
 
 console.log(result); // undefined
+```
+
+forEach 메소드에 두번째 인수로 forEach 메소드 내부에서 this로 사용될 객체를 전달할 수 있다.
+
+```javascript
+class Numbers {
+  numberArray = [];
+
+	multiply(arr) {
+    arr.forEach(function (item) {
+      // 외부에서 this를 전달하지 않으면 this는 undefined(엄격 모드 적용)을 가리킨다.
+      // multiply 내부의 this는 인스턴스를 가리킨다.
+      this.numberArray.push(item * item);
+    }, this); // forEach 메소드 내부에서 this로 사용될 객체를 전달
+  }
+}
+
+const numbers = new Numbers();
+numbers.multiply([1, 2, 3]);
+console.log(numbers.numberArray); // [1, 4, 9]
+```
+
+보다 나은 방법은 ES6 화살표 함수를 사용하는 것이다.
+
+```javascript
+class Number {
+  numberArray = [];
+
+	multiply(arr) {
+    // 화살표 함수 내부에서 this를 참조하면 상위 스코프의 this를 그대로 참조한다.
+    arr.forEach(item => this.numberArray.push(item * item));
+  }
+}
+
+const numbers = new Numbers();
+numbers.multiply([1, 2, 3]);
+console.log(numbers.numberArray); // [1, 4, 9]
+```
+
+forEach 메소드의 동작을 이해하기 위해 forEach 메소드의 폴리필(최신 사양의 기능을 지원하지 않는 브라우저를 위해 누락된 최신 사양의 기능을 구현하여 추가하는 것을 폴리필(pollyfill)이라 한다.)을 살펴보자.
+
+```javascript
+// 만약 Array.prototype에 forEach 메소드가 존재하지 않으면 폴리필을 추가한다.
+if (!Array.prototype.forEach) {
+  Array.prototype.forEach = function (callback, thisArg) {
+    // 전달받은 첫번째 인수가 함수가 아니면 TypeError를 발생시킨다.
+  	if (typeof callback !== 'function') {
+      throw new TypeError(callback + ' must be a function');
+    }
+    
+    // this로 사용할 두번째 인수를 전달받지 못하면 전역 객체를 this로 사용한다.
+    thisArg = thisArg || window;
+    
+    // for 문으로 배열(this)을 순회하면서 콜백 함수를 호출한다.
+    for (var i = 0; i < this.length; i++) {
+      // call 메소드를 통해 두번째 인수로 전달받은 thisArg를 전달하면서 콜백 함수를 호출한다.
+      // 이때 콜백 함수의 인수로 배열 요소, 인덱스, 배열 자신을 전달한다.
+      callback.call(thisArg, this[i], i, this);
+    }
+  };
+}
+```
+
+이처럼 forEach 메소드도 내부에서는 반복문을 통해 배열을 순회할 수 밖에 없다. 단, 반복문을 메소드 내부로 은닉하여 로직의 흐름을 이해하기 쉽게 하고 복잡성을 해결한다.
+
+forEach 메소드는 for 문과는 달리 break, continue 문을 사용할 수 없다. 배열의 모든 요소를 빠짐없이 순회하며 중간에 순회를 중단할 수 없다.
+
+```javascript
+[1, 2, 3].forEach(item => {
+  console.log(item);
+  if (item > 1) break; // SyntaxError: Illegal break statement
+  // if (item > 1) continue; // SyntaxError: Illegal break statement
+})
+```
+
+희소 배열의 존재하지 않는 요소는 순회 대상에서 제외된다. 이는 map, filter, reduce 메소드 등에서도 마찬가지이다.
+
+```javascript
+// 희소 배열
+const arr = [1, , 3];
+
+// for 문으로 희소 배열을 순회
+for (let i = 0; i < arr.length; i++) {
+  console.log(arr[i]); // 1, undefined, 3
+}
+
+// forEach 메소드는 희소 배열의 존재하지 않는 요소를 순회 대상에서 제외한다.
+arr.forEach(item => console.log(item)); // 1, 3
+```
+
+&nbsp;  
+
+### 9.3. Array.prototype.map
+
+map 메소드는 배열을 순회하며 배열의 각 요소에 대하여 인수로 전달된 콜백 함수를 실행한다. 그리고 **콜백 함수의 반환값들로 구성된 새로운 배열을 반환한다.** 이때 원본 배열은 변경되지 않는다.
+
+```javascript
+const numbers = [1, 4, 9];
+const roots = numbers.map(item => Math.sqrt(item));
+
+// map 메소드는 새로운 배열을 반환한다.
+console.log(roots); // [1, 2, 3]
+// map 메소드는 원본 배열은 변경하지 않는다.
+console.log(numbers); // [1, 4, 9]
+```
+
+forEach 메소드는 배열을 순회하며 요소 값을 참조하여 무언가를 하기 위한 함수이며, map 메소드는 **배열을 순회하며 요소 값을 다른 값으로 맵핑하기 위한 함수이다.** 따라서 **map 메소드가 생성하여 반환하는 새로운 배열의 length는 map 메소드를 호출한 배열(this)의 length와 반드시 일치한다.** 즉, 1:1 매핑(mapping)한다.
+
+<img src="https://user-images.githubusercontent.com/32444914/82622654-5016ac00-9c19-11ea-9e94-4133988651d9.png" width="80%" />
+
+forEach 메소드와 마찬가지로 map 메소드의 콜백 함수는 요소값, 인덱스, map 메소드를 호출한 배열(this)를 전달 받을 수 있다.
+
+```javascript
+[1, 2, 3].map((item, index, arr) => {
+  console.log(`${arr}의 ${index}번째 요소 = ${item}`);
+  return item;
+});
+
+/*
+1,2,3의 0번째 요소 = 1
+1,2,3의 1번째 요소 = 2
+1,2,3의 2번째 요소 = 3
+*/
+```
+
+forEach 메소드와 마찬가지로 map 메소드에 두번째 인자로 map 메소드 내부에서 this로 사용될 객체를 전달할 수 있다.
+
+```javascript
+class Prefixer {
+  constructor(prefix) {
+    this.prefix = prefix;
+  }
+  
+  prefixArray(arr) {
+    return arr.map()
+  }
+}
+
+const prefixer = new Prefixer('Hi');
+
 ```
 
 
