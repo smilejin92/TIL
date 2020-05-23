@@ -172,7 +172,7 @@ const arr = [
 * length 프로퍼티의 값을 명시적으로 변경할 수 있다.
 * length 프로퍼티에 현재 length 프로퍼티 값보다 큰 숫자 값을 할당하는 경우, **length 프로퍼티 값은 변경되지만, 실제 배열에는 아무런 변함이 없다.** 값이 없이 비어있는 요소를 위해 메모리 공간을 확보하지 않으며, 빈 요소를 생성하지도 않는다.
 * 희소 배열의 empty는 요소의 값이 아니다. empty가 표시된 인덱스의 요소에 접근하면 undefined를 출력한다. 즉, 해당 인덱스(프로퍼티)를 갖지 않는다.
-* 희소 배열은 length와 배열 요소의 개수가 일치하지 않는다.
+* 희소 배열은 length 프로퍼티의 값이 배열 요소의 개수보다 항상 크다.
 * **배열에는 같은 타입의 요소를 연속적으로 위치시키는 것이 최선이다.**
 
 &nbsp;  
@@ -532,7 +532,7 @@ console.log(arr); // [1, empty, 3]
 console.log(arr.length); // 3
 ```
 
-`delete` 연산자는 객체의 프로퍼티를 삭제한다. 따라서 위 예제의 `delete arr[1]`은 arr에서 프로퍼티 키가 `'1'`인 프로퍼티를 삭제한다. 이때 배열은 희소 배열이 되며 length 프로퍼티 값은 변하지 않는다. 따라서 희소 배열을 만드는 `delete` 연산자는 사용하지 않는 것이 좋다.
+`delete` 연산자는 객체의 프로퍼티를 삭제한다. 따라서 위 예제의 `delete arr[1]`은 arr에서 프로퍼티 키가 `'1'`인 프로퍼티를 삭제한다. 이때 **배열은 희소 배열이 되며 length 프로퍼티 값은 변하지 않는다.** 따라서 희소 배열을 만드는 `delete` 연산자는 사용하지 않는 것이 좋다.
 
 희소 배열을 만들지 않으면서 배열의 특정 요소를 완전히 삭제하려면 `Array.prototype.splice` 메소드를 사용한다.
 
@@ -841,35 +841,263 @@ class Prefixer {
   }
   
   prefixArray(arr) {
-    return arr.map()
+    return arr.map(function (item) {
+      // 외부에서 this를 전달하지 않으면 this는 undefined를 가리킨다.
+      return this.prefix + item;
+    }, this); // map 메소드 내부에서 this로 사용될 객체를 전달(인스턴스)
   }
 }
 
-const prefixer = new Prefixer('Hi');
-
+const prefixer = new Prefixer('-webkit-');
+const preArr = prefixer.prefixArray(['linear-gradient', 'border-radius']);
+console.log(preArr); // ['-webkit-linear-gradient', '-webkit-border-radius']
 ```
 
+보다 나은 방법은 ES6의 화살표 함수를 사용하는 것이다.
 
+```javascript
+class Prefixer {
+  constructor(prefix) {
+    this.prefix = prefix;
+  }
+  
+  prefixArray(arr) {
+    return arr.map(item => this.prefix + item);
+  }
+}
+const prefixer = new Prefixer('-webkit-');
+const preArr = prefixer.prefixArray(['linear-gradient', 'border-radius']);
+console.log(preArr); // ['-webkit-linear-gradient', '-webkit-border-radius']
+```
 
+&nbsp;  
 
+### 9.4. Array.prototype.filter
 
+filter 메소드는 배열을 순회하며 배열의 각 요소에 대하여 인수로 전달된 콜백 함수를 실행한다. 그리고 **콜백 함수의 반환값이 true인 요소만을 추출한 새로운 배열을 반환**한다. 이때 원본 배열은 변경되지 않는다.
 
+```javascript
+const numbers = [1, 2, 3, 4, 5];
 
+// 홀수만을 필터링 한다
+const odds = numbers.filter(num => num % 2);
+console.log(odds); // [1, 3, 5];
+```
 
+filter 메소드는 배열에서 특정 요소만을 필터링 조건으로 추출하여 새로운 배열을 만들고 싶을 때 사용한다. 따라서 **filter 메소드가 생성하여 반환하는 새로운 배열의 length는 filter 메소드를 호출한 배열, 즉 this의 length와 같거나 작다.**
 
+<img src="https://user-images.githubusercontent.com/32444914/82731358-29ec2b80-9d41-11ea-93a7-3a9e5d889055.png" width="60%" />
 
+forEach, map 메소드와 마찬가지로 filter 메소드의 콜백 함수는 요소값, 인덱스, filter 메소드를 호출한 배열(this)를 전달 받을 수 있다.
 
+```javascript
+[1, 2, 3].filter((item, index, arr) => {
+  console.log(`${arr}의 ${index}번째 요소 = ${item}`);
+  return item % 2;
+});
+/*
+요소값: 1, 인덱스: 0, this: 1,2,3
+요소값: 2, 인덱스: 1, this: 1,2,3
+요소값: 3, 인덱스: 2, this: 1,2,3
+*/
+```
 
+forEach, map 메소드와 마찬가지로 filter 메소드에 두번째 인자로 filter 메소드 내부에서 사용할 this 객체를 전달할 수 있다. 보다 나은 방법은 화살표 함수를 사용하는 것이다.
 
+```javascript
+class Users {
+  constructor() {
+    this.users = [
+      { id: 1, name: 'Kim' },
+      { id: 2, name: 'Park' }
+    ];
+  }
 
+	// 요소 추출
+	findById(id) {
+    // id가 일치하는 사용자만 반환
+    return this.users.filter(user => user.id === id);
+  }
+  
+  // 요소 제거
+  remove(id) {
+    // id가 일치하지 않는 사용자를 모두 반환
+    this.users = this.users.filter(user => user.id !== id);
+  }
+}
 
+const users = new Users();
 
+let user = users.findById(1);
+console.log(user); // [{ id: 1, name: 'Kim' }]
 
+users.remove(1);
 
+user = users.findById(1);
+console.log(user); // []
+```
 
+&nbsp;  
 
+### 9.5. Array.prototype.reduce
 
+reduce 메소드는 배열을 순회하며 콜백 함수의 이전 반환값과 배열의 각 요소에 대하여 인수로 전달된 콜백 함수를 실행해 **하나의 결과값**을 반환한다. 이때 원본 배열은 변경되지 않는다.
 
+reduce 메소드는 첫번째 인수로 콜백 함수, **두번째 인수로 초기값을 전달받는다.** reduce 메소드의 콜백 함수에는 4개의 인수, 초기값 또는 콜백 함수의 이전 반환값, 요소값, 인덱스, reduce 메소드를 호출한 배열(this)이 전달된다.
 
+아래 예제를 살펴보자. 예제의 reduce 메소드는 2개의 인수, 즉 콜백 함수와 초기값 0을 전달받아 배열의 모든 요소의 누적을 구한다.
 
+```javascript
+// 1부터 4까지 누적을 구한다.
+const sum = [1, 2, 3, 4].reduce((accumulator, currentValue, index, array) => accumulator + currentValue, 0);
+
+console.log(sum); // 10
+```
+
+<img src="https://user-images.githubusercontent.com/32444914/82732994-b7cd1400-9d4b-11ea-804e-977db661b3e4.png" width="60%" />
+
+| iteration | accumulator | currentValue | index | array        | return                          |
+| --------- | ----------- | ------------ | ----- | ------------ | ------------------------------- |
+| 1         | 0 (초기값)  | 1            | 0     | [1, 2, 3, 4] | 1 (accumulator + currentValue)  |
+| 2         | 1           | 2            | 1     | [1, 2, 3, 4] | 3 (accumulator + currentValue)  |
+| 3         | 3           | 3            | 2     | [1, 2, 3, 4] | 6 (accumulator + currentValue)  |
+| 4         | 6           | 4            | 3     | [1, 2, 3, 4] | 10 (accumulator + currentValue) |
+
+**reduce 메소드를 사용할 때는 언제나 초기값을 전달하는 것이 안전하다**.
+
+```javascript
+const sum = [].reduce((acc, cur) => acc + cur);
+// TypeError: Reduce of empty array with no initial value
+```
+
+이처럼 빈 배열로 reduce 메소드를 호출하면 에러가 발생한다. 이때 reduce 메소드에 초기값을 전달하면 에러가 발생하지 않는다.
+
+```javascript
+const sum = [].reduce((acc, cur) => acc + cur, 0);
+console.log(sum); // 0
+```
+
+reduce 메소드로 객체의 특정 프로퍼티 값을 합산하는 경우을 생각해보자.
+
+```javascript
+const products = [
+  { id: 1, price: 100 },
+  { id: 2, price: 200 },
+  { id: 3, price: 300 },
+];
+
+// 2번째 순회시, 콜백 함수에 숫자값이 전달된다. 이때 pre.price는 undefineddlek.
+// iteration 1: acc = { id: 1, price: 100 }, cur = { id: 2, price: 200 }
+// iteration 2: acc = 300, cur = { id: 3, price: 300 }
+const priceSum = products.reduce((acc, cur) => acc.price + cur.price);
+
+console.log(priceSum); // NaN
+```
+
+이처럼 객체의 특정 프로퍼티 값을 합산하는 경우에는 반드시 초기값을 전달해야 한다.
+
+```javascript
+const products = [
+  { id: 1, price: 100 },
+  { id: 2, price: 200 },
+  { id: 3, price: 300 },
+];
+
+// iteration 1: acc = 0, cur = { id: 1, price: 100 }
+// iteration 2: acc = 100, cur = { id: 2, price: 200 }
+// iteration 3: acc = 300, cur = { id: 3, price: 300 }
+const sum = products.reduce((acc, cur) => acc + cur.price, 0);
+console.log(sum); // 600
+```
+
+&nbsp;  
+
+### 9.6. Array.prototype.some
+
+some 메소드는 배열을 순회하며 각 요소에 대해 인수로 전달된 콜백 함수를 호출한다. 이때 some 메소드는 콜백 함수의 반환값이 한번이라도 참이면 true, 모두 거짓이면 false를 반환한다. 즉, 배열의 요소 중 콜백 함수를 통해 정의한 조건을 만족하는 요소가 1개 이상 존재하는지 확인하여 그 결과를 **불리언 타입**으로 반환한다.
+
+forEach, map, filter 메소드와 마찬가지로 some 메소드의 콜백 함수는 요소값, 인덱스, 메소드를 호출한 배열(this)를 전달 받을 수 있다.
+
+```javascript
+// 배열의 요소 중 10보다 큰 요소가 1개 이상 존재하는지 확인
+[5, 10, 15].some(v => v > 10); // true
+
+// 배열의 요소 중 0보다 작은 요소가 1개 이상 존재하는지 확인
+[5, 10, 15].some(v => v < 0); // false
+```
+
+forEach, map, fillter 메소드와 마찬가지로 some 메소드는 두번째 인수로 some 메소드 내부에서 사용할 this 객체를 전달할 수 있다.
+
+&nbsp;  
+
+### 9.7. Array.prototype.every
+
+every 메소드는 배열을 순회하며 각 요소에 대해 인수로 전달된 콜백 함수를 호출한다. 이때 every 메소드는 콜백 함수의 반환값이 모두 참이면 true, 한번이라도 거짓이면 false를 반환한다. 즉, 배열의 모든 요소가 콜백 함수를 통해 정의한 조건을 모두 만족하는지 확인하여 그 결과를 불리언 타입으로 반환한다.
+
+forEach, map, filter 메소드와 마찬가지로 every 메소드의 콜백 함수는 요소값, 인덱스, 메소드를 호출한 배열(this)을 전달 받을 수 있다.
+
+```javascript
+// 배열의 모든 요소가 3보다 큰지 확인
+[5, 10, 15].every(item => item > 3); // true
+
+// 배열의 모든 요소가 10보다 큰지 확인
+[5, 10, 15].every(item => item > 10); // false
+```
+
+forEach, map, filter 메소드와 마찬가지로 every 메소드에 두번째 인자로 every 메소드 내부에서 사용할 this 객체를 전달할 수 있다.
+
+&nbsp;  
+
+### 9.8. Array.prototype.find
+
+ES6에서 새롭게 도입된 find 메소드는 배열을 순회하며 각 요소에 대해 인수로 전달된 콜백 함수를 호출하여 반환값이 true인 **첫번째 요소**를 반환한다. 콜백 함수의 호출 결과가 true인 요소가 없다면 undefined를 반환한다.
+
+forEach, map, filter 메소드와 마찬가지로 find 메소드의 콜백 함수는 요소값, 인덱스, 메소드를 호출한 배열(this)을 전달 받을 수 있다.
+
+```javascript
+const users = [
+  { id: 1, name: 'Kim' },
+  { id: 2, name: 'Park' },
+  { id: 3, name: 'Lee' }
+];
+
+// id가 2인 요소를 반환한다.
+const result = users.find(item => item.id === 2);
+
+// Array#find는 배열이 아니라 요소를 반환한다.
+console.log(result); // { id: 2, name: 'Kim' }
+```
+
+forEach, map, filter 메소드와 마찬가지로 find 메소드에 두번째 인자로 find 메소드 내부에서 사용할 this 객체를 전달할 수 있다.
+
+&nbsp;  
+
+### 9.9. Array.prototype.findIndex
+
+ES6에서 새롭게 도입된 findIndex 메소드는 배열을 순회하며 각 요소에 대해 인수로 전달된 콜백 함수를 호출하여 반환값이 true인 **첫번째 요소의 인덱스**를 반환한다. 콜백 함수의 호출 결과가 true인 요소가 존재하지 않으면 -1을 반환한다.
+
+forEach, map, filter 메소드와 마찬가지로 findIndex 메소드의 콜백 함수는 요소값, 인덱스, 메소드를 호출한 배열(this)을 전달 받을 수 있다.
+
+```javascript
+const users = [
+  { id: 1, name: 'Kim' },
+  { id: 2, name: 'Lee' },
+  { id: 3, name: 'Park' },
+  { id: 4, name: 'Choi' },
+];
+
+// id가 2인 요소의 인덱스를 구한다.
+users.findIndex(user => user.id === 2); // 1
+
+// name이 'Park'인 요소의 인덱스를 구한다.
+users.findIndex(user => user.name === 'Park'); // 3
+```
+
+forEach, map, filter 메소드와 마찬가지로 findIndex 메소드에 두번째 인자로 findIndex 메소드 내부에서 사용할 this 객체를 전달할 수 있다.
+
+&nbsp;  
+
+## 참고 자료
+
+* [poiemaweb.com - 배열](https://poiemaweb.com/fastcampus/array)
 
