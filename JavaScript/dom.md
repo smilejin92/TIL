@@ -141,7 +141,128 @@ HTML 요소가 객체화된 요소 노드 객체는 HTML 요소가 갖는 공통
 
 &nbsp;  
 
+## 2. 요소 노드 취득
 
+HTML의 구조나 내용 또는 스타일 등을 동적으로 조작하려면 먼저 요소 노드를 취득해야 한다. 텍스트 노드나  어트리뷰트 노드를 조작하고자 할 때도 마찬가지다.
+
+예를 들어, HTML 문서 내의 h1 요소의 텍스트를 변경하고 싶은 경우 먼저 DOM 트리 내에 존재하는 h1 요소 노드를 취득할 필요가 있다. 그리고 취득한 요소 노드의 자식 노드인 텍스트 노드를 변경하면 해당 h1 요소의 텍스트가 변경된다.
+
+이처럼 요소 노드의 취득은 HTML 요소를 조작하는 시작점이다. 이를 위해 DOM은 요소 노드를 취득할 수 있는 다양한 메소드를 제공한다.
+
+&nbsp;  
+
+### 2.1. id를 이용한 요소 노드 취득
+
+<strong>`Document.prototype.getElementbyId(id)`</strong>
+
+* 인수로 전달한 id 어트리뷰트 값을 가지는 하나의 요소 노드를 탐색하여 반환
+* Document.prototype의 프로퍼티이므로 반드시 문서 노드 document를 통해 호출
+* HTML 문서 내에 중복된 id 값을 가지는 요소가 여러 개 존재할 경우 첫번째 요소 노드만 반환
+* 인수로 전달된 id 값을 가지는 요소가 없는 경우 null을 반환
+
+&nbsp;  
+
+
+**주의 사항**
+
+id 값은 HTML 문서 내에서 유일한 값이어야 하며 class 어트리뷰트와는 달리 공백 문자로 구분하여 여러 개의 값을 가질 수 없다. 단, HTML 문서 내에 중복된 id 값을 가지는 요소가 여러 개 존재하더라도 어떠한 에러도 발생하지 않는다.
+
+HTML 요소에 id 어트리뷰트를 부여하면 id 값과 동일한 이름의 전역 변수가 암묵적으로 선언되고 해당 노드 객체가 할당되는 부수 효과(side effect)가 있다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo"></div>
+    <script>
+    	// id 값과 동일한 이름의 전역 변수가 암묵적으로 선언되고 해당 노드 객체가 할당
+      console.log(foo); // <div id="foo"></div>
+      
+      // 암묵적 전역으로 생성된 전역 프로퍼티는 삭제되지만 전역 변수는 삭제되지 않는다.
+      delete foo;
+      console.log(foo); // <div id="foo"></div>
+    </script>
+  </body>
+</html>
+```
+
+단, id 값과 동일한 이름의 전역 변수가 이미 선언되어 있으면 이 전역 변수에 노드 객체가 재할당되지 않는다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo"></div>
+    <script>
+    	let foo = 1;
+      // id 값과 동일한 이름의 전역 변수가 이미 선언되어 있으면 노드 객체가 재할당되지 않는다.
+      	console.log(foo); // 1
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
+### 2.2. 태그 이름을 이용한 요소 노드 취득
+
+<strong>`Document.prototye.getElementsByTagName(tagName)`</strong>
+
+<strong>`Element.prototype.getElementsByTagName(tagName)`</strong>
+
+* 인수로 전달한 태그 이름을 갖는 **모든 요소 노드를 탐색하여 반환**
+* 여러 개의 요소 노드 객체를 가지는 DOM 컬렉션 객체인 HTMLCollection 객체를 반환
+* HTMLCollection 객체는 유사 배열 객체이자 이터러블이다.
+* `Document.prototype.getElementsByTagName` 메소드는 문서 노드(document)를 통해 호출하며 HTML 문서 전체에서 요소 노드를 탐색하여 반환
+* `Element.prototype.getElementsByTagName` 메소드는 특정 요소 노드를 통해 호출하며 특정 요소 노드 범위 내의 요소 노드를 탐색하여 반환
+* 만약 인수로 전달된 태그 이름을 가지는 요소가 존재하지 않는 경우, 빈 HTMLCollection 객체를 반환
+
+&nbsp;  
+
+### 2.3. class를 이용한 요소 노드 취득
+
+<strong>`Document.prototype.getElementsByClassName(className)`</strong>
+
+<strong>`Element.prototype.getElementsByClassName(className)`</strong>
+
+* 인수로 전달한 class 어트리뷰트 값을 가지는 모든 요소 노드를 탐색하여 반환
+* 인수로 전달할 class 값은 공백으로 구분하여 여러 개의 class를 지정할 수 있다.
+* 여러 개의 요소 노드 객체를 가지는 DOM 콜렉션 객체인 HTMLCollection 객체를 반환
+* `Document.prototype.getElementsByClassName` 메소드는 문서 노드(document)를 통해 호출하며 HTML 문서 전체에서 요소 노드를 탐색하여 반환
+* `Element.prototype.getElementsByClassName(className)` 메소드는 특정 요소 노드를 통해 호출하며 특정 요소 노드 범위 내의 요소 노드를 탐색하여 반환
+* 만약 인수로 전달된 class 값을 가지는 요소가 존재하지 않는 경우, 빈 HTMLCollection 객체를 반환
+
+&nbsp;  
+
+### 2.4. CSS 선택자를 이용한 요소 노드 취득
+
+<strong>`Document.prototype.querySelector(cssSelector)`</strong>
+
+<strong>`Element.prototype.querySelector(cssSelector)`</strong>
+
+* 인수로 전달한 CSS 선택자를 만족시키는 하나의 요소 노드를 탐색하여 반환
+* 만약 인수로 전달한 CSS 선택자를 만족하는 요소 노드가 여러 개인 경우, 첫번째 요소 노드만 반환
+* 인수로 전달한 CSS 선택자를 만족시키는 요소가 존재하지 않는 경우, null을 반환
+* `Document.prototype.querySelector` 메소드는 문서 노드(document)를 통해 호출하며 HTML 문서 전체에서 요소 노드를 탐색하여 반환
+* `Element.prototype.querySelector` 메소드는 특정 요소 노드 범위 내의 요소 노드를 탐색하여 반환
+* 인수로 전달한 CSS 선택자가 문법에 맞지 않는 경우, DOMException 에러가 발생한다.
+
+&nbsp;  
+
+<strong>`Document.prototype.querySelectorAll(cssSelector)`</strong>
+
+<strong>`Element.prototype.querySelectorAll(cssSelector)`</strong>
+
+* 인수로 전달한 CSS 선택자를 만족하는 모든 요소 노드를 탐색하여 반환
+* 여러 개의 요소 노드 객체를 가지는 DOM 컬렉션 객체인 NodeList 객체를 반환
+* 인수로 전달된 CSS 선택자를 만족시키는 요소가 존재하지 않는 경우, 빈 NodeList 객체를 반환
+* `Document.prototype.querySelectorAll` 메소드는 문서 노드(document)를 통해 호출하며 HTML 문서 전체에서 요소 노드를 탐색하여 반환
+* `Element.prototype.querySelectorAll` 메소드는 특정 요소 노드 범위 내의 요소 노드를 탐색하여 반환
+* 인수로 전달한 CSS 선택자가 문법에 맞지 않는 경우, DOMException 에러가 발생한다.
+
+&nbsp;  
+
+### 2.5. 요소 노드 취득 가능 여부 확인
 
 
 
