@@ -2,6 +2,13 @@
 
 ## 1. 이벤트 드리븐 프로그래밍
 
+* 브라우저는 처리해야 할 특정 사건이 발생하면 이를 감지하여 이벤트를 발생시킨다.
+* 이벤트 핸들러: 이벤트가 발생했을 때 호출 될 함수
+* 이벤트 핸들러 등록: 이벤트가 발생했을 때 브라우저에게 이벤트 핸들러의 호출을 위임하는 것
+* 프로그램의 흐름을 이벤트 중심으로 제어하는 방식을 이벤트 드리븐 프로그래밍이라 한다.
+
+&nbsp;  
+
 **브라우저는 처리해야 할 특정 사건이 발생하면 이를 감지하여 이벤트(event)를 발생(trigger)시킨다.** 예를 들어 클릭, 키보드 입력, 마우스 이동 등이 일어나면 브라우저는 이를 감지하여 특정한 타입의 이벤트를 발생시킨다.
 
 <strong>이벤트 핸들러</strong>: 이벤트가 발생했을 때 호출될 함수
@@ -37,7 +44,7 @@
 
 ## 2. 이벤트 타입
 
-이벤트 타입(event type)은 **이벤트의 종류를 나타내는 문자열**이다. 예를 들어, 이벤트 타입 'click'은 사용자가 마우스 버튼을 클릭하였을 때 발생하는 이벤트를 나타낸다.
+이벤트 타입(event type)은 **이벤트의 종류를 나타내는 문자열**이다. 예를 들어, 이벤트 타입 "click"은 사용자가 마우스 버튼을 클릭하였을 때 발생하는 이벤트를 나타낸다.
 
 이벤트는 약 200여개의 종류가 있다. 이벤트에 대한 상세 목록은 [MDN의 Event reference](https://developer.mozilla.org/en-US/docs/Web/Events)에서 확인할 수 있다.
 
@@ -47,7 +54,7 @@
 
 이벤트 핸들러(event handler/listener)는 이벤트가 발생했을 때 **브라우저에 호출을 위임한 함수**이다. 다시 말해, 이벤트가 발생하면 브라우저에 의해 호출될 함수가 이벤트 핸들러이다.
 
-이벤트가 발생했을 때 브라우저에게 이벤트 핸들러의 호출을 위임하는 것을 **이벤트 핸들러 등록**이라 한다. 이벤트 핸들러를 등록하는 방법은 3가지이다.
+이벤트가 발생했을 때 브라우저에게 이벤트 핸들러의 호출을 위임하는 것을 **이벤트 핸들러 등록**이라 한다. 이벤트 핸들러를 등록하는 방법은 **3가지**이다.
 
 * 이벤트 핸들러 어트리뷰트
 * 이벤트 핸들러 프로퍼티
@@ -56,6 +63,16 @@
 &nbsp;  
 
 ### 3.1. 이벤트 핸들러 어트리뷰트
+
+* 이벤트 핸들러 어트리뷰트는 HTML 요소의 어트리뷰트이다.
+* 이벤트 핸들러 어트리뷰트는 "onclick"과 같이 "on" 접두사와 이벤트 타입으로 이루어져 있다.
+* 이벤트 핸들러 어트리뷰트 값으로 **함수 참조가 아닌 함수 호출문 등의 문을 할당**하면 이벤트 핸들러가 등록된다.
+* 이벤트 핸들러 어트리뷰트 값은 **이벤트 핸들러의 함수 몸체를 의미한다.**
+* 이벤트 핸들러 어트리뷰트가 파싱되어 생성된 함수 객체는 **이벤트 핸들러 프로퍼티에 할당된다**.
+* 이벤트 핸들러 어트리뷰트의 값으로 함수 호출문을 할당하는 이유는 인수를 전달하기 위함이다.
+* CBD 방식의 프레임워크(ex. React, Angular 등)에서는 이벤트 핸들러 어트리뷰트 방식을 사용한다.
+
+&nbsp;  
 
 **HTML 요소의 어트리뷰트**에는 이벤트에 대응하는 이벤트 핸들러 어트리뷰트가 있다. 이벤트 핸들러 어트리뷰트는 onclick과 같이 on 접두사와 이벤트 타입으로 이루어져 있다. HTML 요소의 이벤트 핸들러 어트리뷰트 값으로 함수 호출문 등의 문(statement)을 할당하면 이벤트 핸들러가 등록된다.
 
@@ -108,6 +125,15 @@ function onclick(event) {
 &nbsp;  
 
 ### 3.2. 이벤트 핸들러 프로퍼티 방식
+
+* window, Document, HTMLElement 타입의 DOM 노드 객체는 이벤트에 대응하는 이벤트 핸들러 **프로퍼티**를 가지고 있다.
+* 이벤트 핸들러 프로퍼티는 "on" 접두사와 이벤트 타입으로 이루어져 있다.
+* 이벤트 핸들러 프로퍼티에 함수를 바인딩하면 이벤트 핸들러가 등록된다.
+* 이벤트 핸들러 어트리뷰트도 DOM 노드의 이벤트 핸들러 프로퍼티로 변환되므로 이벤트 핸들러 프로퍼티와 결과적으로 동일하다.
+* 이벤트 핸들러 프로퍼티는 HTML과 JavaScript의 관심사를 분리할 수 있다는 장점이 있다.
+* 이벤트 핸들러 프로퍼티는 동일한 이벤트에 대해 하나의 이벤트 핸들러만을 등록할 수 있다.
+
+&nbsp;  
 
 window 객체와 Document, HTMLElement 타입의 **DOM 노드 객체**는 이벤트에 대응하는 이벤트 핸들러 **프로퍼티**를 가지고 있다. 이벤트 핸들러 프로퍼티는 이벤트 핸들러 어트리뷰트와 마찬가지로 on 접두사와 이벤트 타입으로 이루어져 있다(ex. onclick). 이벤트 핸들러 프로퍼티에 함수를 바인딩하면 이벤트 핸들러가 등록된다.
 
@@ -162,7 +188,13 @@ window 객체와 Document, HTMLElement 타입의 **DOM 노드 객체**는 이벤
 
 ### 3.3. addEventListener 메소드 방식
 
-DOM Level 2에서 도입된 `EventTarget.prototype.addEventListener` 메소드를 사용하여 이벤트를 등록할 수 있다. 이벤트 핸들러 어트리뷰트와 이벤트 핸들러 프로퍼티 방식은 DOM Level 0부터 제공되었던 방식이다.
+* `EventTarget.prototype.addEventListener` 메소드를 사용하여 이벤트 핸들러를 등록할 수 있다.
+* `addEventListener` 메소드는 이벤트 핸들러 프로퍼티에 아무런 영향을 주지 않는다. 만약 동일한 이벤트에 해당하는 이벤트 핸들러 프로퍼티와 `addEventListener` 메소드로 등록한 이벤트 핸들러가 있다면 모두 호출된다.
+* `addEventListener` 메소드는 동일한 이벤트에 대하여 이벤트 핸들러를 중복으로 등록할 수 있다. 단, 인수로 전달한 함수의 참조가 동일하다면 나중에 등록된 이벤트 핸들러는 무시된다.
+
+&nbsp;  
+
+DOM Level 2에서 도입된 `EventTarget.prototype.addEventListener` 메소드를 사용하여 이벤트 핸들러를 등록할 수 있다. 이벤트 핸들러 어트리뷰트와 이벤트 핸들러 프로퍼티 방식은 DOM Level 0부터 제공되었던 방식이다.
 
 <img src="https://user-images.githubusercontent.com/32444914/83031114-24f3e880-a06f-11ea-93ae-764a448e8abf.png" width="80%" />
 
@@ -271,6 +303,12 @@ DOM Level 2에서 도입된 `EventTarget.prototype.addEventListener` 메소드�
 
 ## 4. 이벤트 핸들러 제거
 
+* `addEventListener` 메소드로 등록한 이벤트 핸들러를 제거하려면 `removeEventListener` 메소드를 사용한다.
+* `removeEventListener` 전달할 인수는 `addEventListener` 메소드와 동일하다. 만약 `addEventListener` 메소드에 전달한 인수와 일치하지 않으면(이벤트 핸들러 참조 포함) 이벤트 핸들러가 제거되지 않는다.
+* 이벤트 핸들러 프로퍼티로 등록한 이벤트 핸들러는 `removeEventListener` 메소드로 제거할 수 없다. 이벤트 핸들로 프로퍼티로 등록한 이벤트 핸들러를 제거하려면 이벤트 핸들러 프로퍼티에 명시적으로 `null`을 할당한다.
+
+&nbsp;  
+
 `addEventListener` 메소드로 등록한 이벤트 핸들러를 제거하려면 `Event.prototype.removeEventListener` 메소드를 사용한다. `removeEventListener` 메소드에 전달할 인수는 `addEventListener` 메소드와 동일하다. 단, `addEventListener` 메소드에 전달한 인수와 일치하지 않으면 이벤트 핸들러가 제거되지 않는다.
 
 ```html
@@ -360,6 +398,14 @@ $button.addEventListener('click', function handleClick() {
 &nbsp;  
 
 ### 5.1. 이벤트 객체의 상속 구조
+
+* 이벤트가 발생하면 발생한 이벤트의 타입에 따라 다양한 타입의 이벤트 객체가 생성된다.
+* `Event`, `UIEvent`, `MouseEvent` 등은 모두 생성자 함수이다. 따라서 이벤트 객체를 직접 생성할 수 있다.
+* 이벤트 객체도 생성자 함수에 의해 생성되므로 프로토타입 객체를 가지며, 프로토타입 체인의 일원이 된다.
+* Event 인터페이스에는 모든 이벤트 객체의 공통 프로퍼티가 정의되어있다.
+* FocusEvent, MouseEvent, KeyboardEvent 등 하위 인터페이스에는 이벤트 타입에 따라 고유한 프로퍼티가 정의되어있다.
+
+&nbsp;  
 
 이벤트가 발생하면 **발생한 이벤트의 타입에 따라** 다양한 타입의 **이벤트 객체가 생성**된다. 이벤트 객체는 아래와 같은 상속 구조를 가진다.
 
@@ -725,16 +771,15 @@ DOM 요소마다 기본 동작이 있다. 예를 들어, a 요소를 클릭하�
 <!doctype html>
 <html>
   <body>
-    <!-- <button onclick="console.log(this);">Click me</button -->
     <button>Click me</button>
     <script>
-      document.querySelector('button').onclick = function () {
-        handleClick(); // 일반 함수로 호출되어 this는 전역 객체 window를 가리킨다.
-      };
-      
       function handleClick() {
         console.log(this);
       }
+      
+      document.querySelector('button').onclick = function () {
+        handleClick(); // 일반 함수로 호출되어 this는 전역 객체 window를 가리킨다.
+      };
     </script>
   </body>
 </html>
@@ -1088,22 +1133,4 @@ console.log(customEvent.type); // foo
 ## 참고 자료
 
 * [poiemaweb.com - 이벤트](https://poiemaweb.com/fastcampus/event)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
