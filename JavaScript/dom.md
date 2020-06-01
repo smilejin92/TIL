@@ -264,9 +264,233 @@ HTML 요소에 id 어트리뷰트를 부여하면 id 값과 동일한 이름의 
 
 ### 2.5. 요소 노드 취득 가능 여부 확인
 
+<strong>`Element.prototype.matches(cssSelector)`</strong>
 
+* 인수로 전달된 CSS 선택자에 의해 특정 요소 노드를 탐색 가능한지 확인
+* 이벤트 위임에 사용
 
+&nbsp;  
 
+### 2.6. HTMLCollection과 NodeList
+
+HTMLCollection과 NodeList는 DOM API가 **여러 개의 결과값을 반환하기 위한 DOM 컬렉션 객체**이다. **HTMLCollection과 NodeList는 모두 유사 배열 객체이자 이터러블이다.** 따라서 for...of 문으로 순회할 수 있으며 스프레드 문법을 사용해 간단히 배열로 변환할 수 있다.
+
+HTMLCollection과 NodeList의 중요한 특징은 **노드 객체의 상태 변화를 실시간으로 반영하는 살아있는(live) 객체**라는 것이다. HTMLCollection은 언제나 live 객체로 동작한다. 단, NodeList는 대부분의 경우 노드 객체의 상태를 정적으로 유지하는 non-live 객체로 동작하지만, 경우에 따라 live 객체로 동작할 때가 있다(ex. childNodes 프로퍼티).
+
+따라서 **노드 객체의 상태 변경과 상관 없이 안전하게 DOM 컬렉션을 사용하려면 HTMLCollection이나 NodeList를 배열로 변환하여 사용하는 것이 좋다.** HTMLCollection과 NodeList 객체가 메소드를 제공하기는 하지만, 배열만큼 다양한 기능을 제공하지는 않는다(ex. 고차 함수).
+
+HTMLCollection과 NodeList는 모두 유사 배열 객체이며 이터러블이다. 따라서 스프레드 무법을 사용하여 간단히 배열로 변환할 수 있다.
+
+&nbsp;  
+
+## 3. 노드 탐색
+
+요소 노드를 취득한 다음, 취득한 요소 노드를 기점으로 DOM 트리의 노드를 옮겨 다니며 부모, 형제, 자식 등을 탐색(traversing)해야 할 때가 있다. 아래 예제를 살펴보자.
+
+```html
+<ul id="fruits">
+  <li class="apple">apple</li>
+  <li class="banana">banana</li>
+  <li class="orange">orange</li>
+</ul>
+```
+
+ul#fruits 요소는 3개의 자식 요소를 가진다. 이때 먼저 ul#fruits 요소 노드를 취득한 다음, 자식 노드를 모두 탐색하거나 첫번째 자식 노드 또는 마지막 자식 노드 만을 탐색할 수 있다.
+
+li.banana 요소는 2개의 형제 요소와 부모 요소를 가진다. 이때 먼저 li.banana 요소 노드를 취득한 다음, 형제 노드를 탐색하거나 부모 노드를 탐색할 수 있다.
+
+이처럼 DOM 트리 상의 노드를 탐색할 수 있도록 Node, Element 인터페이스는 **트리 탐색 프로퍼티**를 제공한다.
+
+<img src="https://user-images.githubusercontent.com/32444914/83405180-f008dc80-a446-11ea-96a6-3c8258e254b8.png" width="70%" />
+
+DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 프로퍼티인 parentNode, previousSibling, firstChild, childNodes 등은 Node.prototype이 제공하고 프로퍼티 키에 Element가 포함된 previousElementSibling, nextElementSibling, children은 Element.prototype이 제공하는 프로퍼티이다.
+
+노드 탐색 프로퍼티는 모두 **접근자 프로퍼티**이다. 단, setter 없이 getter만 존재하여 참조만 가능한 읽기 전용 프로퍼티이다. 읽기 전용 접근자 프로퍼티에 값을 할당하면 아무런 에러 없이 무시된다.
+
+<img src="https://user-images.githubusercontent.com/32444914/83409975-71b13800-a450-11ea-975d-e8754454f498.png" width="60%" />
+
+&nbsp;  
+
+### 3.1. 공백 텍스트 노드
+
+**HTML 요소 사이의 개행이나 공백은 텍스트 노드를 생성한다.**
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li class="apple">Apple</li>
+      <li class="banana">Banana</li>
+      <li class="orange">Orange</li>
+    </ul>
+  </body>
+</html>
+```
+
+텍스트 에디터에서 HTML 문서에 엔터 키를 입력하면 개행 문자가 추가된다. 위 HTML 문서에도 개행 문자가 포함되어 있다. 위 HTML 문서는 마싱되어 아래와 같은 DOM을 생성한다.
+
+<img src="https://user-images.githubusercontent.com/32444914/83410213-eab08f80-a450-11ea-81c6-19a41d5b5faf.png" width="70%" />
+
+이처럼 개행이나 공백은 텍스트 노드를 생성한다. 따라서 노드 탐색 시에는 개행이나 공백 문자가 생성한 텍스트 노드에 주의해야 한다.
+
+&nbsp;  
+
+### 3.2. 자식 노드 탐색
+
+자식 노드를 탐색하기 위해서는 아래와 같은 노드 탐색 프로퍼티를 사용한다.
+
+| 프로퍼티                            | 설명                                                         |
+| ----------------------------------- | ------------------------------------------------------------ |
+| Node.prototype.childNodes           | 자식 노드를 모두 탐색하여 DOM 컬렉션 객체인 NodeList에 담아 반환한다. **childNodes 프로퍼티가 반환한 NodeList에는 텍스트 노드 또는 요소 노드가 포함되어 있다.** |
+| Element.prototype.children          | 자식 요소 노드 만을 모두 탐색하여 DOM 컬렉션 객체인 HTMLCollection에 담아 반환한다. **children 프로퍼티가 반환한 HTMLCollection에는 텍스트 노드는 포함되지 않고 요소 노드만이 포함되어 있다.** |
+| Node.prototype.firstChild           | 첫번째 자식 노드를 반환한다. 반환된 노드는 텍스트 노드 또는 요소 노드이다. |
+| Node.prototype.lastChild            | 마지막 자식 노드를 반환한다. 반한된 노드는 텍스트 노드 또는 요소 노드이다. |
+| Element.prototype.firstElementChild | 첫번째 자식 노드를 반환한다. 요소 노드만을 반환한다.         |
+| Element.prototype.lastElementChild  | 마지막 자식 노드를 반환한다. 요소 노드만을 반환한다.         |
+
+&nbsp;  
+
+### 3.3. 자식 노드 존재 확인
+
+| 프로퍼티                            | 설명                                                         |
+| ----------------------------------- | ------------------------------------------------------------ |
+| Node.prototype.hasChildNodes        | 자식 노드의 존재 여부를 불리언으로 반환한다. childNodes 프로퍼티와 마찬가지로 텍스트 노드를 포함하여 자식 노드의 존재를 확인한다. |
+| Element.prototype.children.length   | 요소 노드인 자식 노드가 존재하는지 children 프로퍼티(유사 배열 객체)의 길이를 확인한다. children은 DOM 콜렉션 객체인 HTMLCollection 객체이다. |
+| Element.prototype.childElementCount | 요소 노드인 자식 노드의 수를 나타내는 프로퍼티               |
+
+&nbsp;  
+
+### 3.4. 텍스트 노드 탐색
+
+요소 노드의 텍스트 노드는 요소 노드의 자식 노드이다. 따라서 요소 노드의 텍스트 노드는 firstChild 프로퍼티로 접근할 수 있다.
+
+&nbsp;  
+
+### 3.5. 부모 노드 탐색
+
+부모 노드를 탐색하기 위해서는 `Node.prototype.parentNode` 프로퍼티를 사용한다. 텍스트 노드는 DOM 트리의 최종단 노드인 리프 노드(leaf node)이므로 탐색한 부모 노드가 텍스트 노드인 경우는 없다.
+
+&nbsp;  
+
+### 3.6. 형제 노드 탐색
+
+같은 부모 노드를 갖는 형제 노드를 탐색하기 위해서는 아래와 같은 노드 탐색 프로퍼티를 사용한다. 단, **어트리뷰트 노드는 요소 노드의 형제 노드이지만, 같은 부모 노드를 갖는 형제 노드가 아니기 때문에 반환되지 않는다.** 즉, 아래 프로퍼티는 텍스트 노드 또는 요소 노드만 반환한다.
+
+| 프로퍼티                                 | 설명                                                         |
+| ---------------------------------------- | ------------------------------------------------------------ |
+| Node.prototype.previousSibling           | 같은 부모 노드를 갖는 형제 노드 중 이전 형제 노드를 탐색하여 반환한다. 텍스트 노드 또는 요소 노드가 반환된다. |
+| Node.prototype.nextSibling               | 같은 부모 노드를 갖는 형제 노드 중 다음 형제 노드를 탐색하여 반환한다. 텍스트 노드 또는 요소 노드가 반환된다. |
+| Element.prototype.previousElementSibling | 같은 부모 노드를 갖는 형제 요소 노드 중 이전 형제 요소 노드를 탐색하여 반환한다. |
+| Element.prototype.nextElementSibling     | 같은 부모 노드를 갖는 형제 요소 노드 중 다음 형제 요소 노드를 탐색하여 반환한다. |
+
+&nbsp;  
+
+## 4. 노드 정보 취득
+
+노드 객체에 대한 정보를 확인하려면 아래와 같은 노드 정보 프로퍼티를 사용한다.
+
+| 프로퍼티                | 설명                                                         |
+| ----------------------- | ------------------------------------------------------------ |
+| Node.prototype.nodeType | 노드 객체의 종류를 나타내는 상수를 반환한다. 노드 타입 상수는 Node에 정의되어 있다. |
+| Node.prototype.nodeName | 노드의 이름을 문자열로 반환한다.                             |
+
+&nbsp;  
+
+## 5. 요소 노드의 텍스트 조작
+
+### 5.1. nodeValue
+
+`Node.prototype.nodeValue` 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티이다. 따라서 nodeValue 프로퍼티는 참조와 할당 모두 가능하다.
+
+노드의 nodeValue 프로퍼티를 참조하면 **노드의 값을 반환**한다. 이때 텍스트 노드가 아닌 노드(문서 노드 혹은 요소 노드)의 nodeValue 프로퍼티를 참조하면 null을 반환한다. 텍스트 노드의 nodeValue 프로퍼티를 참조할 때만 텍스트 노드의 값, 즉 텍스트를 반환한다.
+
+텍스트 노드의 nodeValue 프로퍼티에 값을 할당하면 텍스트를 변경할 수 있다. 이를 통해 요소 노드의 텍스트를 변경하려면 아래와 같은 처리가 필요하다.
+
+1. 텍스트를 변경할 요소 노드를 취득한 다음, 취득한 요소 노드의 텍스트 노드를 탐색한다. 텍스트 노드는 요소 노드의 자식 노드이므로 firstChild 프로퍼티를 사용하여 탐색한다.
+2. nodeValue 프로퍼티를 사용하여 탐색한 텍스트 노드의 값을 변경한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+    <script>
+    	// 1. div#foo 요소의 텍스트 노드 취득
+      const $textNode = document.getElementById('foo').firstChild;
+      
+      // 2. 텍스트 노드의 텍스트 변경.
+      $textNode.nodeValue = 'World';
+      
+      console.log($textNode.nodeValue); // World
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
+### 5.2. textContent
+
+`Node.prototype.textContent`는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 텍스트와 모든 자손 노드의 텍스트를 취득하거나 변경한다.
+
+요소 노드의 textContent 프로퍼티를 참조하면 요소 노드의 컨텐츠 영역(시작 태그와 종료 태그 사이)내의 텍스트를 모두 반환한다. 이때 HTML 마크업은 무시된다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world!</span></div>
+    <script>
+    	// div#foo 요소의 텍스트를 모두 취득
+      // HTML 마크업은 무시된다.
+      console.log(document.getElementById('foo').textContent);
+      // Hellow world!
+    </script>
+  </body>
+</html>
+```
+
+<img src="https://user-images.githubusercontent.com/32444914/83415196-b2617f00-a459-11ea-8bad-13c3f65b3849.png" width="70%" />
+
+만약 요소 노드의 컨텐츠 영역에 다른 요소 노드가 없고 텍스트만 존재한다면 firstChild.nodeValue와 textContent 프로퍼티는 같은 결과를 반환한다. 따라서 이 경우, textContent 프로퍼티를 사용하는 것이 좋다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+    <script>
+    	const $foo = document.getElementById('foo');
+      
+      // 요소 노드의 컨텐츠 영역에 다른 요소 노드가 없고 텍스트만 존재한다면
+      // firstChild.nodeValue와 textContent는 같은 결과를 반환한다.
+      console.log($foo.textContent === $foo.firstChild.nodeValue); // true
+    </script>
+  </body>
+</html>
+```
+
+**만약 요소 노드의 textContent 프로퍼티에 문자열을 할당하면 요소 노드의 모든 자식 노드가 제거되고 할당한 문자열이 텍스트로 추가된다.** 이때 할당한 문자열에 HTML 마크업이 포함되어 있더라도 문자열 그대로 인식되어 텍스트로 취급된다. 즉, HTML 마크업이 파싱되지 않는다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world!</span></div>
+    <script>
+    	// div#foo 요소의 모든 자식 노드가 제거되고 할당한 문자열이 텍스트로 추가된다.
+      document.getElementById('foo').textContent = 'Hi <span>there!</span>';
+    </script>
+  </body>
+</html>
+```
+
+<img src="https://user-images.githubusercontent.com/32444914/83415795-a629f180-a45a-11ea-9c59-c4048856f351.png" width="70%" />
+
+&nbsp;  
+
+## 6. DOM 조작
 
 
 
