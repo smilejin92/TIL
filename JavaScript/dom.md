@@ -492,6 +492,111 @@ DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 �
 
 ## 6. DOM 조작
 
+DOM 조작(DOM manipulation)은 **새로운 노드를 생성하여 DOM에 추가하거나 기존 노드를 삭제 또는 교체하는 것**을 말한다. DOM 조작에 의해 DOM에 새로운 노드가 추가되거나 삭제되면 **리플로우와 리페인트가 발생하는 원인**이 되므로 성능에 영향을 준다. 따라서 복잡한 컨텐츠를 다루는 DOM 조작은 성능 최적화를 위해 주의해서 다루어야 한다.
+
+&nbsp;  
+
+### 6.1. innerHTML
+
+`Element.prototype.innerHTML` 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 **요소 노드의 HTML 마크업을 취득하거나 변경**한다. 요소 노드의 innerHTML 프로퍼티를 참조하면 요소 노드의 컨텐츠 영역(시작 태그와 종료 태그 사이) 내에 포함된 모든 HTML 마크업을 문자열로 반환한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world!</span></div>
+    <script>
+    	// div#foo 요소의 컨텐츠 영역 내의 HTML 마크업을 취득
+      console.log(document.getElementById('foo').innerHTML);
+      // Hello <span>world!</span>
+    </script>
+  </body>
+</html>
+```
+
+앞서 살펴본 textContent 프로퍼티를 참조하면 HTML 마크업을 무시하고 텍스트만 반환하지만, innerHTML 프로퍼티는 HTML 마크업을 그대로 반환한다.
+
+<img src="https://user-images.githubusercontent.com/32444914/83422253-37ea2c80-a464-11ea-8a25-3cf283fb17aa.png" width="70%" />
+
+요소 노드의 innerHTML 프로퍼티에 문자열을 할당하면 요소 노드의 자식 노드가 모두 제거되고 할당한 문자열에 포함되어 있는 HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world!</span></div>
+    <script>
+    	// HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+      document.getElemenetById('foo').innerHTML = 'Hi <span>there!</span>';
+    </script>
+  </body>
+</html>
+```
+
+<img src="https://user-images.githubusercontent.com/32444914/83422638-ca8acb80-a464-11ea-8940-b21cd6d0b1d6.png" width="70%" />
+
+이처럼 innerHTML 프로퍼티를 사용하면 HTML 마크업 문자열로 간단히 DOM 조작이 가능하다.
+
+요소 노드의 innerHTML 프로퍼티에 할당한 HTML 마크업 문자열은 렌더링 엔진에 의해 파싱되어 요소 노드의 자식으로 DOM에 반영된다. 이때 사용자로부터 입력 받은 데이터(untrusted input data)를 그대로 innerHTML 프로퍼티에 할당하는 것은 <strong>크로스 사이트 스크립팅 공격(XSS: Cross-Site Scripting Attacks)</strong>에 취약하므로 위험하다. HTML 마크업 내에 자바스크립트 악성 코드가 포함되어 있다면 파싱 과정에서 그대로 실행될 가능성이 있기 때문이다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+    <script>
+    	// innerHTML로 스크립트 태그를 삽입하여 자바스크립트가 실행되도록 한다.
+      // HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크립트 코드를 실행하지 않는다.
+      document.getElementById('foo').innerHTML = `<script>alert('XSS!')</script>`;
+    </script>
+  </body>
+</html>
+```
+
+HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크립트 코드를 실행하지 않는다. 따라서 HTML5를 지원하는 브라우저에서 위 예제는 동작하지 않는다. 하지만 script 요소 없이도 크로스 사이트 스크립팅 공격은 가능하다. 아래의 간단한 크로스 사이트 스크립팅 공격은 모던 브라우저에서도 동작한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+    <script>
+    	document.getElementById('foo').innerHTML = `<img src="x" onerror="alert('XSS')">`;
+    </script>
+  </body>
+</html>
+```
+
+이처럼 innerHTML 프로퍼티를 사용한 DOM 조작은 구현이 간단하고 직관적이라는 장점이 있지만, XSS 공격에 취약한 단점도 있다.
+
+> **HTML 새니티제이션(HTML sanitization)**
+>
+> HTML 새니티제이션 사용자로부터 입력 받은 데이터(untrusted input data)에 의해 발생할 수 있는 XSS 공격을 예방하기 위해 잠재적 위험을 제거하는 기능을 말한다. [DOMPurify](https://github.com/cure53/DOMPurify) 라이브러리는 이러한 기능을 제공하는 라이브러리다. DOMPurify는 아래와 같이 잠재적 위험을 내포한 HTML 마크업을 살균(sanitize)하여 잠재적 위험을 제거한다.
+>
+> `DOMPurify.sanitize('<img src=x onerror=alert(1) />'); // <img src="x" />`
+
+&nbsp;  
+
+innerHTML 프로퍼티의 또 다른 단점은 **기존의 노드를 제거하고 다시 파싱을 수행**하여 DOM을 변경한다는 것이다.
+
+&nbsp;  
+
+### 6.2. insertAdjacentHTML 메소드
+
+### 6.3. 노드 생성과 추가
+
+### 6.4. 복수의 노드 생성과 추가
+
+### 6.5. 노드 삽입
+
+### 6.6. 노드 이동
+
+### 6.7. 노드 복사
+
+### 6.8. 노드 교체
+
+### 6.9. 노드 삭제
+
 
 
 
