@@ -822,6 +822,7 @@ DOM 요소마다 기본 동작이 있다. 예를 들어, a 요소를 클릭하�
         }
         
         sayHi() {
+          // 문맥상 이곳의 this는 인스턴스이다.
           console.log(this);
         }
       }
@@ -832,7 +833,261 @@ DOM 요소마다 기본 동작이 있다. 예를 들어, a 요소를 클릭하�
 </html>
 ```
 
+위 예제의 `sayHi` 메소드 내부의  this는 클래스가 생성할 인스턴스를 가리키지 않고 `$button`을 가리킨다. 때문에 `sayHi` 메소드를 이벤트 핸들러 프로퍼티에 바인딩할 때 `bind` 메소드를 사용해 this(인스턴스)를 전달하여 `sayHi` 메소드 내부의 this가 인스턴스를 가리키도록 해야한다.
 
+```html
+<!doctype html>
+<html>
+  <body>
+    <button class="btn">Click me</button>
+    <script>
+    	class App {
+        constructor() {
+          this.$button = document.querySelector('.btn');
+          
+          // sayHi 메소드 내부의 this가 인스턴스를 가리키도록 한다.
+          this.$button.onclick = this.sayHi.bind(this);
+        }
+        
+        sayHi() {
+          console.log(this);
+        }
+      }
+      
+      new App();
+    </script>
+  </body>
+</html>
+```
+
+또는 클래스 필드에 할당한 화살표 함수를 이벤트 핸들러로 등록하면, 이벤트 핸들러 내부의 this가 인스턴스를 가리키도록 할 수도 있다. 하지만 이때 이벤트 핸들러 `sayHi`는 프로토타입 메소드가 아닌 인스턴스 메소드가 된다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <button class="btn">Click me</button>
+    <script>
+    	class App {
+        
+        constructor() {
+          this.$button = document.querySelector('.btn');
+          this.$button.onclick = this.sayHi;
+        }
+        
+        // sayHi는 인스턴스 메소드이며 화살표 함수로 정의되었다.
+        // 화살표 함수 내부의 this는 자신이 정의된 위치의 this를 따른다.
+        sayHi = () =>  {
+          // 문맥상 이곳의 this는 인스턴스이다.
+          console.log(this);
+        }
+      }
+      
+      new App();
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
+## 10. 이벤트 핸들러에 인수 전달
+
+함수에게 인수를 전달하려면 함수를 호출할 때 전달해야 한다. 이벤트 핸들러 어트리뷰트 방식은 함수 호출문을 사용할 수 있기 때문에 인수를 전달할 수 있지만, 이벤트 핸들러 프로퍼티와 addEventListener 메소드를 사용하는 경우, 브라우저가 이벤트 핸들러를 호출하기 때문에 함수 호출문이 아닌 함수 자체를 등록해야 한다. 따라서 인수를 전달할 수 없다.
+
+그러나 인수를 전달할 방법이 전혀 없는 것은 아니다. 아래 예제와 같이 이벤트 핸들러 내부에서 함수를 호출하면서 인수를 전달할 수 있다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <button>Click me</button>
+    <script>
+    	const $button = document.querySelector('button');
+      const sayHi = name => {
+        console.log(name);
+      };
+      
+      $button.onclick = e => {
+        console.log(e.target);
+        sayHi('Jin');
+      };
+    </script>
+  </body>
+</html>
+```
+
+또는 이벤트 핸들러를 반환하는 함수를 호출하면서 인수를 전달할 수도 있다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <button>Click me</button>
+    <script>
+    	const $button = document.querySelector('button');
+      const sayHi = name => e => {
+        console.log(e.target);
+        console.log(name);
+      };
+      
+      $button.onclick = sayHi('Jin');
+    </script>
+  </body>
+</html>
+```
+
+`sayHi` 함수는 함수를 반환한다. 따라서 `$button.onclick`에는 결국 `sayHi` 함수가 반환한 함수가 바인딩된다.
+
+&nbsp;  
+
+## 11. 커스텀 이벤트
+
+### 11.1. 커스텀 이벤트 생성
+
+이벤트 객체의 상속 구조에서 살펴본 바와 같이, **이벤트 객체는** Event, UIEvent, MouseEvent와 같은 생성자 함수로 생성할 수 있다.
+
+이벤트가 발생하면 생성되는 이벤트 객체는 이벤트의 종류에 따라 이벤트 타입이 결정되지만 Event, UIEvent, MouseEvent와 같은 생성자 함수로 이벤트 객체를 생성하는 경우, 이벤트 타입을 명시적으로 지정할 수 있다. 이를 통해 [이벤트 타입](https://developer.mozilla.org/en-US/docs/Web/Events)에서 살펴본 이벤트 타입 이외의 이벤트를 생성할 수 있다. 이를 **커스텀 이벤트**라 한다.
+
+이벤트 생성자 함수의 인수로 전달하는 이벤트 타입은 기존 이벤트 타입을 사용할 수 있다.
+
+```javascript
+// KeyboardEvent 생성자 함수로 keyup 이벤트 타입의 커스텀 이벤트 객체를 생성
+const keyboardEvent = new KeyboardEvent('keyup');
+console.log(keyboardEvent.type); // keyup
+```
+
+생성된 **커스텀 이벤트 객체는 버블링되지 않으며 취소할 수도 없다**. 즉, bubbles와 cancelable 프로퍼티의 값이 false로 기본 설정된다.
+
+```javascript
+// MouseEvent 생성자 함수로 click 이벤트 타입의 커스텀 이벤트 객체를 생성
+const customEvent = new MouseEvent('click');
+console.log(customEvent.type); // click
+console.log(customEvent.bubbles); // false
+console.log(customEvent.cancelable); // false
+```
+
+또는 임의 문자열을 사용하여 기존의 이벤트 타입이 아닌 **새로운 이벤트 타입을 지정**할 수도 있다. 이 경우, 일반적으로 CustomEvent 이벤트 생성자 함수를 사용한다 (커스텀 이벤트 디스패치).
+
+```javascript
+// CustomEvent 생성자 함수로 foo 이벤트 타입의 커스텀 이벤트 객체를 생성
+const customEvent = new CustomEvent('foo');
+console.log(customEvent.type); // foo
+```
+
+bubbles 또는 cancelable 프로퍼티를 true로 설정하려면 이벤트 생성자 함수의 두번째 인수로 bubbles 또는 cancelable 프로퍼티를 가진 객체를 전달한다.
+
+```javascript
+// MouseEvent 생성자 함수로 click 이벤트 타입의 커스텀 이벤트 객체를 생성
+const customEvent = new MouseEvent('click', {
+  bubbles: true,
+  cancelable: true
+});
+
+console.log(customEvent.bubbles); // true
+console.log(customEvent.cancelable); // true
+```
+
+bubbles 또는 cancelable 프로퍼티뿐만 아니라 이벤트 생성자 함수에 따라 생성된 이벤트의 특성에 맞는 프로퍼티를 설정할 수 있다.
+
+```javascript
+// MouseEvent 생성자 함수로 click 이벤트 타입의 커스텀 이벤트 객체를 생성
+const mouseEvent = new MouseEvent('click', {
+  bubbles: true,
+  cancelable: true,
+  clientX: 50,
+  clientY: 100
+});
+
+console.log(mouseEvent.clientX); // 50
+console.log(mouseEvent.clientY); // 100
+```
+
+이벤트 **생성자 함수로 생성한 커스텀 이벤트는 isTrusted 프로퍼티의 값이 언제나 false**이다. 커스텀 이벤트가 아닌 사용자의 행위에 의해 생성된 이벤트 객체의 isTrusted 프로퍼티 값은 언제나 true이다.
+
+```javascript
+// InputEvent 생성자 함수로 foo 이벤트 타입의 커스텀 이벤트 객체를 생성
+const customEvent = new InputEvent('foo');
+console.log(customEvent.isTrusted); // false
+```
+
+&nbsp;  
+
+### 11.2. 커스텀 이벤트 디스패치
+
+생성된 커스텀 이벤트는 dispatchEvent 메소드로 디스패치(이벤트를 발생시키는 행위)할 수 있다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <button class="btn">Click me</button>
+    <script>
+    	const $button = document.querySelector('.btn');
+      
+      // 커스텀 이벤트 생성
+      const customEvent = new MouseEvent('click');
+      
+      // click 커스텀 이벤트 핸들러 등록
+      // 커스텀 이벤트를 디스패치하기 이전에 이벤트 핸들러를 등록해야 한다.
+      $button.addEventListener('click', e => {
+        console.log(e);
+        e.target.textContent = 'Clicked!';
+      });
+      
+      // 커스텀 이벤트 디스패치(동기적)
+      $button.dispatchEvent(customEvent);
+    </script>
+  </body>
+</html>
+```
+
+일반적으로 이벤트는 비동기적으로 발생하지만, <strong>`dispatchEvent` 메소드는 커스텀 이벤트를 동기적으로 발생시킨다.</strong> 따라서  `dispatchEvent` 메소드로 이벤트를 디스패치하기 전에 커스텀 이벤트를 처리할 이벤트 핸들러를 등록해야 한다.
+
+기존의 이벤트 타입이 아닌 새로운 이벤트 타입을 지정하여 이벤트 객체를 생성한 경우, 일반적으로  `CustomEvent` 이벤트 생성자 함수를 사용한다.
+
+```javascript
+// CustomEvent 생성자 함수로 foo 이벤트 타입의 커스텀 이벤트 객체 생성
+const customEvent = new CustomEvnet('foo');
+console.log(customEvent.type); // foo
+```
+
+이때 **CustomEvent 이벤트 생성자 함수에는 2번째 인수로 이벤트와 함께 전달하고 싶은 정보를 담은 `detail` 프로퍼티를 포함하는 객체를 전달할 수 있다.** 이 정보는 이벤트 객체의 `detail` 프로퍼티에 담겨 전달된다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <button class="btn">Click me</button>
+    <script>
+    	const $button = document.querySelector('.btn');
+      
+      // CustomEvent 생성자 함수로 foo 이벤트 타입의 커스텀 이벤트 객체를 생성
+      const customEvent = new CustomEvent('foo', {
+        detail: { message: 'Hello' } // 이벤트와 함께 전달하고 싶은 정보
+      });
+      
+      // click 커스텀 이벤트 핸들러 등록
+      // 커스텀 이벤트를 디스패치하기 이전에 이벤트 핸들러를 등록해야 한다.
+      $button.addEventListener('foo', e => {
+        // e.detail에는 CustomEvent 함수의 두번째 인수로 전달한 정보가 담겨 있다.
+        e.target.textContent = e.detail.message;
+      });
+      
+      // 커스텀 이벤트 디스패치
+      $button.dispatchEvent(customEvent);
+    </script>
+  </body>
+</html>
+```
+
+기존의 이벤트 타입이 아닌 새로운 이벤트 타입을 지정하여 커스텀 이벤트 객체를 생성한 경우, 이벤트 핸들러 등록은 반드시 `addEventListener` 메소드를 사용해야 한다. 새로운 이벤트 타입(ex. `foo`) 에 대한 이벤트 핸들러 어트리뷰트 / 프로퍼티가 존재하지 않기 때문이다 (ex. `onfoo`).
+
+&nbsp;  
+
+## 참고 자료
+
+* [poiemaweb.com - 이벤트](https://poiemaweb.com/fastcampus/event)
 
 
 
