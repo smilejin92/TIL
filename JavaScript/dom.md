@@ -1082,11 +1082,108 @@ input 요소의 요소 노드가 생성되어 첫 렌더링이 끝난 시점까�
 
 #### 7.3.1. 어트리뷰트 노드는 초기 상태를 관리한다
 
+**HTML 어트리뷰트로 지정한 HTML 요소의 초기 상태는 어트리뷰트 노드에서 관리한다.**
+
+&nbsp;  
+
 #### 7.3.2. DOM 프로퍼티는 최신 상태를 관리한다.
+
+**사용자가 입력한 최신 상태는 HTML 어트리뷰트에 대응하는 요소 노드의 DOM 프로퍼티가 관리한다. DOM 프로퍼티는 사용자의 입력에 의한 상태 변화에 반응하여 언제나 최신 상태를 유지한다.**
+
+&nbsp;  
 
 #### 7.3.3. HTML 어트리뷰트와 DOM 프로퍼티의 대응 관계
 
+대부분의 HTML 어트리뷰트 값은 HTML 어트리뷰트 이름과 동일한 DOM 프로퍼티 키로 참조할 수 있다. 단, 아래와 같이 HTML 어트리뷰트와 DOM 프로퍼티가 언제나 1:1로 대응하는 것은 아니며 HTML 어트리뷰트 이름과 DOM 프로퍼티 키가 반드시 일치하는 것도 아니다.
+
+* id 어트리뷰트와 id 프로퍼티는 1:1 대응하며 동일한 값으로 연동한다.
+* input 요소의 value 어트리뷰트는 value 프로퍼티와 1:1 대응한다. 하지만 value 어트리뷰트는 초기 상태를, value 프로퍼티는 최신 상태를 가진다.
+* class 어트리뷰트는 className, classList 프로퍼티와 대응한다.
+* for 어트리뷰트는 htmlFor 프로퍼티와 대응한다.
+* td 요소의 colspan 어트리뷰트는 대응하는 프로퍼티가 존재하지 않는다.
+* textContent 프로퍼티는 대응하는 어트리뷰트가 존재하지 않는다.
+* 어트리뷰트 이름은 대소문자를 구별하지 않지만, 프로퍼티 키는 카멜 케이스를 따른다(ex. maxlength -> maxLength)
+
+&nbsp;  
+
 #### 7.3.4. DOM 프로퍼티 값의 타입
+
+getAttribute 메소드로 취득한 어트리뷰트 값은 언제나 문자열이다. 하지만 **DOM 프로퍼티로 취득한 상태 값은 문자열이 아닐 수도 있다.** 예를 들어 checkbox 요소의 checked 어트리뷰트 값은 문자열이지만 checked 프로퍼티 값은 불리언 타입이다.
+
+&nbsp;  
+
+## 8. 스타일
+
+### 8.1. 인라인 스타일 조작
+
+`HTMLElement.prototype.style` 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 **인라인 스타일(inline style)을 취득하거나 변경**한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <div style="color: red">Hello World</div>
+    <script>
+    	const $div = document.querySelector('div');
+      
+      // 인라인 스타일 취득
+      console.log($div.style); // CSSStyleDeclaration { 0: "color", ... }
+      
+      // 인라인 스타일 변경
+      $div.style.color = 'blue';
+      $div.style.width = '100px';
+    </script>
+  </body>
+</html>
+```
+
+style 프로퍼티는 CSSStyleDeclaration 타입의 객체를 반환한다. CSSStyleDeclaration 객체는 CSS 프로퍼티에 대응하는 다양한 프로퍼티를 가지고 있으며, 이 프로퍼티에 값을 할당하면 해당 **CSS 프로퍼티가 인라인 스타일로 HTML 요소에 추가된다.**
+
+CSS 프로퍼티는 케밥 케이스를 따른다. 이에 대응하는 CSSStyleDeclaration 객체의 프로퍼티는 카멜 케이스를 따른다. 예를 들어 CSS 프로퍼티 `background-color`에 대응하는 CSSStyleDeclaration 객체의 프로퍼티 `backgroundColor`이다.
+
+```javascript
+$div.style.backgroundColor = 'blue';
+```
+
+케밥 케이스의 CSS 프로퍼티를 그대로 사용하려면 객체의 마침표 표기법 대신 대괄호 표기법을 사용한다.
+
+```javascript
+$div.style['background-color'] = 'blue';
+```
+
+단위 지정이 필요한 CSS 프로퍼티의 값은 반드시 단위를 지정하여야 한다. 예를 들어 `px`, `em`, `%` 등의 크기 단위가 필요한 width 프로퍼티에 값을 할당할 때 단위를 생략하면 해당 CSS 프로퍼티는 적용되지 않는다.
+
+```javascript
+$div.style.width = '100px';
+```
+
+&nbsp;  
+
+### 8.2. 클래스 조작
+
+스타일 시트(CSS 파일) 또는 style 요소에 class로 스타일을 미리 정의한 다음, **HTML 요소의 class 어트리뷰트 값을 변경**하여 HTML 요소의 스타일을 변경할 수도 있다.
+
+(질문. DOM 프로퍼티는 최신 상태를, HTML 어트리뷰트 노드는 초기값을 가지고 있다고 했는데 왜 className 혹은 classList 같은 DOM 프로퍼티를 변경하면 어트리뷰트 노드의 값도 변하는지?)
+
+이때 HTML 요소의 class 어트리뷰트를 조작하려면, class 어트리뷰트에 대응하는 요소 노드의 프로퍼티를 사용한다. class 어트리뷰트에 대응하는 요소 노드의 프로퍼티는 class(자바스크립트에서 class는 예약어)가 아니라 className과 classList이다.
+
+&nbsp;  
+
+#### 8.2.1. className
+
+`Element.prototype.className` 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 class 어트리뷰트 값을 취득하거나 변경한다.
+
+요소 노드의 className 프로퍼티를 참조하면 class 어트리뷰트 값을 문자열로 반환하고, 요소 노드의 className 프로퍼티에 문자열을 할당하면 class 어트리뷰트 값을 할당한 문자열로 변경한다.
+
+
+
+
+
+### 8.3. 요소에 적용되어 있는 CSS 스타일 참조
+
+&nbsp;  
+
+## 9. DOM 표준
 
 
 
