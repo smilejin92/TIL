@@ -743,15 +743,188 @@ DocumentFragment 노드는 기존 DOM과는 별도로 존재하므로 DocumentFr
 
 ### 6.5. 노드 삽입
 
+#### 6.5.1. 마지막 노드로 추가
 
+`Node.prototype.appendChild` 메소드는 인수로 전달받은 노드를 자신을 호출한 노드의 마지막 자식 노드로 DOM에 추가한다. 이때 노드를 추가할 위치를 지정할 수 없고 언제나 마지막 자식 노드로 추가한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+    	<li>Apple</li>
+      <li>Banana</li>
+    </ul>
+    
+    <script>
+    	// 요소 노드 생성
+      const $li = document.createElement('li');
+      
+      // 텍스트 노드를 $li 노드의 마지막 자식 노드로 추가
+      $li.appendchild(document.createTextNode('Orange'));
+      
+      // $li 노드를 ul#fruits 요소의 마지막 자식 노드로 추가
+      document.getElementById('fruits').appendChilld($li);
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
+#### 6.5.2. 지정한 위치에 노드 삽입
+
+`Node.prototype.insertBefore(newNode, childNode)` 메소드는 첫번째 인수로 전달받은 노드를 두번째 인수로 전달받은 노드 앞에 삽입한다.
+
+두번째 인수로 전달받은 노드는 반드시 `insertBefore` 메소드를 호출한 노드의 자식 노드이어야 한다. 그렇지 않으면 DOMException 에러가 발생한다.
+
+두번째 인수로 전달받은 노드가 null이면 `insertBefore` 메소드를 호출한 노드의 마지막 자식 노드로 추가된다. 즉, `appendChild` 메소드 처럼 동작한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+    
+    <script>
+    	const $fruits = document.getElementById('fruits');
+      
+      // 요소 노드 생성
+      const $li = document.createElement('li');
+      
+      // 텍스트 노드를 $li 노드의 마지막 자식 노드로 추가
+      $li.appendChild(document.createTextNode('Orange'));
+      
+      // $li 노드를 $fruits의 마지막 자식 요소 앞에 삽입
+      $fruits.insertBefore($li, $fruits.lastElementChild);
+      // Apple - Orange - Banana
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
 
 ### 6.6. 노드 이동
 
+DOM에 이미 존재하는 노드를 `appendChild` 또는 `insertBefore` 메소드를 사용하여 DOM에 추가하면 **현재 위치에서 노드를 제거하고 새로운 위치에 노드를 추가한다**. 즉, 노드가 이동한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Orange</li>
+    </ul>
+    
+    <script>
+    	const $fruits = document.getElementById('fruits');
+      
+      // 이미 존재하는 노드를 취득
+      const [$apple, $banana] = $fruits.children;
+      
+      // 이미 존재하는 $apple 요소를 $fruits 요소의 마지막 노드로 이동
+      $fruits.appendChild($apple); // Banana - Orange - Apple
+      
+      // 이미 존재하는 $banana 요소를 $fruits 요소의 마지막 자식 노드 앞으로 이동
+      $fruits.insertBefore($banana, $fruits.lastElementChild);
+      // Orange - Banana - Apple
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
 ### 6.7. 노드 복사
+
+`Node.prototype.cloneNode([deep: true | false])` 메소드는 **노드 자신의 사본을 생성**하여 반환한다. 매개 변수 deep에 true를 전달하면 노드 자신을 깊은 복사(deep copy)하여 모든 자손 노드가 포함된 사본을 생성하고, false를 전달하거나 생략하면 노드 자신을 얕은 복사(shallow copy)하여 노드 자신만의 사본을 생성한다. 얖은 복사로 생성된 요소 노드는 자손 노드를 복사하지 않으므로 텍스트 노드도 없다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+    
+    <script>
+    	const $fruits = document.getElementById('fruits');
+      const $apple = $fruits.firstElementChild;
+      
+      // $apple 요소를 얕은 복사하여 사본 생성. 텍스트 노드가 없는 사본이 생성된다.
+      const $shallowClone = $apple.cloneNode(); // <li></li>
+      
+      // $apple 요소를 깊은 복사하여 사본 모든 자손 노드가 포함된 사본 생성
+      const $deepClone = $apple.cloneNode(true); // <li>Apple</li>
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
 
 ### 6.8. 노드 교체
 
+`Node.prototype.replaceChild(newChild, oldChild)` 메소드는 자신을 호출한 노드의 자식 노드(oldChild)를 다른 노드(newChild)로 교체한다. 즉, replaceChild 메소드는 부모 노드의 자식인 oldChild 노드를 newChild 노드로 교체한다. 이때 oldChild 노드는 DOM에서 제거된다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+    
+    <script>
+    	const $fruits = document.getElementById('fruits');
+      
+      // 기존 노드를 치환할 요소 노드
+      const $newChild = document.createElement('li');
+      $newChild.textContent = 'Banana';
+      
+      // $fruits 요소의 첫번째 요소를 $newChild로 교체
+      $fruits.replaceChild($newChild, $fruits.firstElementChild);
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
 ### 6.9. 노드 삭제
+
+`Node.prototype.removeChild(child)` 메소드는 매개 변수 child에 전달한 노드를 DOM에서 삭제한다. 매개 변수 child에게 전달한 노드는 `removeChild` 메소드를 호출한 노드의 자식 노드이어야 한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+    
+    <script>
+    	const $fruits = document.getElementById('fruits');
+      
+      // $fruits 요소의 마지막 요소를 DOM에서 삭제
+      $fruits.removeChild($fruits.lastElementChild);
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
+## 7. 어트리뷰트
+
+
 
 
 
