@@ -924,6 +924,170 @@ DOM에 이미 존재하는 노드를 `appendChild` 또는 `insertBefore` 메소�
 
 ## 7. 어트리뷰트
 
+### 7.1. 어트리뷰트 노드와 attributes 프로퍼티
+
+HTML 문서의 구성 요소인 HTML 요소는 여러 개의 어트리뷰트(attributes, 속성)를 가질 수 있다.
+
+```html
+<input id="user" type="text" value="smilejin92" />
+```
+
+[글로벌 어트리뷰트](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes)와 [이벤트 핸들러 어트리뷰트](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes)는 모든 HTML 요소에서 공통적으로 사용할 수 있지만, 특정 HTML 요소에만 한정적으로 사용 가능한 어트리뷰트도 있다. 예를 들어, `type`, `value`, `checked` 어트리뷰트는 input 요소에만 사용할 수 있다.
+
+HTML 문서가 파싱될 때, **HTML 요소의 어트리뷰트는 어트리뷰트 노드로 변환되어 요소 노드 객체의 형제 노드로 추가된다.** 이때 HTML 어트리뷰트 당 하나의 어트이뷰트 노드가 생성된다. 즉, 위 input 요소는 3개의 어트리뷰트가 있으므로 3개의 어트리뷰트 노드가 생성된다.
+
+이때 모든 어트리뷰트 노드의 참조는 유사 배열 객체이자 이터러블인 NamedNodeMap 객체에 담겨서 요소 노드의 attributes 프로퍼티에 저장된다.
+
+<img src="https://user-images.githubusercontent.com/32444914/83506263-e55f4d80-a501-11ea-9a39-e8646cef2f18.png" width="80%" />
+
+따라서 요소 노드의 모든 어트리뷰트 노드는 요소 노드의 `Element.prototype.attribtues` 프로퍼티로 취득할 수 있다. **attributes 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티이며 요소 노드의 모든 어트리뷰트 노드의 참조가 담긴 NamedNodeMap 객체를 반환**한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <input id="user" type="text" value="smilejin92">
+    <script>
+    	const { attributes } = document.getElementById('user');
+      console.log(attributes); // NamedNodeMap
+      
+      // 어트리뷰트 값 취득
+      console.log(attributes.id.value); // user
+      console.log(attributes.type.value); // text
+      console.log(attributes.value.value); // smilejin92
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
+### 7.2. HTML 어트리뷰트 조작
+
+요소 노드의 attributes 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티이므로 HTML 어트리뷰트 값을 취득할 순 있지만 변경 할 순 없다. 또한 attributes 프로퍼티를 통해야만 HTML 어트리뷰트 값을 취득할 수 있기 때문에 불편하다.
+
+`Element.prototype.getAttribute / setAttribute` 메소드를 사용하면 attributes 프로퍼티를 통하지 않고 요소 노드에서 메소드를 통해 직접 HTML 어트리뷰트 값을 취득하거나 변경할 수 있다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <input id="user" type="text" value="smilejin92">
+    
+    <script>
+    	const $input = document.getElementById('user');
+      
+      // value 어트리뷰트 값 취득
+      const inputValue = $input.getAttribute('value'); // smilejin92
+      
+      // value 어트리뷰트 값 변경
+      $input.setAttribtue('value', 'foo'); // smilejin92 -> foo
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
+HTML 어트리뷰트의 존재 여부를 확인하려면 `Element.prototype.hasAttribute(attributeName)` 메소드를 사용하고, HTML 어트리뷰트를 삭제하려면 `Element.prototype.removeAttribute(attributeName)` 메소드를 사용한다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <input id="user" type="text" value="smileji92">
+    <script>
+    	const $input = document.getElementById('user');
+      
+      // id 어트리뷰트 존재 확인
+      if ($input.hasAttribute('id')) {
+        // id 어트리뷰트 삭제
+        $input.removeAttribute('id');
+      }
+    </script>
+  </body>
+</html>
+```
+
+&nbsp;  
+
+### 7.3. HTML 어트리뷰트 vs. DOM 프로퍼티
+
+요소 노드 객체에는 HTML 어트리뷰트에 대응하는 DOM 프로퍼티가 존재한다. 이 DOM 프로퍼티들은 HTML 어트리뷰트 값을 **초기값**으로 가지고 있다.
+
+예를 들어 `<input id="user" type="text" value="smilejin92">` 요소가 파싱되어 생성된 요소 노드 객체는 id, type, value 어트리뷰트에 대응하는 id, type, value 프로퍼티가 존재한다. 이 DOM 프로퍼티들은 HTML 어트리뷰트의 값을 초기값으로 가지고 있다.
+
+<img src="https://user-images.githubusercontent.com/32444914/83509933-286fef80-a507-11ea-91a2-71bf3ecac7fa.png" width="80%" />
+
+DOM 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티이다. 따라서 DOM 프로퍼티는 참조와 변경이 가능하다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <input id="user" type="text" value="smilejin92">
+    
+    <script>
+      const $input = document.getElementById('user');
+      
+    	// 요소 노드의 value 프로퍼티 값 변경
+      $input.value = 'foo';
+      
+      // 요소 노드의 value 프로퍼티 값 참조
+      console.log($input.value); // foo
+    </script>
+  </body>
+</html>
+```
+
+이처럼 HTML 어트리뷰트는 아래와 같이 중복 관리되고 있는 것처럼 보인다.
+
+1. 요소 노드의 attributes 프로퍼티에서 관리하는 어트리뷰트 노드
+2. HTML 어트리뷰트에 대응하는 요소 노드의 프로퍼티(DOM 프로퍼티)
+
+**HTML 어트리뷰트의 역할은 HTML 요소의 초기 상태를 지정하는 것이다. 즉, HTML 어트리뷰트 값은 HTML 요소의 초기 상태를 의미하며 이는 변하지 않는다.**
+
+예를 들어 `<input id="user" type="text" value="smilejin92">` 요소의 value 어트리뷰트는 input 요소의 입력 필드에 표시할 초기값을 지정한다. 즉, input 요소가 렌더링되면 입력 필드에 초기값으로 지정한 value 어트리뷰트 값 "smilejin92"가 표시된다.
+
+이때 input 요소의 value 어트리뷰트는 어트리뷰트 노드로 변환되어 요소 노드의 attributes 프로퍼티에 저장된다. **이와는 별도로 value 어트리뷰트의 값은 요소 노드의 value 프로퍼티에 초기값으로 할당된다.**
+
+input 요소의 요소 노드가 생성되어 첫 렌더링이 끝난 시점까지 어트리뷰트 노드의 어트리뷰트 값과 요소 노드의 value 프로퍼티에 초기값으로 할당된 값은 HTML 어트리뷰트 값과 동일하다.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <input id="user" type="text" value="smilejin92">
+    
+    <script>
+    	const $input = document.getElementById('user');
+      
+      // attributes 프로퍼티에 저장된 value 어트리뷰트 값
+      console.log($input.getAttribute('value')); // smilejin92
+      
+      // 요소 노드의 프로퍼티에 저장된 value 프로퍼티
+      console.log($input.value); // smilejin92
+    </script>
+  </body>
+</html>
+```
+
+하지만 초기 렌더링 이후 사용자가 input 요소에 무언가를 입력하기 시작하면 상황이 달라진다.
+
+**요소 노드는 상태(state)를 가지고 있다**. 예를 들어 input 요소는 사용자가 입력 필드에 입력한 값을 상태로 가지고 있으며, checkbox 요소는 사용자가 입력 필드에 입력한 체크 여부를 상태로 가지고 있다. input 요소나 checkbox 요소가 가지고 있는 상태는 사용자의 입력에 의해 변화하는 살아있는 것이다.
+
+사용자가 input 요소의 입력 필드에 "foo"라는 값을 입력한 경우를 생각해보자. 이때 input 요소 노드는 사용자의 입력에 의해 변경된 최신 상태("foo")를 관리해야 하는 것은 물론, HTML 어트리뷰트로 지정한 초기 상태("smilejin92")도 관리해야 한다. 초기 상태 값을 관리하지 않으면 웹페이지를 처음 표시하거나 새로고침할 때 표시할 수 없다.
+
+&nbsp;  
+
+#### 7.3.1. 어트리뷰트 노드는 초기 상태를 관리한다
+
+#### 7.3.2. DOM 프로퍼티는 최신 상태를 관리한다.
+
+#### 7.3.3. HTML 어트리뷰트와 DOM 프로퍼티의 대응 관계
+
+#### 7.3.4. DOM 프로퍼티 값의 타입
+
 
 
 
