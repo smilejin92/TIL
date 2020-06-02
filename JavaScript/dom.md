@@ -577,17 +577,173 @@ HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크�
 
 &nbsp;  
 
-innerHTML 프로퍼티의 또 다른 단점은 **기존의 노드를 제거하고 다시 파싱을 수행**하여 DOM을 변경한다는 것이다.
+innerHTML 프로퍼티의 또 다른 단점은 **기존의 노드를 제거하고 다시 파싱을 수행**하여 DOM을 변경한다는 것이다. 아래 예제를 살펴보자.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li class="apple">Apple</li>
+    </ul>
+    <script>
+    	const $fruits = document.getElementById('fruits');
+      
+      // 노드 추가
+      $fruits.innerHTML += `<li class="banana">Banana</li>`;
+    </script>
+  </body>
+</html>
+```
+
+위 예제는 ul#fruits 요소에 자식 요소 li.banana를 추가한다. 이때 ul#fruits 요소의 자식 요소 li.apple은 변경이 없으므로 다시 생성할 필요가 없다. 다만 새롭게 추가할 li.banana 노드만을 생성하여 DOM에 반영하면 된다. 위 코드를 얼핏 보면 그렇게 동작할 것 처럼 보이지만 **자식 노드를 모두 제거**하고 새롭게 자식 노드 li.apple과 li.banana를 생성하여 DOM에 반영한다. 이는 효율적이지 않다.
+
+innerHTML 프로퍼티의 또 다른 단점은 새로운 요소를 삽입할 위치를 지정할 수 없다는 것이다. 아래 예제를 살펴보자.
+
+```html
+<ul id="fruits">
+  <li class="apple">Apple</li>
+  <li class="orange">Orange</li>
+</ul>
+```
+
+li.apple 요소와 li.orange 요소 사이에 새로운 요소를 삽입하고 싶은 경우, innerHTML 프로퍼티를 사용하면 위치를 지정할 수 없다. 이처럼 innerHTML 프로퍼티는 복잡하지 않은 요소를 새롭게 추가할 때 유용하지만 기존 요소를 제거하지 않으면서 위치를 지정해 새로운 요소를 삽입해야 할 때는 사용하지 않는 것이 좋다.
 
 &nbsp;  
 
 ### 6.2. insertAdjacentHTML 메소드
 
+`Element.prototype.insertAdjacentHTML` 메소드는 기존 요소를 제거하지 않으면서 위치를 지정해 새로운 요소를 삽입한다.
+
+```javascript
+Element.prototype.insertAdjacentHTML(position, DOMString)
+```
+
+`insertAdjacentHTML` 메소드는 두번째 인수로 전달한 HTML 마크업 문자열(DOMString)을 파싱하고 그 결과로 생성된 노드를 첫번째 인수로 전달한 위치(position)에 삽입하여 DOM에 반영한다. 첫번째 인수로 전달할 수 있는 문자열은 'beforebegin', 'afterbegin', 'beforeend', 'afterend' 4가지이다.
+
+<img src="https://user-images.githubusercontent.com/32444914/83483487-b931d580-a4dd-11ea-9914-0a70a880bd52.png" width="70%" />
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <!-- beforebegin -->
+    <div id="foo">
+      <!-- afterbegin -->
+    	text
+      <!-- beforeend -->
+    </div>
+    <!-- afterend -->
+    
+    <script>
+    	 const $foo = document.getElementById('foo');
+      
+      $foo.insertAdjacentHTML('beforebegin', '<p>beforebegin</p>');
+    </script>
+  </body>
+</html>
+```
+
+`insertAdjacentHTML` 메소드는 기존 요소에는 영향을 주지 않고 새롭게 삽입될 요소만을 파싱하여 DOM에 반영하므로 기존의 자식 노드를 모두 제거하고 다시 자식 노드를 생성하여 DOM에 반영하는 innerHTML 프로퍼티보다 효율적이고 빠르다.
+
+단, innerHTML 프로퍼티와 마찬가지로 insertAdjacentHTML 메소드는 HTML 마크업 문자열을 파싱하므로 XSS 공격에 취약하다는 점은 동일하다.
+
+&nbsp;  
+
+### 6.3. 노드 생성과 추가
+
+DOM은 노드를 직접 생성 / 삽입 / 삭제 / 치환하는 메소드도 제공한다. 아래 예제를 살펴보자.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+    
+    <script>
+    	const $fruits = document.getElementById('fruits');
+      
+      // 1. 요소 노드 생성
+      const $li = document.createElement('li');
+      
+      // 2. 텍스트 노드 생성
+      const textNode = document.createTextNode('Banana');
+      
+      // 3. 텍스트 노드를 요소 노드의 자식 노드로 추가
+      // 요소 노드에 자식 노드가 하나도 없는 경우 텍스트 노드를 생성하여 요소 노드의
+      // 자식 노드로 텍스트 노드를 추가하는 것보다 textcContent 프로퍼티를
+      // 사용하는 편이 보다 간편하다. 단, 요소 노드의 textContent 프로퍼티에
+      // 문자열을 할당하면 요소 노드의 모든 자식 노드가 제거되고 할당한 문자열이
+      // 텍스트로 추가되므로 주의가 필요하다.
+      $li.appendChild(textNode);
+      
+      // 4. 요소 노드를 DOM에 추가
+      $fruits.appendChild($li);
+    </script>
+  </body>
+</html>
+```
+
+위 예제는 새로운 요소 노드를 생성하고 텍스트를 추가한 다음, DOM에 추가한다.
+
+&nbsp;  
+
 ### 6.3. 노드 생성과 추가
 
 ### 6.4. 복수의 노드 생성과 추가
 
+DocumentFragment 노드는 문서, 요소, 어트리뷰트, 텍스트 노드와 같은 노드 객체의 일종으로 부모 노드가 없으며 기존 DOM과는 별도 존재한다는 특징이 있다. DocumentFragment 노드는 컨테이너 요소와 같이 자식 노드들의 부모 노드로서 별도의 서브 DOM을 구성하여 기존 DOM에 추가하기 위한 용도로 사용한다.
+
+DocumentFragment 노드는 기존 DOM과는 별도로 존재하므로 DocumentFragment 노드에 자식 노드를 추가하여도 기존 DOM에는 어떠한 변경도 발생하지 않는다. 또한 DocumentFragment 노드를 DOM에 추가하면 자신의 자식 노드만 DOM에 추가한다.
+
+<img src="https://user-images.githubusercontent.com/32444914/83490628-57786800-a4eb-11ea-9c04-0cd11123d4c0.png" width="70%" />
+
+`Document.prototype.createDocumentFragment` 메소드는 비어 있는 DocumentFragment 노드를 생성하여 반환한다. 아래 예제를 살펴보자.
+
+```html
+<!doctype html>
+<html>
+  <body>
+    <ul id="fruits"></ul>
+    
+    <script>
+    	const $fruits = document.getElementById('fruits');
+      
+      // DocumentFragment 노드 생성
+      const $fragment = document.createDocumentFragment();
+      
+      ['Apple', 'Banana', 'Orange'].forEach(text => {
+        // 1. 요소 노드 생성
+        const $li = document.createElement('li');
+        
+        // 2. 텍스트 노드 생성
+        const $textNode = document.createTextNode(text);
+        
+        // 3. 텍스트 노드를 요소 노드의 자식 노드로 추가
+        $li.appendChild($textNode);
+        
+        // 4. 요소 노드를 DocumentFragment 노드의 자식 노드로 추가
+        $fragment.appendChild($li);
+      });
+      
+      // 5. DocumentFragment 노드를 DOM에 추가
+      $fruits.appendChild($fragment);
+    </script>
+  </body>
+</html>
+```
+
+먼저 DocumentFragment 노드를 생성하고 DOM에 추가할 요소 노드를 DocumentFragment 노드에 자식 노드로 추가한 다음, DocumentFragment 노드를 기존 DOM에 추가한다.
+
+이때 실제로 DOM 변경이 발생하는 것은 DocumentFragment 노드를 DOM에 추가 한번 뿐이다. 따라서 여러 개의 요소 노드를 DOM에 추가하는 경우, DocumentFragment 노드를 사용하는 것이 보다 효율적이다.
+
+&nbsp;  
+
 ### 6.5. 노드 삽입
+
+
 
 ### 6.6. 노드 이동
 
