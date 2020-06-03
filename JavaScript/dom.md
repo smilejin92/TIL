@@ -10,7 +10,14 @@
 
 ### 1.1. HTML 요소와 노드 객체
 
-<strong>HTML 요소(HTML element)</strong>는 HTML 문서를 구성하는 **개별적인 요소**를 의미한다. HTML 요소는 렌더링 엔진에 의해 파싱되어 DOM을 구성하는 요소 노드 객체로 변환된다. 이때 HTML 요소의 어트리뷰트는 어트리뷰트 노드로, HTML 요소의 텍스트 컨텐츠는 텍스트 노드로 변환된다.
+* HTML 요소는 HTML 문서를 구성하는 개별적인 요소를 의미한다.
+* HTML 요소는 렌더링 엔진에 의해 파싱되어 DOM을 구성하는 요소 노드 객체로 변환된다.
+* 요소의 어트리뷰트는 어트리뷰트 노드로, 요소의 텍스트 컨텐츠는 텍스트 노드로 변환된다.
+* DOM은 (HTML 요소들의 중첩 관계를 반영하여) HTML 요소를 객체화한 모든 노드 객체를 포함하는 트리 자료 구조이다.
+
+&nbsp;  
+
+<strong>HTML 요소(HTML element)</strong>는 HTML 문서를 구성하는 개별적인 요소를 의미한다. HTML 요소는 렌더링 엔진에 의해 파싱되어 **DOM을 구성하는 요소 노드 객체로 변환된다.** 이때 HTML 요소의 어트리뷰트는 어트리뷰트 노드로, HTML 요소의 텍스트 컨텐츠는 텍스트 노드로 변환된다.
 
 <img src="https://user-images.githubusercontent.com/32444914/83388414-5f6fd380-a429-11ea-886b-dc85a67d3825.png" width="60%" />
 
@@ -31,6 +38,14 @@ HTML 문서는 HTML 요소들의 집합으로 이루어지며, HTML 요소는 **
 &nbsp;  
 
 ### 1.2. 노드 객체의 타입
+
+* 노드 객체는 종류가 있고 상속 구조를 가진다.
+* 노드 객체의 종류([노드 타입](https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType))는 총 12가지이다. 그 중 중요한 4가지 타입은 아래와 같다.
+  * 문서 노드
+  * 요소 노드
+  * 어트리뷰트 노드
+  * 텍스트 노드
+* 
 
 예를 들어 다음 HTML 문서를 렌더링 엔진이 파싱한다고 생각해보자.
 
@@ -62,7 +77,7 @@ HTML 문서는 HTML 요소들의 집합으로 이루어지며, HTML 요소는 **
 
 &nbsp;  
 
-이처럼 DOM은 노드 객체의 계층적인 구조로 구성된다. 노드 객체는 종류가 있고 상속 구조를 갖는다. 노드 객체는 총 12개의 종류(노트 타입)가 있다. 이 중 중요한 노드 타입은 아래와 같이 4가지이다.
+이처럼 DOM은 노드 객체의 계층적인 구조로 구성된다. 노드 객체는 종류가 있고 상속 구조를 갖는다. 노드 객체는 총 12개의 종류([노드 타입](https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType))가 있다. 이 중 중요한 노드 타입은 아래와 같이 4가지이다.
 
 &nbsp;  
 
@@ -1171,39 +1186,171 @@ $div.style.width = '100px';
 
 #### 8.2.1. className
 
-`Element.prototype.className` 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 class 어트리뷰트 값을 취득하거나 변경한다.
+`Element.prototype.className` 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 **요소 노드의 class 어트리뷰트 값을 취득하거나 변경**한다.
 
 요소 노드의 className 프로퍼티를 참조하면 class 어트리뷰트 값을 문자열로 반환하고, 요소 노드의 className 프로퍼티에 문자열을 할당하면 class 어트리뷰트 값을 할당한 문자열로 변경한다.
 
+```html
+<!doctype html>
+<html>
+  <head>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+      }
+      
+      .red { color: red; }
+      .blue { color: blue; }
+    </style>
+  </head>
+  <body>
+    <div class="box red">Hello World</div>
+    <script>
+    	const $box = document.querySelector('.box');
+      
+      // class 어트리뷰트 값 취득
+      console.log($box.className); // 'box red'
+      // console.log($box.getAttribute('class')); // 'box red'
+      
+      // class 어트리뷰트 값 변경 (red를 blue로 변경)
+      $box.className = $box.className.replace('red', 'blue');
+      // $box.setAttribute('class', 'box blue');
+    </script>
+  </body>
+</html>
+```
+
+className 프로퍼티는 문자열을 반환하므로 공백으로 구분된 여러 개의 클래스를 반환하는 경우, 다루기가 불편하다.
+
+&nbsp;  
+
+#### 8.2.2. classList
+
+`Element.prototype.classList` 프로퍼티는 **class 어트리뷰트 값을 담은 DOMTokenList 객체를 반환**한다.
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: skyblue;
+      }
+      
+      .red { color: red; }
+      .blue { color: blue; }
+    </style>
+  </head>
+  <body>
+    <div class="box red">Hello World</div>
+    <script>
+    	const $box = document.querySelector('.box');
+      
+      // class 어트리뷰트 값 취득
+      console.log($box.classList);
+      // DOMTokenList(2) [length: 2, value: "box blue", 0: "box", 1: "blue"]
+      
+      // class 어트리뷰트 값 변경 (red를 blue로 변경)
+      $box.className = $box.className.replace('red', 'blue');
+    </script>
+  </body>
+</html>
+```
+
+DOMTokenList 객체는 공백 문자로 구분된 토큰들로 구성된 컬렉션 객체로서 유사 배열 객체이자 이터러블이다. DOMTokenList 객체는 아래와 같이 유용한 메소드를 제공한다.
+
+**`add(...className)`**
+
+인수로 전달한 1개 이상의 문자열을 class 어트리뷰트에 추가한다.
+
+```javascript
+$box.classList.add('class-x', 'class-y'); // class="box red class-x class-y"
+```
 
 
 
+**`remove(...className)`**
+
+인수로 전달한 1개 이상의 문자열을 class 어트리뷰트에서 삭제한다.
+
+```javascript
+$box.classList.remove('class-x', 'class-y'); // class="box red"
+```
+
+
+
+**`item(index)`**
+
+인수로 전달한 index에 해당하는 문자열을 class 어트리뷰트에서 반환한다.
+
+```javascript
+$box.classList.item(1); // red
+```
+
+
+
+**`contains(className)`**
+
+인수로 전달한 문자열에 해당하는 클래스가 class 어트리뷰트에 포함되어 있는지 확인한다.
+
+```javascript
+$box.classList.contains('red'); // true
+```
+
+
+
+**`replace(oldClassName, newClassName)`**
+
+class 어트리뷰트에서 첫번째 인수로 전달한 문자열을 두번째 인수로 전달한 문자열로 변경한다.
+
+```javascript
+$box.classList.replace('red', 'blue'); // class="box blue"
+```
+
+
+
+**`toggle(className)`**
+
+class 어트리뷰트에 인수로 전달한 문자열이 존재하면 삭제하고, 존재하지 않으면 추가한다.
+
+```javascript
+$box.classList.toggle('class-x'); // class="box blue class-x"
+$box.classList.toggle('class-y'); // class="box blue"
+```
+
+2번째 인수로 **조건식**을 전달할 수 있다. 이때 조건식의 평가 결과가 true이면 class 어트리뷰트에 강제로 1번째 인수로 전달받은 문자열을 추가하고, false이면 강제로 제거한다.
+
+```javascript
+// 강제로 'red' 추가
+$box.classList.toggle('red', true);
+
+// 강제로 'red' 제거
+$box.classList.toggle('red', false);
+```
+
+&nbsp;  
 
 ### 8.3. 요소에 적용되어 있는 CSS 스타일 참조
+
+요소의 인라인 스타일을 포함한 모든 CSS 스타일을 참조해야 할 경우, `window.getComputedStyle(elem)` 메소드를 사용한다.
 
 &nbsp;  
 
 ## 9. DOM 표준
 
+HTML과 DOM 표준은 W3C와 WHATWG 두 단체가 나름대로 협력하며 공통된 표준을 만들어 왔다.
 
+하지만 최근 두 단체가 서로 다른 결과물을 내놓기 시작했다. 별개의 HTML과 DOM 표준을 만드는 것은 이롭지 않으므로 2018년 4월부터 구글, 애플, 마이크로소프트, 모질라 네 주류 브라우저 벤더가 주도하는 WHATWG이 단일 표준을 내놓기로 두 단체가 합의했다.
 
+DOM은 DOM Level 1 ~ DOM Level 4까지 4개의 레벨(버전)이 있다.
 
+&nbsp;  
 
+## 참고 자료
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* [poiemaweb.com - DOM](https://poiemaweb.com/fastcampus/dom)
 
