@@ -23,13 +23,15 @@
 
 HTML 문서는 HTML 요소들의 집합으로 이루어지며, HTML 요소는 **중첩 관계**를 가진다. 즉, HTML 요소의 컨텐츠 영역(시작 태그와 종료 태그 사이)에는 텍스트 뿐만 아니라 다른 HTML 요소도 포함될 수 있다. 이때 HTML 요소 간에는 중첩 관계에 의해 계층적인 부자(parent-child) 관계가 형성된다. 이러한 **HTML 요소 간의 부자 관계를 반영하여 HTML 문서의 구성 요소인 HTML 요소를 객체화한 모든 노드 객체를 트리 자료 구조로 구성**한다.
 
+&nbsp;  
+
 > **트리 자료 구조**
 >
 > 트리 자료 구조(tree data structure)는 노드(node)들의 계층 구조로 이루어진다. 즉, 트리 자료 구조는 부모 노드(parent node)와 자식 노드(child node)로 구성되어 노드 간의 계층적 구조(부자, 형제 관계)를 표현하는 비선형 자료 구조를 말한다.
 >
 > 트리 자료 구조는 하나의 최상위 노드에서 시작한다. 최상위 노드는 부모 노드가 없으며 루트 노드(root node)라 하다. 루트 노드는 0개 이상의 자식 노드를 가진다. 자식 노드가 없는 노드를 리프 노드(leaf node)라 한다.
 
-<img src="https://user-images.githubusercontent.com/32444914/83388997-6814d980-a42a-11ea-8610-76b6a744f945.png" width="60%" />
+<img src="https://user-images.githubusercontent.com/32444914/83388997-6814d980-a42a-11ea-8610-76b6a744f945.png" width="50%" />
 
 &nbsp;  
 
@@ -124,6 +126,13 @@ document 객체는 DOM 트리의 루트 노드이므로 DOM 트리의 노드들�
 
 ### 1.3. 노드 객체의 상속 구조
 
+* DOM을 구성하는 노드 객체는 자신의 구조와 정보를 제어할 수 있는 DOM API를 사용할 수 있다.
+* DOM을 구성하는 노드 객체는 ECMAScript 사양에 정의된 표준 빌트인 객체가 아닌 브라우저 환경에서 추가적으로 제공하는 호스트 객체이다.
+* DOM을 구성하는 노드 객체도 자바스크립트 객체이므로 프로토타입에 의한 상속 구조를 가진다.
+* 노드 객체는 공통된 기능일수록 프로토타입 체인의 상위에, 개별적인 고유 기능일수록 프로토타입 체인의 하위에 프로토타입 체인을 구축하여 노드 객체에 필요한 기능(프로퍼티와 메소드)을 상속 구조를 통해 가진다.
+
+&nbsp;  
+
 DOM을 구성하는 노드 객체는 자신의 구조와 정보를 제어할 수 있는 DOM API를 사용할 수 있다. 이를 통해 노드 객체는 자신의 부모 또는 자식을 탐색할 수 있으며 자신의 컨텐츠를 조작할 수도 있다.
 
 DOM을 구성하는 노드 객체는 ECMAScript 사양에 정의된 표준 빌트인 객체(standard built-in object)가 아니라 브라우저 환경에서 추가적으로 제공하는 호스트 객체(host object)이다. 하지만 **노드 객체도 자바스크립트 객체이므로 프로토타입에 의한 상속 구조를 가진다.** 노드 객체의 상속 구조는 아래와 같다.
@@ -136,7 +145,11 @@ DOM을 구성하는 노드 객체는 ECMAScript 사양에 정의된 표준 빌�
 
 예를 들어 input 요소를 파싱하여 객체화한 input 요소 노드 객체는 HTMLInputElement, HTMLElement, Element, Node, EventTarget, Object의 prototype에 바인딩되어 있는 프로토타입 객체를 상속받는다. 즉, input **요소 노드 객체는 프로토타입 체인에 있는 모든 프로토타입의 프로퍼티나 메소드를 상속받아 사용할 수 있다.**
 
+&nbsp;  
+
 <img src="https://user-images.githubusercontent.com/32444914/83393614-05bfd700-a432-11ea-8c35-e56aeb68daf1.png" width="60%" />
+
+&nbsp;  
 
 배열이 객체인 동시에 배열인 것처럼, input 요소 노드 객체도 아래와 같이 다양한 특성을 갖는 객체이며 이러한 특성을 나타내는 기능을 상속 관계를 통해 구분하여 제공한다.
 
@@ -149,9 +162,13 @@ DOM을 구성하는 노드 객체는 ECMAScript 사양에 정의된 표준 빌�
 | 웹 문서의 요소 중에서 HTML 요소를 표현하는 객체              | HTMLElement                |
 | HTML 요소 중 input 요소를 표현하는 객체                      | HTMLInputElement           |
 
+&nbsp;  
+
 노드 객체의 상속 구조는 개발자 도구의 Elements 패널 하단의 Properties 패널에서 확인할 수 있다.
 
 <img src="https://user-images.githubusercontent.com/32444914/83394177-13c22780-a433-11ea-8e0f-6949796ac75d.png" width="80%" />
+
+&nbsp;  
 
 노드 객체는 공통적인 기능도 있지만 **노드 객체의 종류에 따라 고유한 기능**도 갖는다. 예를 들어, 모든 노드 객체는 공통적으로 이벤트를 발생시킨다. 이벤트에 관련된 기능은 EventTarget 인터페이스가 제공한다.
 
@@ -182,18 +199,19 @@ HTML의 구조나 내용 또는 스타일 등을 동적으로 조작하려면 �
 <strong>`Document.prototype.getElementbyId(id)`</strong>
 
 * 인수로 전달한 id 어트리뷰트 값을 가지는 하나의 요소 노드를 탐색하여 반환
-* Document.prototype의 프로퍼티이므로 반드시 문서 노드 document를 통해 호출
+* `Document.prototype`의 프로퍼티이므로 반드시 문서 노드 `document`를 통해 호출
 * HTML 문서 내에 중복된 id 값을 가지는 요소가 여러 개 존재할 경우 첫번째 요소 노드만 반환
-* 인수로 전달된 id 값을 가지는 요소가 없는 경우 null을 반환
+* 인수로 전달된 id 값을 가지는 요소가 없는 경우 `null`을 반환
 
 &nbsp;  
 
+#### &ast;&ast;주의 사항&ast;&ast;
 
-**주의 사항**
+* id 값은 HTML 문서 내에서 유일한 값이어야 하며 class 어트리뷰트와는 달리 공백 문자로 구분하여 여러 개의 값을 가질 수 없다.
+* 단, HTML 문서 내에 중복된 id 값을 가지는 요소가 여러 개 존재하더라도 어떠한 에러도 발생하지 않는다.
+* HTML 요소에 id 어트리뷰트를 부여하면 **id 값과 동일한 이름의 전역 변수가 암묵적으로 선언되고 해당 노드 객체가 할당되는 부수 효과가 있다.**
 
-id 값은 HTML 문서 내에서 유일한 값이어야 하며 class 어트리뷰트와는 달리 공백 문자로 구분하여 여러 개의 값을 가질 수 없다. 단, HTML 문서 내에 중복된 id 값을 가지는 요소가 여러 개 존재하더라도 어떠한 에러도 발생하지 않는다.
-
-HTML 요소에 id 어트리뷰트를 부여하면 id 값과 동일한 이름의 전역 변수가 암묵적으로 선언되고 해당 노드 객체가 할당되는 부수 효과(side effect)가 있다.
+&nbsp;  
 
 ```html
 <!doctype html>
@@ -299,17 +317,20 @@ HTML 요소에 id 어트리뷰트를 부여하면 id 값과 동일한 이름의 
 
 ### 2.6. HTMLCollection과 NodeList
 
-HTMLCollection과 NodeList는 DOM API가 **여러 개의 결과값을 반환하기 위한 DOM 컬렉션 객체**이다. **HTMLCollection과 NodeList는 모두 유사 배열 객체이자 이터러블이다.** 따라서 for...of 문으로 순회할 수 있으며 스프레드 문법을 사용해 간단히 배열로 변환할 수 있다.
-
-HTMLCollection과 NodeList의 중요한 특징은 **노드 객체의 상태 변화를 실시간으로 반영하는 살아있는(live) 객체**라는 것이다. HTMLCollection은 언제나 live 객체로 동작한다. 단, NodeList는 대부분의 경우 노드 객체의 상태를 정적으로 유지하는 non-live 객체로 동작하지만, 경우에 따라 live 객체로 동작할 때가 있다(ex. childNodes 프로퍼티).
-
-따라서 **노드 객체의 상태 변경과 상관 없이 안전하게 DOM 컬렉션을 사용하려면 HTMLCollection이나 NodeList를 배열로 변환하여 사용하는 것이 좋다.** HTMLCollection과 NodeList 객체가 메소드를 제공하기는 하지만, 배열만큼 다양한 기능을 제공하지는 않는다(ex. 고차 함수).
-
-HTMLCollection과 NodeList는 모두 유사 배열 객체이며 이터러블이다. 따라서 스프레드 무법을 사용하여 간단히 배열로 변환할 수 있다.
+* HTMLCollection과 NodeList는 DOM API가 **여러 개의 결과값을 반환하기 위한 DOM 컬렉션 객체**이다.
+* **HTMLCollection과 NodeList는 모두 유사 배열 객체이자 이터러블이다.** 따라서 for...of 문으로 순회할 수 있으며 스프레드 문법을 사용해 간단히 배열로 변환할 수 있다.
+* HTMLCollection과 NodeList의 중요한 특징은 **노드 객체의 상태 변화를 실시간으로 반영하는 살아있는(live) 객체**라는 것이다.
+* HTMLCollection은 언제나 live 객체로 동작한다. 단, NodeList는 대부분의 경우 노드 객체의 상태를 정적으로 유지하는 non-live 객체로 동작하지만, 경우에 따라 live 객체로 동작할 때가 있다. (ex. childNodes 프로퍼티)
+* 따라서 **노드 객체의 상태 변경과 상관 없이 안전하게 DOM 컬렉션을 사용하려면 HTMLCollection이나 NodeList를 배열로 변환하여 사용하는 것이 좋다.** HTMLCollection과 NodeList 객체가 메소드를 제공하기는 하지만, 배열만큼 다양한 기능을 제공하지는 않는다(ex. 고차 함수).
 
 &nbsp;  
 
 ## 3. 노드 탐색
+
+* Node, Element 인터페이스는 DOM 트리 상의 노드를 타색할 수 있도록 **트리 탐색 프로퍼티**를 제공한다.
+* 노드 탐색 프로퍼티는 모두 **접근자 프로퍼티**이다. 단, setter 없이 getter만 존재하여 참조만 가능한 읽기 전용 프로퍼티이다.
+
+&nbsp;  
 
 요소 노드를 취득한 다음, 취득한 요소 노드를 기점으로 DOM 트리의 노드를 옮겨 다니며 부모, 형제, 자식 등을 탐색(traversing)해야 할 때가 있다. 아래 예제를 살펴보자.
 
@@ -329,7 +350,7 @@ li.banana 요소는 2개의 형제 요소와 부모 요소를 가진다. 이때 
 
 <img src="https://user-images.githubusercontent.com/32444914/83405180-f008dc80-a446-11ea-96a6-3c8258e254b8.png" width="70%" />
 
-DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 프로퍼티인 parentNode, previousSibling, firstChild, childNodes 등은 Node.prototype이 제공하고 프로퍼티 키에 Element가 포함된 previousElementSibling, nextElementSibling, children은 Element.prototype이 제공하는 프로퍼티이다.
+DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 프로퍼티인 `parentNode`, `previousSibling`, `firstChild`, `childNodes` 등은 `Node.prototype`이 제공하고 프로퍼티 키에 "Element"가 포함된 `previousElementSibling`, `nextElementSibling`, `children`은 `Element.prototype`이 제공하는 프로퍼티이다.
 
 노드 탐색 프로퍼티는 모두 **접근자 프로퍼티**이다. 단, setter 없이 getter만 존재하여 참조만 가능한 읽기 전용 프로퍼티이다. 읽기 전용 접근자 프로퍼티에 값을 할당하면 아무런 에러 없이 무시된다.
 
@@ -366,30 +387,30 @@ DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 �
 
 자식 노드를 탐색하기 위해서는 아래와 같은 노드 탐색 프로퍼티를 사용한다.
 
-| 프로퍼티                            | 설명                                                         |
-| ----------------------------------- | ------------------------------------------------------------ |
-| Node.prototype.childNodes           | 자식 노드를 모두 탐색하여 DOM 컬렉션 객체인 NodeList에 담아 반환한다. **childNodes 프로퍼티가 반환한 NodeList에는 텍스트 노드 또는 요소 노드가 포함되어 있다.** |
-| Element.prototype.children          | 자식 요소 노드 만을 모두 탐색하여 DOM 컬렉션 객체인 HTMLCollection에 담아 반환한다. **children 프로퍼티가 반환한 HTMLCollection에는 텍스트 노드는 포함되지 않고 요소 노드만이 포함되어 있다.** |
-| Node.prototype.firstChild           | 첫번째 자식 노드를 반환한다. 반환된 노드는 텍스트 노드 또는 요소 노드이다. |
-| Node.prototype.lastChild            | 마지막 자식 노드를 반환한다. 반한된 노드는 텍스트 노드 또는 요소 노드이다. |
-| Element.prototype.firstElementChild | 첫번째 자식 노드를 반환한다. 요소 노드만을 반환한다.         |
-| Element.prototype.lastElementChild  | 마지막 자식 노드를 반환한다. 요소 노드만을 반환한다.         |
+| 프로퍼티                              | 설명                                                         |
+| ------------------------------------- | ------------------------------------------------------------ |
+| `Node.prototype.childNodes`           | 자식 노드를 모두 탐색하여 DOM 컬렉션 객체인 NodeList에 담아 반환한다. **childNodes 프로퍼티가 반환한 NodeList에는 텍스트 노드 또는 요소 노드가 포함되어 있다.** |
+| `Element.prototype.children`          | 자식 요소 노드 만을 모두 탐색하여 DOM 컬렉션 객체인 HTMLCollection에 담아 반환한다. **children 프로퍼티가 반환한 HTMLCollection에는 텍스트 노드는 포함되지 않고 요소 노드만이 포함되어 있다.** |
+| `Node.prototype.firstChild`           | 첫번째 자식 노드를 반환한다. 반환된 노드는 텍스트 노드 또는 요소 노드이다. |
+| `Node.prototype.lastChild`            | 마지막 자식 노드를 반환한다. 반한된 노드는 텍스트 노드 또는 요소 노드이다. |
+| `Element.prototype.firstElementChild` | 첫번째 자식 노드를 반환한다. 요소 노드만을 반환한다.         |
+| `Element.prototype.lastElementChild`  | 마지막 자식 노드를 반환한다. 요소 노드만을 반환한다.         |
 
 &nbsp;  
 
 ### 3.3. 자식 노드 존재 확인
 
-| 프로퍼티                            | 설명                                                         |
-| ----------------------------------- | ------------------------------------------------------------ |
-| Node.prototype.hasChildNodes        | 자식 노드의 존재 여부를 불리언으로 반환한다. childNodes 프로퍼티와 마찬가지로 텍스트 노드를 포함하여 자식 노드의 존재를 확인한다. |
-| Element.prototype.children.length   | 요소 노드인 자식 노드가 존재하는지 children 프로퍼티(유사 배열 객체)의 길이를 확인한다. children은 DOM 콜렉션 객체인 HTMLCollection 객체이다. |
-| Element.prototype.childElementCount | 요소 노드인 자식 노드의 수를 나타내는 프로퍼티               |
+| 프로퍼티                              | 설명                                                         |
+| ------------------------------------- | ------------------------------------------------------------ |
+| `Node.prototype.hasChildNodes`        | 자식 노드의 존재 여부를 불리언으로 반환한다. childNodes 프로퍼티와 마찬가지로 텍스트 노드를 포함하여 자식 노드의 존재를 확인한다. |
+| `Element.prototype.children.length`   | 요소 노드인 자식 노드가 존재하는지 children 프로퍼티(유사 배열 객체)의 길이를 확인한다. children은 DOM 콜렉션 객체인 HTMLCollection 객체이다. |
+| `Element.prototype.childElementCount` | 요소 노드인 자식 노드의 수를 나타내는 프로퍼티               |
 
 &nbsp;  
 
 ### 3.4. 텍스트 노드 탐색
 
-요소 노드의 텍스트 노드는 요소 노드의 자식 노드이다. 따라서 요소 노드의 텍스트 노드는 firstChild 프로퍼티로 접근할 수 있다.
+요소 노드의 텍스트 노드는 요소 노드의 자식 노드이다. 따라서 요소 노드의 텍스트 노드는 `firstChild` 프로퍼티로 접근할 수 있다.
 
 &nbsp;  
 
@@ -403,12 +424,12 @@ DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 �
 
 같은 부모 노드를 갖는 형제 노드를 탐색하기 위해서는 아래와 같은 노드 탐색 프로퍼티를 사용한다. 단, **어트리뷰트 노드는 요소 노드의 형제 노드이지만, 같은 부모 노드를 갖는 형제 노드가 아니기 때문에 반환되지 않는다.** 즉, 아래 프로퍼티는 텍스트 노드 또는 요소 노드만 반환한다.
 
-| 프로퍼티                                 | 설명                                                         |
-| ---------------------------------------- | ------------------------------------------------------------ |
-| Node.prototype.previousSibling           | 같은 부모 노드를 갖는 형제 노드 중 이전 형제 노드를 탐색하여 반환한다. 텍스트 노드 또는 요소 노드가 반환된다. |
-| Node.prototype.nextSibling               | 같은 부모 노드를 갖는 형제 노드 중 다음 형제 노드를 탐색하여 반환한다. 텍스트 노드 또는 요소 노드가 반환된다. |
-| Element.prototype.previousElementSibling | 같은 부모 노드를 갖는 형제 요소 노드 중 이전 형제 요소 노드를 탐색하여 반환한다. |
-| Element.prototype.nextElementSibling     | 같은 부모 노드를 갖는 형제 요소 노드 중 다음 형제 요소 노드를 탐색하여 반환한다. |
+| 프로퍼티                                   | 설명                                                         |
+| ------------------------------------------ | ------------------------------------------------------------ |
+| `Node.prototype.previousSibling`           | 같은 부모 노드를 갖는 형제 노드 중 이전 형제 노드를 탐색하여 반환한다. 텍스트 노드 또는 요소 노드가 반환된다. |
+| `Node.prototype.nextSibling`               | 같은 부모 노드를 갖는 형제 노드 중 다음 형제 노드를 탐색하여 반환한다. 텍스트 노드 또는 요소 노드가 반환된다. |
+| `Element.prototype.previousElementSibling` | 같은 부모 노드를 갖는 형제 요소 노드 중 이전 형제 요소 노드를 탐색하여 반환한다. |
+| `Element.prototype.nextElementSibling`     | 같은 부모 노드를 갖는 형제 요소 노드 중 다음 형제 요소 노드를 탐색하여 반환한다. |
 
 &nbsp;  
 
@@ -416,10 +437,10 @@ DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 �
 
 노드 객체에 대한 정보를 확인하려면 아래와 같은 노드 정보 프로퍼티를 사용한다.
 
-| 프로퍼티                | 설명                                                         |
-| ----------------------- | ------------------------------------------------------------ |
-| Node.prototype.nodeType | 노드 객체의 종류를 나타내는 상수를 반환한다. 노드 타입 상수는 Node에 정의되어 있다. |
-| Node.prototype.nodeName | 노드의 이름을 문자열로 반환한다.                             |
+| 프로퍼티                  | 설명                                                         |
+| ------------------------- | ------------------------------------------------------------ |
+| `Node.prototype.nodeType` | 노드 객체의 종류를 나타내는 상수를 반환한다. 노드 타입 상수는 Node에 정의되어 있다. |
+| `Node.prototype.nodeName` | 노드의 이름을 문자열로 반환한다.                             |
 
 &nbsp;  
 
@@ -460,7 +481,7 @@ DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 �
 
 `Node.prototype.textContent`는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 텍스트와 모든 자손 노드의 텍스트를 취득하거나 변경한다.
 
-요소 노드의 textContent 프로퍼티를 참조하면 요소 노드의 컨텐츠 영역(시작 태그와 종료 태그 사이)내의 텍스트를 모두 반환한다. 이때 HTML 마크업은 무시된다.
+요소 노드의 `textContent` 프로퍼티를 참조하면 요소 노드의 컨텐츠 영역(시작 태그와 종료 태그 사이)내의 텍스트를 모두 반환한다. 이때 HTML 마크업은 무시된다.
 
 ```html
 <!doctype html>
@@ -479,7 +500,7 @@ DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 �
 
 <img src="https://user-images.githubusercontent.com/32444914/83415196-b2617f00-a459-11ea-8bad-13c3f65b3849.png" width="70%" />
 
-만약 요소 노드의 컨텐츠 영역에 다른 요소 노드가 없고 텍스트만 존재한다면 firstChild.nodeValue와 textContent 프로퍼티는 같은 결과를 반환한다. 따라서 이 경우, textContent 프로퍼티를 사용하는 것이 좋다.
+만약 요소 노드의 컨텐츠 영역에 다른 요소 노드가 없고 텍스트만 존재한다면 `firstChild.nodeValue`와 `textContent` 프로퍼티는 같은 결과를 반환한다. 따라서 이 경우, `textContent` 프로퍼티를 사용하는 것이 좋다.
 
 ```html
 <!doctype html>
@@ -496,6 +517,8 @@ DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 �
   </body>
 </html>
 ```
+
+&nbsp;  
 
 **만약 요소 노드의 textContent 프로퍼티에 문자열을 할당하면 요소 노드의 모든 자식 노드가 제거되고 할당한 문자열이 텍스트로 추가된다.** 이때 할당한 문자열에 HTML 마크업이 포함되어 있더라도 문자열 그대로 인식되어 텍스트로 취급된다. 즉, HTML 마크업이 파싱되지 않는다.
 
@@ -544,7 +567,7 @@ DOM 조작(DOM manipulation)은 **새로운 노드를 생성하여 DOM에 추가
 
 <img src="https://user-images.githubusercontent.com/32444914/83422253-37ea2c80-a464-11ea-8a25-3cf283fb17aa.png" width="70%" />
 
-요소 노드의 innerHTML 프로퍼티에 문자열을 할당하면 요소 노드의 자식 노드가 모두 제거되고 할당한 문자열에 포함되어 있는 HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+요소 노드의 innerHTML 프로퍼티에 문자열을 할당하면 요소 노드의 자식 노드가 모두 제거되고 할당한 **문자열에 포함되어 있는 HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.**
 
 ```html
 <!doctype html>
@@ -563,7 +586,7 @@ DOM 조작(DOM manipulation)은 **새로운 노드를 생성하여 DOM에 추가
 
 이처럼 innerHTML 프로퍼티를 사용하면 HTML 마크업 문자열로 간단히 DOM 조작이 가능하다.
 
-요소 노드의 innerHTML 프로퍼티에 할당한 HTML 마크업 문자열은 렌더링 엔진에 의해 파싱되어 요소 노드의 자식으로 DOM에 반영된다. 이때 사용자로부터 입력 받은 데이터(untrusted input data)를 그대로 innerHTML 프로퍼티에 할당하는 것은 <strong>크로스 사이트 스크립팅 공격(XSS: Cross-Site Scripting Attacks)</strong>에 취약하므로 위험하다. HTML 마크업 내에 자바스크립트 악성 코드가 포함되어 있다면 파싱 과정에서 그대로 실행될 가능성이 있기 때문이다.
+요소 노드의 innerHTML 프로퍼티에 할당한 HTML 마크업 문자열은 렌더링 엔진에 의해 파싱되어 요소 노드의 자식으로 DOM에 반영된다. 이때 <strong>사용자로부터 입력 받은 데이터(untrusted input data)</strong>를 그대로 innerHTML 프로퍼티에 할당하는 것은 <strong>크로스 사이트 스크립팅 공격(XSS: Cross-Site Scripting Attacks)</strong>에 취약하므로 위험하다. HTML 마크업 내에 자바스크립트 악성 코드가 포함되어 있다면 파싱 과정에서 그대로 실행될 가능성이 있기 때문이다.
 
 ```html
 <!doctype html>
@@ -571,7 +594,7 @@ DOM 조작(DOM manipulation)은 **새로운 노드를 생성하여 DOM에 추가
   <body>
     <div id="foo">Hello</div>
     <script>
-    	// innerHTML로 스크립트 태그를 삽입하여 자바스크립트가 실행되도록 한다.
+      // innerHTML로 스크립트 태그를 삽입하여 자바스크립트가 실행되도록 한다.
       // HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크립트 코드를 실행하지 않는다.
       document.getElementById('foo').innerHTML = `<script>alert('XSS!')</script>`;
     </script>
@@ -579,7 +602,7 @@ DOM 조작(DOM manipulation)은 **새로운 노드를 생성하여 DOM에 추가
 </html>
 ```
 
-HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크립트 코드를 실행하지 않는다. 따라서 HTML5를 지원하는 브라우저에서 위 예제는 동작하지 않는다. 하지만 script 요소 없이도 크로스 사이트 스크립팅 공격은 가능하다. 아래의 간단한 크로스 사이트 스크립팅 공격은 모던 브라우저에서도 동작한다.
+**HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크립트 코드를 실행하지 않는다.** 따라서 HTML5를 지원하는 브라우저에서 위 예제는 동작하지 않는다. 하지만 script 요소 없이도 크로스 사이트 스크립팅 공격은 가능하다. 아래의 간단한 크로스 사이트 스크립팅 공격은 모던 브라우저에서도 동작한다.
 
 ```html
 <!doctype html>
@@ -594,6 +617,8 @@ HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크�
 ```
 
 이처럼 innerHTML 프로퍼티를 사용한 DOM 조작은 구현이 간단하고 직관적이라는 장점이 있지만, XSS 공격에 취약한 단점도 있다.
+
+&nbsp;  
 
 > **HTML 새니티제이션(HTML sanitization)**
 >
@@ -623,6 +648,8 @@ innerHTML 프로퍼티의 또 다른 단점은 **기존의 노드를 제거하�
 ```
 
 위 예제는 ul#fruits 요소에 자식 요소 li.banana를 추가한다. 이때 ul#fruits 요소의 자식 요소 li.apple은 변경이 없으므로 다시 생성할 필요가 없다. 다만 새롭게 추가할 li.banana 노드만을 생성하여 DOM에 반영하면 된다. 위 코드를 얼핏 보면 그렇게 동작할 것 처럼 보이지만 **자식 노드를 모두 제거**하고 새롭게 자식 노드 li.apple과 li.banana를 생성하여 DOM에 반영한다. 이는 효율적이지 않다.
+
+&nbsp;  
 
 innerHTML 프로퍼티의 또 다른 단점은 새로운 요소를 삽입할 위치를 지정할 수 없다는 것이다. 아래 예제를 살펴보자.
 
@@ -672,7 +699,7 @@ Element.prototype.insertAdjacentHTML(position, DOMString)
 
 `insertAdjacentHTML` 메소드는 기존 요소에는 영향을 주지 않고 새롭게 삽입될 요소만을 파싱하여 DOM에 반영하므로 기존의 자식 노드를 모두 제거하고 다시 자식 노드를 생성하여 DOM에 반영하는 innerHTML 프로퍼티보다 효율적이고 빠르다.
 
-단, innerHTML 프로퍼티와 마찬가지로 insertAdjacentHTML 메소드는 HTML 마크업 문자열을 파싱하므로 XSS 공격에 취약하다는 점은 동일하다.
+단, `innerHTML` 프로퍼티와 마찬가지로 `insertAdjacentHTML` 메소드는 HTML 마크업 문자열을 파싱하므로 XSS 공격에 취약하다는 점은 동일하다.
 
 &nbsp;  
 
@@ -716,13 +743,13 @@ DOM은 노드를 직접 생성 / 삽입 / 삭제 / 치환하는 메소드도 제
 
 &nbsp;  
 
-### 6.3. 노드 생성과 추가
-
 ### 6.4. 복수의 노드 생성과 추가
 
-DocumentFragment 노드는 문서, 요소, 어트리뷰트, 텍스트 노드와 같은 노드 객체의 일종으로 부모 노드가 없으며 기존 DOM과는 별도 존재한다는 특징이 있다. DocumentFragment 노드는 컨테이너 요소와 같이 자식 노드들의 부모 노드로서 별도의 서브 DOM을 구성하여 기존 DOM에 추가하기 위한 용도로 사용한다.
+`DocumentFragment` 노드는 문서, 요소, 어트리뷰트, 텍스트 노드와 같은 노드 객체의 일종으로 부모 노드가 없으며 기존 DOM과는 별도 존재한다는 특징이 있다. `DocumentFragment` 노드는 **컨테이너 요소와 같이 자식 노드들의 부모 노드로서 별도의 서브 DOM을 구성하여 기존 DOM에 추가하기 위한 용도로 사용한다.**
 
-DocumentFragment 노드는 기존 DOM과는 별도로 존재하므로 DocumentFragment 노드에 자식 노드를 추가하여도 기존 DOM에는 어떠한 변경도 발생하지 않는다. 또한 DocumentFragment 노드를 DOM에 추가하면 자신의 자식 노드만 DOM에 추가한다.
+`DocumentFragment` 노드는 기존 DOM과는 별도로 존재하므로 `DocumentFragment` 노드에 자식 노드를 추가하여도 기존 DOM에는 어떠한 변경도 발생하지 않는다. 또한 `DocumentFragment` 노드를 DOM에 추가하면 자신의 자식 노드만 DOM에 추가한다.
+
+&nbsp;  
 
 <img src="https://user-images.githubusercontent.com/32444914/83490628-57786800-a4eb-11ea-9c04-0cd11123d4c0.png" width="70%" />
 
@@ -761,7 +788,7 @@ DocumentFragment 노드는 기존 DOM과는 별도로 존재하므로 DocumentFr
 </html>
 ```
 
-먼저 DocumentFragment 노드를 생성하고 DOM에 추가할 요소 노드를 DocumentFragment 노드에 자식 노드로 추가한 다음, DocumentFragment 노드를 기존 DOM에 추가한다.
+먼저 `DocumentFragment` 노드를 생성하고 DOM에 추가할 요소 노드를 `DocumentFragment` 노드에 자식 노드로 추가한 다음, `DocumentFragment` 노드를 기존 DOM에 추가한다.
 
 이때 실제로 DOM 변경이 발생하는 것은 DocumentFragment 노드를 DOM에 추가 한번 뿐이다. 따라서 여러 개의 요소 노드를 DOM에 추가하는 경우, DocumentFragment 노드를 사용하는 것이 보다 효율적이다.
 
@@ -962,11 +989,11 @@ HTML 문서의 구성 요소인 HTML 요소는 여러 개의 어트리뷰트(att
 
 HTML 문서가 파싱될 때, **HTML 요소의 어트리뷰트는 어트리뷰트 노드로 변환되어 요소 노드 객체의 형제 노드로 추가된다.** 이때 HTML 어트리뷰트 당 하나의 어트이뷰트 노드가 생성된다. 즉, 위 input 요소는 3개의 어트리뷰트가 있으므로 3개의 어트리뷰트 노드가 생성된다.
 
-이때 모든 어트리뷰트 노드의 참조는 유사 배열 객체이자 이터러블인 NamedNodeMap 객체에 담겨서 요소 노드의 attributes 프로퍼티에 저장된다.
+이때 모든 어트리뷰트 노드의 참조는 유사 배열 객체이자 이터러블인 `NamedNodeMap` 객체에 담겨서 요소 노드의 `attributes` 프로퍼티에 저장된다.
 
 <img src="https://user-images.githubusercontent.com/32444914/83506263-e55f4d80-a501-11ea-9a39-e8646cef2f18.png" width="80%" />
 
-따라서 요소 노드의 모든 어트리뷰트 노드는 요소 노드의 `Element.prototype.attribtues` 프로퍼티로 취득할 수 있다. **attributes 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티이며 요소 노드의 모든 어트리뷰트 노드의 참조가 담긴 NamedNodeMap 객체를 반환**한다.
+따라서 요소 노드의 모든 어트리뷰트 노드는 요소 노드의 `Element.prototype.attribtues` 프로퍼티로 취득할 수 있다. **attributes 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티이며 요소 노드의 모든 어트리뷰트 노드의 참조가 담긴 `NamedNodeMap` 객체를 반환**한다.
 
 ```html
 <!doctype html>
@@ -1015,7 +1042,7 @@ HTML 문서가 파싱될 때, **HTML 요소의 어트리뷰트는 어트리뷰�
 
 &nbsp;  
 
-HTML 어트리뷰트의 존재 여부를 확인하려면 `Element.prototype.hasAttribute(attributeName)` 메소드를 사용하고, HTML 어트리뷰트를 삭제하려면 `Element.prototype.removeAttribute(attributeName)` 메소드를 사용한다.
+HTML **어트리뷰트의 존재 여부**를 확인하려면 `Element.prototype.hasAttribute(attributeName)` 메소드를 사용하고, HTML 어트리뷰트를 삭제하려면 `Element.prototype.removeAttribute(attributeName)` 메소드를 사용한다.
 
 ```html
 <!doctype html>
@@ -1039,11 +1066,18 @@ HTML 어트리뷰트의 존재 여부를 확인하려면 `Element.prototype.hasA
 
 ### 7.3. HTML 어트리뷰트 vs. DOM 프로퍼티
 
+* HTML 어트리뷰트로 지정한 **HTML 요소의 초기 상태는 어트리뷰트 노드에서 관리한다.**
+* DOM 프로퍼티는 최신 상태를 관리한다. **사용자가 입력한 최신 상태는 HTML 어트리뷰트에 대응하는 요소 노드의 DOM 프로퍼티가 관리한다. DOM 프로퍼티는 사용자의 입력에 의한 상태 변화에 반응하여 언제나 최신 상태를 유지한다.**
+
+&nbsp;  
+
 요소 노드 객체에는 HTML 어트리뷰트에 대응하는 DOM 프로퍼티가 존재한다. 이 DOM 프로퍼티들은 HTML 어트리뷰트 값을 **초기값**으로 가지고 있다.
 
 예를 들어 `<input id="user" type="text" value="smilejin92">` 요소가 파싱되어 생성된 요소 노드 객체는 id, type, value 어트리뷰트에 대응하는 id, type, value 프로퍼티가 존재한다. 이 DOM 프로퍼티들은 HTML 어트리뷰트의 값을 초기값으로 가지고 있다.
 
 <img src="https://user-images.githubusercontent.com/32444914/83509933-286fef80-a507-11ea-91a2-71bf3ecac7fa.png" width="80%" />
+
+&nbsp;  
 
 DOM 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티이다. 따라서 DOM 프로퍼티는 참조와 변경이 가능하다.
 
@@ -1066,10 +1100,14 @@ DOM 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티�
 </html>
 ```
 
+&nbsp;  
+
 이처럼 HTML 어트리뷰트는 아래와 같이 중복 관리되고 있는 것처럼 보인다.
 
 1. 요소 노드의 attributes 프로퍼티에서 관리하는 어트리뷰트 노드
 2. HTML 어트리뷰트에 대응하는 요소 노드의 프로퍼티(DOM 프로퍼티)
+
+&nbsp;  
 
 **HTML 어트리뷰트의 역할은 HTML 요소의 초기 상태를 지정하는 것이다. 즉, HTML 어트리뷰트 값은 HTML 요소의 초기 상태를 의미하며 이는 변하지 않는다.**
 
@@ -1106,19 +1144,7 @@ input 요소의 요소 노드가 생성되어 첫 렌더링이 끝난 시점까�
 
 &nbsp;  
 
-#### 7.3.1. 어트리뷰트 노드는 초기 상태를 관리한다
-
-**HTML 어트리뷰트로 지정한 HTML 요소의 초기 상태는 어트리뷰트 노드에서 관리한다.**
-
-&nbsp;  
-
-#### 7.3.2. DOM 프로퍼티는 최신 상태를 관리한다.
-
-**사용자가 입력한 최신 상태는 HTML 어트리뷰트에 대응하는 요소 노드의 DOM 프로퍼티가 관리한다. DOM 프로퍼티는 사용자의 입력에 의한 상태 변화에 반응하여 언제나 최신 상태를 유지한다.**
-
-&nbsp;  
-
-#### 7.3.3. HTML 어트리뷰트와 DOM 프로퍼티의 대응 관계
+#### 7.3.1. HTML 어트리뷰트와 DOM 프로퍼티의 대응 관계
 
 대부분의 HTML 어트리뷰트 값은 HTML 어트리뷰트 이름과 동일한 DOM 프로퍼티 키로 참조할 수 있다. 단, 아래와 같이 HTML 어트리뷰트와 DOM 프로퍼티가 언제나 1:1로 대응하는 것은 아니며 HTML 어트리뷰트 이름과 DOM 프로퍼티 키가 반드시 일치하는 것도 아니다.
 
@@ -1132,7 +1158,7 @@ input 요소의 요소 노드가 생성되어 첫 렌더링이 끝난 시점까�
 
 &nbsp;  
 
-#### 7.3.4. DOM 프로퍼티 값의 타입
+#### 7.3.2. DOM 프로퍼티 값의 타입
 
 getAttribute 메소드로 취득한 어트리뷰트 값은 언제나 문자열이다. 하지만 **DOM 프로퍼티로 취득한 상태 값은 문자열이 아닐 수도 있다.** 예를 들어 checkbox 요소의 checked 어트리뷰트 값은 문자열이지만 checked 프로퍼티 값은 불리언 타입이다.
 
@@ -1274,6 +1300,8 @@ className 프로퍼티는 문자열을 반환하므로 공백으로 구분된 �
 
 DOMTokenList 객체는 공백 문자로 구분된 토큰들로 구성된 컬렉션 객체로서 유사 배열 객체이자 이터러블이다. DOMTokenList 객체는 아래와 같이 유용한 메소드를 제공한다.
 
+&nbsp;  
+
 **`add(...className)`**
 
 인수로 전달한 1개 이상의 문자열을 class 어트리뷰트에 추가한다.
@@ -1282,7 +1310,7 @@ DOMTokenList 객체는 공백 문자로 구분된 토큰들로 구성된 컬렉�
 $box.classList.add('class-x', 'class-y'); // class="box red class-x class-y"
 ```
 
-
+&nbsp;  
 
 **`remove(...className)`**
 
@@ -1292,7 +1320,7 @@ $box.classList.add('class-x', 'class-y'); // class="box red class-x class-y"
 $box.classList.remove('class-x', 'class-y'); // class="box red"
 ```
 
-
+&nbsp;  
 
 **`item(index)`**
 
@@ -1302,7 +1330,7 @@ $box.classList.remove('class-x', 'class-y'); // class="box red"
 $box.classList.item(1); // red
 ```
 
-
+&nbsp;  
 
 **`contains(className)`**
 
@@ -1312,7 +1340,7 @@ $box.classList.item(1); // red
 $box.classList.contains('red'); // true
 ```
 
-
+&nbsp;  
 
 **`replace(oldClassName, newClassName)`**
 
@@ -1322,7 +1350,7 @@ class 어트리뷰트에서 첫번째 인수로 전달한 문자열을 두번째
 $box.classList.replace('red', 'blue'); // class="box blue"
 ```
 
-
+&nbsp;  
 
 **`toggle(className)`**
 
