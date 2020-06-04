@@ -40,6 +40,7 @@
 * [**this**](./JavaScript/this.md)
 * [**실행 컨텍스트**](./JavaScript/execution-context.md)
 * [**클로저**](JavaScript/closure.md)
+* [**브라우저의 렌더링 과정**](./JavaScript/browser.md)
 * [**DOM**](./JavaScript/dom.md)
 * [**이벤트**](./JavaScript/event.md)
 
