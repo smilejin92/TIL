@@ -18,6 +18,8 @@
 const arr = ['apple', 'banana', 'orange'];
 ```
 
+&nbsp;  
+
 배열이 가지고 있는 값을 <strong>요소(element)</strong>라고 부른다. **자바스크립트의 모든 값은 배열의 요소가 될 수 있다.**
 
 배열의 요소는 배열에서 **자신의 위치**를 나타내는 0 이상의 정수인 <strong>인덱스(index)</strong>를 갖는다. 인덱스는 배열의 요소에 접근할 때 사용한다. 대부분의 프로그래밍 언어에서 인덱스는 0부터 시작한다.
@@ -30,11 +32,15 @@ arr[1] // banana
 arr[2] // orange
 ```
 
+&nbsp;  
+
 배열은 요소의 개수, 즉 배열의 길이를 나타내는 **length 프로퍼티**를 갖는다.
 
 ```javascript
 arr.length // 3
 ```
+
+&nbsp;  
 
 배열은 인덱스와 **length 프로퍼티**를 갖기 때문에 for 문을 통해 **순차적으로 값에 접근**할 수 있다.
 
@@ -45,11 +51,15 @@ for (let i = 0; i < arr.length; i++) {
 }
 ```
 
+&nbsp;  
+
 자바스크립트에 배열이라는 타입은 존재하지 않는다. **배열은 객체 타입이다.**
 
 ```javascript
 typeof arr // object
 ```
+
+&nbsp;  
 
 배열은 배열 리터럴 또는 Array 생성자 함수로 생성할 수 있다. 두 경우 모두 배열의 생성자 함수는 Array이며 배열의 프로토타입 객체는 Array.prototype이다. Array.prototype은 배열을 위한 빌트인 메소드를 제공한다.
 
@@ -59,6 +69,8 @@ const arr = [1, 2, 3];
 arr.constructor === Array // true
 Object.getPrototypeOf(arr) === Array.prototype // true
 ```
+
+&nbsp;  
 
 배열은 객체이지만 **일반 객체와는 구별되는 독특한 특징이 있다.**
 
@@ -104,6 +116,8 @@ for (let i = 0; i < arr.length; i++) {
 <img src="https://user-images.githubusercontent.com/32444914/82526770-bf37c600-9b6f-11ea-974a-9bc12ed42164.png" width="60%" />
 
 이처럼 자료 구조(data structure)에서 말하는 배열의 경우, 각 요소는 동일한 크기를 가지며 빈틈없이 연속적으로 이어져 있으므로 인덱스를 통해 단 한번의 연산으로 임의의 요소에 접근(random access, O(1))할 수 있다. 이는 매우 효율적이며 고속으로 동작한다.
+
+&nbsp;  
 
 > 검색 대상 요소의 메모리 주소 = 배열의 시작 메모리 주소 + 인덱스 * 요소의 바이트 수
 
@@ -154,6 +168,8 @@ const arr = [
 ];
 ```
 
+&nbsp;  
+
 일반적인 배열과 자바스크립트 배열의 장단점은 아래와 같다.
 
 | 일반 배열                                                    | 자바스크립트의 배열                                          |
@@ -186,6 +202,8 @@ length 프로퍼티는 요소의 개수, 즉 **배열의 길이**를 나타내�
 
 length 프로퍼티의 값은 0과 2^32 미만의 양의 정수이다. 즉, 배열은 요소를 최대 2^32 - 1개 가질 수 있다. 따라서 배열에서 사용할 수 있는 가장 작은 인덱스는 0이며 가장 큰 인덱스는 2^32 - 2이다.
 
+&nbsp;  
+
 length 프로퍼티의 값은 배열에 요소를 추가하거나 삭제하면 자동 갱신된다.
 
 ```javascript
@@ -201,6 +219,8 @@ arr.pop();
 console.log(arr.length); // 3
 ```
 
+&nbsp;  
+
 length 프로퍼티의 값은 요소의 개수를 바탕으로 결정되지만, 임의의 숫자 값을 명시적으로 할당할 수도 있다.
 
 ```javascript
@@ -212,6 +232,8 @@ arr.length = 3;
 // 배열의 길이가 줄어든다.
 console.log(arr); // [1, 2, 3]
 ```
+
+&nbsp;  
 
 주의할 것은 현재 length 프로퍼티 값보다 큰 숫자 값을 할당하는 경우다. **이때 length 프로퍼티 값은 변경되지만 실제로 배열의 길이가 늘어나지는 않는다.**
 
@@ -300,6 +322,8 @@ console.log(sparse[1]); // undefined
 ### 4.2. Array 생성자 함수
 
 Object 생성자 함수를 통해 객체를 생성할 수 있듯이, Array 생성자 함수를 통해 배열을 생성할 수도 있다. **Array 생성자 함수는 전달된 인수의 개수에 따라 다르게 동작한다.**
+
+&nbsp;  
 
 **1. 전달된 인수가 1개이고 숫자인 경우, 인수를 length로 배열을 생성한다.**
 
@@ -404,6 +428,8 @@ const arr2 = Array.from({ length: 5 }, (_, i) => i);
 console.log(arr2); // [0, 1, 2, 3, 4]
 ```
 
+&nbsp;  
+
 > **유사 배열 객체와 이터러블 객체**
 >
 > 유사 배열 객체(array-like Object)는 마치 배열처럼 인덱스로 프로퍼티 값에 접근할 수 있고, length 프로퍼티를 가지는 객체를 말한다. 따라서 for 문으로 순회할 수도 있다.
@@ -423,6 +449,8 @@ const arr = [1, 2];
 console.log(arr[0]); // 1
 ```
 
+&nbsp;  
+
 존재하지 않는 요소에 접근하면 undefined가 반환된다.
 
 ```javascript
@@ -432,6 +460,8 @@ const arr = [1, 2];
 // 배열 arr에 인덱스가 2인 요소는 존재하지 않는다.
 console.log(arr[2]); // undefined
 ```
+
+&nbsp;  
 
 **배열은 사실 인덱스를 프로퍼티 키로 가지는 객체이다.** 따라서 존재하지 않는 프로퍼티 키로 객체의 프로퍼티에 접근했을 때 undefined를 반환하는 것 처럼 **배열도 존재하지 않는 요소를 참조하면 undefined가 반환된다.**
 
@@ -471,6 +501,8 @@ console.log(arr); // [0, 1]
 console.log(arr.length); // 2
 ```
 
+&nbsp;  
+
 만약 **현재 배열의 length 프로퍼티 값보다 큰 인덱스로 새로운 요소를 추가하면 희소 배열이 된다.**
 
 ```javascript
@@ -480,6 +512,8 @@ console.log(arr); // [0, 1, empty * 98, 100]
 console.log(arr.length); // 101
 ```
 
+&nbsp;  
+
 이미 요소가 존재하는 요소에 값을 재할당하면 요소값이 갱신된다.
 
 ```javascript
@@ -488,6 +522,8 @@ arr[1] = 10;
 
 console.log(arr); // [0, 10, empty * 98, 100]
 ```
+
+&nbsp;  
 
 인덱스는 요소의 위치를 나타내므로 반드시 0 이상의 정수(**또는 정수 형태의 문자열**)을 사용하여야 한다. 만약 정수 이외의 값을 인덱스처럼 사용하면 요소가 생성되는 것이 아니라 프로퍼티가 생성된다. 이때 **추가된 프로퍼티는 length 프로퍼티의 값에 영향을 주지 않는다.**
 
@@ -612,6 +648,8 @@ fruits.sort();
 console.log(fruits); // ['Apple', 'Banana', 'Orange']
 ```
 
+&nbsp;  
+
 문자열 요소들로 이루어진 배열의 정렬은 아무 문제가 없다. 하지만 **숫자 요소들로 이루어진 배열을 정렬할 때는 주의가 필요하다.**
 
 ```javascript
@@ -644,6 +682,8 @@ console.log(points); // [100, 40, 25, 10, 5, 2, 1]
 points.sort((a, b) => a < b ? -1 : (a > b ? 1 : 0));
 ```
 
+&nbsp;  
+
 > **Array.prototype.sort 메소드의 알고리즘**
 >
 > Array.prototype.sort 메소드는 10개 이상의 요소가 있는 배열을 정렬할 때 불안정하다고 알려진 quickSort 알고리즘을 사용했었다. ECMAScript 2019(ES10)에서는 timesort 알고리즘을 적용하도록 변경되었다. timesort 알고리즘은 합병 정렬과 삽입 정렬을 이용해 구현되었다 한다.
@@ -669,6 +709,8 @@ numbers.forEach(item => pows.push(item ** 2));
 console.log(pows); // [1, 4, 9]
 ```
 
+&nbsp;  
+
 forEach 메소드의 콜백 함수는 요소값, 인덱스, forEach 메소드를 호출한 배열(this)를 전달 받을 수 있다.
 
 ```javascript
@@ -682,6 +724,8 @@ forEach 메소드의 콜백 함수는 요소값, 인덱스, forEach 메소드를
 1,2,3의 2번째 요소 = 3
 */
 ```
+
+&nbsp;  
 
 forEach 메소드는 원본 배열을 변경하지 않는다. 하지만 콜백 함수를 통해 원본 배열을 변경할 수는 있다.
 
@@ -698,6 +742,8 @@ numbers.forEach((item, index, arr) => {
 console.log(numbers); // [1, 4, 9]
 ```
 
+&nbsp;  
+
 forEach 메소드의 반환값은 언제나 undefined이다.
 
 ```javascript
@@ -708,6 +754,8 @@ const result = [1, 2, 3].forEach(item => console.log(item));
 
 console.log(result); // undefined
 ```
+
+&nbsp;  
 
 forEach 메소드에 두번째 인수로 forEach 메소드 내부에서 this로 사용될 객체를 전달할 수 있다.
 
@@ -746,6 +794,8 @@ numbers.multiply([1, 2, 3]);
 console.log(numbers.numberArray); // [1, 4, 9]
 ```
 
+&nbsp;  
+
 forEach 메소드의 동작을 이해하기 위해 forEach 메소드의 폴리필(최신 사양의 기능을 지원하지 않는 브라우저를 위해 누락된 최신 사양의 기능을 구현하여 추가하는 것을 폴리필(pollyfill)이라 한다.)을 살펴보자.
 
 ```javascript
@@ -771,6 +821,8 @@ if (!Array.prototype.forEach) {
 ```
 
 이처럼 forEach 메소드도 내부에서는 반복문을 통해 배열을 순회할 수 밖에 없다. 단, 반복문을 메소드 내부로 은닉하여 로직의 흐름을 이해하기 쉽게 하고 복잡성을 해결한다.
+
+&nbsp;  
 
 forEach 메소드는 for 문과는 달리 break, continue 문을 사용할 수 없다. 배열의 모든 요소를 빠짐없이 순회하며 중간에 순회를 중단할 수 없다.
 
@@ -813,9 +865,13 @@ console.log(roots); // [1, 2, 3]
 console.log(numbers); // [1, 4, 9]
 ```
 
+&nbsp;  
+
 forEach 메소드는 배열을 순회하며 요소 값을 참조하여 무언가를 하기 위한 함수이며, map 메소드는 **배열을 순회하며 요소 값을 다른 값으로 맵핑하기 위한 함수이다.** 따라서 **map 메소드가 생성하여 반환하는 새로운 배열의 length는 map 메소드를 호출한 배열(this)의 length와 반드시 일치한다.** 즉, 1:1 매핑(mapping)한다.
 
 <img src="https://user-images.githubusercontent.com/32444914/82622654-5016ac00-9c19-11ea-9e94-4133988651d9.png" width="80%" />
+
+&nbsp;  
 
 forEach 메소드와 마찬가지로 map 메소드의 콜백 함수는 요소값, 인덱스, map 메소드를 호출한 배열(this)를 전달 받을 수 있다.
 
@@ -831,6 +887,8 @@ forEach 메소드와 마찬가지로 map 메소드의 콜백 함수는 요소값
 1,2,3의 2번째 요소 = 3
 */
 ```
+
+&nbsp;  
 
 forEach 메소드와 마찬가지로 map 메소드에 두번째 인자로 map 메소드 내부에서 this로 사용될 객체를 전달할 수 있다.
 
