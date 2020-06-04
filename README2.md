@@ -40,6 +40,7 @@
 * [**this**](./JavaScript/this.md)
 * [**실행 컨텍스트**](./JavaScript/execution-context.md)
 * [**클로저**](JavaScript/closure.md)
+* [**배열**](./JavaScript/array.md)
 * [**스프레드 문법**](./JavaScript/spread-syntax.md)
 * [**디스트럭처링 할당**](./JavaScript/destructuring-assignment.md)
 * [**브라우저의 렌더링 과정**](./JavaScript/browser.md)
