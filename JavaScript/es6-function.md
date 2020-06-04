@@ -10,6 +10,8 @@
   * 메소드(method)
   * 화살표 함수(arrow)
 
+&nbsp;  
+
 | ES6 함수의 구분    | constructor | prototype | super | arguments |
 | ------------------ | ----------- | --------- | ----- | --------- |
 | 일반 함수(Normal)  | O           | O         | X     | O         |
@@ -36,11 +38,9 @@ var obj = { a: foo };
 obj.a(); // 1
 ```
 
-이처럼 ES6 이전까지 함수는 사용 목적에 따라 명확히 구분되지 않는다. 다시 말해, ES6 이전의 모든 함수는 callable이며 constructor이다.
+&nbsp;  
 
-> **callabe과 constructor / non-constructor**
->
-> 호출할 수 있는 함수 객체를 callable이라 하며, 인스턴스를 생성할 수 있는 함수 객체를 constructor, 인스턴스를 생성할 수 없는 함수 객체를 non-constructor라고 부른다.
+이처럼 ES6 이전까지 함수는 사용 목적에 따라 명확히 구분되지 않는다. 다시 말해, ES6 이전의 모든 함수는 callable이며 constructor이다.
 
 ```javascript
 // foo는 일반 함수이다.
@@ -50,6 +50,14 @@ var foo = function () {};
 foo(); // undefined
 new foo(); // foo {}
 ```
+
+&nbsp;  
+
+> **callabe과 constructor / non-constructor**
+>
+> 호출할 수 있는 함수 객체를 callable이라 하며, 인스턴스를 생성할 수 있는 함수 객체를 constructor, 인스턴스를 생성할 수 없는 함수 객체를 non-constructor라고 부른다.
+
+&nbsp;  
 
 **주의할 것은 ES6 이전에 일반적으로 메소드라고 부르던 객체에 바인딩된 함수도 callable이며 constructor라는 것이다.** 따라서 객체에 바인딩된 함수도 일반 함수로서 호출할 수 있고, 생성자 함수로서 호출할 수도 있다.
 
@@ -83,6 +91,8 @@ new obj.f(); // f {}
 }); // [2, 4, 6]
 ```
 
+&nbsp;  
+
 이처럼 **ES6 이전의 모든 함수는 사용 목적에 따라 명확한 구분이 없으므로 호출 방식에 특별한 제약이 없고, 생성자 함수로 호출되지 않아도 프로토타입 객체를 생성한다.** 이는 혼란스러우며 실수를 유발시킬 가능성이 있고 성능에도 좋지 않다.
 
 이러한 문제를 해결하기 위해 **ES6에서는 사용 목적에 따라 함수를 3가지 종류로 명확히 구분하였다.**
@@ -92,6 +102,8 @@ new obj.f(); // f {}
 | 일반 함수(Normal)  | O           | O         | X     | O         |
 | 메소드(Method)     | X           | X         | O     | O         |
 | 화살표 함수(Arrow) | X           | X         | X     | X         |
+
+&nbsp;  
 
 일반 함수는 함수 선언문과 함수 표현식으로 정의한 함수를 말하며 ES6 이전의 함수와 차이가 없다. 하지만 ES6의 메소드와 화살표 함수는 ES6 이전의 함수와 명확한 차이가 있다.
 
@@ -122,12 +134,16 @@ console.log(obj.foo()); // 1
 console.log(obj.bar()); // 1
 ```
 
+&nbsp;  
+
 **ES6 사양에서 정의한 메소드는 인스턴스를 생성할 수 없는 non-constructor이다.** 따라서 ES6 메소드는 생성자 함수로서 호출할 수 없다.
 
 ```javascript
 new obj.foo(); // TypeError: obj.foo is not a constructor
 new obj.bar(); // bar  {}
 ```
+
+&nbsp;  
 
 **ES6 메소드는 인스턴스를 생성할 수 없으므로 prototype 프로퍼티가 없고, 프로토타입도 생성하지 않는다.**
 
@@ -138,6 +154,8 @@ obj.foo.hasOwnProperty('prototype'); // false
 // obj.bar는 constructor인 일반 함수이므로 prototype 프로퍼티가 있다.
 obj.bar.hasOwnProperty('prototype'); // true
 ```
+
+&nbsp;  
 
 참고로 표준 빌트인 객체가 제공하는 프로토타입 메소드와 정적 메소드는 모두 non-contructor이다.
 
@@ -152,7 +170,9 @@ Array.prototype.map.prototype; // undefined
 Array.from.prototype; // undefined
 ```
 
-ES6 메소드는 자신을 바인딩한 객체를 가리키는 내부 슬롯 [[HomeObject]]를 갖는다. super 참조는 내부 슬롯 [[HomeObject]]를 갖는 ES6 메소드 만이 super 키워드를 사용할 수 있다.
+&nbsp;  
+
+ES6 메소드는 자신을 바인딩한 객체를 가리키는 내부 슬롯 [[HomeObject]]를 갖는다. **super 참조는 내부 슬롯 [[HomeObject]]를 갖는 ES6 메소드 만이 super 키워드를 사용할 수 있다.**
 
 ```javascript
 const base = {
@@ -175,6 +195,8 @@ const derived = {
 console.log(derived.sayHi()); // Hi! Kim. How are you doing?
 ```
 
+&nbsp;  
+
 ES6 메소드가 아닌 함수는 super 키워드를 사용할 수 없다. ES6 메소드가 아닌 함수는 내부 슬롯 [[HomeObject]]를 갖지 않기 때문이다.
 
 ```javascript
@@ -186,6 +208,8 @@ const derived = {
   }
 };
 ```
+
+&nbsp;  
 
 ES6 메소드로 정의한 함수는 중복된 매개 변수 이름을 선언할 수 없다.
 
@@ -205,6 +229,8 @@ const obj = {
 ## 3. 화살표 함수
 
 화살표 함수(arrow function)는 `function` 키워드 대신 화살표(`=>`, fat arrow)를 사용하여 기존의 함수 정의 방식보다 간략하게 함수를 정의할 수 있다. 화살표 함수는 표현만 간략한 것이 아니라 내부 동작도 기존의 함수보다 간략하다. 특히 화살표 함수는 콜백 함수 내부에서 this가 전역 객체를 가리키는 문제를 해결하기 위한 대안으로 유용하다.
+
+&nbsp;  
 
 ### 3.1. 화살표 함수 정의
 
@@ -265,6 +291,8 @@ var sum = function (a, b) {
 };
 ```
 
+&nbsp;  
+
 함수 몸체가 여러 줄의 문으로 구성된다면 함수 몸체를 감싸는 중괄호 `{}`를 생략할 수 없다. 이때 반환값이 있다면 **명시적으로 반환해야 한다.**
 
 ```javascript
@@ -280,6 +308,8 @@ var sum = function (a, b) {
   return result;
 };
 ```
+
+&nbsp;  
 
 객체 리터럴을 반환하는 경우, 객체 리터럴을 소괄호 `()`로 감싸 주어야 한다.
 
@@ -298,6 +328,8 @@ var create = function (id, content) {
 create(1, 'JavaScript'); // { id: 1, content: 'JavaScript' }
 ```
 
+&nbsp;  
+
 화살표 함수도 즉시 실행 함수(IIFE)로 사용할 수 있다.
 
 ```javascript
@@ -307,6 +339,8 @@ const person = (name => ({
 
 console.log(person.sayHi()); // Hi! My name is Kim
 ```
+
+&nbsp;  
 
 화살표 함수도 일급 객체이므로 `Array.prototype.map`, `Array.prototype.filter`, `Array.prototype.reduce`와 같은 고차 함수(HOF)에 인수로 전달할 수 있다. 이 경우, 일반적인 함수 표현식보다 표현이 간결하고 가독성이 좋다.
 
@@ -390,6 +424,8 @@ this 바인딩은 함수가 어떻게 호출되었는지에 따라 동적으로 
 
 빌트인 고차 함수(ex. `Array.prototype.map`)에 전달된 콜백 함수는 대부분 고차 함수 내부에서 일반 함수로 호출된다. 자바스크립트의 this는 함수가 어떻게 호출되었는지에 따라 함수 내부에서 참조하는 this가 결정된다고 했다. 따라서 일반 함수로 호출된 콜백 함수 내부의 this는 전역 객체를 가리키게 된다.
 
+&nbsp;  
+
 이러한 문제를 해결하기 위해 ES6 이전에는 크게 두 가지 방법을 사용했다.
 
 **1. 메소드를 호출한 객체를 가리키는 this를 일단 회피시킨 다음, 콜백 함수 내부에서 사용한다.**
@@ -456,6 +492,8 @@ obj.foo();
 (function () { return this.x; }).bind(this);
 ```
 
+&nbsp;  
+
 만약 화살표 함수가 화살표 함수의 중첩 함수인 경우, 부모 화살표 함수 상위 스코프의 this를 참조한다. 즉, 화살표 함수가 중첩 함수인 경우 상위 스코프에 존재하는 가장 가까운 함수 중 화살표 함수가 아닌 부모 함수의 this를 참조한다. 만약 화살표 함수가 전역 함수라면 화살표 함수의 this는 전역 객체를 가리킨다.
 
 ```javascript
@@ -489,6 +527,8 @@ const counter = {
 console.log(counter.increase()); // NaN
 ```
 
+&nbsp;  
+
 화살표 함수는 함수 자체의 this 바인딩이 없기 때문에 `Function.prototype.call`, `Function.prototype.apply`, `Function.prototype.bind` 메소드를 사용하여도 **화살표 함수 내부의 this를 교체할 수 없다.**
 
 ```javascript
@@ -501,6 +541,8 @@ console.log(normal.call({ x: 10 })); // 10
 console.log(arrow.call({ x: 10 })); // 1
 ```
 
+&nbsp;  
+
 화살표 함수가 `Function.prototype.call`, `Function.prototype.apply`, `Function.prototype.bind` 메소드를 사용할 수 없다는 의미는 아니다. 화살표 함수는 자체의 this 바인딩이 없기 때문에 교체할 수 없고 언제나 상위 스코프의 this 바인딩을 참조한다.
 
 ```javascript
@@ -510,6 +552,8 @@ console.log(add.call(null, 1, 2)); // 3
 console.log(add.apply(null, [1, 2])); // 3
 console.log(add.bind(null, 1, 2)()); // 3
 ```
+
+&nbsp;  
 
 메소드를 화살표 함수로 정의하는 것은 피해야 한다. 화살표 함수 내부의 this는 자신이 정의된 스코프의 this 바인딩을 참조하기 때문이다.
 
@@ -525,6 +569,8 @@ const person = {
 person.sayHi(); // Hi
 ```
 
+&nbsp;  
+
 프로토타입 객체의 프로퍼티로 화살표 함수를 추가하는 경우도 동일한 문제가 발생한다.
 
 ```javascript
@@ -538,6 +584,8 @@ const person = new Person('Kim');
 // 이 예제를 브라우저에서 실행하면 빈 문자열을 갖는 window.name이 출력된다.
 person.sayHi(); // Hi
 ```
+
+&nbsp;  
 
 클래스 필드 정의 제안을 사용하여 클래스 필드에 화살표 함수를 할당할 수도 있다.
 
@@ -638,6 +686,8 @@ function foo(...rest) {
 foo(1, 2, 3, 4, 5);
 ```
 
+&nbsp;  
+
 함수에 전달된 인수들은 순차적으로 매개변수와 Rest 파라미터에 할당된다.
 
 ```javascript
@@ -650,6 +700,8 @@ function foo(x, y, ...rest) {
 foo(1, 2, 3, 4, 5);
 ```
 
+&nbsp;  
+
 Rest 파라미터는 이름 그대로 **먼저 선언된 매개변수에 할당된 인수를 제외한 나머지 인수들이 모두 배열에 담겨 할당**된다. 따라서 Rest 파라미터는 반드시 **마지막**이어야 한다.
 
 ```javascript
@@ -659,6 +711,8 @@ foo(1, 2, 3, 4, 5);
 // SyntaxError: Rest parameter must be last formal parameter
 ```
 
+&nbsp;  
+
 Rest 파라미터는 단 하나만 선언할 수 있다.
 
 ```javascript
@@ -667,6 +721,8 @@ function foo(...rest1, ...rest2) { }
 foo(1, 2, 3, 4, 5);
 // SyntaxError: Rest parameter must be last formal parameter
 ```
+
+&nbsp;  
 
 Rest 파라미터는 함수 정의 시 선언한 매개변수 개수를 나타내는 함수 객체의 `length` 프로퍼티에 영향을 주지 않는다.
 
@@ -692,6 +748,8 @@ function sum() {
 sum(1, 2); // { length: 2, '0': 1, '1': 2}
 ```
 
+&nbsp;  
+
 하지만 arguments 객체는 유사 배열 객체이므로 배열 메소드를 사용하려면 `Function.prototype.call` 메소드를 통해 this를 변경하여 배열 메소드를 호출해야 하는 번거로움이 있다.
 
 ```javascript
@@ -706,6 +764,8 @@ function sum() {
 console.log(sum(1, 2, 3, 4, 5)); // 15
 ```
 
+&nbsp;  
+
 ES6에서는 rest 파라미터를 사용하여 가변 인자의 목록을 배열로 직접 전달받을 수 있다. 이를 통해 유사 배열인 arguments 객체를 배열로 변환하는 번거로움을 피할 수 있다.
 
 ```javascript
@@ -716,6 +776,8 @@ function sum(...args) {
 
 console.log(sum(1, 2, 3, 4, 5)); // 15
 ```
+
+&nbsp;  
 
 일반 함수와 메소드는 Rest 파라미터와 arguments 객체를 모두 사용할 수 있다. **하지만 화살표 함수는 함수 자체의 arguments 객체를 갖지 않는다. 따라서 화살표 함수로 가변 인자 함수를 구현해야 할 때는 반드시 Rest 파라미터를 사용해야 한다**
 
@@ -748,6 +810,8 @@ console.log(sum(1, 2)); // 3
 console.log(sum(1)); // 1
 ```
 
+&nbsp;  
+
 ES6에서는 **매개변수 기본값을 사용하여 함수 내에서 수행하던 인수 체크 및 초기화를 간소화할 수 있다.**
 
 ```javascript
@@ -758,6 +822,8 @@ function sum(x = 0, y = 0) {
 console.log(sum(1, 2)); // 3
 console.log(sum(1)); // 1
 ```
+
+&nbsp;  
 
 **매개 변수 기본값은 매개변수에 인수를 전달하지 않았을 경우와 undefined를 전달한 경우에만 유효하다.**
 
@@ -771,6 +837,8 @@ logName(undefined); // Kim
 logName(null); // null
 ```
 
+&nbsp;  
+
 Rest 파라미터에는 기본값을 지정할 수 없다.
 
 ```javascript
@@ -779,6 +847,8 @@ function foo(...rest = []) {
 }
 // SyntaxError: Rest parameter may not have a default initializer
 ```
+
+&nbsp;  
 
 매개변수 기본값은 **함수 정의 시 선언한 매개변수 개수를 나타내는 함수 객체의 length 프로퍼티와 arguments 객체에 영향을 주지 않는다.**
 
@@ -794,7 +864,7 @@ sum(1, 2); // Arguments { '0': 1, '1': 2 }
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - ES6 함수의 추가 기능](https://poiemaweb.com/fastcampus/es6-function)
 
