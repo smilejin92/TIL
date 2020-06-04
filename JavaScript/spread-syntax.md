@@ -25,6 +25,8 @@ const arr = [1, 2, 3];
 const list = ...arr; // SyntaxError
 ```
 
+&nbsp;  
+
 이처럼 스프레드 문법의 결과물은 값으로 사용할 수 없고, 아래와 같이 **쉼표로 구분한 값의 목록을 사용하는 문맥에서만 사용할 수 있다.**
 
 * 함수 호출문의 인수 목록
@@ -244,6 +246,8 @@ const merged = { ...obj, ...{ a: 3, b: 4 } };
 console.log(merged); // { x: 1, y: 2, a: 3, b: 4 };
 ```
 
+&nbsp;  
+
 스프레드 프로퍼티가 제안되기 이전에는 ES6에서 도입된 `Object.assign` 메소드를 사용하여 여러 개의 객체를 병합하거나 특정 프로퍼티를 변경 또는 추가하였다.
 
 ```javascript
@@ -261,6 +265,8 @@ console.log(changed); // { x: 1, y: 100 }
 const added = Object.assign({}, { x: 1, y: 2 }, { z: 0 });
 console.log(added); // { x: 1, y: 2, z: 0 }
 ```
+
+&nbsp;  
 
 스프레드 프로퍼티는 `Object.assign` 메소드를 대체할 수 있는 간편한 문법이다.
 
