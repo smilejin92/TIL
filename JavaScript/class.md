@@ -12,7 +12,7 @@
 
 &nbsp;  
 
-자바스크립트는 프로토타입 기반(prototype-based) 객체지향 언어다. 프로토타입 기반 객체지향 언어는 클래스가 필요 없은(class-free) 객체지향 프로그래밍 언어이다. ES5에서는 클래스 없이도 아래와 같이 생성자 함수와 프로토타입 체인, 클로저를 사용하여 객체 지향 언어의 상속, 캡슐화 등의 개념을 구현할 수 있었다.
+자바스크립트는 프로토타입 기반(prototype-based) 객체지향 언어다. 프로토타입 기반 객체지향 언어는 클래스가 필요 없은(class-free) 객체지향 프로그래밍 언어이다. ES5에서는 클래스 없이도 아래와 같이 생성자 함수와 프로토타입 체인, 클로저를 사용하여 객체 지향 언어의 상속의 개념을 구현할 수 있고,  캡슐화도 한정적으로 구현할 수 있었다.
 
 ```javascript
 // ES5 생성자 함수
@@ -72,6 +72,8 @@ ES6에서 새롭게 도입된 클래스는 Java나 C#과 같은 클래스 기반
 class Person {}
 ```
 
+&nbsp;  
+
 일반적이지는 않지만, 함수와 마찬가지로 표현식으로 클래스를 정의할 수 있다. 이때 클래스는 함수와 마찬가지로 이름일 가질 수 있고, 그렇지 않을 수도 있다.
 
 ```javascript
@@ -90,6 +92,8 @@ const Person = class MyClass {};
 * 함수의 반환값으로 사용할 수 있다.
 
 **좀 더 자세히 말하자면 클래스는 함수이다. 따라서 클래스는 값처럼 사용할 수 있는 일급 객체이다.**
+
+&nbsp;  
 
 클래스 몸체에는 0개 이상의 **메소드만을 정의할 수 있다.** 클래스 몸체에서 정의할 수 있는 메소드는 아래와 같다.
 
@@ -150,6 +154,8 @@ console.log(Person);
 class Person {}
 ```
 
+&nbsp;  
+
 클래스 선언문은 마치 호이스팅이 발생하지 않는 것처럼 보이지만 그렇지 않다.
 
 ```javascript
@@ -190,6 +196,8 @@ console.log(me); // Person {}
 ```
 
 함수는 `new` 연산자의 사용 여부에 따라 일반 함수로 호출되거나 생성자 함수로 호출되지만, **클래스는 인스턴스를 생성하는 것이 유일한 존재 이유이므로 반드시 `new` 연산자와 함께 호출하여야 한다.**
+
+&nbsp;  
 
 클래스 표현식으로 정의된 클래스의 경우, 클래스를 가리키는 식별자를 사용해 인스턴스를 생성해야한다.
 
@@ -239,6 +247,8 @@ class Person {
   }
 }
 ```
+
+&nbsp;  
 
 앞에서 살펴본 바와 같이 클래스는 인스턴스를 생성하기 위한 생성자 함수이다. 아래를 크롬 브라우저의 개발자 도구에서 실행해보자.
 
@@ -319,6 +329,8 @@ class Person {
 const me = new Person('Kim');
 me.sayHi(); // Hi! My name is Kim
 ```
+
+&nbsp;  
 
 생성자 함수와 마찬가지로 클래스가 생성한 인스턴스는 프로토타입 체인의 일원이 된다.
 
@@ -424,6 +436,8 @@ console.log(square.area()); // 100
 
 **따라서 메소드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 있다면 this를 사용해야 한다. 이러한 경우, 프로토타입 메소드로 정의해야 한다. 하지만 메소드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 없다면 정적 메소드로 정의하는 것이 좋다.**
 
+&nbsp;  
+
 표준 빌트인 객체인 `Math`, `Number`, `JSON`, `Object`, `Reflect` 등은 다양한 정적 메소드를 가지고 있다.
 
 ```javascript
@@ -450,9 +464,9 @@ Reflect.has({ a: 1 }, 'a');
 
 ## 6. 클래스의 인스턴스 생성 과정
 
-자바스크립트 엔진은 클래스 선언문을 런타임 이전 함수 객체로 평가한 후 생성한 함수 객체를 클래스 이름과 동일한 식별자에 바인딩한다. (함수 호이스팅과 동일)
+자바스크립트 엔진은 **클래스 선언문**을 런타임 이전 함수 객체로 평가한 후 생성한 함수 객체를 클래스 이름과 동일한 식별자에 바인딩한다. (함수 호이스팅과 동일)
 
-또한 생성된 함수 객체의 prototype 프로퍼티가 가리키는 객체, 즉 프로토타입 객체를 생성하고 프로토타입 객체의 constructor 프로퍼티에 생성자 함수의 참조를 할당한다. (함수 호이스팅과 동일)
+또한 생성된 함수 객체의 prototype 프로퍼티가 가리키는 객체, 즉 프로토타입 객체를 생성하고 프로토타입 객체의 constructor 프로퍼티에 생성자 함수의 참조를 할당한다. (normal 함수 객체 생성 과정과 동일)
 
 이때, **클래스 몸체에 정의된 정적 메소드와 프로토타입 메소드도 생성자 함수와 프로토타입 객체에 각각 추가된다.** 함수 선언문으로 정의한 생성자 함수를 사용하면, 정적 메소드와 프로토타입 메소드를 런타임에 동적으로 추가해야한다. 하지만 클래스의 정적 메소드와 프로토타입 메소드는 클래스가 평가되는 시점에 함수 객체와 프로토타입 객체가 추가된다.
 
@@ -466,9 +480,13 @@ Reflect.has({ a: 1 }, 'a');
 2. 인스턴스의 프로토타입 결정 (`클래스.prototype`)
 3. 인스턴스를 this에 바인딩한다. 따라서 constructor 내부의 this는 클래스가 생성한 인스턴스를 가리킨다.
 
+&nbsp;  
+
 **2. 인스턴스 초기화**
 
 constructor의 내부 코드가 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티 값을 초기화한다. 만약 constructor가 생략되었다면 이 과정도 생략된다.
+
+&nbsp;  
 
 **3. 인스턴스 반환**
 
@@ -613,6 +631,8 @@ class Person {
 const me = new Person(); // Person { name: 'Kim' }
 ```
 
+&nbsp;  
+
 자바스크립트의 경우, 클래스 몸체에 메소드 만을 선언할 수 있다. 따라서 위 예제를 실행하면 문법 에러(SyntaxError)가 발생해야한다. 하지만 클래스 필드 정의 제안은 현재 TC39 프로세스의 stage 3(candidate)에 제안되어 있고, 최신 브라우저와 최신 Node.js는 ECMAScript 표준 사양으로 승급이 확실시되는 이 제안을 미리 구현해 놓았다. 따라서 최신 브라우저와 최신 Node.js에서는 위 예제와 같이 클래스 필드를 클래스 몸체에 정의할 수 있다.
 
 클래스 몸체에서 클래스 필드를 정의하는 경우 this에 클래스 필드를 바인딩해서는 안된다. this는 클래스의 constructor와 메소드 내에서만 유효하다.
@@ -624,20 +644,24 @@ class Person {
 }
 ```
 
+&nbsp;  
+
 클래스 필드를 참조하는 경우, 자바스크립트에서는 this를 반드시 사용해야 한다.
 
 ```javascript
 class Person {
   // 클래스 필드
   name = 'Kim';
-
-	constructor() {
+  
+  constructor() {
     console.log(name); // ReferenceError: name is not defined
   }
 }
 
 new Person();
 ```
+
+&nbsp;  
 
 클래스 필드에 초기값을 할당하지 않으면 undefined를 갖는다.
 
@@ -650,6 +674,8 @@ class Person {
 const me = new Person();
 console.log(me); // Person { name: undefined }
 ```
+
+&nbsp;  
 
 인스턴스를 생성할 때, 외부의 초기값으로 클래스 필드를 초기화해야 할 필요가 있다면 constructor에서 클래스 필드를 초기화해야 한다.
 
@@ -679,6 +705,8 @@ class Person {
 const me = new Person('Kim');
 console.log(me); // Person { name: 'Kim' }
 ```
+
+&nbsp;  
 
 함수는 일급 객체이므로 함수를 클래스 필드에 할당할 수 있다. 이때 할당된 함수는 인스턴스의 메소드로 추가된다.
 
@@ -742,6 +770,8 @@ you.sayHi(); // Hi Park
 me.sayHi(); // Hi Park
 ```
 
+&nbsp;  
+
 클래스 필드 정의 제안을 사용하더라도 클래스 필드는 인스턴스의 프로퍼티이기 때문에 마찬가지로 pulbic하다.
 
 ```javascript
@@ -753,6 +783,8 @@ class Person {
 const me = new Person();
 console.log(me.name); // Kim
 ```
+
+&nbsp;  
 
 2020년 5월 현재, TC39 프로세스의 stage 3(candidate)에는 **private 필드를 정의할 수 있는 새로운 표준 사양이 제안되어 있다.** 표준 사양으로 승급이 확실시 되는 이 제안도 최신 브라우저와 최신 Node.js에 이미 구현되어 있다.
 
@@ -778,6 +810,8 @@ console.log(me.name); // Kim
 console.log(me.#age); // private 필드 #name은 클래스 외부에서 참조할 수 없다.
 // SyntaxError: Private field '#name' must be declared in an enclosing class
 ```
+
+&nbsp;  
 
 public 필드는 어디서든지 참조할 수 있지만, private 필드는 클래스 내부에서만 참조할 수 있다.
 
@@ -813,6 +847,8 @@ console.log(me.age); // 10 (getter 접근자 프로퍼티 참조)
 me.age = 100; // setter 프로퍼티 값 할당
 console.log(me.age); // 100 (getter 접근자 프로퍼티 참조)
 ```
+
+&nbsp;  
 
 private 필드는 반드시 클래스 몸체에 정의해야 한다. private 필드를 직접 constructor에 정의하면 에러가 발생한다.
 
@@ -876,6 +912,8 @@ console.log(MyMath.#num); // SyntaxError
 예를 들어 동물을 추상화한 Animal 클래스와 새와 사자를 추상화한 Bird, Lion 클래스를 정의한다고 생각해보자. 새와 사자는 동물에 속하므로 동물의 속성을 가진다. 하지만 새와 사자는 자신만의 고유한 속성도 가진다. 이때 Animal 클래스는 동물의 속성을 표현하고, Bird, Lion 클래스는 상속을 통해 동물 클래스의 속성을 그대로 사용하고 자신만의 고유한 속성을 추가하여 확장할 수 있다.
 
 <img src="https://user-images.githubusercontent.com/32444914/82306680-524eef80-99fa-11ea-8dad-23a7201c0bd7.png" width="60%" />
+
+&nbsp;  
 
 이처럼 **상속에 의한 클래스 확장은 코드 재사용 관점에서 매우 유용하다.** 상속을 통해 Animal 클래스를 확장한 Bird 클래스를 구현해 보자.
 
@@ -960,6 +998,8 @@ const derived = new Derived(1);
 console.log(derived); // Derived {a: 1}
 ```
 
+&nbsp;  
+
 `extends` 키워드 다음에는 클래스 뿐만 아니라 [[Construct]] 내부 메소드를 갖는 함수 객체를 반환하는 모든 표현식을 사용할 수 있다. 이를 통해 **동적으로 상속받을 대상을 결정할 수 있다.**
 
 ```javascript
@@ -989,6 +1029,8 @@ console.log(derived instanceof Base2); // false
 constructor() {}
 ```
 
+&nbsp;  
+
 수퍼 클래스를 상속 받는 서브 클래스의 constructor를 생략하면 아래와 같이 디폴트 constructor가 암묵적으로 정의된다. `args`는 `new` 연산자와 함께 클래스를 호출할 때 전달한 인수의 리스트이다.
 
 `super()`는 수퍼 클래스의 constructor(super-constructor)를 호출하여 인스턴스를 생성한다.
@@ -996,6 +1038,8 @@ constructor() {}
 ```javascript
 constructor(...args) { super(...args); }
 ```
+
+&nbsp;  
 
 아래 예제에서 수퍼 클래스와 서브 클래스 모두 constructor를 생략하였다.
 
@@ -1035,9 +1079,9 @@ super 키워드는 함수처럼 호출할 수도 있고, this와 같이 식별�
 * super를 호출하면 수퍼 클래스의 constructor(super-constructor)를 호출한다.
 * super를 참조하면 수퍼 클래스의 메소드를 호출할 수 있다.
 
+&nbsp;  
 
-
-#### super 호출
+#### &ast;&ast;super 호출&ast;&ast;
 
 super를 호출하면 수퍼 클래스의 constructor(super-constructor)를 호출한다.
 
@@ -1060,6 +1104,8 @@ class Derived extends Base {
 const derived = new Derived(1, 2);
 console.log(derived); // Derived {a: 1, b: 2}
 ```
+
+&nbsp;  
 
 아래 예제와 같이 수퍼 클래스에서 추가한 프로퍼티와 서브 클래스에서 추가한 프로퍼티를 모두 가지는 인스턴스를 생성한다면, 서브 클래스의 constructor를 생략할 수 없다. 이때 new 연산자와 함께 서브 클래스를 호출하면서 전달한 인수 중 수퍼 클래스의 constructor에게 전달할 필요가 있는 인수는 서브 클래스의 constructor에서 호출한 super를 통해 전달된다.
 
@@ -1084,6 +1130,8 @@ const derived = new Derived(1, 2, 3); // 1. Derived 클래스 호출
 console.log(derived); // Derived {a: 1, b: 2, c: 3}
 ```
 
+&nbsp;  
+
 **super 호출 시 주의사항**
 
 1. 서브 클래스에서 constructor를 생략하지 않는 경우, 서브 클래스의 constructor에서는 반드시 super를 호출해야 한다.
@@ -1092,7 +1140,7 @@ console.log(derived); // Derived {a: 1, b: 2, c: 3}
 
 &nbsp;  
 
-#### super 참조
+#### &ast;&ast;super 참조&ast;&ast;
 
 메소드 내에서 super를 참조하면 수퍼 클래스의 메소드를 호출할 수 있다.
 
@@ -1121,6 +1169,8 @@ class Derived extends Base {
 const derived = new Derived('Jin');
 console.log(derived.sayHi()); // Hi! Jin. How are you doing?
 ```
+
+&nbsp;  
 
 super 참조를 통해 수퍼 클래스의 메소드를 참조하려면, super가 `수퍼클래스.prototype` 객체를 참조할 수 있어야 한다. 위 예제는 아래 예제와 동일하게 동작한다.
 
@@ -1152,6 +1202,8 @@ class Derived extends Base {
 `Base.prototype.sayHi`를 호출할 때 `call` 메소드로 this를 전달하지 않으면, `Base.prototype.sayHi` 메소드 내부의 this는 `Base.prototype`을 가리킨다. `Base.prototype.sayHi` 메소드는 프로토타입 메소드이기 때문에 내부의 this는 인스턴스를 가리켜야한다. `name` 프로퍼티는 인스턴스에 존재하기 때문이다.
 
 <strong>이처럼 super 참조가 동작하기 위해서는 메소드가 자신을 바인딩하고 있는 객체(`Derived.prototype`)의 프로토타입(`Base.prototype`)를 찾을 수 있어야한다.</strong> 이를 위해 메소드는 내부 슬롯 [[HomeObject]]을 가지며 자신을 바인딩한 객체를 가리킨다.
+
+&nbsp;  
 
 super 참조를 의사 코드로 표현하면 아래와 같다.
 
@@ -1272,6 +1324,8 @@ ColorRectangle 클래스에 의해 생성된 인스턴스의 프로토타입 체
 
 서브 클래스(ColorRectangle)가 new 연산자와 함께 호출되면, 아래의 과정을 통해 인스턴스를 생성한다.
 
+&nbsp;  
+
 **1. 서브 클래스의 super 호출**
 
 **클래스는 내부 슬롯 [[ConstructorKind]]을 갖는다.** [[ContructorKind]] 내부 슬롯은 클래스가 자바스크립트 엔진에 의해 평가될 때, 수퍼 클래스와 서브 클래스를 구분하기 위해 'base' 또는 'derived'를 자신의 값으로 가진다. 다른 클래스를 상속받지 않는 클래스는 그 값이 'base'이고, 다른 클래스를 상속 받는 서브 클래스는 그 값이 'derived'이다. 이를 통해 **수퍼 클래스와 서브 클래스는 new 연산자와 함께 호출되었을 때의 동작이 구분된다.**
@@ -1283,6 +1337,8 @@ ColorRectangle 클래스에 의해 생성된 인스턴스의 프로토타입 체
 서브 클래스(ColorRectangle)가 new 연산자와 함께 호출되면 서브 클래스 constructor 내부의 super 키워드가 함수처럼 호출된다. super를 호출하면 수퍼 클래스의 constructor(super-constructor)가 호출된다. 좀 더 정확히 말하자면 수퍼 클래스가 평가되어 생성된 함수 객체의 코드가 실행되기 시작한다.
 
 만약 서브 클래스 constructor 내부에 super 호출이 없으면 에러가 발생한다. **실제로 인스턴스를 생성하는 주체는 수퍼 클래스이므로, 수퍼 클래스의 constructor를 호출하는 super가 호출되지 않으면 인스턴스를 생성할** 수 없기 때문이다.
+
+&nbsp;  
 
 **2. 수퍼 클래스의 인스턴스 생성과 this 바인딩**
 
@@ -1306,9 +1362,13 @@ class Rectangle {
 
 이때 생성된 인스턴스의 프로토타입은 Rectangle.prototype이 아니라 new.target(서브 클래스)의 prototype 프로퍼티가 가리키는 객체 Color.prototype이다.
 
+&nbsp;  
+
 **3. 수퍼 클래스의 인스턴스 초기화**
 
 수퍼 클래스의 constructor가 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티를 초기화한다.
+
+&nbsp;  
 
 **4. 서브 클래스 constructor로의 복귀와 this 바인딩**
 
@@ -1328,17 +1388,21 @@ class ColorRectangle extends Rectangle {
 
 **이처럼 super가 호출되지 않으면 인스턴스가 생성되지 않으며 this 바인딩도 할 수 없다. 서브 클래스의 constructor에서 super를 호출하기 이전에 this를 참조할 수 없는 이유가 바로 이 때문이다.** 따라서 서브 클래스 constructor 내부의 인스턴스 초기화는 반드시 super 호출 이후에 처리되어야 한다.
 
-**6. 서브 클래스의 인스턴스 초기화**
+&nbsp;  
+
+**5. 서브 클래스의 인스턴스 초기화**
 
 super 호출 이후, 서브 클래스의  constructor에 기술되어 있는 인스턴스 초기화가 실행된다. 즉,  this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티를 초기화한다.
 
-**7. 인스턴스 반환**
+&nbsp;  
+
+**6. 인스턴스 반환**
 
 클래스의 모든 처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - 클래스](https://poiemaweb.com/fastcampus/class)
 
