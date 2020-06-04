@@ -111,9 +111,10 @@ function onclick(event) {
 
 <!--
 암묵적으로 아래와 같은 함수(이벤트 핸들러)가 생성되어 이벤트 핸들러 프로퍼티에 할당한다.
+
 function onclick(event) {
-	console.log('Hi! ');
-	console.log('Kim');
+  console.log('Hi! ');
+  console.log('Kim');
 }
 -->
 ```
@@ -304,7 +305,7 @@ DOM Level 2에서 도입된 `EventTarget.prototype.addEventListener` 메소드�
 ## 4. 이벤트 핸들러 제거
 
 * `addEventListener` 메소드로 등록한 이벤트 핸들러를 제거하려면 `removeEventListener` 메소드를 사용한다.
-* `removeEventListener` 전달할 인수는 `addEventListener` 메소드와 동일하다. 만약 `addEventListener` 메소드에 전달한 인수와 일치하지 않으면(이벤트 핸들러 참조 포함) 이벤트 핸들러가 제거되지 않는다.
+* `removeEventListener` 메소드에 전달할 인수는 `addEventListener` 메소드와 동일하다. 만약 `addEventListener` 메소드에 전달한 인수와 일치하지 않으면(이벤트 핸들러 참조 포함) 이벤트 핸들러가 제거되지 않는다.
 * 이벤트 핸들러 프로퍼티로 등록한 이벤트 핸들러는 `removeEventListener` 메소드로 제거할 수 없다. 이벤트 핸들로 프로퍼티로 등록한 이벤트 핸들러를 제거하려면 이벤트 핸들러 프로퍼티에 명시적으로 `null`을 할당한다.
 
 &nbsp;  
@@ -537,6 +538,11 @@ keydown, keyup, keypress 이벤트가 발생하면 생성되는 KeyboardEvent �
 
 ## 6. 이벤트 전파
 
+* 캡처링 (window 출발) -> Target Phase (event target 도착) -> 버블링 (window로 회귀)
+* `Event.prototype.composedPath` 메소드로 이벤트 패스(이벤트가 통과하는 DOM 트리 상의 경로)를 확인할 수 있다.
+
+&nbsp;  
+
 DOM 트리 상에 존재하는 DOM 요소 노드에서 발생한 이벤트는 DOM 트리를 통해 전파된다. 이를 이벤트 전파(event propagation)라고 한다.
 
 ```html
@@ -596,6 +602,12 @@ DOM 트리 상에 존재하는 DOM 요소 노드에서 발생한 이벤트는 DO
 &nbsp;  
 
 ## 7. 이벤트 위임
+
+* 이벤트 위임은 다수의 하위 요소에 각각 이벤트 핸들러를 등록하는 대신 하나의 상위 요소에 이벤트 핸들러를 등록하는 방법이다.
+* 상위 요소에 이벤트 핸들러를 등록하기 때문에 event.target과 event.currentTarget은 다를 수 있다.
+* 포커스 이벤트 focus, blur는 이벤트가 버블링되지 않는다.
+
+&nbsp;  
 
 이벤트 위임(Event delegation)은 **다수의 하위 요소에 각각 이벤트 핸들러를 등록하는 대신 하나의 상위 요소에 이벤트 핸들러를 등록하는 방법을 말한다.** 하위 요소에서 발생한 이벤트는 버블링 단계에서 부모 요소 방향으로 전파된다. 따라서 상위 요소는 하위 요소에서 발생한 이벤트를 캐치할 수 있다.
 
@@ -755,7 +767,7 @@ DOM 요소마다 기본 동작이 있다. 예를 들어, a 요소를 클릭하�
 <!doctype html>
 <html>
   <body>
-    <button onclick="handleClick()">Click me</button>
+    <button onclick="handleClick();">Click me</button>
     <script>
       function handleClick() {
         console.log(this); // window
@@ -778,7 +790,11 @@ DOM 요소마다 기본 동작이 있다. 예를 들어, a 요소를 클릭하�
       }
       
       document.querySelector('button').onclick = function () {
-        handleClick(); // 일반 함수로 호출되어 this는 전역 객체 window를 가리킨다.
+        handleClick();
+        // "일반 함수로 호출되어 this는 전역 객체 window를 가리킨다."
+        // 라고 생각할 수 있지만 사실 아무도 모른다.
+        // 일반 함수로 호출이란 말은 사용자가 직접 호출할 때 얘기이다.
+        // 그러므로 위 예제가 이러한 방법으로 동작하는지는 알 수 없다.
       };
     </script>
   </body>
@@ -938,7 +954,7 @@ DOM 요소마다 기본 동작이 있다. 예를 들어, a 요소를 클릭하�
 
 ## 10. 이벤트 핸들러에 인수 전달
 
-함수에게 인수를 전달하려면 함수를 호출할 때 전달해야 한다. 이벤트 핸들러 어트리뷰트 방식은 함수 호출문을 사용할 수 있기 때문에 인수를 전달할 수 있지만, 이벤트 핸들러 프로퍼티와 addEventListener 메소드를 사용하는 경우, 브라우저가 이벤트 핸들러를 호출하기 때문에 함수 호출문이 아닌 함수 자체를 등록해야 한다. 따라서 인수를 전달할 수 없다.
+함수에게 인수를 전달하려면 함수를 호출할 때 전달해야 한다. 이벤트 핸들러 어트리뷰트 방식은 함수 호출문을 사용할 수 있기 때문에 인수를 전달할 수 있지만, 이벤트 핸들러 프로퍼티와 `addEventListener `메소드를 사용하는 경우, 브라우저가 이벤트 핸들러를 호출하기 때문에 함수 호출문이 아닌 함수 자체를 등록해야 한다. 따라서 인수를 전달할 수 없다.
 
 그러나 인수를 전달할 방법이 전혀 없는 것은 아니다. 아래 예제와 같이 이벤트 핸들러 내부에서 함수를 호출하면서 인수를 전달할 수 있다.
 
@@ -989,6 +1005,12 @@ DOM 요소마다 기본 동작이 있다. 예를 들어, a 요소를 클릭하�
 ## 11. 커스텀 이벤트
 
 ### 11.1. 커스텀 이벤트 생성
+
+* 커스텀 이벤트 객체는 버블링되지 않으며 취소할 수도 없다.
+* 기존의 이벤트 타입이 아닌 새로운 이벤트 타입을 지정할 수 있다.
+* 생성자 함수로 생성한 커스텀 이벤트는 isTrusted 프로퍼티 값이 언제나 false이다.
+
+&nbsp;  
 
 이벤트 객체의 상속 구조에서 살펴본 바와 같이, **이벤트 객체는** Event, UIEvent, MouseEvent와 같은 생성자 함수로 생성할 수 있다.
 
@@ -1059,6 +1081,11 @@ console.log(customEvent.isTrusted); // false
 &nbsp;  
 
 ### 11.2. 커스텀 이벤트 디스패치
+
+* 생성된 커스텀 이벤트는 `dispatchEvent` 메소드로 디스패치(이벤트를 발생시키는 행위) 할 수 있다.
+* 일반적으로 이벤트는 비동기적으로 발생하지만, `dispatchEvent` 메소드는 커스텀 이벤트를 동기적으로 발생시킨다.
+
+&nbsp;  
 
 생성된 커스텀 이벤트는 dispatchEvent 메소드로 디스패치(이벤트를 발생시키는 행위)할 수 있다.
 
