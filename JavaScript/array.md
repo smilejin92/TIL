@@ -1165,7 +1165,7 @@ forEach, map, filter 메소드와 마찬가지로 findIndex 메소드에 두번�
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - 배열](https://poiemaweb.com/fastcampus/array)
 
