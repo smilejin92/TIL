@@ -942,9 +942,13 @@ const odds = numbers.filter(num => num % 2);
 console.log(odds); // [1, 3, 5];
 ```
 
+&nbsp;  
+
 filter 메소드는 배열에서 특정 요소만을 필터링 조건으로 추출하여 새로운 배열을 만들고 싶을 때 사용한다. 따라서 **filter 메소드가 생성하여 반환하는 새로운 배열의 length는 filter 메소드를 호출한 배열, 즉 this의 length와 같거나 작다.**
 
 <img src="https://user-images.githubusercontent.com/32444914/82731358-29ec2b80-9d41-11ea-93a7-3a9e5d889055.png" width="60%" />
+
+&nbsp;  
 
 forEach, map 메소드와 마찬가지로 filter 메소드의 콜백 함수는 요소값, 인덱스, filter 메소드를 호출한 배열(this)를 전달 받을 수 있다.
 
@@ -959,6 +963,8 @@ forEach, map 메소드와 마찬가지로 filter 메소드의 콜백 함수는 �
 요소값: 3, 인덱스: 2, this: 1,2,3
 */
 ```
+
+&nbsp;  
 
 forEach, map 메소드와 마찬가지로 filter 메소드에 두번째 인자로 filter 메소드 내부에서 사용할 this 객체를 전달할 수 있다. 보다 나은 방법은 화살표 함수를 사용하는 것이다.
 
@@ -1003,6 +1009,8 @@ reduce 메소드는 배열을 순회하며 콜백 함수의 이전 반환값과 
 
 reduce 메소드는 첫번째 인수로 콜백 함수, **두번째 인수로 초기값을 전달받는다.** reduce 메소드의 콜백 함수에는 4개의 인수, 초기값 또는 콜백 함수의 이전 반환값, 요소값, 인덱스, reduce 메소드를 호출한 배열(this)이 전달된다.
 
+&nbsp;  
+
 아래 예제를 살펴보자. 예제의 reduce 메소드는 2개의 인수, 즉 콜백 함수와 초기값 0을 전달받아 배열의 모든 요소의 누적을 구한다.
 
 ```javascript
@@ -1020,6 +1028,8 @@ console.log(sum); // 10
 | 2         | 1           | 2            | 1     | [1, 2, 3, 4] | 3 (accumulator + currentValue)  |
 | 3         | 3           | 3            | 2     | [1, 2, 3, 4] | 6 (accumulator + currentValue)  |
 | 4         | 6           | 4            | 3     | [1, 2, 3, 4] | 10 (accumulator + currentValue) |
+
+&nbsp;  
 
 **reduce 메소드를 사용할 때는 언제나 초기값을 전달하는 것이 안전하다**.
 
