@@ -8,6 +8,8 @@
 
 클로저는 자바스크립트 고유의 개념이 아니므로 클로저의 정의가 ECMAScript 사양에 등장하지 않는다. 클로저에 대해 MDN은 아래와 같이 정의하고 있다.
 
+&nbsp;  
+
 > "A closure is the combination of a function and the lexical environment within which that function was declared."
 >
 > 클로저는 함수와 그 함수가 선언된 **렉시컬 환경**과의 조합이다.
@@ -62,7 +64,7 @@ outer();
 
 &nbsp;  
 
-**자바스크립트 엔진은 함수를 어디서 호출했는지가 아니라, 어디에 정의했는지에 따라 함수의 상위 스코프를 결정한다.** 이를 **렉시컬 스코프(정적 스코프)**라 한다.
+**자바스크립트 엔진은 함수를 어디서 호출했는지가 아니라, 어디에 정의했는지에 따라 함수의 상위 스코프를 결정한다.** 이를 <strong>렉시컬 스코프(정적 스코프)</strong>라 한다.
 
 ```javascript
 const x = 1;
@@ -81,6 +83,8 @@ bar(); // 1
 ```
 
 함수 `bar`는 전역에 정의된 함수이다. 따라서 `bar` 함수를 `foo` 함수 내부에서 호출하여도, `bar` 함수 몸체의 `console.log`는 전역 변수 `x`를 가리킨다.
+
+&nbsp;  
 
 실행 컨텍스트에서 살펴보았듯, **스코프의 실체는 실행 컨텍스트의 렉시컬 환경(Lexical Environment)이다.** 렉시컬 환경은 환경 레코드(Environment Record)와 외부 렉시컬 환경에 대한 참조(Outer Lexcial Environment Reference)로 구성되어 있고, **렉시컬 환경은 Outer Lexical Environment Reference를 통해 상위 렉시컬 환경과 연결된다. 이것이 바로 스코프 체인이다.**
 
@@ -124,6 +128,8 @@ bar(); // 1
 <img src="https://user-images.githubusercontent.com/32444914/82112692-41984280-978a-11ea-976b-ee624fa66787.png" width="80%" />
 
 함수 `foo`와 함수 `bar`는 모두 전역에서 함수 선언문으로 정의되었다. 따라서 함수 `foo`와 `bar`는 모두 전역 코드가 평가되는 시점에 평가되어 함수 객체를 생성하고 전역 객체 `window`의 프로퍼티가 된다. 이때 생성된 함수 객체의 내부 슬롯 [[Environment]]에는 함수 정의가 평가되는 시점에 running execution context의 렉시컬 환경에 대한 참조가 저장된다.
+
+&nbsp;  
 
 함수가 호출되면 함수 내부로 코드의 제어권이 이동한다. 그리고 함수 코드를 평가하기 시작한다. 함수 코드 평가는 아래 순서로 진행된다.
 
@@ -174,6 +180,8 @@ innerFunc(); // 10
 
 이처럼 **자신을 포함하고 있는 외부 함수보다 중첩 함수가 더 오래 유지되는 경우, 외부 함수 밖에서 중첩 함수를 호출하더라도 외부 함수의 지역 변수에 접근할 수 있는 함수를 일반적으로 클로저(closure)라고 부른다.**
 
+&nbsp;  
+
 위 예제에서 `outer` 함수가 평가되어 함수 객체를 생성할 때, running execution context의 렉시컬 환경을 `outer` 함수 객체의 [[Environment]] 내부 슬롯에 상위 스코프로서 저장한다.
 
 <img src="https://user-images.githubusercontent.com/32444914/82113402-b9696b80-9790-11ea-83e8-918a89f72f10.png" width="80%" />
@@ -194,14 +202,20 @@ innerFunc(); // 10
 
 중첩 함수 `inner`는 외부 함수 `outer`보다 더 오래 생존하였다. 이때 함수는 외부 함수의 생존 여부(실행 컨텍스트의 생존 여부)와 상관 없이 자신이 정의된 위치에 의해 결정된 상위 스코프를 기억한다. 따라서 중첩 함수 `inner`의 내부에서는 상위 스코프를 참조할 수 있으므로 상위 스코프의 식별자를 참조할 수 있고 식별자의 값을 변경할 수도 있다.
 
+&nbsp;  
+
 이론적으로 자바스크립트의 모든 함수는 클로저이다. 함수의 내부 슬롯 [[Environment]]에는 상위 스코프(running execution context의 렉시컬 환경 - 자신이 정의된 스코프)에 대한 참조가 있기 때문이다. 단, 일반적으로는 모든 함수를 클로저라 하지 않는다.
+
+&nbsp;  
 
 **클로저가 되기 위한 조건**
 
 1. 중첩 함수가 외부 함수보다 생존 주기가 길다.
 2. 1을 만족하며 외부 함수의 지역 변수, 함수(식별자)를 참조한다.
 
-대부분의 모던 브라우저는 최적화를 통해 아래와 같이 상위 스코프의 식별자 중 클로저가 참조하고 있는 식별자만을 기억한다. 클로저에 의해 참조되는 상위 스코프의 변수를 **자유 변수(free variable)**라 부른다. 클로저(closure)란 "자유 변수와 묶여있는 함수"라고 할 수 있다.
+&nbsp;  
+
+대부분의 모던 브라우저는 최적화를 통해 아래와 같이 상위 스코프의 식별자 중 클로저가 참조하고 있는 식별자만을 기억한다. 클로저에 의해 참조되는 상위 스코프의 변수를 <strong>자유 변수(free variable)</strong>라 부른다. 클로저(closure)란 "자유 변수와 묶여있는 함수"라고 할 수 있다.
 
 &nbsp;  
 
@@ -235,7 +249,7 @@ console.log(increase()); // 3
 3. `increase`에 할당된 함수는 자신이 정의된 위치(즉시 실행 함수의 렉시컬 환경)를 [[Environment]] 내부 슬롯에 상위 스코프로서 기억한다.
 4. 따라서 즉시 실행 함수가 반환한 클로저(`increase`)는 카운트 상태를 유지하기 위한 자유 변수 `num`을 언제든지 참조하고 변경할 수 있다.
 
-
+&nbsp;  
 
 **이처럼 클로저는 상태가 의도치 않게 변경되지 않도록 안전하게 은닉(information hiding)하고 특정 함수에게만 상태 변경을 허용하여 상태(state)를 안전하게 변경하고 유지하기 위해 사용한다.**
 
@@ -306,7 +320,72 @@ console.log(counter.decrease()); // 0
 
 &nbsp;  
 
-## 5. 자주 발생하는 실수
+## 5. 캡슐화
+
+**캡슐화(encapsulation)는 정보의 일부를 외부에 감추어 은닉(information hiding)하는 것을 말한다.** 즉, 구현의 일부를 외부에 공개되지 않도록 감추어 적절치 못한 접근으로부터 벙보를 보호하며, 객체간의 상호 의존성을 낮추는 효과를 얻는다.
+
+자바스크립트는 자바의 public, private, protected와 같은 접근 제한자를 제공하지 않는다. 따라서 **자바스크립트 객체의 모든 프로퍼티와 메소드는 기본적으로 외부에 공개되어 있다**. 즉 public하다.
+
+클로저를 활용하여 캡슐화를 구현할 수 있을 것 같지만, 그렇지 않다. 아래 예제를 살펴보자.
+
+```javascript
+const Person = (function () {
+	let _age = 0; // private
+  
+  // 생성자 함수 (클로저)
+  function Person(name, age) {
+    this.name = name;
+    _age = age;
+  }
+  
+  // 프로토타입 메소드 (클로저)
+  Person.prototype.sayHi = function () {
+    console.log(`Hi! My name is ${this.name}. I am ${_age}.`);
+  };
+  
+  // 생성자 함수 반환
+  return Person;
+}());
+
+const me = new Person('Kim', 20);
+me.sayHi(); // Hi! My name is Kim. I am 20.
+console.log(me.name); // Kim
+console.log(me._age); // undefined
+
+const you = new Person('Park', 30);
+you.sayHi(); // Hi! My name is Park. I am 30.
+console.log(you.name); // Park
+console.log(you._age); // undefined
+```
+
+위 패턴을 사용하면 접근 제한자를 제공하지 않는 자바스크립트에서도 캡슐화가 가능한 것처럼 보인다. `Person` 생성자 함수와 `Person.prototype.sayHi` 메소드는 즉시 실행 함수의 지역 변수 `_age`을 참조할 수 있는 클로저이다.
+
+하지만 위 코드의 문제는 `Person` 생성자 함수가 여러 개의 인스턴스를 생성할 경우, `_age` 변수의 상태를 유지하지 못한다는 것이다.
+
+```javascript
+const me = new Person('Kim', 20);
+me.sayHi(); // Hi! My name is Kim. I am 20.
+
+const you = new Person('Park', 30);
+you.sayHi(); // Hi! My name is Park. I am 30.
+
+// _age의 상태가 변경된다.
+me.sayHi(); // Hi! My name is Kim. I am 20.
+```
+
+이는 `Person.prototype.sayHi` 메소드가 단 한번만 생성되는 클로저이기 때문에 발생하는 현상이다. `Person` 생성자 함수의 모든 인스턴스가 상속을 통해 호출할 수 있는 `Person.prototype.sayHi` 메소드의 상위 스코프는 어떤 인스턴스로 호출하더라도 하나의 동일한 상위 스코프를 사용하게 된다.
+
+&nbsp;  
+
+이처럼 자바스크립트는 캡슐화를 완전하게 지원하지 않는다. 인스턴스 메소드를 사용한다면 자유 변수를 통해 private을 흉내낼 수는 있지만, 프로토타입 메소드를 사용하면 이마저도 불가능하다.
+
+다행히도 2020년 5월 TC39 프로세스의 stage 3(candidate)에는 클래스에 private 필드를 정의할 수 있는 새로운 표준 사양이 제안되어 있다. 표준 사양으로 승급이 확실시 되는 이 제안은 현재 최신 브라우저와 Node.js에 이미 구현되어 있다.
+
+&nbsp;  
+
+&nbsp;  
+
+## 6. 자주 발생하는 실수
 
 아래는 클로저를 사용할 때 자주 발생할 수 있는 실수에 관련한 예제이다.
 
@@ -325,6 +404,8 @@ for (var j = 0; j < funcs.length; j++) {
 ```
 
 for 문의 초기화 문에서 `var` 키워드로 선언한 변수 `i`는 블록 레벨 스코프가 아닌 함수 레벨 스코프를 갖기 때문에 전역 변수가 되며, 변수 `i`에는 0, 1, 2가 순차적으로 할당된다. 따라서 배열 `funcs`에 요소로 추가된 함수를 호출하면 전역 변수 `i`를 참조하여 `i`의 값 3이 출력된다.
+
+&nbsp;  
 
 클로저를 사용해 위 예제를 바르게 동작하는 코드로 만들어보자.
 
@@ -346,6 +427,8 @@ for (var j = 0; j < funcs.length; j++) {
 
 ①에서 즉시 실행 함수(`iife`)는 전역 변수 `i`의 현재 값을 인수로 전달 받아 새로운 매개 변수 `id`에 할당한 후 중첩 함수(`inner`)를 반환하고 종료된다. 이때 `iife`의 매개 변수 `id`는 `inner`의 상위 스코프에 존재하며 `inner`에 의해 참조되므로 자유 변수가 되어 `inner`에 의해 그 값이 유지된다.
 
+&nbsp;  
+
 이러한 방법은 자바스크립트의 함수 레벨 스코프 특성으로 인해 for 문의 초기화 문에서 `var` 키워드로 선언한 변수가 전역 변수가 되기 때문에 사용한다. ES6의 `let` 키워드를 사용하면 이와 같은 번거로움이 깔끔하게 해결된다.
 
 ```javascript
@@ -362,6 +445,8 @@ for (let i = 0; i < 3; i++) {
 }
 ```
 
+&nbsp;  
+
 이전 실행 컨텍스트에서 살펴보았듯, **초기화 문에서 `let` 키워드로 선언한 변수를 사용하면 for 문이 반복될 때마다 for 문 코드 블록의 새로운 렉시컬 환경이 생성된다.** 만약 for 문 안에 정의된 함수가 있다면, 이 함수의 상위 스코프는 for 문이 반복될 때마다 독립적으로 생성된 for 문 코드 블록의 새로운 렉시컬 환경이다.
 
 <img src="https://user-images.githubusercontent.com/32444914/82119209-a322d600-97b7-11ea-8b15-38cd94c30dc3.png" width="80%" />
@@ -370,7 +455,7 @@ for (let i = 0; i < 3; i++) {
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - 클로저](https://poiemaweb.com/fastcampus/closure)
 
