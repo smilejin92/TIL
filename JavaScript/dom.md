@@ -31,6 +31,8 @@ HTML 문서는 HTML 요소들의 집합으로 이루어지며, HTML 요소는 **
 >
 > 트리 자료 구조는 하나의 최상위 노드에서 시작한다. 최상위 노드는 부모 노드가 없으며 루트 노드(root node)라 하다. 루트 노드는 0개 이상의 자식 노드를 가진다. 자식 노드가 없는 노드를 리프 노드(leaf node)라 한다.
 
+&nbsp;  
+
 <img src="https://user-images.githubusercontent.com/32444914/83388997-6814d980-a42a-11ea-8610-76b6a744f945.png" width="50%" />
 
 &nbsp;  
@@ -83,6 +85,8 @@ HTML 문서는 HTML 요소들의 집합으로 이루어지며, HTML 요소는 **
 렌더링 엔진은 위 HTML 문서를 파싱하여 아래와 같은 DOM을 생성한다.
 
 <img src="https://user-images.githubusercontent.com/32444914/83391198-153d2100-a42e-11ea-9daf-887bf7577e3b.png" width="70%" />
+
+&nbsp;  
 
 > **공백 텍스트 노드**
 >
@@ -352,7 +356,7 @@ li.banana 요소는 2개의 형제 요소와 부모 요소를 가진다. 이때 
 
 DOM 트리를 구성하는 노드로서 갖추어야 할 트리 노드 탐색 프로퍼티인 `parentNode`, `previousSibling`, `firstChild`, `childNodes` 등은 `Node.prototype`이 제공하고 프로퍼티 키에 "Element"가 포함된 `previousElementSibling`, `nextElementSibling`, `children`은 `Element.prototype`이 제공하는 프로퍼티이다.
 
-노드 탐색 프로퍼티는 모두 **접근자 프로퍼티**이다. 단, setter 없이 getter만 존재하여 참조만 가능한 읽기 전용 프로퍼티이다. 읽기 전용 접근자 프로퍼티에 값을 할당하면 아무런 에러 없이 무시된다.
+**노드 탐색 프로퍼티는 모두 접근자 프로퍼티이다.** 단, setter 없이 **getter만 존재하여 참조만 가능한 읽기 전용 프로퍼티이다.** 읽기 전용 접근자 프로퍼티에 값을 할당하면 아무런 에러 없이 무시된다.
 
 <img src="https://user-images.githubusercontent.com/32444914/83409975-71b13800-a450-11ea-975d-e8754454f498.png" width="60%" />
 
@@ -546,6 +550,14 @@ DOM 조작(DOM manipulation)은 **새로운 노드를 생성하여 DOM에 추가
 &nbsp;  
 
 ### 6.1. innerHTML
+
+* 접근자 프로퍼티로서 요소 노드의 HTML 마크업을 취득하거나 변경한다.
+* innerHTML에 할당한 문자열에 포하ㅁ되어 있는 HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+* 사용자로부터 입력 받은 데이터(untrusted data)를 그대로 반영하기 때문에 XSS 공격에 취약하다.
+* 할당된 프로퍼티 값으로 기존의 노드를 제거하고 다시 파싱을 수행하여 DOM을 변경한다.
+* 새로운 요소를 삽입할 위치를 지정할 수 없다.
+
+&nbsp;  
 
 `Element.prototype.innerHTML` 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 **요소 노드의 HTML 마크업을 취득하거나 변경**한다. 요소 노드의 innerHTML 프로퍼티를 참조하면 요소 노드의 컨텐츠 영역(시작 태그와 종료 태그 사이) 내에 포함된 모든 HTML 마크업을 문자열로 반환한다.
 
@@ -745,7 +757,7 @@ DOM은 노드를 직접 생성 / 삽입 / 삭제 / 치환하는 메소드도 제
 
 ### 6.4. 복수의 노드 생성과 추가
 
-`DocumentFragment` 노드는 문서, 요소, 어트리뷰트, 텍스트 노드와 같은 노드 객체의 일종으로 부모 노드가 없으며 기존 DOM과는 별도 존재한다는 특징이 있다. `DocumentFragment` 노드는 **컨테이너 요소와 같이 자식 노드들의 부모 노드로서 별도의 서브 DOM을 구성하여 기존 DOM에 추가하기 위한 용도로 사용한다.**
+`DocumentFragment` 노드는 문서, 요소, 어트리뷰트, 텍스트 노드와 같은 노드 객체의 일종으로 부모 노드가 없으며 기존 DOM과는 별도 존재한다는 특징이 있다. **`DocumentFragment` 노드는 컨테이너 요소와 같이 자식 노드들의 부모 노드로서 별도의 서브 DOM을 구성하여 기존 DOM에 추가하기 위한 용도로 사용한다.**
 
 `DocumentFragment` 노드는 기존 DOM과는 별도로 존재하므로 `DocumentFragment` 노드에 자식 노드를 추가하여도 기존 DOM에는 어떠한 변경도 발생하지 않는다. 또한 `DocumentFragment` 노드를 DOM에 추가하면 자신의 자식 노드만 DOM에 추가한다.
 
@@ -1017,7 +1029,7 @@ HTML 문서가 파싱될 때, **HTML 요소의 어트리뷰트는 어트리뷰�
 
 ### 7.2. HTML 어트리뷰트 조작
 
-요소 노드의 attributes 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티이므로 HTML 어트리뷰트 값을 취득할 순 있지만 변경 할 순 없다. 또한 attributes 프로퍼티를 통해야만 HTML 어트리뷰트 값을 취득할 수 있기 때문에 불편하다.
+**요소 노드의 attributes 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티이므로 HTML 어트리뷰트 값을 취득할 순 있지만 변경 할 순 없다.** 또한 attributes 프로퍼티를 통해야만 HTML 어트리뷰트 값을 취득할 수 있기 때문에 불편하다.
 
 `Element.prototype.getAttribute / setAttribute` 메소드를 사용하면 attributes 프로퍼티를 통하지 않고 요소 노드에서 메소드를 통해 직접 HTML 어트리뷰트 값을 취득하거나 변경할 수 있다.
 
