@@ -234,7 +234,7 @@ Rest 프로퍼티는 스프레드 프로퍼티와 함께 2020년 5월 TC39 프�
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - 디스트럭처링](https://poiemaweb.com/fastcampus/destructuring)
 

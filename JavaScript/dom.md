@@ -1401,7 +1401,7 @@ DOM은 DOM Level 1 ~ DOM Level 4까지 4개의 레벨(버전)이 있다.
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - DOM](https://poiemaweb.com/fastcampus/dom)
 

@@ -340,7 +340,7 @@ HTML 파싱과 외부 자바스크립트 파일의 로드가 비동기적으로 
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - 브라우저의 렌더링 과정](https://poiemaweb.com/fastcampus/browser-rendering)
 

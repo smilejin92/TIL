@@ -1157,7 +1157,7 @@ console.log(customEvent.type); // foo
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - 이벤트](https://poiemaweb.com/fastcampus/event)
 
