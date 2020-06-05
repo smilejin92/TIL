@@ -29,6 +29,8 @@ console.log(circle.getDiameter()); // 10
 
 `getDiameter` 메소드가 호출되는 시점에는 이미 객체 리터럴의 평가가 완료되어 생성된 객체가 `circle` 식별자에 바인딩되어 있다. 따라서 메소드 내부에서 식별자 `circle`을 참조할 수 있다.
 
+&nbsp;  
+
 > **바인딩(Binding)**
 >
 > 바인딩이란 식별자와 값을 연결하는 과정을 의미한다. 예를 들어 변수는 할당에 의해 값이 바인딩된다.
@@ -71,6 +73,8 @@ const circle = new Circle(5);
 &nbsp;  
 
 **this 바인딩(this에 연결되는 값)은 함수가 어떻게 호출되었는지에 따라 동적으로 결정된다.**
+
+&nbsp;  
 
 > **렉시컬 스코프와 this 바인딩은 결정 시기가 다르다.**
 >
@@ -140,6 +144,8 @@ function foo() {
 }
 foo();
 ```
+
+&nbsp;  
 
 위 예제처럼 전역 함수는 물론, 중첩 함수를 **일반 함수로 호출하면 함수 내부의 this에는 전역 객체가 바인딩된다.** 다만, this는 객체의 프로퍼티나 메소드를 참조하기 위한 자기 참조 변수이므로 **객체를 생성하지 않는 일반 함수에서 this는 의미가 없다.** 따라서 엄격 모드(strict mode)가 적용된 일반 함수 내부의 this에는 undefined가 바인딩된다.
 
@@ -225,9 +231,13 @@ const person = {
 console.log(person.getName()); // Kim
 ```
 
+&nbsp;  
+
 위 예제의 `getName` 메소드는 프로퍼티에 바인딩된 함수이다. 즉, `person` 객체와 `getName` 프로퍼티가 가리키는 함수 객체는 별도의 객체이다.
 
 <img src="https://user-images.githubusercontent.com/32444914/81574129-5cf8fb80-93e0-11ea-9560-739e8bb1ac20.png" width="80%" />
+
+&nbsp;  
 
 따라서 `getName` 프로퍼티가 가리키는 함수 객체는 다른 객체의 프로퍼티에 할당는 것으로 다른 객체의 메소드가 될 수도 있고, 일반 변수에 할당하여 일반 함수로 호출될 수도 있다.
 
@@ -283,6 +293,8 @@ const circle2 = new Circle(10);
 console.log(circle1.getDiameter()); // 10
 console.log(circle2.getDiameter()); // 20
 ```
+
+&nbsp;  
 
 생성자 함수는 이름 그대로 객체(인스턴스)를 생성하는 함수이다. 일반 함수와 동일한 방법으로 생성자 함수를 정의하고 **new 연산자와 함께 호출하면 해당 함수는 생성자 함수로 동작한다**. 만약 new 연산자와 함께 생성자 함수를 호출하지 않으면 생성자 함수가 아니라 일반 함수로 동작한다.
 
@@ -400,6 +412,8 @@ console.log(getThisBinding.bind(thisArg)); // this 바인딩
 console.log(getThisBinding.bind(thisArg)()); // { a: 1 }
 ```
 
+&nbsp;  
+
 bind 메소드는, 객체의 메소드 내부에 정의된 중첩 함수 혹은 객체의 메소드에 전달된 콜백 함수가 일반 함수로 호출되어 this가 일치하지 않는 경우에 유용하게 사용된다.
 
 ```javascript
@@ -418,7 +432,7 @@ person.foo(function () {
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemweb.com - this](https://poiemaweb.com/fastcampus/this)
 
