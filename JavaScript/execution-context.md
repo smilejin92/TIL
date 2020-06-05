@@ -22,27 +22,35 @@ ECMAScript 사양은 소스 코드(ECMAScript)를 4가지 타입으로 구분한
 
 소스 코드(실행 가능한 코드, executable code)를 4가지 타입으로 구분하는 이유는 **소스 코드의 타입에 따라 실행 컨텍스트를 생성하는 과정과 관리 내용이 다르기 때문이다.**
 
+&nbsp;  
+
+<img src="https://user-images.githubusercontent.com/32444914/81897022-b2a3f280-95f0-11ea-8c51-ca01347b6807.png" width="80%" />
+
 &nbsp;  
 
 ### 1.1. 전역 코드
 
 전역 코드는 전역 변수를 관리하기 위해 **최상위 스코프인 전역 스코프를 생성해야 한다.** 그리고 var 키워드로 선언된 전역 변수와 함수 선언문으로 정의된 함수를 전역 객체의 프로퍼티와 메소드로 바인딩하고 참조하기 위해 전역 객체와 연결한다. 이를 위해 전역 코드가 평가되면 **전역 실행 컨텐스트를 생성된다.**
 
+&nbsp;  
+
 ### 1.2. 함수 코드
 
 함수 코드는 **지역 스코프를 생성**하고 지역 변수와 매개 변수를 관리해야 한다. 그리고 생성한 **지역 스코프를 전역 스코프에서 시작하는 스코프 체인의 일원으로 연결**한다. 이를 위해 함수 코드가 평가되면 **함수 실행 컨텍스트가 생성**된다.
+
+&nbsp;  
 
 ### 1.3. eval 코드
 
 eval 코드는 엄격 모드(strict mode)에서 자신만의 독자적인 스코프를 생성한다. 이를 위해 eval 코드가 평가되면 **eval 실행 컨텍스트가 생성**된다.
 
+&nbsp;  
+
 ### 1.4. 모듈 코드
 
 모듈 코드는 모듈 별로 독립적인 모듈 스코프를 생성한다. 이를 위해 모듈 코드가 평가되면 **모듈 실행 컨텍스트가 생성**된다.
 
-<img src="https://user-images.githubusercontent.com/32444914/81897022-b2a3f280-95f0-11ea-8c51-ca01347b6807.png" width="80%" />
-
-&nbsp;  
+&nbsp;  
 
 ## 2. 소스 코드의 평가와 실행
 
@@ -60,6 +68,8 @@ eval 코드는 엄격 모드(strict mode)에서 자신만의 독자적인 스코
 &nbsp;  
 
 <img src="https://user-images.githubusercontent.com/32444914/81897477-ad937300-95f1-11ea-9e5d-3f8cd160df46.png" width="80%" />
+
+&nbsp;  
 
 아래 소스 코드가 처리되는 과정에 대해 알아보자.
 
@@ -93,9 +103,13 @@ x = 1;
 
 ## 4. 실행 컨텍스트 스택
 
-자바스크립트 엔진은 소스 코드의 타입에 해당하는 실행 컨텍스트를 생성한다. 이때 생성된 **실행 컨텍스트는 스택 자료 구조로 관리된다.** 이를 **실행 컨텍스트 스택(execution context stack)**이라고 부른다.
+자바스크립트 엔진은 소스 코드의 타입에 해당하는 실행 컨텍스트를 생성한다. 이때 생성된 **실행 컨텍스트는 스택 자료 구조로 관리된다.** 이를 <strong>실행 컨텍스트 스택(execution context stack)</strong>이라고 부른다.
+
+&nbsp;  
 
 > 실행 컨텍스트 스택을 콜 스택(call stack)이라고 부르기도 한다.
+
+&nbsp;  
 
 ```javascript
 const x = 1;
@@ -117,6 +131,8 @@ foo(); // 6
 
 <img src="https://user-images.githubusercontent.com/32444914/81902529-3367ec00-95fb-11ea-91cd-15f93834eebf.png" width="80%" />
 
+&nbsp;  
+
 이처럼 **실행 컨텍스트 스택은 코드의 실행 순서를 관리한다.** 소스 코드가 평가되면 실행 컨텍스트가 생성되고, 실행 컨텍스트 스택의 최상위에 쌓인다. **실행 컨텍스트 스택의 최상위에 존재하는 실행 컨텍스트는 언제나 현재 실행 중인 코드의 실행 컨텍스트이다.** 이러한 실행 컨텍스트를 **실행 중인 실행 컨텍스트(running execution context)라 부른다.**
 
 &nbsp;  
@@ -137,6 +153,8 @@ foo(); // 6
 실행 컨텍스트는 LexicalEnvironment 컴포넌트와 VariableEnvironment 컴포넌트로 구성된다. 생성 초기의 실행 컨텍스트와 렉시컬 환경을 그림으로 표현하면 아래와 같다.
 
 <img src="https://user-images.githubusercontent.com/32444914/81908831-b80b3800-9604-11ea-8768-a69a1510d3b5.png" width="80%" />
+
+&nbsp;  
 
 > 생성 초기에 LexicalEnvrionment 컴포넌트와 VariableEnvironment 컴포넌트는 하나의 동일한 렉시컬 환경을 참조한다. 이후, 몇가지 상황을 만나면 VariableEnvironment 컴포넌트를 위한 새로운 렉시컬 환경이 생성되고 각 컴포넌트의 참조가 달라지는 경우도 있다. 이 글에선 각 컴포넌트를 구분하지 않고 렉시컬 환경으로 통일해 설명한다.
 
@@ -226,11 +244,15 @@ foo(20); // 27
 
 <img src="https://user-images.githubusercontent.com/32444914/81911932-e2f78b00-9608-11ea-97f0-b8826eb4bb8a.png" width="80%" />
 
+&nbsp;  
+
 #### 1. 전역 실행 컨텍스트 생성
 
 비어있는 전역 실행 컨텍스트를 생성하여 실행 컨텍스트 스택에 push한다. 이때 전역 실행 컨텍스트는 running execution context이다(실행 컨텍스트 스택의 최상위). 
 
 <img src="https://user-images.githubusercontent.com/32444914/81912491-99f40680-9609-11ea-8b15-e8faec94e218.png" width="40%" />
+
+&nbsp;  
 
 #### 2. 전역 렉시컬 환경 생성
 
@@ -238,7 +260,7 @@ foo(20); // 27
   * 전역 환경 레코드 (Global Environment Record)
   * 외부 환경 레코드 참조 (Outer Lexical Environment Reference)
 
-
+&nbsp;  
 
 전역 렉시컬 환경(Global Lexical Envrionment)을 생성하고 전역 실행 컨텍스트의 Lexical Environment 컴포넌트와 Variable Environment 컴포넌트에 바인딩한다 (아래 그림은 두 컴포넌트를 하나로 통일하여 설명한다).
 
@@ -261,7 +283,7 @@ foo(20); // 27
 * BindingObject를 통해 빌트인 전역 프로퍼티, 빌트인 전역 함수, 표준 빌트인 객체, 호스트 객체를 검색할 수 있다.
 * 전역 코드 평가 과정에서 var 키워드로 선언한 전역 변수, 함수 선언문으로 정의한 전역 함수는 BindingObject를 통해 전역 객체의 프로퍼티와 메소드가 된다. 그리고 이때 등록된 식별자를 검색하면 전역 객체의 프로퍼티를 검색하여 반환한다. 이것이 **전역 객체의 식별자 없이 전역 객체의 프로퍼티를 참조할 수 있는 메커니즘**이다.
 
-
+&nbsp;  
 
 위 예제의 전역 변수 x와 전역 함수 foo는 객체 환경 레코드의 BindingObject에 바인딩되어 있는 전역 객체의 프로퍼티와 메소드가 된다.
 
@@ -286,7 +308,11 @@ function foo (a) {...}
 * let, const 키워드로 선언한 전역 변수는 전역 객체의 프로퍼티가 되지 않는다.
 * let, const 키워드로 선언한 변수는 선언 단계와 초기화 단계가 분리되어 진행된다. 따라서 런타임에 컨트롤이 변수 선언문에 도달하기 전까지 **일시적 사각지대(Temporal Dead Zone; TDZ)**에 빠지게 된다.
 
+&nbsp;  
+
 <img src="https://user-images.githubusercontent.com/32444914/81925913-20194880-961c-11ea-81c2-8dcf6a9ae177.png" width="80%" />
+
+&nbsp;  
 
 > 위 그림에서 변수 y에 바인딩되어 있는 `<uninitialized>`는 초기화 단계가 진행되지 않아 변수에 접근할 수 없음을 나타내기 이해 사용한 표현이다.
 
@@ -366,6 +392,8 @@ foo 함수가 호출되면 전역 코드의 실행을 일시 중단하고 foo �
 
 <img src="https://user-images.githubusercontent.com/32444914/81931979-e8170300-9625-11ea-818b-dbe77fe64384.png" width="80%" />
 
+&nbsp;  
+
 #### 1. 함수 실행 컨텍스트 생성
 
 foo 함수 실행 컨텍스트를 생성한다. 생성된 함수 실행 컨텍스트는 함수 렉시컬 환경이 완성된 다음 실행 컨텍스트 스택에 push된다. 이때 foo 함수 실행 컨텍스트는 running execution context가 된다.
@@ -430,19 +458,27 @@ foo 함수는 일반 함수로 호출되었으므로 this는 전역 객체를 �
 
 그리고 `console.log(a + x + y);`가 아래의 순서로 실행된다.
 
+&nbsp;  
+
 #### 1. 식별자 console 검색
 
 1. Running execution context 렉시컬 환경(foo 렉시컬 환경)의 환경 레코드 검색 (실패)
 2. foo 렉시컬 환경의 외부 렉시컬 환경에 대한 참조를 타고 전역 렉시컬 환경으로 이동
 3. 전역 렉시컬 환경의 객체 환경 레코드의 BindingObject를 통해 전역 객체에서 검색 (성공)
 
+&nbsp;  
+
 #### 2. log 메소드 검색
 
 1. console 객체의 프로토타입 체인에서 log 메소드를 검색 (성공)
 
+&nbsp;  
+
 #### 3. 표현식 a + x + y 평가
 
 1. 식별자 a, x, y 모두 running execution context의 렉시컬 환경에서 검색 가능
+
+&nbsp;  
 
 #### 4. console.log 메소드 호출
 
@@ -481,7 +517,11 @@ console.log(x); // 1
 
 if 문의 코드 블록 내에서 let 키워드로 변수가 선언되었다. 따라서 if 문이 실행되면 if 문의 블록 레벨 스코프를 생성해야 한다. 이를 위해 if 문을 위한 선언적 환경 레코드를 가지는 렉시컬 환경을 새롭게 생성하여, 기존의 전역 렉시컬 환경을 교체한다. 이때 새롭게 생성된 if 문을 위한 렉시컬 환경의 Outer Lexical Environment Reference는 전역 렉시컬 환경을 가리킨다.
 
+&nbsp;  
+
 <img src="https://user-images.githubusercontent.com/32444914/81940873-09322080-9633-11ea-8382-58f15b23b35b.png" width="80%" />
+
+&nbsp;  
 
 if 문 실행이 종료되면 if 문이 실행되기 이전의 렉시컬 환경으로 되돌린다.
 
@@ -493,7 +533,7 @@ for 문의 경우, 초기문에 let 키워드를 사용한 for 문은 반복될 
 
 &nbsp;  
 
-## 참고 자료
+## 출처
 
 * [poiemaweb.com - 실행 컨텍스트](https://poiemaweb.com/fastcampus/execution-context)
 
