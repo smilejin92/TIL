@@ -148,9 +148,92 @@ get('https://jsonplaceholder.typicode.com/posts/1')
 
 &nbsp;  
 
+## 4. 프로미스의 에러 처리
 
+위 예제의 비동기 함수 `get`은 Promise 객체를 반환한다. 비동기 처리 결과에 대한 후속 처리는 Promise 객체가 제공하는 후속 처리 메소드 `then`, `catch`, `finally`를 사용하여 수행한다. 비동기 처리 시에 발생한 에러는 `then` 메소드의 두 번째 콜백 함수로 처리할 수 있다.
 
+```javascript
+const wrongUrl = 'https://jsonplaceholder.typicode.com/XXX/1';
 
+// 부적절한 URL이 지정되었기 때문에 에러가 발생한다.
+get(wrongUrl)
+  .then(res => console.log(res), err => console.error(err)); // Error: 404
+```
+
+&nbsp;  
+
+비동기 처리 시에 발생한 에러는 Promise 객체의 후속 처리 메소드 `catch`를 사용하여 처리할 수도 있다.
+
+```javascript
+const wrongUrl = 'https://jsonplaceholder.typicode.com/XXX/1';
+
+// 부적절한 URL이 지정되었기 때문에 에러가 발생한다.
+get(wrongUrl)
+  .then(res => console.log(res))
+  .catch(err => console.error(err)); // Error: 404
+```
+
+&nbsp;  
+
+`catch` 메소드를 호출하면 내부적으로 `then` 메소드를 호출한다. 위 예제는 내부적으로 다음과 같이 처리된다.
+
+```javascript
+const wrongUrl = 'https://jsonplaceholder.typicode.com/XXX/1';
+
+// 부적절한 URL이 지정되었기 때문에 에러가 발생한다.
+get(wrongUrl)
+  .then(res => console.log(res))
+  .then(undefined, err => console.error(err)); // Error: 404
+```
+
+&nbsp;  
+
+`catch` 메소드는 에러를 처리한다는 점에서 `then` 메소드의 두 번째 콜백 함수와 동일하지만 미묘한 차이가 있다. **`then` 메소드의 두 번째 콜백 함수는 비동기 처리에서 발생한 에러(reject 함수가 호출된 상태)만을 캐치한다. 즉, `then` 메소드 내부의 에러를 캐치하지 못한다.**
+
+```javascript
+get('https://jsonplaceholder.typicode.com/todos/1')
+  .then(res => console.xxx(res), err => console.error(err));
+  // 두 번째 콜백 함수는 첫 번째 콜백 함수에서 발생한 에러를 캐치하지 못한다.
+```
+
+하지만 `catch` 메소드는 비동기 처리에서 발생한 에러(reject 함수가 호출된 상태)와 `then` 메소드 내부에서 발생한 에러도 캐치한다.
+
+```javascript
+get('https://jsonplaceholder.typicode.com/todos/1')
+  .then(res => console.xxx(res))
+  .catch(err => console.error(err));
+  // TypeError: console.xxx is not a function
+```
+
+따라서 에러 처리는 `catch` 메소드를 사용하는 편이 보다 효율적이다. 또한 `then` 메소드에 두 번째 콜백 함수를 전달하는 것보다 `catch` 메소드를 사용하는 것이 가독성이 더 좋다.
+
+&nbsp;  
+
+## 5. 프로미스 체이닝
+
+비동기 함수의 처리 결과를 가지고 다른 비동기 함수를 호출해야 하는 경우, 비동기 함수의 호출이 중첩(nesting)되어 복잡도가 높아지는 콜백 헬이 발생한다. Promise 객체를 반환한 비동기 함수는 프로미스 후속 처리 메소드인 `then`, `catch`, `finally` 메소드를 사용할 수 있다. 이 후속 처리 메소드는 모두 Promise 객체를 반환한다. 따라서 후속 처리 메소드를 체이닝하여 호출할 수 있다. 이로써 콜백 헬을 해결한다.
+
+```javascript
+const url = 'https://jsonplaceholder.typicode.com';
+
+get(`${url}/posts/1`)
+  .then(({ userId }) => get(`${url}/users/${userId}`))
+  .then(userInfo => console.log(userInfo))
+  .catch(err => console.error(err));
+
+// 콜백 헬
+/*
+get(`${url}/posts/1`, ({ userId }) => {
+	get(`${url}/users/${userId}`, userInfo => {
+    console.log(userInfo);
+  });
+});
+*/
+```
+
+&nbsp;  
+
+## 6. 프로미스의 정적 메소드
 
 
 
