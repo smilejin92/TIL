@@ -2,7 +2,18 @@
 
 ## 1. Ajax란?
 
-Ajax(Asynchronous JavaScript and XML)란 자바스크립트를 사용하여 브라우저가 서버에게 비동기 방식으로 데이터를 요청하고, 서버가 응답한 데이터를 수신하여 웹페이지를 동적으로 갱신하는 프로그래밍 방식을 말한다. Ajax는 Web API인 XMLHttpRequest 객체를 기반으로 동작한다. XMLHttpRequest는 HTTP 비동기 통신을 위한 메소드와 프로퍼티를 제공한다.
+* Ajax는 자바스크립트를 사용하여 브라우저가 서버에게 비동기 방식으로 데이터를 요청하고, 서버가 응답한 데이터를 수신하여 웹 페이지를 동적으로 갱신하는 프로그래밍 방식이다.
+* Ajax는 Web API인 XMLHttpRequest 객체를 기반으로 동작한다.
+* Ajax 이전의 웹 페이지는 html 태그로 시작하여 html 태그로 끝나는 완전한 HTML 문서를 서버로부터 전송 받아 웹 페이지 전체를 처음부터 다시 렌더링하는 방식으로 동작했다.
+* Ajax 이전의 클라이언트 <-> 서버 통신의 단점은 아래와 같다.
+  * 변경이 필요 없는 영역까지 포함된 완전한 HTML 문서를 다시 요청하기 때문에 불필요한 데이터 통신이 발생한다.
+  * 변경이 필요 없는 부분까지 다시 렌더링한다.
+  * 클라이언트 <-> 서버 통신이 동기적으로 수행되기 때문에 응답을 받기 전까지 다음 태스크는 블로킹된다.
+* Ajax는 위 세 개의 단점을 모두 보완한다.
+
+&nbsp;  
+
+Ajax(Asynchronous JavaScript and XML)란 자바스크립트를 사용하여 브라우저가 서버에게 비동기 방식으로 데이터를 요청하고, 서버가 응답한 데이터를 수신하여 웹 페이지를 동적으로 갱신하는 프로그래밍 방식을 말한다. Ajax는 Web API인 XMLHttpRequest 객체를 기반으로 동작한다. XMLHttpRequest는 HTTP 비동기 통신을 위한 메소드와 프로퍼티를 제공한다.
 
 &nbsp;  
 
@@ -36,6 +47,15 @@ Ajax는 전통적인 웹 페이지 방식과 비교했을 때 아래와 같은 �
 
 ## 2. JSON
 
+* JSON은 클라이언트와 서버간의 HTTP 통신을 위한 **텍스트 데이터 포맷**이다.
+* JSON은 자바스크립트의 객체 리터럴과 유사하게 키와 값으로 구성된 순수한 텍스트다.
+* JSON의 키는 반드시 큰따옴표로 묶어야 한다. 값은 객체 리터럴과 같은 표기법을 그대로 사용할 수 있지만, 문자열은 반드시 큰따옴표로 묶어야 한다.
+* `JSON.stringify` 메소드는 객체를 JSON 포맷의 문자열로 변환(직렬화)한다.
+* `JSON.parse` 메소드는 JSON 포맷의 문자열을 객체로 변환(역직렬화)한다.
+* 배열의 요소가 객체여도 직렬화 / 역직렬화 할 수 있다. 단, 값이 함수이거나 메소드 축약 표현으로 정의한 프로퍼티는 직렬화할 수 없다.
+
+&nbsp;  
+
 JSON(JavaScript Object Notation)은 클라이언트와 서버간의 HTTP 통신을 위한 **텍스트 데이터 포맷**이다. 자바스크립트에 종속되지 않는 언어 독립형 데이터 포맷으로 대부분의 프로그래밍 언어에서 사용할 수 있다.
 
 &nbsp;
@@ -47,7 +67,7 @@ JSON은 자바스크립트의 객체 리터럴과 유사하게 키와 값으로 
 ```json
 {
   "name": "Kim",
-  "age", 20,
+  "age": 20,
   "alive": true,
   "hobby": ["traveling", "tennis"]
 }
@@ -203,7 +223,22 @@ console.log(parsed);
 
 ## 3. XMLHttpRequest
 
-브라우저는 주소창이나 HTML은 `form` 태그 또는 `a` 태그를 통해 HTTP 요청 전송 기능을 기본 제공한다. 자바스크립트를 사용하여 HTTP 요청을 전송하려면 XMLHttpRequest 객체를 사용한다. Web API인 XMLHttpRequest 객체는 HTTP 요청 전송과 HTTP 응답 수신을 위한 다양한 메소드와 프로퍼티를 제공한다.
+* 브라우저는 주소창이나 HTML의 `form` 태그 또는 `a` 태그를 통해 HTTP 요청 전송 기능을 기본 제공한다.
+* 자바스크립트를 사용하여 HTTP 요청을 전송하려면 XMLHttpRequest 객체를 사용한다.
+* Web API인 XMLHttpRequest 객체는 HTTP 요청 전송과 HTTP 응답 수신을 위한 다양한 메소드와 프로퍼티를 제공한다.
+* HTTP 요청을 생성하여 서버에 전송하고 응답을 수신하는 순서는 아래와 같다.
+  * XMLHttpRequest 객체 생성
+  * 요청 초기화 (`XMLHttpRequest.prototype.open`)
+  * 요청 헤더 설정 (`XMLHttpRequest.prototype.setRequestHeader`)
+  * 요청 전송 (`XMLHttpRequest.prototype.send`)
+  * 응답 수신 (`XMLHttpRequest.prototype.onload / onreadystatechange`)
+* HTTP 요청 메소드는 클라이언트가 <strong>서버에게 요청의 종류와 목적(리소스에 대한 행위)</strong>을 알리는 방법이다. 주로 5가지 메소드(GET, POST, PUT, PATCH, DELETE 등)를 사용하여 CRUD를 구현한다.
+* GET 요청 메소드의 경우, 데이터를 URL의 일부분인 쿼리 문자열(query string)로 서버에 전송한다.
+* POST 요청 메소드의 경우, 데이터(페이로드)를 요청 몸체(request body)에 담아 전송한다.
+
+&nbsp;  
+
+브라우저는 주소창이나 HTML의 `form` 태그 또는 `a` 태그를 통해 HTTP 요청 전송 기능을 기본 제공한다. 자바스크립트를 사용하여 HTTP 요청을 전송하려면 XMLHttpRequest 객체를 사용한다. Web API인 XMLHttpRequest 객체는 HTTP 요청 전송과 HTTP 응답 수신을 위한 다양한 메소드와 프로퍼티를 제공한다.
 
 &nbsp;  
 
