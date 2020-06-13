@@ -67,21 +67,35 @@ Promise 객체는 비동기 처리가 성공(fulfilled) 했는지 또는 실패(
 
 **`Promise.prototype.then`**
 
-* `then` 메소드는 두 개의 콜백 함수를 인수로 전달 받는다.
-* 첫 번째 콜백 함수는 프로미스가 fulfilled 상태(resolve 함수가 호출된 상태)가 되면 호출된다.
-* 두 번째 콜백 함수는 프로미스가 rejected 상태(reject 함수가 호출된 상태)가 되면 호출된다.
-* `then` 메소드는 언제나 Promise 객체를 반환한다.
-* `then` 메소드의 콜백 함수가 Promise 객체가 아닌 값을 반환하면 그 값을 resolve 또는 reject하여 Promise 객체를 반환한다.(??????????? 이렇게 해서 then 메소드는 언제나 Promise 객체를 반환하는건지?)
-
 ```javascript
-// fulfilled
-new Promise(resolve => resolve('fulfilled'))
-  .then(v => console.log(v), e => console.error(e)); // fulfilled
+p.then(onFulfilled[, onRejected]);
 
-// rejected
-new Promise((_, reject) => reject(new Error('rejected')))
-  .then(v => console.log(v), e => console.error(e)); // Error: rejected
+p.then(value => {
+  // fulfillment
+}, reason => {
+  // rejection
+});
 ```
+
+| 매개 변수          | 설명                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| (옵션) onFulfilled | * 프로미스가 fulfilled되면 호출되는 함수.<br />* 하나의 인수(fulfillment value)를 전달 받는다.<br />* 만약 함수가 아니면, 내부적으로 "Identity" 함수로 대체된다.<br />* "Identity" 함수는 fulfillment value를 반환한다. |
+| (옵션) onRejected  | * 프로미스가 rejected되면 호출되는 함수.<br />* 하나의 인수(rejection reason)을 전달 받는다.<br />* 만약 함수가 아니면, 내부적으로 "Thrower" 함수로 대체된다.<br />* "Thrower" 함수는 에러(rejection reason)를 throw한다. |
+
+따라서 `then` 메소드에 전달된 인수가 함수가 아니거나, 전달된 인수가 아예 없어도 에러가 발생하지 않는다. 이러한 경우 `then` 메소드가 반환하는 새로운 프로미스 객체는 이전 프로미스 객체의 상태와 성공 값/실패 이유를 그대로 갖는다.
+
+&nbsp;  
+
+프로미스가 fulfilled 혹은 rejected되면, 후속 처리 메소드에 전달된 콜백 함수(`onFulfilled` 혹은 `onRejected`)가 **비동기적으로 호출된다.** 콜백 함수의 동작에 따라 후속 처리 메소드가 반환하는 프로미스 객체의 상태가 달라진다. 단, **`then` 메소드는 언제나 프로미스 객체를 반환한다.**
+
+| 콜백 함수의 동작                 | then이 반환하는 Promise 객체                                 |
+| -------------------------------- | ------------------------------------------------------------ |
+| 값(value)를 반환                 | 콜백 함수가 반환한 값을 resolve한 프로미스                   |
+| 아무 것도 반환하지 않음          | undefined를 resolve한 프로미스                               |
+| 에러를 throw                     | 콜백 함수가 throw한 에러를 reject한 프로미스                 |
+| 이미 fulfilled된 프로미스를 반환 | 콜백 함수가 반환한 프로미스의 fulfillment value로 fulfilled된 프로미스 |
+| 이미 rejected된 프로미스를 반환  | 콜백 함수가 반환한 프로미스의 reject reason으로 rejected된 프로미스 |
+| pending 상태의 프로미스를 반환   | 콜백 함수가 반환한 프로미스의 성공/실패 상태에 따라 성공/실패된 프로미스. `then`이 반환하는 프로미스의 resolve 값은 콜백 함수가 반환한 프로미스의 resolve 값과 동일하다. |
 
 &nbsp;  
 
@@ -234,6 +248,8 @@ get(`${url}/posts/1`, ({ userId }) => {
 &nbsp;  
 
 ## 6. 프로미스의 정적 메소드
+
+Promise는 주로 생성자 함수로 사용되지만, 함수도 객체이므로 메소드를 가질 수 있다. Promise 객체는 5가지 정적 메소드를 제공한다.
 
 
 
