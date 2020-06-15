@@ -101,22 +101,23 @@ p.then(value => {
 
 **`Promise.prototype.catch`**
 
-* `catch` 메소드는 한 개의 콜백 함수를 인수로 전달 받는다.
-* `catch` 메소드의 콜백 함수는 예외(비동기 처리에서 발생한 에러와 `then` 메소드에서 발생한 에러)가 발생하면 호출된다.
-
 ```javascript
-// rejected
-new Promise((_, reject) => reject(new Error('rejected')))
-  .catch(e => console.log(e)); // Error: rejected
+p.catch(onRejected);
+
+p.catch(function (reason) {
+  // rejection
+});
 ```
 
-`catch` 메소드는 `then(undefined, onRejected)`와 동일하게 동작한다. 따라서 `then` 메소드와 마찬가지로 언제나 Promise 객체를 반환한다.
+| 매개 변수  | 설명                                                         |
+| ---------- | ------------------------------------------------------------ |
+| onRejected | * 프로미스가 rejected되면 호출되는 함수.<br />* 하나의 인수(rejection reason)를 전달 받는다.<br />* 만약 onRejected가 에러를 throw하거나, 이미 rejected 프로미스를 반환하면 catch가 반환하는 프로미스는 rejected 상태를 가진다. 그 외의 경우 catch 반환하는 프로미스는 resolved 상태를 가진다.<br />* 만약 함수가 아니면, 내부적으로 "Thrower" 함수로 대체된다.<br />* "Thrower" 함수는 에러(rejection reason)를 throw한다. |
 
-```javascript
-// rejected
-new Promise((_, reject) => reject(new Error('rejected')))
-  .then(undefined, e => console.log(e)); // Error: rejected
-```
+**반환 값:** 프로미스 객체. `catch`는 내부적으로 `Promise.prototype.then` 메소드를 호출한다. 이때 `then` 메소드에 전달되는 첫 번째 인수(onFulfilled)로 undefined가 전달되고, 두 번째 인수(onRejected)에 `catch` 메소드에 전달한 콜백이 전달된다.
+
+&nbsp;  
+
+`catch` 메소드는 프로미스 체인에서 발생한 에러를 핸들링하기 위해 사용된다. `catch` 메소드는 프로미스 객체를 반환하기 때문에 프로미스 체이닝을 이어서 사용할 수 있다.
 
 &nbsp;  
 
@@ -251,7 +252,151 @@ get(`${url}/posts/1`, ({ userId }) => {
 
 Promise는 주로 생성자 함수로 사용되지만, 함수도 객체이므로 메소드를 가질 수 있다. Promise 객체는 5가지 정적 메소드를 제공한다.
 
+&nbsp;  
 
+### 6.1. Promise.resolve / Promise.reject
+
+`Promise.resolve`와 `Promise.reject` 메소드는 이미 존재하는 값을 래핑하여 Promise 객체를 생성하기 위해 사용한다.
+
+정적 메소드 `Promise.resolve` 메소드는 인자로 전달된 값을 resolve하는 Promise 객체를 생성한다.
+
+```javascript
+// 배열을 resolve하는 Promise 객체 생성
+const resolvedPromise = Promise.resolve([1, 2, 3]);
+resolvedPromise.then(console.log); // [1, 2, 3]
+```
+
+위 예제는 다음 예제와 동일하게 동작한다.
+
+```javascript
+const resolvedPromise = new Promise(resolve => resolve([1, 2, 3]));
+resolvedPromise.then(console.log);
+```
+
+&nbsp;  
+
+`Promise.reject` 메소드는 인자로 전달된 값을 reject하는 Promise 객체를 생성한다.
+
+```javascript
+// 에러 객체를 reject하는 Promise 객체를 생성
+const rejectedPromise = Promise.reject(new Error('Error!'));
+rejectedPromise.catch(console.log); // Error: Error!
+```
+
+위 예제는 다음 예제와 동일하게 동작한다.
+
+```javascript
+const rejectedPromise = new Promise((_, reject) => reject(new Error('Error!')));
+rejectedPromise.catch(console.log); // Error: Error!
+```
+
+&nbsp;  
+
+### 6.2. Promise.all
+
+`Promise.all` 메소드는 **Promise 객체를 요소로 가지는 배열 등의 이터러블을 인자로 전달받는다.** 그리고 전달받은 모든 Promise 객체를 모두 **연속적으로** 처리하고, 그 처리 결과를 resolve하는 새로운 프로미스를 반환한다.
+
+```javascript
+Promise.all([
+  new Promise(resolve => setTimeout(() => resolve(1), 3000)),
+  new Promise(resolve => setTimeout(() => resolve(2), 2000)),
+  new Promise(resolve => setTimeout(() => resolve(3), 1000))
+]).then(conosle.log) // [1, 2, 3]
+  .catch(console.error);
+```
+
+위 예제의 `Promise.all` 메소드는 3개의 Promise 객체를 요소로 가지는 배열을 전달받았다. 각각의 Promise 객체는 다음과 같이 동작한다.
+
+* 첫 번째 Promise 객체는 3초 후 1을 resolve하여 처리 결과를 반환한다.
+* 두 번째 Promise 객체는 2초 후 2를 resolve하여 처리 결과를 반환한다.
+* 세 번째 Promise 객체는 1초 후 3을 resolve하여 처리 결과를 반환한다.
+
+&nbsp;  
+
+`Promise.all` 메소드는 전달받은 모든 Promise 객체를 연속적으로 처리한다. `Promise.all`은 배열 내 모든 Promise 객체의 resolve 또는 첫 번째 reject를 기다린다.
+
+모든 Promise 객체의 처리가 성공하면 모든 Promise 객체가 resolve한 처리 결과를 배열에 담아 resolve하는 새로운 Promise 객체를 반환한다. 이때 첫 번째 Promise 객체가 가장 나중에 처리되어도, `Promise.all` 메소드가 반환하는 Promise 객체는 첫 번째 Promise 객체가 resolve한 처리 결과부터 차례대로 배열에 담에 그 배열을 resolve하는 새로운 Promise 객체를 반환한다. 즉, **처리 순서가 보장된다.**
+
+Promise 객체의 처리가 하나라도 실패하면 가장 먼저 실패한 Promise 객체가 reject한 에러를 reject하는 새로운 Promise 객체를 **즉시 반환한다.**
+
+```javascript
+Promise.all([
+	new Promise((_, reject) => setTimeout(() => reject(new Error('Error 1')), 3000)),
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error 2')), 2000)),
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error 3')), 1000))
+]).then(console.log)
+  .catch(console.error); // Error: Error 3
+```
+
+위 예제의 경우 세 번째 Promise 객체가 가장 먼저 실패하므로 세 번째 Promise 객체가 reject한 에러가 catch 메소드로 전달된다.
+
+&nbsp;  
+
+`Promise.all` 메소드는 인수로 전달받은 이터러블의 요소가 Promise 객체가 아닌 경우, `Promise.resolve` 메소드를 통해 Promise 객체로 래핑한다.
+
+```javascript
+Promise.all([
+	1, // Promise.resolve(1)
+	2, // Promise.resolve(2)
+	3 // Promise.resolve(3)
+]).then(console.log) // [1, 2, 3]
+  .catch(console.error);
+```
+
+&nbsp;  
+
+### 6.3. Promise.race
+
+`Promise.race` 메소드는 `Promise.all` 메소드와 동일하게 Promise 객체를 요소로 가지는 배열 등의 이터러블을 인자로 전달받는다. `Promise.race` 메소드는 `Promise.all` 메소드처럼 모든 Promise 객체를 연속적으로 처리하는 것이 아니라, **가장 먼저 처리된 Promise 객체가 resolve한 처리 결과를 resolve하는 새로운 Promise 객체를 반환한다.**
+
+```javascript
+Promise.race([
+  new Promise(resolve => setTimeout(() => resolve(1), 3000)),
+  new Promise(resolve => setTimeout(() => resolve(2), 2000)),
+  new Promise(resolve => setTimeout(() => resolve(3), 1000))
+]).then(conosle.log) // 3
+  .catch(console.error);
+```
+
+&nbsp;  
+
+에러가 발생한 경우는 `Promise.all` 메소드와 동일하게 처리된다. 즉, `Promise.race` 메소드에 전달된 Promise 객체의 처리가 하나라도 실패하면 가장 먼저 실패한 Promise 객체가 reject한 에러를 reject하는 새로운 Promise 객체를 **즉시 반환한다.**
+
+```javascript
+Promise.race([
+	new Promise((_, reject) => setTimeout(() => reject(new Error('Error 1')), 3000)),
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error 2')), 2000)),
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error 3')), 1000))
+]).then(console.log)
+  .catch(console.error); // Error: Error 3
+```
+
+&nbsp;  
+
+### 6.4. Promise.allSettled
+
+`Promise.allSettled` 메소드는 Promise 객체를 요소로 가지는 배열 등의 이터러블을 인자로 전달받는다. 그리고 전달받은 모든 Promise 객체를 모두 연속적으로 처리하고 그 처리 결과를 배열로 반환한다.
+
+```javascript
+Promise.allSettled([
+  new Promise(resolve => setTimeout(() => resolve(1), 2000)),
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error!')), 1000))
+]).then(console.log);
+/*
+[
+	{status: "fulfilled", value: 1},
+	{status: "rejected", reason: Error: Error! at <anonymous>:3:60}
+]
+*/
+```
+
+`Promise.allSettled` 메소드가 반환한 배열에는 fulfilled 또는 rejected 상태와 상관없이 인수로 전달받은 모든 Promise 객체들의 처리 결과가 담겨 있다.
+
+모든 Promise 객체의 처리 결과를 나타내는 배열의 요소는 각 Promise 객체의 상태(fulfilled/rejected를 나타내는 status 프로퍼티와, 처리 결과 / 에러를 나타내는 value / reason 프로퍼티를 가진다.
+
+`Promise.allSettled` 메소드는 2020년 5월 TC39 프로세스의 stage 4에 제안되어 있다. IE를 제외한 대부분의 브라우저에서 지원한다.
+
+&nbsp;  
 
 
 
