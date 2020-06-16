@@ -1,5 +1,139 @@
 # 프로미스
 
+## 1. 비동기 처리를 위한 콜백 패턴의 단점
+
+### 1.1. 콜백 헬
+
+**비동기 함수의 처리 결과(서버의 응답 등)에 대한 후속 처리는 비동기 함수에게 콜백 함수를 전달해서 수행해야 한다.** 아래 예제를 살펴보자.
+
+```javascript
+// GET 요청을 위한 비동기 함수
+const get = url => {
+  const xhr = new XMLHttpRequest();
+	xhr.open('GET', url);
+	xhr.send();
+  
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      // 서버의 응답 결과를 반환한다.
+      return JSON.parse(xhr.response);
+    } else {
+      return new Error(`${xhr.status} ${xhr.statusText}`);
+    }
+  };
+};
+
+// jsonplaceholder는 Fast REST API를 제공하는 서비스다.
+// id가 1인 post를 취득
+const post = get('https://jsonplaceholder.typicode.com/posts/1');
+console.log(post); // undefined
+```
+
+GET 요청을 위한 `get` 함수는 비동기 함수이다. 따라서 비동기 함수 내에서 서버의 응답 결과를 반환하거나 상위 스코프의 변수에 할당하면 기대한 대로 동작하지 않는다.
+
+`xhr.onload` 이벤트 핸들러 프로퍼티에 바인딩한 이벤트 핸들러의 반환문은 `get` 함수의 반환문이 아니다. 만약 `xhr.onload` 이벤트 핸들러를 `get` 함수가 호출할 수 있다면 이벤트 핸들러의 반환값을 `get` 함수가 다시 반환할 수 있겠지만 그럴 수 없다. 따라서 `xhr.onload` 이벤트 핸들러의 반환값은 캐치할 수 없으며, `get` 함수는 그저 undefined를 반환할 뿐이다.
+
+이러한 상황이 발생하는 이유는 `xhr.onload` 이벤트 핸들러는 비동기적으로 실행되기 때문에 서버의 응답을 반환하거나 상위 스코프의 변수에 할당하여도 그 순서가 보장되지 않기 때문이다.
+
+1. get 호출 
+   1. xhr 인스턴스 생성 및 요청 초기화
+   2. 요청 전송
+   3. xhr.onload 이벤트 핸들러 바인딩
+   4. return문이 생략되어 undefined를 반환
+2. post 변수에 undefined를 할당
+3. console.log(post);
+4. 콜스택이 비어졌으므로 이벤트 핸들러는 이벤트 루프에 의해  콜스택에 푸시되어 실행
+
+&nbsp;  
+
+> 이벤트 핸들러도 함수이므로 이벤트 핸들러의 평가 -> 이벤트 핸들러의 실행 컨택스트 생성 -> 콜스택에 푸시 -> 이벤트 핸들러의 실행 단계를 거친다.
+
+&nbsp;  
+
+만약 console.log가 호출되기 직전에 load 이벤트가 발생하더라도 xhr.onload 이벤트 핸들러 프로퍼티에 바인딩한 이벤트 핸들러는 결코 console.log보다 먼저 실행되지 않는다. 따라서 `xhr.onload` 이벤트 핸들러 프로퍼티에 바인딩한 이벤트 핸들러가 실행되는 시점에는 콜 스택이 빈 상태이므로 console.log는 이미 종료된 이후이다. 이처럼 비동기 함수인 get이 취득한 서버의 응답 결과는 반환할 수 없고, 상위 스코프의 변수에 할당할 수도 없다.
+
+&nbsp;  
+
+이러한 문제를 해결하기 위해 **비동기 함수에게 콜백 함수를 전달하여 비동기 함수의 처리 결과에 대한 후속 처리를 수행하는 콜백 패턴이 등장했다.** 비동기 함수에 전달한 콜백 함수는 비동기 처리가 미래에 완료되면 호출되도록 구현해서 비동기 함수의 처리 결과를 가지고 처리해야 할 모든 일을 콜백 함수 내부에서 수행한다. 필요에 따라 성공 시 호출될 콜백과 실패 시 호출될 콜백을 전달할 수 있다.
+
+```javascript
+// GET 요청을 위한 비동기 함수
+const get = (url, onSuccess, onFailure) => {
+  const xhr = new XMLHttpRequest();
+	xhr.open('GET', url);
+	xhr.send();
+  
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      // 서버의 응답을 콜백 함수에 인수로 전달하면서 호출하여 응답에 대한 후속 처리를 한다.
+      onSuccess(JSON.parse(xhr.response));
+    } else {
+      // 에러 정보를 콜백 함수에 인수로 전달하면서 호출하여 에러 처리를 한다.
+      onFailure(xhr.status);
+    }
+  };
+};
+
+// id가 1인 post를 취득
+// 서버의 응답에 대한 후속 처리를 위해 콜백 함수를 비동기 함수인 get에 전달한다.
+get('https://jsonplaceholder.typicode.com/posts/1', console.log, console.error);
+/*
+{
+  "userId": 1,
+  "id": 1,
+  "title": "sunt aut facere ...",
+  "body": "quia et suscipit ..."
+}
+*/
+```
+
+&nbsp;  
+
+만약 비동기 함수의 처리 결과를 가지고 또 다른 비동기 함수를 호출해야 한다면, 함수 호출이 중첩되어 복잡도가 높아지는 현상이 발생하는데 이를 <strong>콜백 헬(callback hell)</strong>이라 한다. 다음 예제를 살펴보자.
+
+```javascript
+const url = 'https://jsonplaceholder.typicode.com';
+
+// 1. id가 1인 post의 userId를 취득
+get(`${url}/posts/1`, ({ userId }) => {
+  console.log(userId); // 1
+
+  // 2. userId를 사용하여 user 정보를 취득
+  get(`${url}/users/${userId}`, userInfo => {
+    console.log(userInfo); // // {id: 1, name: "Leanne Graham", username: "Bret",...}
+  }, console.error);
+}, console.error);
+```
+
+위 예제를 살펴보면 GET 요청을 통해 서버로부터 응답(id가 1인 post)을 취득하고 이 데이터를 사용하여 또 다른 GET 요청을 한다. 이와 같이 작성된 이유는 태스크를 순차적으로 실행하기 위함이지만, 가독성을 나쁘게 하며 실수를 유발하는 원인이 된다.
+
+&nbsp;  
+
+### 1.2. 에러 처리의 한계
+
+**비동기 처리를 위한 콜백 패턴의 문제점 중 가장 심각한 것은 에러 처리가 곤란하다는 것이다.** 다음 예제를 살펴보자.
+
+```javascript
+try {
+  setTimeout(() => { throw new Error('Error'); }, 1000);
+} catch (e) {
+  // 에러를 캐치하지 못한다.
+  console.error('캐리한 에러', e);
+}
+```
+
+try 블록 내에서 호출한 setTimeout 함수는 1초 후 콜백 함수를 실행시키고, 이 콜백 함수는 에러를 throw한다. 하지만 이 에러는 catch 블록에서 잡을 수 없다. 그 이유는 아래와 같다.
+
+* setTimeout이 호출되면 setTimeout 함수의 실행 컨텍스트가 생성되어 콜 스택에 푸시되고 실행된다.
+* setTimeout은 비동기 함수이므로 콜백 함수가 호출되는 것을 기다리지 않고 즉시 종료되어 콜 스택에서 제거된다.
+* 이후 타이머가 만료되면 setTimeout 함수의 콜백은 태스크 큐로 푸시되고 콜 스택이 비어졌을 때 이벤트 루프에 의해 콜 스택으로 푸시되어 실행된다.
+
+setTimeout의 콜백이 콜 스택에 푸시되어 실행될 때, setTimeout 함수는 이미 콜 스택에서 제거된 상태이다. 이것은 **setTimeout 함수의 콜백을 호출한 것이 setTimeout 함수가 아니라는 것이다.** setTimeout 함수의 콜백의 호출자(caller)가 setTimeout 함수라면, 콜 스택의 콜백 함수 실행 컨텍스트 하위에는 setTimeout 실행 컨텍스트가 존재해야 한다. 따라서 setTimeout 함수의 콜백 함수가 발생시킨 에러는 catch 블록에서 캐치되지 않는다.
+
+지금까지 살펴본 비동기 처리를 위한 콜백 패턴의 콜백 헬이나 에러 처리의 한계를 극복하기 위해 ES6에서 프로미스(Promise)가 도입되었다.
+
+&nbsp;  
+
 ## 2. 프로미스의 생성
 
 프로미스는 Promise 생성자 함수를 통해 인스턴스화한다. Promise 생성자 함수는 비동기 처리를 수행할 콜백 함수를 인자로 전달받는데, 이 콜백 함수는 resolve와 reject 함수를 인수로 전달 받는다.
