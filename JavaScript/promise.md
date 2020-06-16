@@ -16,6 +16,8 @@ const promise = new Promise((resolve, reject) => {
 });
 ```
 
+&nbsp;  
+
 Promise 생성자 함수가 인수로 전달받은 콜백 함수 내부에서 비동기 처리를 수행한다. 이때 비동기 처리가 성공하면 콜백 함수의 인수로 전달받은 resolve 함수를 호출하고, 비동기 처리가 실패하면 reject 함수를 호출한다. 앞서 살펴보았던 비동기 함수 get을 프로미스로 구현해보자.
 
 ```javascript
@@ -82,7 +84,7 @@ p.then(value => {
 | (옵션) onFulfilled | * 프로미스가 fulfilled되면 호출되는 함수.<br />* 하나의 인수(fulfillment value)를 전달 받는다.<br />* 만약 함수가 아니면, 내부적으로 "Identity" 함수로 대체된다.<br />* "Identity" 함수는 fulfillment value를 반환한다. |
 | (옵션) onRejected  | * 프로미스가 rejected되면 호출되는 함수.<br />* 하나의 인수(rejection reason)을 전달 받는다.<br />* 만약 함수가 아니면, 내부적으로 "Thrower" 함수로 대체된다.<br />* "Thrower" 함수는 에러(rejection reason)를 throw한다. |
 
-따라서 `then` 메소드에 전달된 인수가 함수가 아니거나, 전달된 인수가 아예 없어도 에러가 발생하지 않는다. 이러한 경우 `then` 메소드가 반환하는 새로운 프로미스 객체는 이전 프로미스 객체의 상태와 성공 값/실패 이유를 그대로 갖는다.
+`then` 메소드에 전달된 인수가 함수가 아니거나, 전달된 인수가 자체가 없어도 에러가 발생하지 않는다. 이러한 경우 `then` 메소드는 이전 프로미스 객체의 상태와 성공 값/실패 이유를 그대로 갖는 새로운 프로미스 객체를 반환한다.
 
 &nbsp;  
 
@@ -294,7 +296,7 @@ rejectedPromise.catch(console.log); // Error: Error!
 
 ### 6.2. Promise.all
 
-`Promise.all` 메소드는 **Promise 객체를 요소로 가지는 배열 등의 이터러블을 인자로 전달받는다.** 그리고 전달받은 모든 Promise 객체를 모두 **연속적으로** 처리하고, 그 처리 결과를 resolve하는 새로운 프로미스를 반환한다.
+`Promise.all` 메소드는 **Promise 객체를 요소로 가지는 배열 등의 이터러블을 인자로 전달받는다.** 그리고 전달받은 모든 Promise 객체를 모두 <strong>연속적으로 처리</strong>하고, 그 처리 결과를 resolve하는 새로운 프로미스를 반환한다.
 
 ```javascript
 Promise.all([
@@ -310,8 +312,6 @@ Promise.all([
 * 첫 번째 Promise 객체는 3초 후 1을 resolve하여 처리 결과를 반환한다.
 * 두 번째 Promise 객체는 2초 후 2를 resolve하여 처리 결과를 반환한다.
 * 세 번째 Promise 객체는 1초 후 3을 resolve하여 처리 결과를 반환한다.
-
-&nbsp;  
 
 `Promise.all` 메소드는 전달받은 모든 Promise 객체를 연속적으로 처리한다. `Promise.all`은 배열 내 모든 Promise 객체의 resolve 또는 첫 번째 reject를 기다린다.
 
@@ -422,11 +422,15 @@ Promise.resolve()
 
 fetch 함수는 XMLHttpRequest 객체와 마찬가지로 HTTP 요청 전송 기능을 제공하는 클라이언트 사이드 Web API이다. fetch 함수는 XMLHttpRequest 객체보다 사용법이 간단하고 프로미스를 지원하기 때문에 비동기 처리를 위한 콜백 패턴의 단점에서 자유롭다. fetch 함수는 비교적 최근에 추가된 Web API로서 IE를 제외한 대부분의 브라우저에서 제공하고 있다.
 
+&nbsp;  
+
 fetch 함수에는 HTTP 요청을 전송할 URL과 HTTP 요청 헤더, 페이로드 등을 설정한 객체를 전달한다.
 
 ```javascript
 const promise = fetch(url, [, options]);
 ```
+
+&nbsp;  
 
 **fetch 함수는 HTTP 응답을 나타내는 Response 객체를 래핑한 Promise 객체를 반환한다.** fetch 함수로 GET 요청을 전송해 보자. fetch 함수에 첫 번째 인수로 HTTP 요청을 전송할 URL만을 전달하면 GET 요청을 전송한다.
 
@@ -435,9 +439,13 @@ fetch('https://jsonplaceholder.typicode.com/todos/1')
 	.then(response => console.log(response));
 ```
 
+&nbsp;  
+
 fetch 함수는 HTTP 응답을 나타내는 Response 객체를 래핑한 프로미스를 반환하므로, 후속 처리 메소드 then을 통해 프로미스가 resolve한 Response 객체를 전달받을 수 있다. Response 객체는 HTTP 응답을 나타내는 다양한 프로퍼티를 제공한다.
 
 <img src="https://user-images.githubusercontent.com/32444914/84765307-0186e280-b00a-11ea-908c-c627f0dd38b7.png" width="80%" />
+
+&nbsp;  
 
 `Response.prototype`에는 Response 객체에 포함되어 있는 HTTP 응답 몸체(body)를 위한 다양한 메소드를 제공한다. 예를 들어, fetch 함수가 반환한 프로미스가 래핑하고 있는 HTTP 응답 몸체를 취득하려면 `Response.prototype.json` 메소드를 사용한다. `Response.prototype.json` 메소드는 Response 객체에서 HTTP 응답 몸체(response.body)를 취득하여 역직렬화(`JSON.parse`)한다.
 
@@ -450,6 +458,8 @@ fetch('https://jsonplaceholder.typicode.com/todos/1')
 	.then(json => console.log(json));
 	// {userId: 1, id: 1, title: "delectus aut autem", completed: false}
 ```
+
+&nbsp;  
 
 fetch 함수를 통해 HTTP 요청을 전송해보자. fetch 함수에 첫 번째 인수로 HTTP 요청을 전송할 URL과 두 번째 인수로 HTTP 요청 메소드, HTTP 요청 헤더, 페이로드 등을 설정한 객체를 전달한다.
 
@@ -477,8 +487,6 @@ const request = {
   }
 };
 ```
-
-&nbsp;  
 
 **1. GET 요청**
 
