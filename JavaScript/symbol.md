@@ -83,6 +83,47 @@ if (mySymbol) console.log('mySymbol is not empty.');
 
 ### 2.2. Symbol.for / Symbol.keyFor 메소드
 
+`Symbol.for` 메소드는 인수로 전달받은 문자열을 키로 사용하여 전역 심벌 레지스트리(global symbol registry)에서 해당 키와 일치하는 심벌 값을 검색한다.
+
+&nbsp;  
+
+> **전역 심벌 레지스트리** 
+>
+> 키와 심벌 값의 쌍들이 저장되어 있는 저장소
+
+&nbsp;  
+
+* 검색에 성공하면 새로운 심벌 값을 생성하지 않고 검색된 심벌 값을 반환한다.
+* 검색에 실패하면 `Symbol.for` 메소드의 인수로 전달된 키로 새로운 심벌 값을 생성하여 전역 심벌 레지스트리에 저장한 후, 생성된 심벌 값을 반환한다.
+
+```javascript
+// 전역 심벌 레지스트리에 mySymbol이라는 키로 저장된 심벌 값이 없으면 새로운 심벌 값을 생성
+const s1 = Symbol.for('mySymbol');
+
+// 전역 심벌 레지스트리에 mySymbol이라는 키로 저장된 심벌 값이 있으면 해당 심벌 값을 반환
+const s2 = Symbol.for('mySymbol');
+
+console.log(s1 === s2); // true
+```
+
+Symbol 함수는 호출될 때마다 유일무이한 심벌 값을 생성한다. 이때 생성된 심벌 값의 키를 지정할 수 없으므로 생성된 심벌 값은 전역 심벌 레지스트리(자바스크립트 엔진이 관리하는 심벌 값 저장소)에 등록되지 않는다.
+
+하지만 `Symbol.for` 메소드를 사용하면 애플리케이션 전역에서 중복되지 않는 유일무이한 상수인 심벌 값을 단 하나만 생성하여 전역 심벌 레지스트리에 등록하고 공유할 수 있다.
+
+`Symbol.keyFor` 메소드를 사용하면 전역 심벌 레지스트리에 저장된 심벌 값의 키를 추출할 수 있다.
+
+```javascript
+// 전역 심벌 레지스트리에 mySymbol이라는 키로 저장된 심벌 값이 없으면 새로운 심벌 값을 생성
+const s1 = Symbol.for('mySymbol');
+// 전역 심벌 레지스트리에 저장된 심벌 값의 키를 추출
+Symbol.keyFor(s1); // mySymbol
+
+// Symbol 함수를 호출하여 생성한 심벌 값은 전역 심벌 레지스트리에 등록되어 관리되지 않는다.
+const s2 = Symbol('foo');
+// 전역 심벌 레지스트리에 저장된 심벌 값의 키를 추출
+Symbol.keyFor(s1); // undefined
+```
+
 
 
 
