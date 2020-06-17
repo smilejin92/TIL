@@ -106,7 +106,7 @@ const s2 = Symbol.for('mySymbol');
 console.log(s1 === s2); // true
 ```
 
-Symbol 함수는 호출될 때마다 유일무이한 심벌 값을 생성한다. 이때 생성된 심벌 값의 키를 지정할 수 없으므로 생성된 심벌 값은 전역 심벌 레지스트리(자바스크립트 엔진이 관리하는 심벌 값 저장소)에 등록되지 않는다.
+`Symbol` 함수는 호출될 때마다 유일무이한 심벌 값을 생성한다. 이때 생성된 심벌 값의 키를 지정할 수 없으므로 생성된 심벌 값은 전역 심벌 레지스트리(자바스크립트 엔진이 관리하는 심벌 값 저장소)에 등록되지 않는다.
 
 하지만 `Symbol.for` 메소드를 사용하면 애플리케이션 전역에서 중복되지 않는 유일무이한 상수인 심벌 값을 단 하나만 생성하여 전역 심벌 레지스트리에 등록하고 공유할 수 있다.
 
@@ -123,6 +123,109 @@ const s2 = Symbol('foo');
 // 전역 심벌 레지스트리에 저장된 심벌 값의 키를 추출
 Symbol.keyFor(s1); // undefined
 ```
+
+&nbsp;  
+
+## 3. 심벌과 상수
+
+예를 들어, 4방향(위, 아래, 오른쪽, 왼쪽)을 나타내는 상수를 정의한다고 생각해보자.
+
+```javascript
+// 위, 아래, 오른쪽, 왼쪽을 나타내는 상수.
+// 값 1, 2, 3, 4에는 특별한 의미가 없고 상수 이름에 의미가 있다.
+const Direction = {
+  UP: 1,
+  DOWN: 2,
+  LEFT: 3,
+  RIGHT: 4
+};
+
+// 변수에 상수를 할당
+const myDirection = Direction.UP;
+
+if (myDirection === Direction.UP) {
+  console.log('You are going UP.');
+}
+```
+
+위 예제와 같이 값에는 특별한 의미가 없고 상수 이름 자체에 의미가 있는 경우가 있다. 이때 문제는 상수값 1, 2, 3, 4가 다른 변수 값과 중복될 수 있다는 것이다. 이러한 경우, 중복될 가능성이 있는 무의미한 상수 대신 중복될 가능성이 없는 심벌 값을 사용할 수 있다.
+
+```javascript
+// 위, 아래, 오른쪽, 왼쪽을 나타내는 상수.
+// 중복될 가능성이 없는 심벌 값으로 상수값을 생성
+const Direction = {
+  UP: Symbol('up'),
+  DOWN: Symbol('down'),
+  LEFT: Symbol('left'),
+  RIGHT: Symbol('right'),
+};
+
+// 변수에 상수를 할당
+const myDirection = Direction.UP;
+
+if (myDirection === Direction.UP) {
+  console.log('You are going UP.');
+}
+```
+
+&nbsp;  
+
+## 4. 심벌과 프로퍼티 키
+
+객체의 프로퍼티 키는 빈 문자열을 포함하는 모든 문자열 또는 심벌 값으로 만들 수 있으며 동적으로 생성(computed property name)할 수도 있다.
+
+심벌 값으로 프로퍼티 키를 동적 생성하여 프로퍼티를 만들어 보자. **심벌 값을 프로퍼티 키로 사용하려면 프로퍼티 키로 사용할 심벌 값에 대괄호를 사용해야 한다.** 프로퍼티에 접근할 때도 마찬가지로 대괄호를 사용해야 한다.
+
+```javascript
+const obj = {
+  // 심벌 값으로 프로퍼티 키를 생성
+  [Symbol.for('mySymbol')]: 1
+};
+
+obj[Symbol.for('mySymbol')]; // 1
+```
+
+**심벌 값은 유일무이한 값이므로 심벌 값으로 프로퍼티 키를 만들면 다른 프로퍼티 키와 절대 충돌하지 않는다.** 기존 프로퍼티 키와 충돌하지 않는 것은 물론, 미래에 추가될 어떤 프로퍼티 키와도 충돌할 위험이 없다.
+
+&nbsp;  
+
+## 5. 심벌과 프로퍼티 은닉
+
+심벌 값을 프로퍼티 키로 사용하여 생성한 프로퍼티는 for...in 문이나 `Object.keys`, `Object.getOwnPropertyNames` 메소드로 찾을 수 없다. 이처럼 심벌 값을 프로퍼티 키로 사용하여 프로퍼티를 생성하면 프로퍼티를 숨길 수 있다.
+
+```javascript
+const obj = {
+  // 심벌 값으로 프로퍼티 키를 생성
+  [Symbol('mySymbol')]: 1
+};
+
+for (const key in obj) {
+  console.log(key); // 아무것도 출력되지 않는다.
+}
+
+console.log(Object.keys(obj)); // []
+console.log(Object.getOwnPropertyNames(obj)); // []
+```
+
+하지만 프로퍼티를 완전하게 숨길 수 있는 것은 아니다. ES6에서 도입된 `Object.getOwnPropertySymbols` 메소드를 사용하면 심벌 값을 프로퍼티 키로 사용하여 생성한 프로퍼티를 찾을 수 있다.
+
+```javascript
+const obj = {
+  // 심벌 값으로 프로퍼티 키를 생성
+  [Symbol('mySymbol')]: 1
+};
+
+// ES6: getOwnPropertySymbols
+console.log(Object.getOwnPropertySymbols(obj)); // [Symbol(mySymbol)]
+
+// 심벌 값을 찾을 수 있다.
+const [symbolKey1] = Object.getOwnPropertySymbols(obj);
+console.log(obj[symbolKey1]); // 1
+```
+
+&nbsp;  
+
+## 6. 심벌과 표준 빌트인 객체 확장
 
 
 
