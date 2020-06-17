@@ -1,0 +1,105 @@
+# 7번째 데이터 타입 Symbol
+
+## 1. 심벌이란?
+
+1997년 ECMAScript가 처음 표준화된 이래로 자바스크립트에는 6개의 타입(문자열, 숫자, 불리언, undefined, null, 객체)이 있었다.
+
+심벌(symbol)은 ES6에서 새롭게 추가된 7번째 데이터 타입으로 **변경 불가능한 원시 타입의 값**이다. 심벌 값은 다른 값과 중복되지 않는 유일무이한 값이다. 따라서 **이름의 충돌 위험이 없는 유일한 프로퍼티 키를 만들기 위해 주로 사용된다.**
+
+프로퍼티 키로 사용할 수 있는 값은 빈 문자열을 포함하는 **모든 문자열 또는 심벌 값이다.**
+
+&nbsp;  
+
+## 2. 심벌 값의 생성
+
+### 2.1. Symbol 함수
+
+**심벌 값은 Symbol 함수를 호출하여 생성한다.** 다른 원시값(문자열, 숫자, 불리언, undefined, null)은 리터럴 표기법을 통해 값을 생성할 수 있지만, 심벌 값은 Symbol 함수를 호출하여 생성해야 한다. 이때 생성된 심벌 값은 노출되지 않으며 **다른 값과 절대 중복되지 않는 유일무이한 값**이다. 
+
+```javascript
+// Symbol 함수를 호출하여 유일무이한 심벌 값을 생성한다.
+const mySymbol = Symbol();
+
+// 심벌 값은 노출되지 않는다.
+console.log(mySymbol); // Symbol()
+console.log(typeof mySymbol); // symbol
+```
+
+언뜻 보면 생성자 함수로 객체를 생성하는 것 처럼 보이지만 Symbol 함수는 String, Number, Boolean 생성자 함수와는 달리 `new` 연산자와 함께 호출되지 않는다. `new` 연산자와 함께 생성자 함수 또는 클래스를 호출하면 객체(인스턴스)가 생성되지만 심벌 값은 변경 불가능한 **원시 값**이다.
+
+```javascript
+new Symbol(); // TypeError: Symbol is not a constructor
+```
+
+&nbsp;  
+
+Symbol 함수에는 선택적으로 문자열을 인수로 전달할 수 있다. 이 문자열은 <strong>생성된 심벌 값에 대한 설명(description)</strong>으로 디버깅 용도로만 사용되며 심벌 값 생성에 어떠한 영향도 주지 않는다. 즉, 심벌 값에 대한 설명이 같더라도 생성된 심벌 값은 유일무이한 값이다.
+
+```javascript
+// 심벌 값에 대한 설명이 같더라도 유일무이한 심벌 값을 생성한다.
+const mySymbol1 = Symbol('mySymbol');
+const mySymbol2 = Symbol('mySymbol');
+
+console.log(mySymbol1 === mySymbol2); // false
+```
+
+&nbsp;  
+
+심벌 값도 문자열, 숫자, 불리언과 같이 객체처럼 접근하면 암묵적으로 래퍼 객체를 생성한다. 아래 예제의 description 프로퍼티와 toString 메소드는 Symbol.prototype의 프로퍼티이다.
+
+```javascript
+const mySymbol = Symbol('mySymbol');
+
+// 심벌도 래퍼 객체를 생성한다.
+console.log(mySymbol.description); // mySymbol
+console.log(mySymbol.toString()); // Symbol(mySymbol)
+```
+
+&nbsp;  
+
+심벌 값은 암묵적으로 문자열이나 숫자 타입으로 변환되지 않는다.
+
+```javascript
+const mySymbol = Symbol();
+
+// 심벌 값은 암묵적으로 타입 변환이 되지 않는다.
+console.log(mySymbol + ''); // TypeError: Cannot convert a Symbol value to a string
+console.log(+mySymbol); // TypeError: Cannot convert a Symbol value to a string
+```
+
+단, 불리언 타입으로는 암묵적 타입 변환된다. 이를 통해 if 문 등에서 존재 확인이 가능하다.
+
+```javascript
+const mySymbol = Symbol();
+
+// 불리언 타입으로는 암묵적으로 타입 변환된다.
+console.log(!!mySymbol); // true
+
+// if 문 등에서 존재 확인을 위해 사용할 수 있다.
+if (mySymbol) console.log('mySymbol is not empty.');
+```
+
+&nbsp;  
+
+### 2.2. Symbol.for / Symbol.keyFor 메소드
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
