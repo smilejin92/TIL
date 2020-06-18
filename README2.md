@@ -50,7 +50,6 @@
 * [**이벤트**](./JavaScript/event.md)
 * [**비동기 프로그래밍**](./JavaScript/async-programming.md)
 * [**Ajax**](./JavaScript/ajax.md)
-* [Promise](./Javascript/promise.md)
-
-
+* [**Promise**](./Javascript/promise.md)
+* [**Symbol**](./JavaScript/symbol.md)
 
