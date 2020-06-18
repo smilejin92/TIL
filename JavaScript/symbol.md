@@ -6,7 +6,7 @@
 
 심벌(symbol)은 ES6에서 새롭게 추가된 7번째 데이터 타입으로 **변경 불가능한 원시 타입의 값**이다. 심벌 값은 다른 값과 중복되지 않는 유일무이한 값이다. 따라서 **이름의 충돌 위험이 없는 유일한 프로퍼티 키를 만들기 위해 주로 사용된다.**
 
-프로퍼티 키로 사용할 수 있는 값은 빈 문자열을 포함하는 **모든 문자열 또는 심벌 값이다.**
+**프로퍼티 키로 사용할 수 있는 값은 빈 문자열을 포함하는 모든 문자열 또는 심벌 값이다.**
 
 &nbsp;  
 
@@ -25,7 +25,7 @@ console.log(mySymbol); // Symbol()
 console.log(typeof mySymbol); // symbol
 ```
 
-언뜻 보면 생성자 함수로 객체를 생성하는 것 처럼 보이지만 Symbol 함수는 String, Number, Boolean 생성자 함수와는 달리 `new` 연산자와 함께 호출되지 않는다. `new` 연산자와 함께 생성자 함수 또는 클래스를 호출하면 객체(인스턴스)가 생성되지만 심벌 값은 변경 불가능한 **원시 값**이다.
+언뜻 보면 생성자 함수로 객체를 생성하는 것 처럼 보이지만 **Symbol 함수는 String, Number, Boolean 생성자 함수와는 달리 `new` 연산자와 함께 호출되지 않는다.** `new` 연산자와 함께 생성자 함수 또는 클래스를 호출하면 객체(인스턴스)가 생성되지만 심벌 값은 변경 불가능한 **원시 값**이다.
 
 ```javascript
 new Symbol(); // TypeError: Symbol is not a constructor
@@ -227,23 +227,95 @@ console.log(obj[symbolKey1]); // 1
 
 ## 6. 심벌과 표준 빌트인 객체 확장
 
+일반적으로 표준 빌트인 객체에 사용자 정의 메소드를 직접 추가하여 확장하는 것은 권장하지 않는다. 표준 빌트인 객체는 읽기 전용으로 사용하는 것이 좋다.
 
+```javascript
+// 표준 빌트인 객체를 확장하는 것은 권장하지 않는다.
+Array.prototype.sum = function () {
+  return this.reduce((acc, cur) => acc + cur, 0);
+};
 
+[1, 2].sum(); // 3
+```
 
+그 이유는 개발자가 직접 추가한 메소드와 미래에 표준 사양으로 추가될 메소드 이름이 중복될 수 있기 때문이다. 예를 들어, `Array.prototype.find` 메소드가 ES6에 새롭게 도입되기 전에 `Array.prototype`에 사용자 정의 `find` 메소드를 직접 추가했다면 새롭게 도입된 ES6의 `find` 메소드와 이름이 중복되어 사용자 정의 메소드가 오버라이딩한다.
 
+&nbsp;  
 
+하지만 중복될 가능성이 없는 심벌 값으로 프로퍼티 키를 생성하여 표준 빌트인 객체를 확장하면, 표준 빌트인 객체의 기존 프로퍼티 키와 충돌하지 않는 것은 물론, 버전이 올라감에 따라 추가될 수 있는 어떤 프로퍼티 키와도 충돌할 위험이 없다. 따라서 심벌 값으로 프로퍼티 키를 생성하면 안전하게 표준 빌트인 객체를 확장할 수 있다.
 
+```javascript
+// 심벌 값으로 프로퍼티 키를 동적 생성하면 다른 프로퍼티 키와 절대 충돌하지 않는다.
+Array.prototype[Symbol.for('sum')] = function () {
+  return this.reduce((acc, cur) => acc + cur, 0);
+};
 
+[1, 2][Symbol.for('sum')](); // 3
+```
 
+&nbsp;  
 
+## 7. Well-known Symbol
 
+자바스크립트가 기본 제공하는 빌트인 심벌 값이 있다. 빌트인 심벌 값은 Symbol 함수의 프로퍼티에 할당되어 있다. 브라우저 콘솔에서 Symbol 함수를 참조해 보자.
 
+<img src="https://user-images.githubusercontent.com/32444914/84981908-8ab82980-b170-11ea-8703-653b044095a4.png" width="70%" />
 
+자바스크립트가 기본 제공하는 빌트인 심벌 값을 **Well-Known Symbol**이라 부른다. Well-Knwon Symbol은 자바스크립트 엔진의 내부 알고리즘에 사용된다.
 
+예를 들어 배열, String 객체, arguments 객체와 같이 for...of 문으로 순회 가능한 빌트인 이터러블(iterable)은 Well-Known Symbol인 Symbol.iterator를 키로 가지는 메소드를 가진다. **Symbol.iterator 메소드를 호출하면 이터레이터(iterator)를 반환하도록 ECMAScript 사양에 규정되어 있다.** 빌트인 이터러블은 이 규정(이터레이션 프로토콜)을 준수하고 있다.
 
+만약 빌트인 이터러블이 아닌 일반 객체를 이터러블처럼 동작하도록 구현하고 싶다면 이터레이션 프로토콜을 따르면 된다. 즉, ECMAScript 사양에 규정되어 있는 대로 Well-Known Symbol인 Symbol.iterator를 키로 갖는 메소드를 객체에  추가하고 이터레이터를 반환하도록 구현하면 그 객체는 이터러블이 된다.
 
+```javascript
+// 1 ~ 5 사이의 정수로 이루어진 이터러블
+const iterable = {
+  // Symbol.iterator 메소드를 구현하여 이터러블 프로토콜을 준수
+  [Symbol.iterator]() {
+    let cur = 1;
+    const max = 5;
+    // Symbol.iterator 메소드는 next 메소드를 소유한 이터레이터를 반환
+    return {
+      next() {
+        return {
+          value: cur++,
+          done: cur > max + 1
+        };
+      }
+    };
+	}
+};
 
+for (const num of iterable) {
+  console.log(num); // 1 2 3 4 5
+}
+```
 
+이때 일반 객체에 추가해야 하는 메소드의 키 Symbol.iterator는 기존 프로퍼티 키 또는 미래에 추가될 프로퍼티 키와 절대로 중복되지 않는다.
 
+이처럼 심벌은 중복되지 않는 상수 값을 생성하는 것은 물론 기존에 작성된 코드에 영향을 주지 않고 새로운 프로퍼티를 추가하기 위해(하위 호환성을 보장하기 위해) 도입되었다.
 
+&nbsp;  
+
+> **빌트인 이터러블**
+>
+> 이터러블은 for...of 문으로 순회할 수 있고 스프레드 문법을 사용할 수 있는 객체를 말한다. 자바스크립트가 기본 제공하는 빌트인 이터러블은 아래와 같다.
+
+&nbsp;  
+
+| 빌트인 이터러블 | 프로퍼티 키가 Symbol.iterator인 메소드                       |
+| --------------- | ------------------------------------------------------------ |
+| Array           | Array.prototype[Symbol.iterator]                             |
+| String          | String.prototype[symbol.iterator]                            |
+| Map             | Map.prototype[Symbol.iterator]                               |
+| Set             | Set.prototype[Symbol.iterator]                               |
+| TypedArray      | TypedArray.prototype[Symbol.iterator]                        |
+| arguments       | arguments[Symbol.iterator]                                   |
+| DOM 컬렉션      | * NodeList.prototype[Symbol.iterator]<br />* HTMLCollection.prototype[Symbol.iterator] |
+
+&nbsp;  
+
+## 출처
+
+* [poiemaweb.com - Symbol](https://poiemaweb.com/fastcampus/symbol)
 
