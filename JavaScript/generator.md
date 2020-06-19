@@ -214,6 +214,108 @@ console.log(res); // { value: 30, done: true }
 
 ### 5.1. 이터러블의 구현
 
+제너레이터 함수를 사용하면 이터레이션 프로토콜을 준수하여 이터러블을 생성하는 것보다 간단히 이터러블을 구현할 수 있다. 먼저 이터레이션 프로토콜을 준수하여 무한 피보나치 수열을 생성하는 함수를 구현해 보자.
+
+```javascript
+const infiniteFibonacci = (function () {
+  let [pre, cur] = [0, 1];
+  
+  return {
+    [Symbol.iterator]() {
+      return this;
+    },
+    next() {
+      [pre, cur] = [cur, pre + cur];
+      return { value: cur };
+    }
+  };
+}());
+
+// infiniteFibonacci는 무한 이터러블이다.
+for (cont num of infiniteFibonacci) {
+  if (num > 10000) break;
+  console.log(num); // 1 2 3 5 8 ...
+}
+```
+
+&nbsp;  
+
+이번에는 제너레이터를 사용하여 무한 피보나치 수열을 생성하는 함수를 구현해 보자. 제너레이터 함수를 사용하면 이터레이션 프로토콜을 준수하여 이터러블을 생성하는 것보다 간단히 이터러블을 구현할 수 있다.
+
+```javascript
+const infiniteFibonacci = (function* () {
+  let [pre, cur] = [0, 1];
+  
+  while (true) {
+    [pre, cur] = [cur, pre + cur];
+    yield cur;
+  }
+}());
+
+for (const num of infiniteFibonacci) {
+  if (num > 10000) break;
+  console.log(num); // 1 2 3 5 8 ...
+}
+```
+
+&nbsp;  
+
+### 5.2. 비동기 처리
+
+제너레이터 함수는 `next` 메소드와 `yield` 표현식을 통해 함수 호출자와 함수의 상태를 주고 받을 수 있다. 이러한 특징을 활용하면 프로미스를 사용한 비동기 처리를 동기 처리처럼 구현할 수 있다. 다시 말해, 프로미스의 후속 처리 메소드 `then` / `catch` / `finally` 없이 비동기 처리 결과를 반환하도록 구현할 수 있다.
+
+```javascript
+const async = genFunc => {
+  const generator = genFunc(); // 2
+  
+  const onResolved = arg => {
+  	const result = generator.next(arg); // 5
+    return result.done
+    	? result.value
+    	: result.value.then(pValue => onResolved(pValue)); // 7
+  };
+  
+  return onResolved; // 3
+};
+
+(async(function* fetchTodo() { // 1
+  const url = 'https://jsonplaceholder.typicode.com/todos/1';
+
+  const response = yield fetch(url); // 6
+  const todo = yield response.json(); // 8
+  console.log(todo);
+  // {userId: 1, id: 1, title: 'delectus aut autem', completed: false}
+})());
+```
+
+1. `async` 함수가 호출(1)되면 인수로 전달받은 제너레이터 함수 `fetchTodo`를 호출하여 제너레이터 객체를 생성(2)하고 `onResolved` 함수를 반환(3)한다.
+2. `next` 메소드가 처음 호출(5)되면 첫 번째 `yield` 문(6)까지 실행된다. 이때 `next` 메소드가 반환한 이터레이터 리절트 객체(`result`)의 `done` 프로퍼티의 값은 false이며, `value` 프로퍼티의 값은 6에서 yield된 (fetch 함수가 반환한) 프로미스 객체이다.  `result.done`이 false이므로 `result.value`가 resolve한 Response 객체를 `onResolved` 함수에 인수로 전달하며 재귀 호출(7)한다.
+3. `onResolved` 함수에 인수로 전달된 Response 객체를 `next` 메소드에 인수로 전달하며 `next` 메소드를 두 번째 호출(5)한다. 이때 `next` 메소드에 인수로 전달한 Response 객체는 제너레이터 함수 `fetchTodo`의 `response` 변수(6)에 할당되고, 두 번째 `yield` 문(8)까지 실행된다.
+4. 두 번째 `next` 메소드가 반환한 이터레이터 리절트 객체(`result`)의 `done` 프로퍼티 값은 false이며, `value` 프로퍼티의 값은 8에서 yield된 (`response.json()`가 반환한) 프로미스 객체이다. `result.done`이 false이므로 `result.value`가 resolve한 `todo` 객체를 `onResolved` 함수에 인수로 전달하며 재귀호출(7)한다.
+5. `onResolved` 함수에 인수로 전달된 todo 객체를 `next` 메소드에 인수로 전달하며 `next` 메소드를 세 번째 호출(5)한다. 이때 `next` 메소드에 인수로 전달한 todo 객체는 제너레이터 함수 `fetchTodo`의 `todo` 변수(8)에 할당되고, 제너레이터 함수의 끝까지 실행된다.
+6. 세 번째 `next` 메소드가 반환한 이터레이터 리절트 객체(`result`)의 `done` 프로퍼티 값은 true이며, `value` 프로퍼티의 값은 제네레이터 함수 `fetchTodo`의 반환값인 undefined이다. `result.done`이 true이므로 `result.value`를 그대로 반환한다 (재귀 끝).
+
+&nbsp;  
+
+위 예제의 제너레이터 함수를 실행하는 **제너레이터 실행기**인 `async` 함수는 이해를 돕기 위해 간략화한 예제이므로 완전하지 않다. 다음에 설명할 async / await를 사용하면 `async` 함수와 같은 제너레이터 실행기를 사용할 필요가 없지만, 만약 제너레이터 실행기가 필요하다면 [co](https://github.com/tj/co)를 사용하기 바란다.
+
+```javascript
+const fetch = require('node-fetch');
+// https://github.com/tj/co
+const co = require('co');
+
+co(function* fetchTodo() {
+  const url = 'https://jsonplaceholder.typicode.com/todos/1';
+
+  const response = yield fetch(url);
+  const todo = yield response.json();
+  console.log(todo);
+  // { userId: 1, id: 1, title: 'delectus aut autem', completed: false }
+});
+```
+
+&nbsp;  
+
 
 
 
