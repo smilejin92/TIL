@@ -316,6 +316,76 @@ co(function* fetchTodo() {
 
 &nbsp;  
 
+## 6. async / await
+
+제너레이터를 사용해서 비동기 처리를 동기 처리처럼 구현하긴 했지만, 코드가 무척이나 장황해지고 가독성이 떨어진다. ES8에서는 제너레이터보다 간단하고 가독성 좋게 **비동기 처리를 동기 처리처럼 구현할 수 있는 async / await가 도입되었다.**
+
+async / await을 사용하면 프로미스의 then / catch / finally 후속 처리 메소드에 콜백 함수를 전달하여 비동기 처리 결과를 후속 처리할 필요 없이, 마치 동기 처리처럼 프로미스를 사용할 수 있다. 다시 말해, 프로미스의 후속 처리 메소드 없이 동기 처리처럼 프로미스가 처리 결과를 반환하도록 구현할 수 있다. 위 예제를 async / await로 다시 구현해 보자.
+
+```javascript
+async function fetchTodo() {
+  const url = 'https://jsonplaceholder.typicode.com/todos/1';
+  
+  const response = await fetch(url);
+  const todo = await response.json();
+  console.log(todo);
+  // {userId: 1, id: 1, title: 'delectus aut autem', completed: false}
+}
+
+fetchTodo();
+```
+
+&nbsp;  
+
+### 6.1. async 함수
+
+`await` 키워드는 반드시 async 함수 내부에서 사용해야 한다. async 함수는 `async` 키워드를 사용해 정의하며, **언제나 프로미스를 반환한다.** async 함수가 명시적으로 프로미스를 반환하지 않더라도, async 함수의 반환값을 프로미스로 래핑하여 반환한다.
+
+```javascript
+// async 함수 선언문
+async function foo(n) { return n; }
+foo(1); // Promise {<resolved>: 1}
+
+// async 함수 표현식
+const bar = async function () {};
+bar(); // Promise {<resolved>: undefined}
+
+// async 화살표 함수
+const baz = async n => Promise.resolve(n * n);
+baz(3); // Promise {<resolved>: 9}
+
+// async 메소드
+const obj = {
+  async foo(n) { return n; }
+}
+obj.foo(4); // Promise {<resolved>: 4}
+
+// async 클래스 메소드
+class MyClass {
+  async bar(n) { return n; }
+}
+const myClass = new MyClass();
+myClass.bar(5); // Promise {<resolved>: 5}
+```
+
+&nbsp;  
+
+### 6.2. await 키워드
+
+`await` 키워드는 프로미스가 settled된 상태(비동기 처리가 수행된 상태)가 될 때까지 대기하다가, 프로미스가 settled 상태가 되면 resolve된 처리 결과 또는 reject된 에러를 반환한다.
+
+```javascript
+const getGithubUserName = async id => {
+  const res = await fetch(`https://api.github.com/users/${id}`); // 1
+  const { name } = await res.json(); // 2
+  console.log(name); // Jinhyun Kim
+};
+
+getGithubUserName('smilejin92');
+```
+
+await 키워드는 프로미스가 settled 상태가 될 때까지 대기한다고 했다. 따라서 1의 fetch 함수가 수행한 HTTP 요청에 대한 서버의 응답이 도착해서 fetch 함수가 반환한 프로미스가 settled 상태가 될 때까지 1에서 대기하게 된다. 이후 프로미스가 settled 상태가 되면 프로미스의 resolve된 처리 결과가 `res` 변수에 할당된다.
+
 
 
 
