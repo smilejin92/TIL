@@ -50,6 +50,7 @@
 * [**이벤트**](./JavaScript/event.md)
 * [**비동기 프로그래밍**](./JavaScript/async-programming.md)
 * [**Ajax**](./JavaScript/ajax.md)
+* [**REST API**](./JavaScript/rest-api.md)
 * [**Promise**](./JavaScript/promise.md)
 * [**Symbol**](./JavaScript/symbol.md)
 * [**이터러블**](./JavaScript/iterable.md)
