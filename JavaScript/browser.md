@@ -40,9 +40,13 @@
 
 브라우저의 핵심 기능은 **필요한 리소스를 서버에 요청(request)하고, 서버의 응답(response)을 받아 브라우저에 시각적으로 렌더링하는 것**이다. 즉, 렌더링에 필요한 리소스는 모두 서버에 존재하므로, 필요한 리소스를 서버에 요청하고 서버가 응답한 리소스를 파싱(parsing)하여 렌더링 하는 것이다.
 
+&nbsp;  
+
 > <strong>리소스(Resource)</strong>
 >
 > HTML, CSS, 자바스크립트, 이미지, 폰트 등의 정적 파일 또는 서버가 동적으로 생성한 데이터
+
+&nbsp;  
 
 서버에 요청을 하기 위해 브라우저는 주소창을 제공한다. 브라우저의 주소창에 URL을 입력하고 엔터 키를 입력하면, URL의 호스트 이름은 DNS를 통해 IP 주소로 변환되고, 이 IP 주소를 갖는 서버에게 요청(request)를 전송한다.
 
@@ -133,6 +137,8 @@ HTTP(HyperText Transfer Protocol)는 웹에서 <strong>브라우저와 서버가
 
 그리고 `<link>` 태그의 `href` 어트리뷰트에 정의된 CSS 파일을 서버에 요청하여 로드한 CSS나, `<style>` 태그내의 CSS를 HTML과 동일한 파싱 과정(바이트 -> 문자 -> 토큰 -> 노드 -> CSSOM)을 통해 해석하여 <strong>CSSOM(CSS Object Model)</strong>을 생성한다. 이후 CSS 파싱을 완료하면 HTML 파싱이 중단된 지점부터 다시 HTML을 파싱하기 시작하여 DOM 생성을 재개한다.
 
+&nbsp;  
+
 위에서 살펴본 index.html을 다시 살펴보자. index.html에는 CSS 파일을 로드하는 `<link>` 태그가 존재한다.
 
 ```html
@@ -178,9 +184,13 @@ CSSOM은 CSS의 상속을 반영하여 생성된다. 위 예제에서 body 요�
 
 <img src="https://user-images.githubusercontent.com/32444914/82747742-391db880-9dd7-11ea-99d4-28f7f86ee6da.png" width="80%" />
 
+&nbsp;  
+
 이후 완성된 렌더 트리는 각 HTML 요소의 레이아웃(위치와 크기) 계산에 사용되며, 브라우저 화면에 픽셀을 렌더링하는 페인팅(painting) 처리에 입력된다.
 
 <img src="https://user-images.githubusercontent.com/32444914/82747767-69655700-9dd7-11ea-97d7-3ec7a5e43a78.png" width="60%" />
+
+&nbsp;  
 
 지금까지 살펴본 브라우저의 렌더링 과정은 반복해서 실행될 수 있다. 예를 들어 아래와 같은 경우, 반복해서 레이아웃 계산과 페인팅이 재차 실행된다.
 
@@ -219,6 +229,8 @@ CSS 파싱 과정과 마찬가지로 렌더링 엔진은 HTML을 한줄씩 순�
 **자바스크립트 파싱과 실행은** 브라우저의 렌더링 엔진이 아닌 **자바스크립트 엔진이 처리한다.** 자바스크립트 엔진은 자바스크립트 코드를 CPU가 이해할 수 있는 저수준 언어(low-level language)로 변환하는 역할을 한다. 자바스크립트 엔진은 구글 크롬과 Node.js의 V8, 파이어폭스의 SpiderMonkey, 사파리의 JavaScriptCore 등 다양한 종류가 존재하며, 모든 자바스크립트 엔진은 ECMAScript 사양을 준수한다.
 
 렌더링 엔진으로부터 제어권을 넘겨 받은 자바스크립트 엔진은 자바스크립트 코드를 파싱하기 시작한다. 렌더링 엔진이 HTML과 CSS를 파싱하여 DOM과 CSSOM을 생성하듯 자바스크립트 엔진은 자바스크립트를 해석하여 <strong>AST(Abstract Syntax Tree, 추상적 구문 트리)</strong>를 생성한다. 그리고 AST를 기반으로 인터프리터가 실행할 수 있는 중간 코드(intermediate code)인 바이트 코드(bytecode)를 생성하여 실행한다.
+
+&nbsp;  
 
 <img src="https://user-images.githubusercontent.com/32444914/82748450-eba44a00-9ddc-11ea-9a2f-b6442e93f71a.png" width="70%" />
 
