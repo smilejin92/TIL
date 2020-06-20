@@ -220,14 +220,14 @@ for (;;) {
 > **for...in 문**
 >
 > for...of 문은 for...in 문의 형식과 매우 유사하다.
+>
+> ```javascript
+> for (변수선언문 in 객체) { ... }
+> ```
+>
+> for...in 문은 객체의 프로토타입 체인 상에 존재하는 모든 프로토타입의 프로퍼티 중 프로퍼티 어트리뷰트 [[Enumerable]]의 값이 true인 프로퍼티를 순회하며 열거(enumeration)한다. 이때 프로퍼티 키가 심벌인 프로퍼티는 열거하지 않으며 열거 순서를 보장하지 않는다.
 
-```pseudocode
-for (변수선언문 in 객체) { ... }
-```
-
-for...in 문은 객체의 프로토타입 체인 상에 존재하는 모든 프로토타입의 프로퍼티 중 프로퍼티 어트리뷰트 [[Enumerable]]의 값이 true인 프로퍼티를 순회하며 열거(enumeration)한다. 이때 프로퍼티 키가 심벌인 프로퍼티는 열거하지 않으며 열거 순서를 보장하지 않는다.
-
-&nbsp;  
+&nbsp;    
 
 ## 4. 이터러블과 유사 배열 객체
 
@@ -259,6 +259,8 @@ for (const item of arrayLikeObj) {
 }
 // TypeError: arrayLikeObj is not iterable
 ```
+
+&nbsp;  
 
 단, arguments, NodeList, HTMLCollection은 유사 배열 객체이면서 이터러블이다. 정확히 말하면 ES6에서 이터러블이 도입되며 유사 배열 객체인 arguments, NodeList, HTMLCollection 객체에 Symbol.iterator 메소드를 구현하여 이터러블이 되었다. 하지만 이터러블이 된 이후에도 length 프로퍼티를 가지며, 인덱스로 접근할 수 있는 것은 변함 없으므로 유사 배열 객체이면서 이터러블인 것이다.
 
