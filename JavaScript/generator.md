@@ -373,12 +373,13 @@ fetchTodo();
 ### 6.1. async 함수
 
 * async 함수는 언제나 프로미스를 반환한다.
+* 만약 async 함수 내부에 await 표현식이 없다면 async 함수 몸체의 문은 동기적으로 실행된다. 하지만 await 키워드가 1개 이상 존재하면, **첫 번째 await 표현식까지는 동기적으로 실행**되며 이후의 태스크는 비동기적으로 수행된다.
 * async 함수가 명시적으로 프로미스를 반환하지 않더라도, async 함수의 반환값을 프로미스로 래핑하여 반환한다.
 * `await` 키워드는 반드시 async 함수 내부에서 사용해야 한다.
 
-&nbsp;  
+&nbsp;  
 
-`await` 키워드는 반드시 async 함수 내부에서 사용해야 한다. async 함수는 `async` 키워드를 사용해 정의하며, **언제나 프로미스를 반환한다.** async 함수가 명시적으로 프로미스를 반환하지 않더라도, async 함수의 반환값을 프로미스로 래핑하여 반환한다.
+`await` 키워드는 반드시 async 함수 내부에서 사용해야 한다. async 함수는 `async` 키워드를 사용해 정의하며, **언제나 프로미스를 반환한다.** async 함수가 명시적으로 프로미스를 반환하지 않더라도, 암묵적으로 async 함수의 반환값을 프로미스로 래핑하여 반환한다.
 
 ```javascript
 // async 함수 선언문
@@ -408,6 +409,60 @@ myClass.bar(5); // Promise {<resolved>: 5}
 ```
 
 &nbsp;  
+
+만약 async 함수 내부에 await 키워드가 없다면, 함수 몸체의 문은 동기적으로 실행된다.
+
+```javascript
+const foo = async () => {
+  console.log('1');
+  console.log('2');
+};
+
+const bar = () => {
+  console.log('3');
+};
+
+foo(); // 1 2
+bar(); // 3
+```
+
+&nbsp;  
+
+만약 async 함수 내부에 await 키워드가 1개 이상 존재하면, 첫 번째 await 표현식까지는 동기적으로 실행되며 이후의 문은 비동기적으로 실행된다. 예를 들어, 아래 코드는 서로 동치이다.
+
+```javascript
+async functino foo() {
+  console.log('foo');
+  await 1; // 여기까지 동기적으로 실행된다.
+  // return undefined
+}
+
+// ===
+
+function foo() {
+  console.log('foo');
+  return Promise.resolve(1).then(() => undefined);
+}
+```
+
+&nbsp;  
+
+각 await 표현식 이후의 코드를 `.then` 메소드의 콜백 함수로 생각할 수 있다. 아래 예제의 실행 순서를 살펴보자.
+
+```javascript
+async function foo() {
+   const result1 = await new Promise((resolve) => setTimeout(() => resolve('1')));
+   const result2 = await new Promise((resolve) => setTimeout(() => resolve('2')));
+}
+
+foo();
+```
+
+1. `foo` 함수를 호출하면 `foo` 함수의 첫 번째 `await` 표현식(프로미스 생성자 함수 호출)까지 동기적으로 평가된다. 이때 첫 번째 `await` 표현식의 평가 결과로 pending 상태의 프로미스 객체가 생성된다. 이때 `foo` 함수의 진행은 일시 중지(suspend)되고, 컨트롤이 `foo` 함수를 호출한 호출자(caller)에게 양도된다.
+2. 이후 첫 번째 프로미스가 settled 상태가 되면 컨트롤이 `foo` 함수로 다시 돌아간다. 만약 첫 번째 프로미스가 fulfilled되면, 첫 번째 프로미스의 fulfillment value가 `result1`에 할당된다. 이후 `foo` 함수의 두 번째 `await` 표현식이 평가된다. 이때 `foo` 함수의 진행은 일시 중지(suspend)되고 컨트롤이 양도된다.
+3. 이후 두 번째 프로미스가 settled 상태가 되면 컨트롤이 `foo` 함수로 다시 돌아간다. 만약 두 번째 프로미스가 fulfilled되면, 두 번째 프로미스의 fulfillment value가 `result2`에 할당된다. 이후 return 문이 실행된다.
+
+&nbsp;  
 
 ### 6.2. await 키워드
 
